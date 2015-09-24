@@ -810,7 +810,7 @@ a:visited {
 }
 .article-title {
   text-decoration: none;
-  font-size: 2em;
+  font-size: 1.6em;
   color: #565a5f;
   line-height: 1.1em;
   -webkit-transition: color 0.2s;
