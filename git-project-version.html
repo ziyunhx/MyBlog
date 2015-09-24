@@ -18,7 +18,7 @@
 <meta name="twitter:description" content="上一篇博客写了如何在 .Net 项目使用 SVN 作为版本控制工具时生成与代码对应的组件版本号。虽然在公司一直使用 SVN ，但我却对 GIT 情有独钟，但少有文章提及如何具体在 Windows 平台来获得版本号。这让我有了迫切得到方法的希望。下面会具体实现如何在VS中使用Git版本号作为编译产生的文件版本号。">
   
   
-    <link rel="icon" href="favicon.png">
+    <link rel="icon" href="favicon.ico">
   
   
 
@@ -52,7 +52,7 @@
       
         <nav id="sub-nav">
           <div class="profile" id="profile-nav">
-            <a id="profile-anchor" href="javascript:;"><img class="avatar" src="https://avatars2.githubusercontent.com/u/1736004?v=3&amp;s=460"><i class="fa fa-caret-down"></i></a>
+            <a id="profile-anchor" href="javascript:;"><img class="avatar" src="/css/images/avatar.png"><i class="fa fa-caret-down"></i></a>
           </div>
         </nav>
       
@@ -88,7 +88,7 @@
         <aside id="profile">
   <div class="inner profile-inner">
     <div class="base-info profile-block">
-      <img id="avatar" src="https://avatars2.githubusercontent.com/u/1736004?v=3&amp;s=460">
+      <img id="avatar" src="/css/images/avatar.png">
       <h2 id="name">Carey Tzou</h2>
       <h3 id="title">Programmer &amp; Architect</h3>
       <span id="location"><i class="fa fa-map-marker"></i>Shanghai, China</span>
@@ -113,9 +113,7 @@
           
           <td><a href="/#" target="_blank" title="twitter"><i class="fa fa-twitter"></i></a></td>
           
-          <td><a href="/#" target="_blank" title="facebook"><i class="fa fa-facebook"></i></a></td>
-          
-          <td><a href="/#" target="_blank" title="dribbble"><i class="fa fa-dribbble"></i></a></td>
+          <td><a href="/‘#’" target="_blank" title="facebook"><i class="fa fa-facebook"></i></a></td>
           
           <td><a href="/atom.xml" target="_blank" title="rss"><i class="fa fa-rss"></i></a></td>
           
@@ -294,7 +292,9 @@ GIT_VERSION=<span class="variable">$VER</span>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.tnidea.com/git-project-version.html" data-id="ciey5alch001vo2s3p58nspfb" class="article-share-link">分享到</a>
+      <a data-url="http://www.tnidea.com/git-project-version.html" data-id="cieycikhc001vdis36dvs1cib" class="article-share-link">分享到</a>
+      
+        <a href="http://www.tnidea.com/git-project-version.html#disqus_thread" class="article-comment-link">评论</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/VS/">VS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/git/">git</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/批处理/">批处理</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/文件版本号/">文件版本号</a></li></ul>
@@ -326,6 +326,12 @@ GIT_VERSION=<span class="variable">$VER</span>
   
 </article>
 
+
+<section id="comments">
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
 
 </section>
       
@@ -367,7 +373,6 @@ GIT_VERSION=<span class="variable">$VER</span>
   </div>
 
   
-  <div id="toTop" class="fa fa-chevron-up"></div>
 </aside>
       
     </div>
@@ -375,13 +380,24 @@ GIT_VERSION=<span class="variable">$VER</span>
   
   <div class="outer">
     <div id="footer-info" class="inner">
-      Copyright &copy; 2013 - 2015 The NewIdea Inc. Author Carey Tzou, All Rights Reserved.
+      Copyright &copy; 2013 - 2015 The NewIdea Inc, All Rights Reserved.
 
 	  
     </div>
   </div>
 </footer>
     
+
+<script>
+  var disqus_shortname = 'tnidea';
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
 
 
 

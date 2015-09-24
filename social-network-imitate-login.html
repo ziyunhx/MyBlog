@@ -18,7 +18,7 @@
 <meta name="twitter:description" content="网站的登录是抓取某些网站的必须步骤，大多数情况我们都是使用一个真实的浏览器去提交我们的登录信息，但是在代码中嵌套浏览器不仅会带来性能损耗，还会带来崩溃的风险。因此就有了这个使用httpRequest来模拟登录的库 imitate-login ，目前仅有微博网页版和微博Wap版的实现，其它计划实现会根据项目关注度来决定（Star &amp;amp; fork）是否更新以及更新时间。">
   
   
-    <link rel="icon" href="favicon.png">
+    <link rel="icon" href="favicon.ico">
   
   
 
@@ -52,7 +52,7 @@
       
         <nav id="sub-nav">
           <div class="profile" id="profile-nav">
-            <a id="profile-anchor" href="javascript:;"><img class="avatar" src="https://avatars2.githubusercontent.com/u/1736004?v=3&amp;s=460"><i class="fa fa-caret-down"></i></a>
+            <a id="profile-anchor" href="javascript:;"><img class="avatar" src="/css/images/avatar.png"><i class="fa fa-caret-down"></i></a>
           </div>
         </nav>
       
@@ -88,7 +88,7 @@
         <aside id="profile">
   <div class="inner profile-inner">
     <div class="base-info profile-block">
-      <img id="avatar" src="https://avatars2.githubusercontent.com/u/1736004?v=3&amp;s=460">
+      <img id="avatar" src="/css/images/avatar.png">
       <h2 id="name">Carey Tzou</h2>
       <h3 id="title">Programmer &amp; Architect</h3>
       <span id="location"><i class="fa fa-map-marker"></i>Shanghai, China</span>
@@ -113,9 +113,7 @@
           
           <td><a href="/#" target="_blank" title="twitter"><i class="fa fa-twitter"></i></a></td>
           
-          <td><a href="/#" target="_blank" title="facebook"><i class="fa fa-facebook"></i></a></td>
-          
-          <td><a href="/#" target="_blank" title="dribbble"><i class="fa fa-dribbble"></i></a></td>
+          <td><a href="/‘#’" target="_blank" title="facebook"><i class="fa fa-facebook"></i></a></td>
           
           <td><a href="/atom.xml" target="_blank" title="rss"><i class="fa fa-rss"></i></a></td>
           
@@ -219,7 +217,9 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.tnidea.com/social-network-imitate-login.html" data-id="ciey5alc00011o2s3li7iwuu7" class="article-share-link">分享到</a>
+      <a data-url="http://www.tnidea.com/social-network-imitate-login.html" data-id="cieycikh00011dis340kxfsfp" class="article-share-link">分享到</a>
+      
+        <a href="http://www.tnidea.com/social-network-imitate-login.html#disqus_thread" class="article-comment-link">评论</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NET/">.NET</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/">C#</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/csharp/">csharp</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/social-network/">social network</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/thrift/">thrift</a></li></ul>
@@ -251,6 +251,12 @@
   
 </article>
 
+
+<section id="comments">
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
 
 </section>
       
@@ -292,7 +298,6 @@
   </div>
 
   
-  <div id="toTop" class="fa fa-chevron-up"></div>
 </aside>
       
     </div>
@@ -300,13 +305,24 @@
   
   <div class="outer">
     <div id="footer-info" class="inner">
-      Copyright &copy; 2013 - 2015 The NewIdea Inc. Author Carey Tzou, All Rights Reserved.
+      Copyright &copy; 2013 - 2015 The NewIdea Inc, All Rights Reserved.
 
 	  
     </div>
   </div>
 </footer>
     
+
+<script>
+  var disqus_shortname = 'tnidea';
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
 
 
 
