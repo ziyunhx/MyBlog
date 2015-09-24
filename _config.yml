@@ -7,9 +7,9 @@ title: The NewIdea
 subtitle: 
 description: 介绍个人的开源项目以及技术细节，分享构建在微软dotNet平台上的大数据技术、开源项目，分析大数据发展趋势与运用场景，分享实施案例。
 author: Carey Tzou
-author_title: 'Web Developer & Designer'
-avatar: css/images/avatar.png
-location: ’Shanghai, China'
+author_title: 'Programmer & Architect'
+avatar: https://avatars2.githubusercontent.com/u/1736004?v=3&s=460
+location: 'Shanghai, China'
 follow: https://github.com/ziyunhx/
 language: zh_CN
 timezone: Asia/Shanghai
@@ -17,9 +17,9 @@ since: 2013 # The start year showing in your copyright section.
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: http://blog.tnidea.com/
+url: http://www.tnidea.com/
 root: /
-permalink: :title/
+permalink: :title.html
 permalink_defaults:
 
 # Directory
