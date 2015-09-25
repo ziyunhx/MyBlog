@@ -33,21 +33,20 @@ thumbnail: true
 contacts:
   github: http://github.com/ziyunhx
   twitter: '#'
-  facebook: '#'
-  dribbble: '#'
+  facebook: ‘#’
   rss: atom.xml
 
 # Links
 links:
-  Hexo: http://hexo.io
+#  Hexo: http://hexo.io
 
 # CDN
-cdn: uses #If your site loads slowly change it to "google" , because "useso" is slow out of China
+cdn: useso #If your site loads slowly change it to "google" , because "useso" is slow out of China
 
 # Miscellaneous
 google_site_verification:
 google_analytics:
-favicon: favicon.png
+favicon: favicon.ico
 twitter:
 google_plus:
 fb_admins:
