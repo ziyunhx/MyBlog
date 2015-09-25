@@ -32,8 +32,8 @@ thumbnail: true
 # Contacts
 contacts:
   github: http://github.com/ziyunhx
-  twitter: '#'
-  facebook: '#'
+  twitter: 'https://twitter.com/ziyunhx'
+  facebook: 'http://www.facebook.com/ziyunhx'
   dribbble: '#'
   rss: atom.xml
 

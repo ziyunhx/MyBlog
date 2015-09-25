@@ -80,5 +80,5 @@ theme: icarus
 ## Docs: http://hexo.io/docs/deployment.html
 deploy:
   type: git
-  repository: https://github.com/ziyunhx/MyBlog.git
+  repository: git@github.com:ziyunhx/MyBlog.git
   branch: gh-pages
