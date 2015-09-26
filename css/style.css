@@ -987,12 +987,19 @@ a.article-title:hover {
 .article-footer a:hover {
   color: #565a5f;
 }
+@media screen and (min-width: 560px) and (max-width: 799px) {
+  .article-footer {
+    display: none;
+  }
+}
+@media screen and (max-width: 559px) {
+  .article-footer {
+    display: none;
+  }
+}
 .article-tag-list-item {
   float: left;
   margin-right: 10px;
-}
-.article-tag-list-link:before {
-  content: "#";
 }
 .article-comment-link {
   float: right;
@@ -1513,6 +1520,16 @@ ol.toc {
   line-height: 1.6em;
   font-size: 0.85em;
 }
+@media screen and (min-width: 560px) and (max-width: 799px) {
+  #footer-info-extend {
+    display: none;
+  }
+}
+@media screen and (max-width: 559px) {
+  #footer-info-extend {
+    display: none;
+  }
+}
 .article-entry pre,
 .article-entry .highlight {
   background: #34383d;
@@ -1734,6 +1751,16 @@ pre .javascript .function {
     float: left;
     width: 29.230769230769234%;
     margin: 0 0.769230769230769%;
+  }
+}
+@media screen and (min-width: 560px) and (max-width: 799px) {
+  #sidebar {
+    display: none;
+  }
+}
+@media screen and (max-width: 559px) {
+  #sidebar {
+    display: none;
   }
 }
 .widget {
