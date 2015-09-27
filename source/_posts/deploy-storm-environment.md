@@ -1,4 +1,4 @@
-title: 搭建dotNet开发Storm拓扑的环境
+title: 搭建.Net开发Storm拓扑的环境
 date: 2015-05-20
 categories: 
 - Storm

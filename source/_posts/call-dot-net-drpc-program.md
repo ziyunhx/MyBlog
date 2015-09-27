@@ -1,4 +1,4 @@
-title: 使用DRPC调用dotNET开发的Storm Topology
+title: 使用DRPC调用dotNET开发的Storm拓扑
 date: 2015-09-12
 categories: 
 - Storm

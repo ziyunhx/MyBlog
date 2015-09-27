@@ -1,11 +1,25 @@
 <header id="header">
   <div id="header-main" class="header-inner">
     <div class="outer">
+      <a href="javascript:void(0)" id="mobile-logo" class="navigation-menu-button" id="js-mobile-menu"><i class="fa fa-bars mobile-menu-img">&nbsp;</i><span class="site-title"><%= config.title %></span></a>
       <a href="<%- url_for() %>" id="logo"><%- (theme.logo? '<i class="logo" style="background-image: url(' + url_for(theme.logo) + ')"></i>':'') %><span class="site-title"><%= config.title %></span></a>
+      
+      <!-- Nav -->
       <nav id="main-nav">
-        <% for (var i in theme.menu){ %>
-          <a class="main-nav-link" href="<%- url_for(theme.menu[i]) %>"><%= i %></a>
-        <% } %>
+        <ul>
+          <% for (var i in theme.menu){ %>
+            <li class="main-nav-link">
+              <a href="<%- url_for(theme.menu[i]) %>"><%= i %></a>
+              <% if(i == "Categories" && site.categories.length) { %>
+                <%- list_categories(site.categories, {
+                  show_count: false,
+                  class: 'main-nav-category',
+                  separator: ''
+                }) %>
+              <% } %>
+            </li>
+          <% } %>
+        </ul>
       </nav>
       <% if(theme.profile) { %>
         <nav id="sub-nav">
@@ -23,7 +37,7 @@
     <table class="menu outer">
       <tr>
         <% for (var i in theme.menu){ %>
-          <td><a class="main-nav-link" href="<%- url_for(theme.menu[i]) %>"><%= i %></a></td>
+          <td class="main-nav-link"><a href="<%- url_for(theme.menu[i]) %>"><%= i %></a></td>
         <% } %>
         <td>
           <%- search_form() %>

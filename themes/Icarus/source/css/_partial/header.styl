@@ -23,10 +23,9 @@ $header-block-right
 .header-inner
   height: 100%
   position: relative
-  #logo
+  #logo, #mobile-logo
     @extend $header-block
     @extend $header-block-left
-    display: inline-block
     .logo
       display: inline-block
       width: logo-size
@@ -37,6 +36,18 @@ $header-block-right
       display: inline-block
       vertical-align: top
       font-weight: 600
+  #mobile-logo
+    display: none
+    @media mq-mobile
+      display: inline-block
+    @media mq-mini
+      display: inline-block
+  #logo
+    display: inline-block
+    @media mq-mobile
+      display: none
+    @media mq-mini
+      display: none
 
 #header-title
   text-align: center
@@ -99,8 +110,15 @@ $nav-link
   line-height: logo-size !important
 
 .main-nav-link
-  @extend $nav-link
+  float: left
+  display: block
   font-weight: 300
+  background: white
+  > a
+    padding: 0 15px
+  &:hover
+    .main-nav-category-list
+      display: block
 
 #sub-nav
   @media mq-normal
@@ -186,3 +204,21 @@ $nav-link
       &::-webkit-search-results-decoration
       &::-webkit-search-cancel-button
         -webkit-appearance: none
+
+.main-nav-category-list
+  display: none
+  border: 1px solid
+  border-color: #cccccc
+
+.main-nav-category-list-item
+  margin-left: 15px
+
+.avigation-menu-button
+  @media mq-normal
+    display: none
+  @media mq-tablet
+    display: none
+
+.mobile-menu-img
+  font-size: 1.8em
+  margin-right: 1em

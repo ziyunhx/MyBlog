@@ -1,4 +1,4 @@
-title: dotNet使用HttpWebRequest模拟浏览器
+title: .Net使用HttpWebRequest模拟浏览器
 date: 2015-07-10
 categories: 
 - 爬虫
