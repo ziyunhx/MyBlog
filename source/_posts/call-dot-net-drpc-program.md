@@ -17,7 +17,7 @@ tags:
 <!--more-->
  在开始介绍具体代码之前，我们先回顾一下DRPC的数据流图：
 
- ![image](http://blog.tnidea.com/media/image/drpc-workflow.png)
+ ![image](http://www.tnidea.com/media/image/drpc-workflow.png)
 
  从图中可以看到，DRPC实际上并不会影响的具体的业务逻辑代码的编写，只是在传入参数中增加了一个 request-id 用于辨别任务，在结束时增加了一个 return-info 用来返回结果。那么，在Bolt的编写中，我们为每一个Bolt的输入输出增加一个 id 参数来标识任务，在结束时额外增加一个返回结果的参数。我们还是写一个简单的字符操作的例子。
 
