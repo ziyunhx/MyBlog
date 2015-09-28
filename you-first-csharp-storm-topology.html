@@ -11,9 +11,9 @@
 <meta property="og:url" content="http://www.tnidea.com/you-first-csharp-storm-topology.html">
 <meta property="og:site_name" content="The NewIdea">
 <meta property="og:description" content="WordCount在大数据领域就像学习一门语言时的hello world，得益于Storm的开源以及Storm.Net.Adapter，现在我们也可以像Java或Python一样，使用Csharp创建原生支持的Storm Topologies。下面我将通过介绍wordcount来展示如何使用Csharp开发Storm拓扑。">
-<meta property="og:image" content="http://blog.tnidea.com/media/image/wordcount-project.png">
-<meta property="og:image" content="http://blog.tnidea.com/media/image/wordcount-topology.png">
-<meta property="og:updated_time" content="2015-09-23T15:30:58.000Z">
+<meta property="og:image" content="http://www.tnidea.com/media/image/wordcount-project.png">
+<meta property="og:image" content="http://www.tnidea.com/media/image/wordcount-topology.png">
+<meta property="og:updated_time" content="2015-09-28T12:13:59.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="使用Csharp创建你的第一个Storm拓扑（wordcount）">
 <meta name="twitter:description" content="WordCount在大数据领域就像学习一门语言时的hello world，得益于Storm的开源以及Storm.Net.Adapter，现在我们也可以像Java或Python一样，使用Csharp创建原生支持的Storm Topologies。下面我将通过介绍wordcount来展示如何使用Csharp开发Storm拓扑。">
@@ -39,17 +39,36 @@
     <header id="header">
   <div id="header-main" class="header-inner">
     <div class="outer">
+      <a href="javascript:void(0)" id="mobile-logo" class="navigation-menu-button" id="js-mobile-menu"><i class="fa fa-bars mobile-menu-img">&nbsp;</i><span class="site-title">The NewIdea</span></a>
       <a href="/" id="logo"><i class="logo" style="background-image: url(/css/images/logo.png)"></i><span class="site-title">The NewIdea</span></a>
+      
+      <!-- Nav -->
       <nav id="main-nav">
-        
-          <a class="main-nav-link" href="/.">Home</a>
-        
-          <a class="main-nav-link" href="/archives">Archives</a>
-        
-          <a class="main-nav-link" href="/categories">Categories</a>
-        
-          <a class="main-nav-link" href="/about">About</a>
-        
+        <ul>
+          
+            <li class="main-nav-link">
+              <a href="/.">Home</a>
+              
+            </li>
+          
+            <li class="main-nav-link">
+              <a href="/archives">Archives</a>
+              
+            </li>
+          
+            <li class="main-nav-link">
+              <a href="/categories">Categories</a>
+              
+                <ul class="main-nav-category-list"><li class="main-nav-category-list-item"><a class="main-nav-category-list-link" href="/categories/Storm/">Storm</a></li><li class="main-nav-category-list-item"><a class="main-nav-category-list-link" href="/categories/爬虫/">爬虫</a></li><li class="main-nav-category-list-item"><a class="main-nav-category-list-link" href="/categories/项目管理/">项目管理</a></li></ul>
+              
+            </li>
+          
+            <li class="main-nav-link">
+              <a href="/about">About</a>
+              
+            </li>
+          
+        </ul>
       </nav>
       
         <nav id="sub-nav">
@@ -63,24 +82,6 @@
       </div>
     </div>
   </div>
-  <div id="main-nav-mobile" class="header-sub header-inner">
-    <table class="menu outer">
-      <tr>
-        
-          <td><a class="main-nav-link" href="/.">Home</a></td>
-        
-          <td><a class="main-nav-link" href="/archives">Archives</a></td>
-        
-          <td><a class="main-nav-link" href="/categories">Categories</a></td>
-        
-          <td><a class="main-nav-link" href="/about">About</a></td>
-        
-        <td>
-          <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><input type="hidden" name="sitesearch" value="http://www.tnidea.com"></form>
-        </td>
-      </tr>
-    </table>
-  </div>
 </header>
 
     <div class="outer">
@@ -92,16 +93,16 @@
       <h2 id="name">Carey Tzou</h2>
       <h3 id="title">Programmer &amp; Architect</h3>
       <span id="location"><i class="fa fa-map-marker"></i>Shanghai, China</span>
-      <a id="follow" href="https://github.com/ziyunhx/">关注我</a>
+      <a id="follow" href="https://github.com/ziyunhx/">FOLLOW</a>
     </div>
     <div class="article-info profile-block">
       <div class="article-info-block">
         11
-        <span>文章</span>
+        <span>posts</span>
       </div>
       <div class="article-info-block">
         29
-        <span>标签</span>
+        <span>tags</span>
       </div>
     </div>
     
@@ -165,7 +166,7 @@
 <a id="more"></a>
 <p> 上篇博客已经介绍了如何部署Storm开发环境，本文所讲述demo已包含在<a href="https://github.com/ziyunhx/storm-net-adapter" title="Storm.Net.Adapter" target="_blank" rel="external">Storm.Net.Adapter</a>中，如果你觉得对你有帮助，欢迎Star和Fork，让更多人看到来帮助完善这个项目。</p>
 <p> 首先，我们创建一个控制台应用程序（使用控制台是方便调用） StormSimple；使用Nuget添加添加Storm.Net.Adapter（该类库的namespace为Storm）。</p>
-<p><img src="http://blog.tnidea.com/media/image/wordcount-project.png" alt="wordcount project"></p>
+<p><img src="http://www.tnidea.com/media/image/wordcount-project.png" alt="wordcount project"></p>
 <p> <strong>STEP1</strong>：通过继承ISpout创建一个Spout：Generator，实现ISpout的四个方法：</p>
 <figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Open</span>(<span class="params">Config stormConf, TopologyContext context</span>)</span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">NextTuple</span>(<span class="params"></span>)</span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Ack</span>(<span class="params"><span class="keyword">long</span> seqId</span>)</span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Fail</span>(<span class="params"><span class="keyword">long</span> seqId</span>)</span>;</span><br></pre></td></tr></table></figure>
 <p> 在实现这4个方法之前，我们还需要创建一些变量和方法来初始化这个类：</p>
@@ -193,17 +194,17 @@
 <p> <strong>STEP3</strong>：修改Program.cs来方便使用Java调用。</p>
 <figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> Storm;</span><br><span class="line"><span class="keyword">using</span> System;</span><br><span class="line"><span class="keyword">using</span> System.Linq;</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">StormSample</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">class</span> <span class="title">Program</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>(<span class="params"><span class="keyword">string</span>[] args</span>)</span><br><span class="line">        </span>&#123;</span><br><span class="line">            <span class="keyword">if</span> (args.Count() &gt; <span class="number">0</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">string</span> compName = args[<span class="number">0</span>];</span><br><span class="line"></span><br><span class="line">                <span class="keyword">try</span></span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="keyword">if</span> (<span class="string">"generator"</span>.Equals(compName))</span><br><span class="line">                    &#123;</span><br><span class="line">                        ApacheStorm.LaunchPlugin(<span class="keyword">new</span> newPlugin(Generator.Get));</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="function"><span class="keyword">else</span> <span class="title">if</span> (<span class="params"><span class="string">"splitter"</span>.Equals(compName</span>))</span><br><span class="line">                    </span>&#123;</span><br><span class="line">                        ApacheStorm.LaunchPlugin(<span class="keyword">new</span> newPlugin(Splitter.Get));</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="function"><span class="keyword">else</span> <span class="title">if</span> (<span class="params"><span class="string">"counter"</span>.Equals(compName</span>))</span><br><span class="line">                    </span>&#123;</span><br><span class="line">                        ApacheStorm.LaunchPlugin(<span class="keyword">new</span> newPlugin(Counter.Get));</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">else</span></span><br><span class="line">                    &#123;</span><br><span class="line">                        <span class="keyword">throw</span> <span class="keyword">new</span> Exception(<span class="keyword">string</span>.Format(<span class="string">"unexpected compName: &#123;0&#125;"</span>, compName));</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">catch</span> (Exception ex)</span><br><span class="line">                &#123;</span><br><span class="line">                    Context.Logger.Error(ex.ToString());</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">            &#123;</span><br><span class="line">                Context.Logger.Error(<span class="string">"Not support local model."</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p> 我们在Main方法里使用参数来确定具体调用的是哪个Spout/Bolt，ApacheStorm是一个包含主要方法的类，之所以不使用Storm只是因为命名空间占用了它。Csharp端的代码到此就全部结束了，Java端的代码与部署发布将在下一篇详细介绍，敬请期待！下面让我们来看一看整个Topology的流程吧！</p>
-<p> <img src="http://blog.tnidea.com/media/image/wordcount-topology.png" alt="WordCount Topology"></p>
-<h2 id="Storm系列文章">Storm系列文章</h2><p>（一）：<a href="http://blog.tnidea.com/deploy-storm-environment.html" title="搭建dotNet开发Storm拓扑的环境" target="_blank" rel="external">搭建dotNet开发Storm拓扑的环境</a></p>
-<p>（二）：<a href="http://blog.tnidea.com/you-first-csharp-storm-topology.html" title="使用Csharp创建你的第一个Storm拓扑" target="_blank" rel="external">使用Csharp创建你的第一个Storm拓扑（wordcount）</a></p>
-<p>（三）：<a href="http://blog.tnidea.com/deploy-wordcount-topology" title="创建Maven项目打包提交wordcount到Storm集群" target="_blank" rel="external">创建Maven项目打包提交wordcount到Storm集群</a></p>
+<p> <img src="http://www.tnidea.com/media/image/wordcount-topology.png" alt="WordCount Topology"></p>
+<h2 id="Storm系列文章">Storm系列文章</h2><p>（一）：<a href="http://www.tnidea.com/deploy-storm-environment.html" title="搭建dotNet开发Storm拓扑的环境">搭建dotNet开发Storm拓扑的环境</a></p>
+<p>（二）：<a href="http://www.tnidea.com/you-first-csharp-storm-topology.html" title="使用Csharp创建你的第一个Storm拓扑">使用Csharp创建你的第一个Storm拓扑（wordcount）</a></p>
+<p>（三）：<a href="http://www.tnidea.com/deploy-wordcount-topology" title="创建Maven项目打包提交wordcount到Storm集群">创建Maven项目打包提交wordcount到Storm集群</a></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.tnidea.com/you-first-csharp-storm-topology.html" data-id="cif0i74qg000f67s3tr1364y1" class="article-share-link">分享到</a>
+      <a data-url="http://www.tnidea.com/you-first-csharp-storm-topology.html" data-id="cif0i74qg000f67s3tr1364y1" class="article-share-link">Share</a>
       
-        <a href="http://www.tnidea.com/you-first-csharp-storm-topology.html#disqus_thread" class="article-comment-link">评论</a>
+        <a href="http://www.tnidea.com/you-first-csharp-storm-topology.html#disqus_thread" class="article-comment-link">Comments</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NET/">.NET</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/">C#</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Storm/">Storm</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/csharp/">csharp</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/wordcount/">wordcount</a></li></ul>
@@ -215,7 +216,7 @@
 <nav id="article-nav">
   
     <a href="/deploy-wordcount-topology.html" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">上一篇</strong>
+      <strong class="article-nav-caption">Newer</strong>
       <div class="article-nav-title">
         
           创建Maven项目打包提交wordcount到Storm集群
@@ -225,8 +226,8 @@
   
   
     <a href="/deploy-storm-environment.html" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">下一篇</strong>
-      <div class="article-nav-title">搭建dotNet开发Storm拓扑的环境</div>
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">搭建.Net开发Storm拓扑的环境</div>
     </a>
   
 </nav>
@@ -248,7 +249,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">标签云</h3>
+    <h3 class="widget-title">tag cloud</h3>
     <div class="widget tagcloud">
       <a href="/tags/NET/" style="font-size: 20px;">.NET</a> <a href="/tags/C/" style="font-size: 20px;">C#</a> <a href="/tags/DRPC/" style="font-size: 13.33px;">DRPC</a> <a href="/tags/Hadoop-MapReduce/" style="font-size: 10px;">Hadoop MapReduce</a> <a href="/tags/HttpHelper/" style="font-size: 10px;">HttpHelper</a> <a href="/tags/HttpWebRequest/" style="font-size: 10px;">HttpWebRequest</a> <a href="/tags/ImitateLogin/" style="font-size: 10px;">ImitateLogin</a> <a href="/tags/OpenAuth/" style="font-size: 10px;">OpenAuth</a> <a href="/tags/SVN/" style="font-size: 10px;">SVN</a> <a href="/tags/Spark-Streaming/" style="font-size: 10px;">Spark Streaming</a> <a href="/tags/Storm/" style="font-size: 16.67px;">Storm</a> <a href="/tags/Topology/" style="font-size: 13.33px;">Topology</a> <a href="/tags/VS/" style="font-size: 13.33px;">VS</a> <a href="/tags/csharp/" style="font-size: 20px;">csharp</a> <a href="/tags/distributed-computing/" style="font-size: 13.33px;">distributed computing</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/open-auth-assist/" style="font-size: 10px;">open-auth-assist</a> <a href="/tags/social-network/" style="font-size: 10px;">social network</a> <a href="/tags/storm/" style="font-size: 13.33px;">storm</a> <a href="/tags/thrift/" style="font-size: 10px;">thrift</a> <a href="/tags/wordcount/" style="font-size: 13.33px;">wordcount</a> <a href="/tags/zookeeper/" style="font-size: 10px;">zookeeper</a> <a href="/tags/分布式/" style="font-size: 13.33px;">分布式</a> <a href="/tags/安装/" style="font-size: 10px;">安装</a> <a href="/tags/批处理/" style="font-size: 13.33px;">批处理</a> <a href="/tags/文件版本号/" style="font-size: 13.33px;">文件版本号</a> <a href="/tags/流式框架/" style="font-size: 13.33px;">流式框架</a> <a href="/tags/部署/" style="font-size: 10px;">部署</a> <a href="/tags/项目管理/" style="font-size: 10px;">项目管理</a>
     </div>
@@ -257,7 +258,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">分类</h3>
+    <h3 class="widget-title">categories</h3>
     <div class="widget">
       <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Storm/">Storm</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/爬虫/">爬虫</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/项目管理/">项目管理</a><span class="category-list-count">2</span></li></ul>
     </div>
@@ -266,16 +267,16 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">归档</h3>
+    <h3 class="widget-title">archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">九月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">八月 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/07/">七月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/06/">六月 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/05/">五月 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/11/">十一月 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/10/">十月 2013</a><span class="archive-list-count">1</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">September 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">August 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/07/">July 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/06/">June 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/05/">May 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/11/">November 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/10/">October 2013</a><span class="archive-list-count">1</span></li></ul>
     </div>
   </div>
 
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">标签</h3>
+    <h3 class="widget-title">tags</h3>
     <div class="widget">
       <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/NET/">.NET</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C#</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DRPC/">DRPC</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hadoop-MapReduce/">Hadoop MapReduce</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HttpHelper/">HttpHelper</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HttpWebRequest/">HttpWebRequest</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ImitateLogin/">ImitateLogin</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OpenAuth/">OpenAuth</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SVN/">SVN</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spark-Streaming/">Spark Streaming</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Storm/">Storm</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Topology/">Topology</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VS/">VS</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/csharp/">csharp</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/distributed-computing/">distributed computing</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/open-auth-assist/">open-auth-assist</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/social-network/">social network</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/storm/">storm</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/thrift/">thrift</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/wordcount/">wordcount</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/zookeeper/">zookeeper</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/分布式/">分布式</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安装/">安装</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/批处理/">批处理</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/文件版本号/">文件版本号</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/流式框架/">流式框架</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/部署/">部署</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/项目管理/">项目管理</a><span class="tag-list-count">1</span></li></ul>
     </div>

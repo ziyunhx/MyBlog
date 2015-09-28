@@ -3,18 +3,18 @@
 <head>
   <meta charset="utf-8">
   
-  <title>使用DRPC调用dotNET开发的Storm Topology | The NewIdea</title>
+  <title>使用DRPC调用dotNET开发的Storm拓扑 | The NewIdea</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="在上一篇文章里介绍了.Net版本的DRPC的类库，结尾处的例子使用了Java版 BasicDRPCTopology ，本文我将介绍如何使用C#来开发 Storm Topology 并供远程DRPC调用，这篇文章将作为.Net Storm系列文章的一个暂时的结束，新的文章将随着 storm-net-adapter 新特性来更新!">
 <meta property="og:type" content="article">
-<meta property="og:title" content="使用DRPC调用dotNET开发的Storm Topology">
+<meta property="og:title" content="使用DRPC调用dotNET开发的Storm拓扑">
 <meta property="og:url" content="http://www.tnidea.com/call-dot-net-drpc-program.html">
 <meta property="og:site_name" content="The NewIdea">
 <meta property="og:description" content="在上一篇文章里介绍了.Net版本的DRPC的类库，结尾处的例子使用了Java版 BasicDRPCTopology ，本文我将介绍如何使用C#来开发 Storm Topology 并供远程DRPC调用，这篇文章将作为.Net Storm系列文章的一个暂时的结束，新的文章将随着 storm-net-adapter 新特性来更新!">
-<meta property="og:image" content="http://blog.tnidea.com/media/image/drpc-workflow.png">
-<meta property="og:updated_time" content="2015-09-23T15:21:56.000Z">
+<meta property="og:image" content="http://www.tnidea.com/media/image/drpc-workflow.png">
+<meta property="og:updated_time" content="2015-09-28T12:13:59.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="使用DRPC调用dotNET开发的Storm Topology">
+<meta name="twitter:title" content="使用DRPC调用dotNET开发的Storm拓扑">
 <meta name="twitter:description" content="在上一篇文章里介绍了.Net版本的DRPC的类库，结尾处的例子使用了Java版 BasicDRPCTopology ，本文我将介绍如何使用C#来开发 Storm Topology 并供远程DRPC调用，这篇文章将作为.Net Storm系列文章的一个暂时的结束，新的文章将随着 storm-net-adapter 新特性来更新!">
   
   
@@ -38,17 +38,36 @@
     <header id="header">
   <div id="header-main" class="header-inner">
     <div class="outer">
+      <a href="javascript:void(0)" id="mobile-logo" class="navigation-menu-button" id="js-mobile-menu"><i class="fa fa-bars mobile-menu-img">&nbsp;</i><span class="site-title">The NewIdea</span></a>
       <a href="/" id="logo"><i class="logo" style="background-image: url(/css/images/logo.png)"></i><span class="site-title">The NewIdea</span></a>
+      
+      <!-- Nav -->
       <nav id="main-nav">
-        
-          <a class="main-nav-link" href="/.">Home</a>
-        
-          <a class="main-nav-link" href="/archives">Archives</a>
-        
-          <a class="main-nav-link" href="/categories">Categories</a>
-        
-          <a class="main-nav-link" href="/about">About</a>
-        
+        <ul>
+          
+            <li class="main-nav-link">
+              <a href="/.">Home</a>
+              
+            </li>
+          
+            <li class="main-nav-link">
+              <a href="/archives">Archives</a>
+              
+            </li>
+          
+            <li class="main-nav-link">
+              <a href="/categories">Categories</a>
+              
+                <ul class="main-nav-category-list"><li class="main-nav-category-list-item"><a class="main-nav-category-list-link" href="/categories/Storm/">Storm</a></li><li class="main-nav-category-list-item"><a class="main-nav-category-list-link" href="/categories/爬虫/">爬虫</a></li><li class="main-nav-category-list-item"><a class="main-nav-category-list-link" href="/categories/项目管理/">项目管理</a></li></ul>
+              
+            </li>
+          
+            <li class="main-nav-link">
+              <a href="/about">About</a>
+              
+            </li>
+          
+        </ul>
       </nav>
       
         <nav id="sub-nav">
@@ -62,24 +81,6 @@
       </div>
     </div>
   </div>
-  <div id="main-nav-mobile" class="header-sub header-inner">
-    <table class="menu outer">
-      <tr>
-        
-          <td><a class="main-nav-link" href="/.">Home</a></td>
-        
-          <td><a class="main-nav-link" href="/archives">Archives</a></td>
-        
-          <td><a class="main-nav-link" href="/categories">Categories</a></td>
-        
-          <td><a class="main-nav-link" href="/about">About</a></td>
-        
-        <td>
-          <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><input type="hidden" name="sitesearch" value="http://www.tnidea.com"></form>
-        </td>
-      </tr>
-    </table>
-  </div>
 </header>
 
     <div class="outer">
@@ -91,16 +92,16 @@
       <h2 id="name">Carey Tzou</h2>
       <h3 id="title">Programmer &amp; Architect</h3>
       <span id="location"><i class="fa fa-map-marker"></i>Shanghai, China</span>
-      <a id="follow" href="https://github.com/ziyunhx/">关注我</a>
+      <a id="follow" href="https://github.com/ziyunhx/">FOLLOW</a>
     </div>
     <div class="article-info profile-block">
       <div class="article-info-block">
         11
-        <span>文章</span>
+        <span>posts</span>
       </div>
       <div class="article-info-block">
         29
-        <span>标签</span>
+        <span>tags</span>
       </div>
     </div>
     
@@ -134,7 +135,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      使用DRPC调用dotNET开发的Storm Topology
+      使用DRPC调用dotNET开发的Storm拓扑
     </h1>
   
 
@@ -163,7 +164,7 @@
         <p> 在上一篇文章里介绍了.Net版本的DRPC的类库，结尾处的例子使用了Java版 BasicDRPCTopology ，本文我将介绍如何使用C#来开发 Storm Topology 并供远程DRPC调用，这篇文章将作为.Net Storm系列文章的一个暂时的结束，新的文章将随着 <a href="https://github.com/ziyunhx/storm-net-adapter" title="storm-net-adapter" target="_blank" rel="external">storm-net-adapter</a> 新特性来更新!</p>
 <a id="more"></a>
 <p> 在开始介绍具体代码之前，我们先回顾一下DRPC的数据流图：</p>
-<p> <img src="http://blog.tnidea.com/media/image/drpc-workflow.png" alt="image"></p>
+<p> <img src="http://www.tnidea.com/media/image/drpc-workflow.png" alt="image"></p>
 <p> 从图中可以看到，DRPC实际上并不会影响的具体的业务逻辑代码的编写，只是在传入参数中增加了一个 request-id 用于辨别任务，在结束时增加了一个 return-info 用来返回结果。那么，在Bolt的编写中，我们为每一个Bolt的输入输出增加一个 id 参数来标识任务，在结束时额外增加一个返回结果的参数。我们还是写一个简单的字符操作的例子。</p>
 <figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> Storm;</span><br><span class="line"><span class="keyword">using</span> System;</span><br><span class="line"><span class="keyword">using</span> System.Collections.Generic;</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">StormSample</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">class</span> <span class="title">SimpleDRPC</span> : <span class="title">IBolt</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">private</span> Context ctx;</span><br><span class="line"></span><br><span class="line">        <span class="comment"><span class="xmlDocTag">///</span> <span class="xmlDocTag">&lt;summary&gt;</span></span></span><br><span class="line">        <span class="comment"><span class="xmlDocTag">///</span>  Implements of delegate "newPlugin", which is used to create a instance of this spout/bolt</span></span><br><span class="line">        <span class="comment"><span class="xmlDocTag">///</span> <span class="xmlDocTag">&lt;/summary&gt;</span></span></span><br><span class="line">        <span class="comment"><span class="xmlDocTag">///</span> <span class="xmlDocTag">&lt;param name="ctx"&gt;</span>Context instance<span class="xmlDocTag">&lt;/param&gt;</span></span></span><br><span class="line">        <span class="comment"><span class="xmlDocTag">///</span> <span class="xmlDocTag">&lt;returns&gt;</span><span class="xmlDocTag">&lt;/returns&gt;</span></span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> SimpleDRPC <span class="title">Get</span>(<span class="params">Context ctx</span>)</span><br><span class="line">        </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">new</span> SimpleDRPC(ctx);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="title">SimpleDRPC</span>(<span class="params">Context ctx</span>)</span><br><span class="line">        </span>&#123;</span><br><span class="line">            Context.Logger.Info(<span class="string">"SimpleDRPC constructor called"</span>);</span><br><span class="line">            <span class="keyword">this</span>.ctx = ctx;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// Declare Input and Output schemas</span></span><br><span class="line">            Dictionary&lt;<span class="keyword">string</span>, List&lt;Type&gt;&gt; inputSchema = <span class="keyword">new</span> Dictionary&lt;<span class="keyword">string</span>, List&lt;Type&gt;&gt;();</span><br><span class="line">            inputSchema.Add(<span class="string">"default"</span>, <span class="keyword">new</span> List&lt;Type&gt;() &#123; <span class="keyword">typeof</span>(<span class="keyword">string</span>), <span class="keyword">typeof</span>(<span class="keyword">object</span>) &#125;);</span><br><span class="line">            Dictionary&lt;<span class="keyword">string</span>, List&lt;Type&gt;&gt; outputSchema = <span class="keyword">new</span> Dictionary&lt;<span class="keyword">string</span>, List&lt;Type&gt;&gt;();</span><br><span class="line">            outputSchema.Add(<span class="string">"default"</span>, <span class="keyword">new</span> List&lt;Type&gt;() &#123; <span class="keyword">typeof</span>(<span class="keyword">string</span>), <span class="keyword">typeof</span>(<span class="keyword">object</span>) &#125;);</span><br><span class="line">            <span class="keyword">this</span>.ctx.DeclareComponentSchema(<span class="keyword">new</span> ComponentStreamSchema(inputSchema, outputSchema));</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Execute</span>(<span class="params">StormTuple tuple</span>)</span><br><span class="line">        </span>&#123;</span><br><span class="line">            Context.Logger.Info(<span class="string">"SimpleDRPC Execute enter"</span>);</span><br><span class="line">            </span><br><span class="line">            <span class="keyword">string</span> sentence = tuple.GetString(<span class="number">0</span>) + <span class="string">"!"</span>;</span><br><span class="line">            <span class="keyword">this</span>.ctx.Emit(<span class="string">"default"</span>, <span class="keyword">new</span> List&lt;StormTuple&gt; &#123; tuple &#125;, <span class="keyword">new</span> List&lt;<span class="keyword">object</span>&gt; &#123; sentence, tuple.GetValue(<span class="number">1</span>) &#125;);</span><br><span class="line">            Context.Logger.Info(<span class="string">"SimpleDRPC Execute exit"</span>);</span><br><span class="line">            ApacheStorm.Ack(tuple);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Prepare</span>(<span class="params">Config stormConf, TopologyContext context</span>)</span><br><span class="line">        </span>&#123;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>以上代码需要引用<a href="https://github.com/ziyunhx/storm-net-adapter" title="storm-net-adapter" target="_blank" rel="external">storm-net-adapter</a>，详细信息可以查看我之前的文章，下面我们来使用Java定义这个DRPC Topology:</p>
@@ -181,9 +182,9 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.tnidea.com/call-dot-net-drpc-program.html" data-id="cif0i74pm000067s33n8avmp2" class="article-share-link">分享到</a>
+      <a data-url="http://www.tnidea.com/call-dot-net-drpc-program.html" data-id="cif0i74pm000067s33n8avmp2" class="article-share-link">Share</a>
       
-        <a href="http://www.tnidea.com/call-dot-net-drpc-program.html#disqus_thread" class="article-comment-link">评论</a>
+        <a href="http://www.tnidea.com/call-dot-net-drpc-program.html#disqus_thread" class="article-comment-link">Comments</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NET/">.NET</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/">C#</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/DRPC/">DRPC</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Topology/">Topology</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/csharp/">csharp</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/storm/">storm</a></li></ul>
@@ -196,8 +197,8 @@
   
   
     <a href="/dot-net-drpc-storm.html" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">下一篇</strong>
-      <div class="article-nav-title">dotNET使用DRPC远程调用运行在Storm上的Topology</div>
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">.NET使用DRPC远程调用运行在Storm上的拓扑</div>
     </a>
   
 </nav>
@@ -219,7 +220,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">标签云</h3>
+    <h3 class="widget-title">tag cloud</h3>
     <div class="widget tagcloud">
       <a href="/tags/NET/" style="font-size: 20px;">.NET</a> <a href="/tags/C/" style="font-size: 20px;">C#</a> <a href="/tags/DRPC/" style="font-size: 13.33px;">DRPC</a> <a href="/tags/Hadoop-MapReduce/" style="font-size: 10px;">Hadoop MapReduce</a> <a href="/tags/HttpHelper/" style="font-size: 10px;">HttpHelper</a> <a href="/tags/HttpWebRequest/" style="font-size: 10px;">HttpWebRequest</a> <a href="/tags/ImitateLogin/" style="font-size: 10px;">ImitateLogin</a> <a href="/tags/OpenAuth/" style="font-size: 10px;">OpenAuth</a> <a href="/tags/SVN/" style="font-size: 10px;">SVN</a> <a href="/tags/Spark-Streaming/" style="font-size: 10px;">Spark Streaming</a> <a href="/tags/Storm/" style="font-size: 16.67px;">Storm</a> <a href="/tags/Topology/" style="font-size: 13.33px;">Topology</a> <a href="/tags/VS/" style="font-size: 13.33px;">VS</a> <a href="/tags/csharp/" style="font-size: 20px;">csharp</a> <a href="/tags/distributed-computing/" style="font-size: 13.33px;">distributed computing</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/open-auth-assist/" style="font-size: 10px;">open-auth-assist</a> <a href="/tags/social-network/" style="font-size: 10px;">social network</a> <a href="/tags/storm/" style="font-size: 13.33px;">storm</a> <a href="/tags/thrift/" style="font-size: 10px;">thrift</a> <a href="/tags/wordcount/" style="font-size: 13.33px;">wordcount</a> <a href="/tags/zookeeper/" style="font-size: 10px;">zookeeper</a> <a href="/tags/分布式/" style="font-size: 13.33px;">分布式</a> <a href="/tags/安装/" style="font-size: 10px;">安装</a> <a href="/tags/批处理/" style="font-size: 13.33px;">批处理</a> <a href="/tags/文件版本号/" style="font-size: 13.33px;">文件版本号</a> <a href="/tags/流式框架/" style="font-size: 13.33px;">流式框架</a> <a href="/tags/部署/" style="font-size: 10px;">部署</a> <a href="/tags/项目管理/" style="font-size: 10px;">项目管理</a>
     </div>
@@ -228,7 +229,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">分类</h3>
+    <h3 class="widget-title">categories</h3>
     <div class="widget">
       <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Storm/">Storm</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/爬虫/">爬虫</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/项目管理/">项目管理</a><span class="category-list-count">2</span></li></ul>
     </div>
@@ -237,16 +238,16 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">归档</h3>
+    <h3 class="widget-title">archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">九月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">八月 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/07/">七月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/06/">六月 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/05/">五月 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/11/">十一月 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/10/">十月 2013</a><span class="archive-list-count">1</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">September 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">August 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/07/">July 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/06/">June 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/05/">May 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/11/">November 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/10/">October 2013</a><span class="archive-list-count">1</span></li></ul>
     </div>
   </div>
 
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">标签</h3>
+    <h3 class="widget-title">tags</h3>
     <div class="widget">
       <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/NET/">.NET</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C#</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DRPC/">DRPC</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hadoop-MapReduce/">Hadoop MapReduce</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HttpHelper/">HttpHelper</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HttpWebRequest/">HttpWebRequest</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ImitateLogin/">ImitateLogin</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OpenAuth/">OpenAuth</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SVN/">SVN</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spark-Streaming/">Spark Streaming</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Storm/">Storm</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Topology/">Topology</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VS/">VS</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/csharp/">csharp</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/distributed-computing/">distributed computing</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/open-auth-assist/">open-auth-assist</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/social-network/">social network</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/storm/">storm</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/thrift/">thrift</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/wordcount/">wordcount</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/zookeeper/">zookeeper</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/分布式/">分布式</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安装/">安装</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/批处理/">批处理</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/文件版本号/">文件版本号</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/流式框架/">流式框架</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/部署/">部署</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/项目管理/">项目管理</a><span class="tag-list-count">1</span></li></ul>
     </div>

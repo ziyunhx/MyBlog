@@ -11,8 +11,8 @@
 <meta property="og:url" content="http://www.tnidea.com/git-project-version.html">
 <meta property="og:site_name" content="The NewIdea">
 <meta property="og:description" content="上一篇博客写了如何在 .Net 项目使用 SVN 作为版本控制工具时生成与代码对应的组件版本号。虽然在公司一直使用 SVN ，但我却对 GIT 情有独钟，但少有文章提及如何具体在 Windows 平台来获得版本号。这让我有了迫切得到方法的希望。下面会具体实现如何在VS中使用Git版本号作为编译产生的文件版本号。">
-<meta property="og:image" content="http://blog.tnidea.com/media/image/git-setup.png">
-<meta property="og:updated_time" content="2015-09-23T14:40:45.000Z">
+<meta property="og:image" content="http://www.tnidea.com/media/image/git-setup.png">
+<meta property="og:updated_time" content="2015-09-28T12:13:59.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="在VS项目中通过GIT生成版本号作为编译版本号">
 <meta name="twitter:description" content="上一篇博客写了如何在 .Net 项目使用 SVN 作为版本控制工具时生成与代码对应的组件版本号。虽然在公司一直使用 SVN ，但我却对 GIT 情有独钟，但少有文章提及如何具体在 Windows 平台来获得版本号。这让我有了迫切得到方法的希望。下面会具体实现如何在VS中使用Git版本号作为编译产生的文件版本号。">
@@ -38,17 +38,36 @@
     <header id="header">
   <div id="header-main" class="header-inner">
     <div class="outer">
+      <a href="javascript:void(0)" id="mobile-logo" class="navigation-menu-button" id="js-mobile-menu"><i class="fa fa-bars mobile-menu-img">&nbsp;</i><span class="site-title">The NewIdea</span></a>
       <a href="/" id="logo"><i class="logo" style="background-image: url(/css/images/logo.png)"></i><span class="site-title">The NewIdea</span></a>
+      
+      <!-- Nav -->
       <nav id="main-nav">
-        
-          <a class="main-nav-link" href="/.">Home</a>
-        
-          <a class="main-nav-link" href="/archives">Archives</a>
-        
-          <a class="main-nav-link" href="/categories">Categories</a>
-        
-          <a class="main-nav-link" href="/about">About</a>
-        
+        <ul>
+          
+            <li class="main-nav-link">
+              <a href="/.">Home</a>
+              
+            </li>
+          
+            <li class="main-nav-link">
+              <a href="/archives">Archives</a>
+              
+            </li>
+          
+            <li class="main-nav-link">
+              <a href="/categories">Categories</a>
+              
+                <ul class="main-nav-category-list"><li class="main-nav-category-list-item"><a class="main-nav-category-list-link" href="/categories/Storm/">Storm</a></li><li class="main-nav-category-list-item"><a class="main-nav-category-list-link" href="/categories/爬虫/">爬虫</a></li><li class="main-nav-category-list-item"><a class="main-nav-category-list-link" href="/categories/项目管理/">项目管理</a></li></ul>
+              
+            </li>
+          
+            <li class="main-nav-link">
+              <a href="/about">About</a>
+              
+            </li>
+          
+        </ul>
       </nav>
       
         <nav id="sub-nav">
@@ -62,24 +81,6 @@
       </div>
     </div>
   </div>
-  <div id="main-nav-mobile" class="header-sub header-inner">
-    <table class="menu outer">
-      <tr>
-        
-          <td><a class="main-nav-link" href="/.">Home</a></td>
-        
-          <td><a class="main-nav-link" href="/archives">Archives</a></td>
-        
-          <td><a class="main-nav-link" href="/categories">Categories</a></td>
-        
-          <td><a class="main-nav-link" href="/about">About</a></td>
-        
-        <td>
-          <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><input type="hidden" name="sitesearch" value="http://www.tnidea.com"></form>
-        </td>
-      </tr>
-    </table>
-  </div>
 </header>
 
     <div class="outer">
@@ -91,16 +92,16 @@
       <h2 id="name">Carey Tzou</h2>
       <h3 id="title">Programmer &amp; Architect</h3>
       <span id="location"><i class="fa fa-map-marker"></i>Shanghai, China</span>
-      <a id="follow" href="https://github.com/ziyunhx/">关注我</a>
+      <a id="follow" href="https://github.com/ziyunhx/">FOLLOW</a>
     </div>
     <div class="article-info profile-block">
       <div class="article-info-block">
         11
-        <span>文章</span>
+        <span>posts</span>
       </div>
       <div class="article-info-block">
         29
-        <span>标签</span>
+        <span>tags</span>
       </div>
     </div>
     
@@ -162,7 +163,7 @@
                 
         <p> 上一篇博客写了如何在 .Net 项目使用 SVN 作为版本控制工具时生成与代码对应的组件版本号。虽然在公司一直使用 SVN ，但我却对 GIT 情有独钟，但少有文章提及如何具体在 Windows 平台来获得版本号。这让我有了迫切得到方法的希望。下面会具体实现如何在VS中使用Git版本号作为编译产生的文件版本号。</p>
 <a id="more"></a>
-<p> 上篇博客 <a href="http://blog.tnidea.com/svn-project-version.html" title="在VS项目中使用SVN版本号作为编译版本号" target="_blank" rel="external">《在VS项目中使用SVN版本号作为编译版本号》</a></p>
+<p> 上篇博客 <a href="http://www.tnidea.com/svn-project-version.html" title="在VS项目中使用SVN版本号作为编译版本号">《在VS项目中使用SVN版本号作为编译版本号》</a></p>
 <p> 将 GIT 的 commit 作为 .Net 项目编译后生成dll的文件版本号主要有以下几个困难。</p>
 <ul>
 <li><p>GIT 没有一个数字的序号，而是一个SHA散列码；</p>
@@ -172,7 +173,7 @@
 <p>好了，首先我们依旧得找到 msysgit 的安装目录，一查之下头就大了，各个地方的路径都感觉不靠谱，最后还是选用了<br><code>HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Git_is1</code> 的 <code>InstallLocation</code> ，当然也可以通过 temp 环境变量来获取路径，安装时选择第二或第三项：</p>
 </li>
 </ul>
-<p><img src="http://blog.tnidea.com/media/image/git-setup.png" alt="git-setup"></p>
+<p><img src="http://www.tnidea.com/media/image/git-setup.png" alt="git-setup"></p>
 <p> 然后参照 Git Bash 的快捷方式拼接了下 call 的语句。写了一个 sh 文件来获得版本号，并保存到文件：</p>
 <pre><code><span class="comment"># file name: git_ver.sh</span>
 <span class="shebang">#!/bin/bash </span>
@@ -183,7 +184,7 @@ VER=<span class="string">"<span class="variable">$VER</span> <span class="variab
 GIT_VERSION=<span class="variable">$VER</span>
 <span class="built_in">echo</span> <span class="variable">$GIT_VERSION</span>&gt;<span class="variable">$VER_FILE</span>
 </code></pre><p> 在批处理里取出刚保存文件的值，接下来的工作就和使用 SVN 里的差不多了，唯一的区别是我们要自己实现关键字的替换。</p>
-<p> 上篇博客 <a href="http://blog.tnidea.com/svn-project-version.html" title="在VS项目中使用SVN版本号作为编译版本号" target="_blank" rel="external">《在VS项目中使用SVN版本号作为编译版本号》</a></p>
+<p> 上篇博客 <a href="http://www.tnidea.com/svn-project-version.html" title="在VS项目中使用SVN版本号作为编译版本号">《在VS项目中使用SVN版本号作为编译版本号》</a></p>
 <p> 建立以一个 AssemblyInfo.tpl 作为替换使用的模板，由于 AssemblyInfo.cs 中除了固定的值外还有类似 GUID 变化的值，所以我们不能全部替换，因此仅将需要修改的部分放在 tpl 中，内容如下：</p>
 <pre><code>[assembly: <span class="function"><span class="title">AssemblyVersion</span><span class="params">(<span class="string">"1.0.0.0"</span>)</span></span>]
 [assembly: <span class="function"><span class="title">AssemblyFileVersion</span><span class="params">(<span class="string">"1.0.0.GITVERSION"</span>)</span></span>]
@@ -291,9 +292,9 @@ GIT_VERSION=<span class="variable">$VER</span>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.tnidea.com/git-project-version.html" data-id="cif0i74r4001v67s3879xugnu" class="article-share-link">分享到</a>
+      <a data-url="http://www.tnidea.com/git-project-version.html" data-id="cif0i74r4001v67s3879xugnu" class="article-share-link">Share</a>
       
-        <a href="http://www.tnidea.com/git-project-version.html#disqus_thread" class="article-comment-link">评论</a>
+        <a href="http://www.tnidea.com/git-project-version.html#disqus_thread" class="article-comment-link">Comments</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/VS/">VS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/git/">git</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/批处理/">批处理</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/文件版本号/">文件版本号</a></li></ul>
@@ -305,7 +306,7 @@ GIT_VERSION=<span class="variable">$VER</span>
 <nav id="article-nav">
   
     <a href="/compare-with-distributed-computation-system.html" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">上一篇</strong>
+      <strong class="article-nav-caption">Newer</strong>
       <div class="article-nav-title">
         
           开源分布式计算系统框架比较
@@ -315,7 +316,7 @@ GIT_VERSION=<span class="variable">$VER</span>
   
   
     <a href="/svn-project-version.html" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">下一篇</strong>
+      <strong class="article-nav-caption">Older</strong>
       <div class="article-nav-title">在VS项目中使用SVN版本号作为编译版本号</div>
     </a>
   
@@ -338,7 +339,7 @@ GIT_VERSION=<span class="variable">$VER</span>
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">标签云</h3>
+    <h3 class="widget-title">tag cloud</h3>
     <div class="widget tagcloud">
       <a href="/tags/NET/" style="font-size: 20px;">.NET</a> <a href="/tags/C/" style="font-size: 20px;">C#</a> <a href="/tags/DRPC/" style="font-size: 13.33px;">DRPC</a> <a href="/tags/Hadoop-MapReduce/" style="font-size: 10px;">Hadoop MapReduce</a> <a href="/tags/HttpHelper/" style="font-size: 10px;">HttpHelper</a> <a href="/tags/HttpWebRequest/" style="font-size: 10px;">HttpWebRequest</a> <a href="/tags/ImitateLogin/" style="font-size: 10px;">ImitateLogin</a> <a href="/tags/OpenAuth/" style="font-size: 10px;">OpenAuth</a> <a href="/tags/SVN/" style="font-size: 10px;">SVN</a> <a href="/tags/Spark-Streaming/" style="font-size: 10px;">Spark Streaming</a> <a href="/tags/Storm/" style="font-size: 16.67px;">Storm</a> <a href="/tags/Topology/" style="font-size: 13.33px;">Topology</a> <a href="/tags/VS/" style="font-size: 13.33px;">VS</a> <a href="/tags/csharp/" style="font-size: 20px;">csharp</a> <a href="/tags/distributed-computing/" style="font-size: 13.33px;">distributed computing</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/open-auth-assist/" style="font-size: 10px;">open-auth-assist</a> <a href="/tags/social-network/" style="font-size: 10px;">social network</a> <a href="/tags/storm/" style="font-size: 13.33px;">storm</a> <a href="/tags/thrift/" style="font-size: 10px;">thrift</a> <a href="/tags/wordcount/" style="font-size: 13.33px;">wordcount</a> <a href="/tags/zookeeper/" style="font-size: 10px;">zookeeper</a> <a href="/tags/分布式/" style="font-size: 13.33px;">分布式</a> <a href="/tags/安装/" style="font-size: 10px;">安装</a> <a href="/tags/批处理/" style="font-size: 13.33px;">批处理</a> <a href="/tags/文件版本号/" style="font-size: 13.33px;">文件版本号</a> <a href="/tags/流式框架/" style="font-size: 13.33px;">流式框架</a> <a href="/tags/部署/" style="font-size: 10px;">部署</a> <a href="/tags/项目管理/" style="font-size: 10px;">项目管理</a>
     </div>
@@ -347,7 +348,7 @@ GIT_VERSION=<span class="variable">$VER</span>
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">分类</h3>
+    <h3 class="widget-title">categories</h3>
     <div class="widget">
       <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Storm/">Storm</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/爬虫/">爬虫</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/项目管理/">项目管理</a><span class="category-list-count">2</span></li></ul>
     </div>
@@ -356,16 +357,16 @@ GIT_VERSION=<span class="variable">$VER</span>
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">归档</h3>
+    <h3 class="widget-title">archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">九月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">八月 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/07/">七月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/06/">六月 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/05/">五月 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/11/">十一月 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/10/">十月 2013</a><span class="archive-list-count">1</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">September 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">August 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/07/">July 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/06/">June 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/05/">May 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/11/">November 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/10/">October 2013</a><span class="archive-list-count">1</span></li></ul>
     </div>
   </div>
 
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">标签</h3>
+    <h3 class="widget-title">tags</h3>
     <div class="widget">
       <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/NET/">.NET</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C#</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DRPC/">DRPC</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hadoop-MapReduce/">Hadoop MapReduce</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HttpHelper/">HttpHelper</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HttpWebRequest/">HttpWebRequest</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ImitateLogin/">ImitateLogin</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OpenAuth/">OpenAuth</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SVN/">SVN</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spark-Streaming/">Spark Streaming</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Storm/">Storm</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Topology/">Topology</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VS/">VS</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/csharp/">csharp</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/distributed-computing/">distributed computing</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/open-auth-assist/">open-auth-assist</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/social-network/">social network</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/storm/">storm</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/thrift/">thrift</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/wordcount/">wordcount</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/zookeeper/">zookeeper</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/分布式/">分布式</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安装/">安装</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/批处理/">批处理</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/文件版本号/">文件版本号</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/流式框架/">流式框架</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/部署/">部署</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/项目管理/">项目管理</a><span class="tag-list-count">1</span></li></ul>
     </div>
