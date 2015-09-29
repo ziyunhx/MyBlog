@@ -82,3 +82,6 @@ deploy:
   type: git
   repository: git@github.com:ziyunhx/MyBlog.git
   branch: gh-pages
+  
+sitemap:
+    path: sitemap.xml

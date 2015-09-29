@@ -7,8 +7,6 @@ tags:
 - zookeeper
 - 流式框架
 - 分布式
-- distributed computing
-- 安装
 - 部署
 
 ---
