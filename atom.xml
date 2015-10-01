@@ -396,7 +396,7 @@
     <link href="http://www.tnidea.com/deploy-storm-environment.html"/>
     <id>http://www.tnidea.com/deploy-storm-environment.html</id>
     <published>2015-05-19T16:00:00.000Z</published>
-    <updated>2015-09-28T12:13:59.000Z</updated>
+    <updated>2015-09-28T14:24:29.000Z</updated>
     <content type="html"><![CDATA[<p> 上篇博客比较了目前流行的计算框架特性，如果你是 Java 开发者，那么根据业务场景选择即可；但是如果你是 .Net 开发者，那么三者都不能拿来即用，至少在这篇文章出现之前是如此。基于上篇文章的比较发现，Storm 应该是对多语言支持比较好的框架了，但即便如此，官方也没有提供 .Net 的适配器，网上也找不到第三方的开源库。So，<a href="https://github.com/ziyunhx/storm-net-adapter" title="Storm.Net.Adapter" target="_blank" rel="external">Storm.Net.Adapter</a> 出现了，一个使用 Csharp 开发的 针对 Apache Storm 的适配器！</p>
 <a id="more"></a>
 <p> 本文是“Storm系列”的第一篇，后期会根据时间情况继续更新，欢迎大家关注文章末尾处的微信公众号：dotNet大数据，如果你愿意提供素材或建议，欢迎通过 About 中的邮箱与我联系。</p>
@@ -482,13 +482,9 @@
     
       <category term="Storm" scheme="http://www.tnidea.com/tags/Storm/"/>
     
-      <category term="distributed computing" scheme="http://www.tnidea.com/tags/distributed-computing/"/>
-    
       <category term="zookeeper" scheme="http://www.tnidea.com/tags/zookeeper/"/>
     
       <category term="分布式" scheme="http://www.tnidea.com/tags/%E5%88%86%E5%B8%83%E5%BC%8F/"/>
-    
-      <category term="安装" scheme="http://www.tnidea.com/tags/%E5%AE%89%E8%A3%85/"/>
     
       <category term="流式框架" scheme="http://www.tnidea.com/tags/%E6%B5%81%E5%BC%8F%E6%A1%86%E6%9E%B6/"/>
     

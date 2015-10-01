@@ -478,7 +478,7 @@ a:visited {
   font-weight: 300;
   background: #fff;
 }
-.main-nav-link > a {
+.main-nav-link a {
   padding: 0 15px;
 }
 .main-nav-link:hover .main-nav-category-list {
@@ -635,6 +635,77 @@ a:visited {
 .mobile-menu-img {
   font-size: 1.8em;
   margin-right: 1em;
+}
+.cbp-spmenu {
+  background: #47a3da;
+  position: fixed;
+}
+.cbp-spmenu a {
+  display: block;
+  color: #fff;
+  font-size: 1.1em;
+  font-weight: 300;
+}
+.cbp-spmenu a:hover {
+  background: #258ecd;
+}
+.cbp-spmenu a:active {
+  background: #afdefa;
+  color: #47a3da;
+}
+.cbp-spmenu-vertical {
+  width: 240px;
+  height: 100%;
+  top: 0;
+  z-index: 1000;
+}
+.cbp-spmenu-vertical a {
+  border-bottom: 1px solid #258ecd;
+  padding: 1em;
+}
+.cbp-spmenu-left {
+  left: -240px;
+}
+.cbp-spmenu-right {
+  right: -240px;
+}
+.cbp-spmenu-left.cbp-spmenu-open {
+  left: 0px;
+}
+.cbp-spmenu-right.cbp-spmenu-open {
+  right: 0px;
+}
+.cbp-spmenu-push {
+  overflow-x: hidden;
+  position: relative;
+  left: 0;
+}
+.cbp-spmenu-push-toright {
+  left: 240px;
+}
+.cbp-spmenu-push-toleft {
+  left: -240px;
+}
+.cbp-spmenu,
+.cbp-spmenu-push {
+  -webkit-transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  -webkit-transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  -ms-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+}
+#mobile-nav a,
+#mobile-nav a:visited {
+  white-space: nowrap;
+  -webkit-transition: 0.2s ease;
+  -moz-transition: 0.2s ease;
+  -ms-transition: 0.2s ease;
+  transition: 0.2s ease;
+  color: #fff;
+}
+#mobile-nav a:hover {
+  color: #fff;
 }
 .bio {
   text-align: center;
