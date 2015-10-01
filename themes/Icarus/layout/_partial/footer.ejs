@@ -8,3 +8,16 @@
     </div>
   </div>
 </footer>
+
+<script src="js/classie.js"></script>
+<script>
+	var menuLeft = document.getElementById( 'cbp-spmenu-s1' ),
+      showMobileNav = document.getElementById( 'mobile-logo' ),
+		  body = document.body;
+
+	showMobileNav.onclick = function() {
+		classie.toggle( this, 'active' );
+		classie.toggle( body, 'cbp-spmenu-push-toright' );
+		classie.toggle( menuLeft, 'cbp-spmenu-open' );
+	};
+</script>
