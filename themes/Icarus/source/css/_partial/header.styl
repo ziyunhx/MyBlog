@@ -93,7 +93,6 @@ $header-block-right
   @media mq-normal
     display: none
   
-
 $nav-link
   float: left
   display: block
@@ -115,7 +114,7 @@ $nav-link
   display: block
   font-weight: 300
   background: white
-  > a
+  a
     padding: 0 15px
   &:hover
     .main-nav-category-list
@@ -225,3 +224,66 @@ $nav-link
 .mobile-menu-img
   font-size: 1.8em
   margin-right: 1em
+
+.cbp-spmenu
+  background: #47a3da
+  position: fixed
+  
+.cbp-spmenu
+  a
+    display: block
+    color: #fff
+    font-size: 1.1em
+    font-weight: 300
+  a:hover
+    background: #258ecd
+  a:active
+    background: #afdefa
+    color: #47a3da
+
+.cbp-spmenu-vertical
+  width: 240px
+  height: 100%
+  top: 0
+  z-index: 1000
+  a
+    border-bottom: 1px solid #258ecd;
+    padding: 1em
+
+.cbp-spmenu-left
+  left: -240px
+
+.cbp-spmenu-right
+	right: -240px
+
+.cbp-spmenu-left.cbp-spmenu-open
+	left: 0px
+
+.cbp-spmenu-right.cbp-spmenu-open
+	right: 0px
+
+/* Push classes applied to the body */
+.cbp-spmenu-push
+	overflow-x: hidden
+	position: relative
+	left: 0
+
+.cbp-spmenu-push-toright
+	left: 240px
+
+.cbp-spmenu-push-toleft
+	left: -240px
+
+/* Transitions */
+.cbp-spmenu,.cbp-spmenu-push
+  -webkit-transition: all 0.3s ease
+  -moz-transition: all 0.3s ease
+  transition: all 0.3s ease
+  
+#mobile-nav
+  a, a:visited
+    white-space: nowrap
+    transition: 0.2s ease
+    color: white
+  a:hover
+    color: white

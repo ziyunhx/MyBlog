@@ -33,17 +33,30 @@
       </div>
     </div>
   </div>
-  <nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left" id="cbp-spmenu-s1">
-    <% for (var i in theme.menu){ %>
-      <a class="link depth-0" target="_blank" href="<%- url_for(theme.menu[i]) %>">
-      <span class="indent-0"></span><%= i %></a>
-      <% if(i == "Categories" && site.categories.length) { %>
-        <%- list_categories(site.categories, {
-          show_count: false,
-          class: 'main-nav-category',
-          separator: ''
-        }) %>
+  <div id="mobile-nav">
+    <nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left" id="cbp-spmenu-s1">
+      <% for (var i in theme.menu){ %>
+        <a class="link depth-0" href="<%- url_for(theme.menu[i]) %>">
+        <span class="indent-0"></span><%= i %></a>
+        <% if(i == "Categories" && site.categories.length) { %>
+          <%- list_categories(site.categories, {
+            show_count: false,
+            class: 'main-nav-category',
+            separator: ''
+          }) %>
+        <% } %>
       <% } %>
-    <% } %>
-  </nav>
+    </nav>
+  </div>
+  <script>
+    var menuLeft = document.getElementById( 'cbp-spmenu-s1' ),
+        showMobileNav = document.getElementById( 'mobile-logo' ),
+        body = document.body;
+  
+    showMobileNav.onclick = function() {
+      classie.toggle( this, 'active' );
+      classie.toggle( body, 'cbp-spmenu-push-toright' );
+      classie.toggle( menuLeft, 'cbp-spmenu-open' );
+    };
+  </script>
 </header>
