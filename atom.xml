@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://www.tnidea.com/"/>
-  <updated>2015-09-28T12:13:59.000Z</updated>
+  <updated>2015-10-05T13:07:21.000Z</updated>
   <id>http://www.tnidea.com/</id>
   
   <author>
@@ -15,11 +15,11 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title><![CDATA[使用DRPC调用dotNET开发的Storm拓扑]]></title>
+    <title><![CDATA[使用DRPC调用.NET开发的Storm拓扑]]></title>
     <link href="http://www.tnidea.com/call-dot-net-drpc-program.html"/>
     <id>http://www.tnidea.com/call-dot-net-drpc-program.html</id>
     <published>2015-09-11T16:00:00.000Z</published>
-    <updated>2015-09-28T12:13:59.000Z</updated>
+    <updated>2015-10-05T13:07:21.000Z</updated>
     <content type="html"><![CDATA[<p> 在上一篇文章里介绍了.Net版本的DRPC的类库，结尾处的例子使用了Java版 BasicDRPCTopology ，本文我将介绍如何使用C#来开发 Storm Topology 并供远程DRPC调用，这篇文章将作为.Net Storm系列文章的一个暂时的结束，新的文章将随着 <a href="https://github.com/ziyunhx/storm-net-adapter" title="storm-net-adapter" target="_blank" rel="external">storm-net-adapter</a> 新特性来更新!</p>
 <a id="more"></a>
 <p> 在开始介绍具体代码之前，我们先回顾一下DRPC的数据流图：</p>
@@ -499,7 +499,7 @@
     <link href="http://www.tnidea.com/compare-with-distributed-computation-system.html"/>
     <id>http://www.tnidea.com/compare-with-distributed-computation-system.html</id>
     <published>2015-05-02T16:00:00.000Z</published>
-    <updated>2015-09-23T15:12:17.000Z</updated>
+    <updated>2015-10-05T09:32:32.000Z</updated>
     <content type="html"><![CDATA[<p> 分布式计算在许多领域都有广泛需求，目前流行的分布式计算框架主要有 Hadoop MapReduce, Spark Streaming, Storm； 这三个框架各有优势，现在都属于 Apache 基金会下的顶级项目，下文将对三个框架的特点与适用场景进行分析，以便开发者能快速选择适合自己的框架进行开发。</p>
 <a id="more"></a>
 <p> Hadoop MapReduce 是三者中出现最早，知名度最大的分布式计算框架，最早由 Google Lab 开发，使用者遍布全球（<a href="http://wiki.apache.org/hadoop/PoweredBy" title="Hadoop PoweredBy" target="_blank" rel="external">Hadoop PoweredBy</a>）；主要适用于大批量的集群任务，由于是批量执行，故时效性偏低，原生支持 Java 语言开发 MapReduce ，其它语言需要使用到 Hadoop Streaming 来开发。Spark Streaming 保留了 Hadoop MapReduce 的优点，而且在时效性上有了很大提高，中间结果可以保存在内存中，从而对需要迭代计算和有较高时效性要求的系统提供了很好的支持，多用于能容忍小延时的推荐与计算系统。Storm 一开始就是为实时处理设计，因此在实时分析/性能监测等需要高时效性的领域广泛采用，而且它理论上支持所有语言，只需要少量代码即可完成适配器。</p>
@@ -632,8 +632,6 @@
       <category term="Spark Streaming" scheme="http://www.tnidea.com/tags/Spark-Streaming/"/>
     
       <category term="Storm" scheme="http://www.tnidea.com/tags/Storm/"/>
-    
-      <category term="distributed computing" scheme="http://www.tnidea.com/tags/distributed-computing/"/>
     
       <category term="分布式" scheme="http://www.tnidea.com/tags/%E5%88%86%E5%B8%83%E5%BC%8F/"/>
     
