@@ -10,6 +10,10 @@ nav:
   prev: '上一页'
   older: '下一篇'
   newer: '上一篇'
+  Home: '首页'
+  Archives: '归档'
+  Categories: '分类'
+  About: '关于'
 widget:
   recents: '最新文章'
   archives: '归档'

@@ -8,7 +8,6 @@ tags:
 - Hadoop MapReduce
 - 流式框架
 - 分布式
-- distributed computing
 
 ---
 

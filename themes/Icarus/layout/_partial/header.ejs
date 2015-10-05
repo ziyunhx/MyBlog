@@ -1,19 +1,18 @@
 <header id="header">
   <div id="header-main" class="header-inner">
     <div class="outer">
-      <a href="#" id="mobile-logo" class="navigation-menu-button" id="js-mobile-menu"><i class="fa fa-bars mobile-menu-img">&nbsp;</i><span class="site-title"><%= config.title %></span></a>
+      <span id="mobile-logo" class="navigation-menu-button" id="js-mobile-menu"><i class="fa fa-bars mobile-menu-img">&nbsp;</i><span class="site-title"><%= config.title %></span></span>
       <a href="<%- url_for() %>" id="logo"><%- (theme.logo? '<i class="logo" style="background-image: url(' + url_for(theme.logo) + ')"></i>':'') %><span class="site-title"><%= config.title %></span></a>
-      
       <!-- Nav -->
       <nav id="main-nav">
         <ul>
           <% for (var i in theme.menu){ %>
             <li class="main-nav-link">
-              <a href="<%- url_for(theme.menu[i]) %>"><%= i %></a>
+              <a href="<%- url_for(theme.menu[i]) %>"><%= __('nav.' + i) %></a>
               <% if(i == "Categories" && site.categories.length) { %>
                 <%- list_categories(site.categories, {
                   show_count: false,
-                  class: 'main-nav-category',
+                  class: 'menu-category',
                   separator: ''
                 }) %>
               <% } %>
@@ -29,15 +28,14 @@
         </nav>
       <% } %>
       <div id="search-form-wrap">
-        <%- search_form({button: ' '}) %>
+        <%- search_form({button: ' ', text: '搜索'}) %>
       </div>
     </div>
   </div>
   <div id="mobile-nav">
     <nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left" id="cbp-spmenu-s1">
       <% for (var i in theme.menu){ %>
-        <a class="link depth-0" href="<%- url_for(theme.menu[i]) %>">
-        <span class="indent-0"></span><%= i %></a>
+        <a href="<%- url_for(theme.menu[i]) %>"><%= __('nav.' + i) %></a>
         <% if(i == "Categories" && site.categories.length) { %>
           <%- list_categories(site.categories, {
             show_count: false,
@@ -46,6 +44,9 @@
           }) %>
         <% } %>
       <% } %>
+      <div id="nav-search-form">
+        <%- search_form({button: ' ', text: '搜索'}) %>
+      </div>
     </nav>
   </div>
   <script>

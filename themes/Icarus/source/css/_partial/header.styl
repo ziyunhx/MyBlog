@@ -115,14 +115,12 @@ $nav-link
   font-weight: 300
   background: white
   a
-    padding: 0 15px
+    padding: 0 25px
   &:hover
-    .main-nav-category-list
+    .menu-category-list
       display: block
 
 #sub-nav
-  @media mq-normal
-    display: none
   @media mq-mini
     padding-right: 20px
   @extend $header-block
@@ -141,6 +139,38 @@ $nav-link
       margin-right: 8px
     .fa
       line-height: logo-size
+
+#nav-search-form
+  display: none
+  @media mq-mini
+    display: block
+  @extend $header-block
+  .search-form
+    background-color: #fff
+    position: relative
+    .search-form-input
+      width: 100%
+      height: logo-size
+      padding: 0 15px
+      line-height: logo-size
+      border-radius: 0px
+      &::-webkit-search-results-decoration
+      &::-webkit-search-cancel-button
+        -webkit-appearance: none
+    .search-form-submit
+      top: 50%
+      right: 15px
+      border: none
+      cursor: pointer
+      margin-top: -7px
+      background: none
+      position: absolute
+      font: 13px font-icon
+      font-family: 'FontAwesome'
+      &:before
+        content: '\f002'
+      &:hover, &:focus
+        color: #777
 
 #search-form-wrap
   @media mq-mini
@@ -207,15 +237,14 @@ $nav-link
       &::-webkit-search-cancel-button
         -webkit-appearance: none
 
-.main-nav-category-list
+.menu-category-list
   display: none
-  border: 1px solid
+
+.main-nav-category-list
   border-color: #cccccc
 
-.main-nav-category-list-item
-  margin-left: 15px
-
 .navigation-menu-button
+  cursor: pointer
   @media mq-normal
     display: none
   @media mq-tablet
@@ -226,6 +255,8 @@ $nav-link
   margin-right: 1em
 
 .cbp-spmenu
+  -webkit-box-shadow: 0 1px 2px rgba(0,0,0,0.05)
+  box-shadow: 0 1px 2px rgba(0,0,0,0.05)
   background: #47a3da
   position: fixed
   
@@ -247,8 +278,12 @@ $nav-link
   top: 0
   z-index: 1000
   a
-    border-bottom: 1px solid #258ecd;
-    padding: 1em
+    border-bottom: 1px solid #55AEE4;
+    padding: 1em 1em 0.8em
+  .main-nav-category-list-item
+    a
+      border-bottom: 1px solid #55AEE4;
+      padding: 1em 2em 0.8em
 
 .cbp-spmenu-left
   left: -240px

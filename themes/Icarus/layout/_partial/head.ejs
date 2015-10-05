@@ -28,7 +28,6 @@
   <% if (theme.favicon){ %>
     <link rel="icon" href="<%- theme.favicon %>">
   <% } %>
-  <%- partial('cdn_head') %>
   <%- css('css/style') %>
   <%- css('font-awesome/css/font-awesome.min') %>
   <%- partial('google-analytics') %>
@@ -36,6 +35,6 @@
   <% if( theme.customstylesheet ){ %>
     <%- css('css/'+theme.customstylesheet) %>
   <% } %>
-	<script src="media/js/modernizr.custom.js"></script>
-  <script src="media/js/classie.js"></script>
+  <%- js('js/classie') %>
+  <%- js('js/modernizr.custom') %>
 </head>

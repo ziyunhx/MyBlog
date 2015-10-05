@@ -5,7 +5,7 @@ logo: css/images/logo.png # Empty this to unset logo
 menu:
   Home: .
   Archives: archives
-  Categories: categories
+  Categories: javascript:void(0)
   #Tags: tags
   About: about
 
@@ -14,7 +14,7 @@ excerpt_link:
 fancybox: true
 
 # Profile
-profile: true # whether to show profile bar
+profile: false # whether to show profile bar
 gravatar: false # whether to use gravatar with the email
 showlogo: false # whether to show the logo in the header
 
@@ -41,12 +41,12 @@ links:
 #  Hexo: http://hexo.io
 
 # CDN
-cdn: useso #If your site loads slowly change it to "google" , because "useso" is slow out of China
+cdn: baidu #If your site loads slowly change it to "google" , because "useso" is slow out of China
 
 # Miscellaneous
 google_site_verification:
 google_analytics:
-favicon: favicon.ico
+favicon:
 twitter:
 google_plus:
 fb_admins:
