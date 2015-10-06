@@ -114,6 +114,7 @@ html,
 body,
 #container {
   height: 100%;
+  opacity: 1;
 }
 body {
   color: #565a5f;
@@ -696,7 +697,7 @@ a:visited {
   color: #47a3da;
 }
 .cbp-spmenu-vertical {
-  width: 240px;
+  width: 180px;
   height: 100%;
   top: 0;
   z-index: 1000;
@@ -710,27 +711,44 @@ a:visited {
   padding: 1em 2em 0.8em;
 }
 .cbp-spmenu-left {
-  left: -240px;
-}
-.cbp-spmenu-right {
-  right: -240px;
+  -webkit-transform: translateX(-180px);
+  -moz-transform: translateX(-180px);
+  -ms-transform: translateX(-180px);
+  transform: translateX(-180px);
+  -ms-transform: translateX(-180px);
+  -moz-transform: translateX(-180px);
+  -webkit-transform: translateX(-180px);
+  -o-transform: translateX(-180px);
 }
 .cbp-spmenu-left.cbp-spmenu-open {
-  left: 0px;
-}
-.cbp-spmenu-right.cbp-spmenu-open {
-  right: 0px;
+  -webkit-transform: translateX(0px);
+  -moz-transform: translateX(0px);
+  -ms-transform: translateX(0px);
+  transform: translateX(0px);
+  -ms-transform: translateX(0px);
+  -moz-transform: translateX(0px);
+  -webkit-transform: translateX(0px);
+  -o-transform: translateX(0px);
 }
 .cbp-spmenu-push {
   overflow-x: hidden;
   position: relative;
-  left: 0;
+}
+.cbp-spmenu-push transform:none {
+  -ms-transform: none;
+  -moz-transform: none;
+  -webkit-transform: none;
+  -o-transform: none;
 }
 .cbp-spmenu-push-toright {
-  left: 240px;
-}
-.cbp-spmenu-push-toleft {
-  left: -240px;
+  -webkit-transform: translateX(180px);
+  -moz-transform: translateX(180px);
+  -ms-transform: translateX(180px);
+  transform: translateX(180px);
+  -ms-transform: translateX(180px);
+  -moz-transform: translateX(180px);
+  -webkit-transform: translateX(180px);
+  -o-transform: translateX(180px);
 }
 .cbp-spmenu,
 .cbp-spmenu-push {
