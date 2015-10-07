@@ -12,7 +12,7 @@
 <meta property="og:site_name" content="The NewIdea">
 <meta property="og:description" content="网站的登录是抓取某些网站的必须步骤，大多数情况我们都是使用一个真实的浏览器去提交我们的登录信息，但是在代码中嵌套浏览器不仅会带来性能损耗，还会带来崩溃的风险。因此就有了这个使用httpRequest来模拟登录的库 imitate-login ，目前仅有微博网页版和微博Wap版的实现，其它计划实现会根据项目关注度来决定（Star &amp;amp; fork）是否更新以及更新时间。">
 <meta property="og:image" content="http://www.tnidea.com/media/image/imitate-login-weibo-setting.png">
-<meta property="og:updated_time" content="2015-09-28T12:13:59.000Z">
+<meta property="og:updated_time" content="2015-10-07T07:49:49.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="开源一个社交网站模拟登录的库">
 <meta name="twitter:description" content="网站的登录是抓取某些网站的必须步骤，大多数情况我们都是使用一个真实的浏览器去提交我们的登录信息，但是在代码中嵌套浏览器不仅会带来性能损耗，还会带来崩溃的风险。因此就有了这个使用httpRequest来模拟登录的库 imitate-login ，目前仅有微博网页版和微博Wap版的实现，其它计划实现会根据项目关注度来决定（Star &amp;amp; fork）是否更新以及更新时间。">
@@ -119,7 +119,7 @@
 <p> <img src="http://www.tnidea.com/media/image/imitate-login-weibo-setting.png" alt="image"></p>
 <p> 这个项目支持使用 Apache Thrift 来实现多语言环境下的RPC调用，首先安装Thrift，然后使用以下命令创建目标语言下的接口：</p>
 <p> <code>thrift --gen &lt;language&gt; ImitateLogin.thrift</code></p>
-<p> 将上面命令中的<code>&lt;language&gt;</code>替换为你所使用的语言。Thrift 目前支持以下参数所代表的语言：</p>
+<p>将上面命令中的<code>&lt;language&gt;</code>替换为你所使用的语言。Thrift 目前支持以下参数所代表的语言：</p>
 <ul>
 <li>as3</li>
 <li>c_glib</li>
@@ -135,31 +135,29 @@
 <li>perl</li>
 <li>php</li>
 <li>py</li>
-<li><p>rb</p>
-<p>然后在csharp端添加服务端得代码：</p>
-</li>
+<li>rb</li>
 </ul>
+<p>然后在csharp端添加服务端得代码：</p>
 <figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Start</span>(<span class="params"></span>) </span><br><span class="line"></span>&#123; </span><br><span class="line">	TServerSocket serverTransport = <span class="keyword">new</span> TServerSocket(<span class="number">7901</span>, <span class="number">0</span>, <span class="keyword">false</span>); </span><br><span class="line">	Login.Processor processor = <span class="keyword">new</span> Login.Processor(<span class="keyword">new</span> LoginHelper()); </span><br><span class="line">	TServer server = <span class="keyword">new</span> TSimpleServer(processor, serverTransport); </span><br><span class="line">	Console.WriteLine(<span class="string">"Starting server on port 7901 ..."</span>); </span><br><span class="line">	server.Serve(); </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p> 然后在其它语言（例如JAVA）中实现客户端的方法：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">TTransport transport = <span class="keyword">new</span> TSocket(<span class="string">"localhost"</span>, <span class="number">7901</span>);</span><br><span class="line">transport.open();</span><br><span class="line">TProtocol protocol = <span class="keyword">new</span> TBinaryProtocol(transport);</span><br><span class="line">Login.Client client = <span class="keyword">new</span> Login.Client(protocol);</span><br><span class="line">client.Login(<span class="string">"username"</span>, <span class="string">"password"</span>, LoginSite.Weibo);</span><br></pre></td></tr></table></figure>
-<p> 将上述语句中的 username 和 password 替换为真实用于登录的微博账户。</p>
-<p> 你可以在包含Mono或.Net Framework的环境下运行 <strong><a href="https://github.com/ziyunhx/imitate-login" target="_blank" rel="external">imitate-login</a></strong> 类库。该类库里包含一个使用Gtk+创建的测试窗体程序，如果你希望使用它，需要额外安装 Gtk+ for Mono.</p>
-<p> 该类库已经完成的社交网站支持：</p>
+<p>将上述语句中的 username 和 password 替换为真实用于登录的微博账户。</p>
+<p>你可以在包含Mono或.Net Framework的环境下运行 <strong><a href="https://github.com/ziyunhx/imitate-login" target="_blank" rel="external">imitate-login</a></strong> 类库。该类库里包含一个使用Gtk+创建的测试窗体程序，如果你希望使用它，需要额外安装 Gtk+ for Mono.</p>
+<p>该类库已经完成的社交网站支持：</p>
 <ul>
 <li>Weibo</li>
-<li><p>WeiboWap</p>
+<li>WeiboWap</li>
+</ul>
 <p>计划完成的支持：</p>
-</li>
-<li><p>Taobao</p>
-</li>
+<ul>
+<li>Taobao</li>
 <li>QQ</li>
 <li>Facebook</li>
 <li>Twitter</li>
-<li><p>Google</p>
-<p>计划支持部分会根据项目关注度来决定（<strong>Star &amp; fork</strong>）是否更新以及更新时间。</p>
-<p><strong>如果这个项目侵犯了您的权益，请及时与我联系（可通过留言或邮件）！我会在收到的一周内协商处理。</strong></p>
-</li>
+<li>Google</li>
 </ul>
+<p>计划支持部分会根据项目关注度来决定（<strong>Star &amp; fork</strong>）是否更新以及更新时间。</p>
+<p> <strong>如果这个项目侵犯了您的权益，请及时与我联系（可通过留言或邮件）！我会在收到的一周内协商处理。</strong></p>
 
       
     </div>
