@@ -2,6 +2,11 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://www.tnidea.com/about.html</loc>
+    <lastmod>2015-10-07T06:49:10.000Z</lastmod>
+  </url>
+  
+  <url>
     <loc>http://www.tnidea.com/call-dot-net-drpc-program.html</loc>
     <lastmod>2015-10-05T13:07:21.000Z</lastmod>
   </url>
@@ -17,11 +22,6 @@
   </url>
   
   <url>
-    <loc>http://www.tnidea.com/deploy-wordcount-topology.html</loc>
-    <lastmod>2015-09-28T12:13:59.000Z</lastmod>
-  </url>
-  
-  <url>
     <loc>http://www.tnidea.com/social-network-imitate-login.html</loc>
     <lastmod>2015-09-28T12:13:59.000Z</lastmod>
   </url>
@@ -32,12 +32,17 @@
   </url>
   
   <url>
-    <loc>http://www.tnidea.com/dot-net-drpc-storm.html</loc>
+    <loc>http://www.tnidea.com/you-first-csharp-storm-topology.html</loc>
     <lastmod>2015-09-28T12:13:59.000Z</lastmod>
   </url>
   
   <url>
-    <loc>http://www.tnidea.com/you-first-csharp-storm-topology.html</loc>
+    <loc>http://www.tnidea.com/deploy-wordcount-topology.html</loc>
+    <lastmod>2015-09-28T12:13:59.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://www.tnidea.com/dot-net-drpc-storm.html</loc>
     <lastmod>2015-09-28T12:13:59.000Z</lastmod>
   </url>
   
@@ -54,21 +59,6 @@
   <url>
     <loc>http://www.tnidea.com/svn-project-version.html</loc>
     <lastmod>2015-09-23T14:40:35.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://www.tnidea.com/media/js/classie.js</loc>
-    <lastmod>2013-04-16T10:43:48.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://www.tnidea.com/media/js/modernizr.custom.js</loc>
-    <lastmod>2013-03-25T23:52:00.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://www.tnidea.com/fonts/readme.html</loc>
-    <lastmod>2013-01-18T09:41:40.000Z</lastmod>
   </url>
   
 </urlset>

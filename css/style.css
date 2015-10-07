@@ -486,6 +486,14 @@ a:visited {
 .main-nav-link:hover .menu-category-list {
   display: block;
 }
+.main-nav-link .menu-category-list-item a {
+  padding: 0 0 0 16px;
+}
+.menu-category-list {
+  -webkit-box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+  -webkit-box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+  box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+}
 @media screen and (max-width: 559px) {
   #sub-nav {
     padding-right: 20px;
@@ -655,6 +663,7 @@ a:visited {
 }
 .menu-category-list {
   display: none;
+  padding: 0;
 }
 .main-nav-category-list {
   border-color: #ccc;
