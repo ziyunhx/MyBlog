@@ -11,7 +11,7 @@
 <meta property="og:url" content="http://www.tnidea.com/deploy-storm-environment.html">
 <meta property="og:site_name" content="The NewIdea">
 <meta property="og:description" content="上篇博客比较了目前流行的计算框架特性，如果你是 Java 开发者，那么根据业务场景选择即可；但是如果你是 .Net 开发者，那么三者都不能拿来即用，至少在这篇文章出现之前是如此。基于上篇文章的比较发现，Storm 应该是对多语言支持比较好的框架了，但即便如此，官方也没有提供 .Net 的适配器，网上也找不到第三方的开源库。So，Storm.Net.Adapter 出现了，一个使用 Csharp 开">
-<meta property="og:updated_time" content="2015-09-28T14:24:29.000Z">
+<meta property="og:updated_time" content="2015-10-07T08:13:28.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="搭建.Net开发Storm拓扑的环境">
 <meta name="twitter:description" content="上篇博客比较了目前流行的计算框架特性，如果你是 Java 开发者，那么根据业务场景选择即可；但是如果你是 .Net 开发者，那么三者都不能拿来即用，至少在这篇文章出现之前是如此。基于上篇文章的比较发现，Storm 应该是对多语言支持比较好的框架了，但即便如此，官方也没有提供 .Net 的适配器，网上也找不到第三方的开源库。So，Storm.Net.Adapter 出现了，一个使用 Csharp 开">
@@ -111,61 +111,40 @@
 <a id="more"></a>
 <p> 本文是“Storm系列”的第一篇，后期会根据时间情况继续更新，欢迎大家关注文章末尾处的微信公众号：dotNet大数据，如果你愿意提供素材或建议，欢迎通过 About 中的邮箱与我联系。</p>
 <h2 id="安装Storm与依赖环境">安装Storm与依赖环境</h2><h3 id="安装Zookeeper">安装Zookeeper</h3><ul>
-<li><p>获取最新 Zookeeper 程序包：<a href="http://zookeeper.apache.org/" title="zookeeper" target="_blank" rel="external">官网</a></p>
-</li>
-<li><p>解压程序包，拷贝 conf 下 zoo_sample.cfg 为 zoo.cfg，修改相关配置</p>
-</li>
-<li><p>Windows 环境下直接执行 bin\zkServer.cmd；Linux 下执行 <code>bin/zkServer.sh start</code></p>
-</li>
+<li>获取最新 Zookeeper 程序包：<a href="http://zookeeper.apache.org/" title="zookeeper" target="_blank" rel="external">官网</a></li>
+<li>解压程序包，拷贝 conf 下 zoo_sample.cfg 为 zoo.cfg，修改相关配置</li>
+<li>Windows 环境下直接执行 bin\zkServer.cmd；Linux 下执行 <code>bin/zkServer.sh start</code></li>
 </ul>
 <h3 id="安装Python,_Java与Maven">安装Python, Java与Maven</h3><ul>
-<li><p>下载 Python 2.x 安装</p>
-</li>
-<li><p>下载 JAVA 6+ 安装，必须安装 JDK 版，否则使用 Maven 时会出错</p>
-</li>
-<li><p>下载 Maven 并安装</p>
-</li>
+<li>下载 Python 2.x 安装</li>
+<li>下载 JAVA 6+ 安装，必须安装 JDK 版，否则使用 Maven 时会出错</li>
+<li>下载 Maven 并安装</li>
 </ul>
 <h3 id="下载Storm">下载Storm</h3><ul>
-<li><p>获取最新 Storm 程序包：<a href="http://storm.apache.org/downloads.html" title="Storm" target="_blank" rel="external">官网</a></p>
-</li>
-<li><p>解压后修改 conf 下的 storm.yaml 里的相关配置</p>
-</li>
+<li>获取最新 Storm 程序包：<a href="http://storm.apache.org/downloads.html" title="Storm" target="_blank" rel="external">官网</a></li>
+<li>解压后修改 conf 下的 storm.yaml 里的相关配置</li>
 </ul>
 <h3 id="配置环境变量">配置环境变量</h3><ul>
-<li><p>配置 Storm_Home 与 Java_Home; 目录最好不要有空格</p>
-</li>
-<li><p>classPath 里增加 <code>.;%JAVA_HOME%\lib\dt.jar;%JAVA_HOME%\lib\toos.jar;</code></p>
-</li>
-<li><p>path 里增加 <code>%STORM_HOME%\bin;%JAVA_HOME%\bin;</code></p>
-</li>
-<li><p>将 Maven 的目录也加到 path 方便使用</p>
-</li>
+<li>配置 Storm_Home 与 Java_Home; 目录最好不要有空格</li>
+<li>classPath 里增加 <code>.;%JAVA_HOME%\lib\dt.jar;%JAVA_HOME%\lib\toos.jar;</code></li>
+<li>path 里增加 <code>%STORM_HOME%\bin;%JAVA_HOME%\bin;</code></li>
+<li>将 Maven 的目录也加到 path 方便使用</li>
 </ul>
 <h3 id="Storm启动">Storm启动</h3><ul>
-<li><p>启动 Zookeeper</p>
-</li>
-<li><p>运行 <code>storm nimbus</code> （如果未将 Storm 加到 path，需要先切换到 Storm 的 bin 目录，下同）</p>
-</li>
-<li><p>运行 <code>storm supervisor</code> （集群环境下，非主可以仅执行该句）</p>
-</li>
-<li><p>运行 <code>storm ui</code>，通过 <a href="http://localhost:8080/" target="_blank" rel="external">http://localhost:8080/</a> 监控 Storm 运行状况</p>
-</li>
+<li>启动 Zookeeper</li>
+<li>运行 <code>storm nimbus</code> （如果未将 Storm 加到 path，需要先切换到 Storm 的 bin 目录，下同）</li>
+<li>运行 <code>storm supervisor</code> （集群环境下，非主可以仅执行该句）</li>
+<li>运行 <code>storm ui</code>，通过 <a href="http://localhost:8080/" target="_blank" rel="external">http://localhost:8080/</a> 监控 Storm 运行状况</li>
 </ul>
 <h2 id="使用_Storm-Net-Adapter">使用 Storm.Net.Adapter</h2><h3 id="获取_Storm-Net-Adapter">获取 Storm.Net.Adapter</h3><p> 目前有以下几种方式获取最新的 Storm.Net.Adapter 库</p>
 <ul>
-<li><p>通过源代码编译自己的版本： <a href="https://github.com/ziyunhx/storm-net-adapter" title="Storm.Net.Adapter" target="_blank" rel="external">GitHub</a></p>
-</li>
-<li><p>下载编译好的版本加入引用： <a href="https://github.com/ziyunhx/storm-net-adapter/releases" title="Storm.Net.Adapter Release" target="_blank" rel="external">Release</a></p>
-</li>
-<li><p>使用 NuGet 获取最新版本（推荐）：<code>PM&gt; Install-Package Storm.Net.Adapter</code></p>
-</li>
+<li>通过源代码编译自己的版本： <a href="https://github.com/ziyunhx/storm-net-adapter" title="Storm.Net.Adapter" target="_blank" rel="external">GitHub</a></li>
+<li>下载编译好的版本加入引用： <a href="https://github.com/ziyunhx/storm-net-adapter/releases" title="Storm.Net.Adapter Release" target="_blank" rel="external">Release</a></li>
+<li>使用 NuGet 获取最新版本（推荐）：<code>PM&gt; Install-Package Storm.Net.Adapter</code></li>
 </ul>
 <h3 id="创建示例项目">创建示例项目</h3><ul>
-<li><p>在项目中引用 Storm.Net.Adapter，创建 Spout （基于ISpout）和 Bolt （基于IBolt或IBasicBolt），都需要 <code>using Storm;</code></p>
-</li>
-<li><p>创建一个使用 Maven 管理的 Java 项目，增加 dotNet 程序对应的 Topology</p>
-</li>
+<li>在项目中引用 Storm.Net.Adapter，创建 Spout （基于ISpout）和 Bolt （基于IBolt或IBasicBolt），都需要 <code>using Storm;</code></li>
+<li>创建一个使用 Maven 管理的 Java 项目，增加 dotNet 程序对应的 Topology</li>
 <li><p>Windows（.Net Framework）平台下，你可以通过下面的方式来调用你的 Spout 或 Bolt：</p>
 <pre><code><span class="keyword">super</span>(<span class="string">"cmd"</span>, <span class="string">"/k"</span>, <span class="string">"CALL"</span>, <span class="string">"StormSimple.exe"</span>, <span class="string">"generator"</span>);
 </code></pre></li>
@@ -181,10 +160,11 @@
 <pre><code>$ storm jar storm-starter-*-jar-with-dependencies<span class="class">.jar</span> storm<span class="class">.starter</span><span class="class">.WordCountTopologyCsharp</span> wordcount
 </code></pre></li>
 </ul>
-<h2 id="Storm系列文章">Storm系列文章</h2><p>（一）：<a href="http://www.tnidea.com/deploy-storm-environment.html" title="搭建dotNet开发Storm拓扑的环境">搭建dotNet开发Storm拓扑的环境</a></p>
-<p>（二）：<a href="http://www.tnidea.com/you-first-csharp-storm-topology.html" title="使用Csharp创建你的第一个Storm拓扑">使用Csharp创建你的第一个Storm拓扑（wordcount）</a></p>
-<p>（三）：<a href="http://www.tnidea.com/deploy-wordcount-topology" title="创建Maven项目打包提交wordcount到Storm集群">创建Maven项目打包提交wordcount到Storm集群</a></p>
 
+              <p>本文来自 <a href="http://www.tnidea.com/" title="The NewIdea" target="_blank" rel="external">The NewIdea</a>，作者 Carey Tzou 。<br>永久地址：<a href="http://www.tnidea.com/deploy-storm-environment.html" title="搭建.Net开发Storm拓扑的环境" target="_blank" rel="external">http://www.tnidea.com/deploy-storm-environment.html</a><br>未经授权，拒绝任何全文及摘要转载！<br><br>文章还不错？打赏一下吧：</p>
+      <form action="https://shenghuo.alipay.com/send/payment/fill.htm" method="POST" target="_blank" accept-charset="GBK"><input name="optEmail" type="hidden" value="ziyunhx@gmail.com"><input name="payAmount" type="hidden" value="10"><input id="title" name="title" type="hidden" value="写的不错哦，我很喜欢！"><input name="memo" type="hidden" value=""><input name="pay" type="image" value="转账" src="https://img.alipay.com/sys/personalprod/style/mc/btn-index.png"></form>
+      <p>欢迎关注微信公众号：CareyTzou（dotNet大数据）</p>
+      <a href="http://www.tnidea.com/media/image/wechat.jpg" title="Wechat:CareyTzou" class="fancybox" rel="article0"><img style="width:160px;display:inline;" src="http://www.tnidea.com/media/image/wechat.jpg" alt="Wechat:CareyTzou"></a>
       
     </div>
     <footer class="article-footer">

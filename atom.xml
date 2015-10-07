@@ -162,7 +162,7 @@
     <link href="http://www.tnidea.com/http-helper-at-csharp.html"/>
     <id>http://www.tnidea.com/http-helper-at-csharp.html</id>
     <published>2015-07-09T16:00:00.000Z</published>
-    <updated>2015-10-07T07:47:47.000Z</updated>
+    <updated>2015-10-07T08:16:21.000Z</updated>
     <content type="html"><![CDATA[<p> 在编写网络爬虫时，HttpWebRequest几乎可以完成绝大多数网站的抓取，为了更好的使用这一技术，我将常用的几个功能进行了封装，以方便调用。这个类已经在多个项目中得到使用，主要解决了Cookies相关的一些问题；如果有其它方面的问题可以提出来，我会进一步完善。</p>
 <a id="more"></a>
 <p> 目前HttpHelper包含了以下几个方面：</p>
@@ -202,7 +202,7 @@
     <link href="http://www.tnidea.com/social-network-imitate-login.html"/>
     <id>http://www.tnidea.com/social-network-imitate-login.html</id>
     <published>2015-06-26T16:00:00.000Z</published>
-    <updated>2015-10-07T07:49:49.000Z</updated>
+    <updated>2015-10-07T08:17:21.000Z</updated>
     <content type="html"><![CDATA[<p> 网站的登录是抓取某些网站的必须步骤，大多数情况我们都是使用一个真实的浏览器去提交我们的登录信息，但是在代码中嵌套浏览器不仅会带来性能损耗，还会带来崩溃的风险。因此就有了这个使用httpRequest来模拟登录的库 <strong><a href="https://github.com/ziyunhx/imitate-login" target="_blank" rel="external">imitate-login</a></strong> ，目前仅有微博网页版和微博Wap版的实现，其它计划实现会根据项目关注度来决定（<strong>Star &amp; fork</strong>）是否更新以及更新时间。</p>
  <a id="more"></a>
 <p> <strong>如果这个项目侵犯了您的权益，请及时与我联系（可通过留言或邮件）！我会在收到的一周内协商处理。</strong></p>
@@ -252,7 +252,6 @@
 <li>Google</li>
 </ul>
 <p>计划支持部分会根据项目关注度来决定（<strong>Star &amp; fork</strong>）是否更新以及更新时间。</p>
-<p> <strong>如果这个项目侵犯了您的权益，请及时与我联系（可通过留言或邮件）！我会在收到的一周内协商处理。</strong></p>
 ]]></content>
     <summary type="html">
     <![CDATA[<p> 网站的登录是抓取某些网站的必须步骤，大多数情况我们都是使用一个真实的浏览器去提交我们的登录信息，但是在代码中嵌套浏览器不仅会带来性能损耗，还会带来崩溃的风险。因此就有了这个使用httpRequest来模拟登录的库 <strong><a href="https://github.com/ziyunhx/imitate-login">imitate-login</a></strong> ，目前仅有微博网页版和微博Wap版的实现，其它计划实现会根据项目关注度来决定（<strong>Star &amp; fork</strong>）是否更新以及更新时间。</p>]]>
@@ -278,7 +277,7 @@
     <link href="http://www.tnidea.com/deploy-wordcount-topology.html"/>
     <id>http://www.tnidea.com/deploy-wordcount-topology.html</id>
     <published>2015-06-19T16:00:00.000Z</published>
-    <updated>2015-09-28T12:13:59.000Z</updated>
+    <updated>2015-10-07T08:15:09.000Z</updated>
     <content type="html"><![CDATA[<p> 在上一篇博客中，我们通过<a href="https://github.com/ziyunhx/storm-net-adapter" title="Storm.Net.Adapter" target="_blank" rel="external">Storm.Net.Adapter</a>创建了一个使用Csharp编写的Storm Topology - wordcount。本文将介绍如何编写Java端的程序以及如何发布到测试的Storm环境中运行。</p>
 <a id="more"></a>
 <p> 如果你觉得对你有帮助，欢迎Star和Fork，让更多人看到来帮助完善这个项目。</p>
@@ -304,9 +303,6 @@
 <p><img src="http://www.tnidea.com/media/image/storm-3-02.png" alt="image"></p>
 </li>
 </ul>
-<h2 id="Storm系列文章">Storm系列文章</h2><p>（一）：<a href="http://www.tnidea.com/deploy-storm-environment.html" title="搭建dotNet开发Storm拓扑的环境">搭建dotNet开发Storm拓扑的环境</a></p>
-<p>（二）：<a href="http://www.tnidea.com/you-first-csharp-storm-topology.html" title="使用Csharp创建你的第一个Storm拓扑">使用Csharp创建你的第一个Storm拓扑（wordcount）</a></p>
-<p>（三）：<a href="http://www.tnidea.com/deploy-wordcount-topology" title="创建Maven项目打包提交wordcount到Storm集群">创建Maven项目打包提交wordcount到Storm集群</a></p>
 ]]></content>
     <summary type="html">
     <![CDATA[<p> 在上一篇博客中，我们通过<a href="https://github.com/ziyunhx/storm-net-adapter" title="Storm.Net.Adapter">Storm.Net.Adapter</a>创建了一个使用Csharp编写的Storm Topology - wordcount。本文将介绍如何编写Java端的程序以及如何发布到测试的Storm环境中运行。</p>]]>
@@ -332,7 +328,7 @@
     <link href="http://www.tnidea.com/you-first-csharp-storm-topology.html"/>
     <id>http://www.tnidea.com/you-first-csharp-storm-topology.html</id>
     <published>2015-06-03T16:00:00.000Z</published>
-    <updated>2015-09-28T12:13:59.000Z</updated>
+    <updated>2015-10-07T08:18:04.000Z</updated>
     <content type="html"><![CDATA[<p> WordCount在大数据领域就像学习一门语言时的hello world，得益于Storm的开源以及<a href="https://github.com/ziyunhx/storm-net-adapter" title="Storm.Net.Adapter" target="_blank" rel="external">Storm.Net.Adapter</a>，现在我们也可以像Java或Python一样，使用Csharp创建原生支持的Storm Topologies。下面我将通过介绍wordcount来展示如何使用Csharp开发Storm拓扑。</p>
 <a id="more"></a>
 <p> 上篇博客已经介绍了如何部署Storm开发环境，本文所讲述demo已包含在<a href="https://github.com/ziyunhx/storm-net-adapter" title="Storm.Net.Adapter" target="_blank" rel="external">Storm.Net.Adapter</a>中，如果你觉得对你有帮助，欢迎Star和Fork，让更多人看到来帮助完善这个项目。</p>
@@ -366,9 +362,6 @@
 <figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> Storm;</span><br><span class="line"><span class="keyword">using</span> System;</span><br><span class="line"><span class="keyword">using</span> System.Linq;</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">StormSample</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">class</span> <span class="title">Program</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>(<span class="params"><span class="keyword">string</span>[] args</span>)</span><br><span class="line">        </span>&#123;</span><br><span class="line">            <span class="keyword">if</span> (args.Count() &gt; <span class="number">0</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">string</span> compName = args[<span class="number">0</span>];</span><br><span class="line"></span><br><span class="line">                <span class="keyword">try</span></span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="keyword">if</span> (<span class="string">"generator"</span>.Equals(compName))</span><br><span class="line">                    &#123;</span><br><span class="line">                        ApacheStorm.LaunchPlugin(<span class="keyword">new</span> newPlugin(Generator.Get));</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="function"><span class="keyword">else</span> <span class="title">if</span> (<span class="params"><span class="string">"splitter"</span>.Equals(compName</span>))</span><br><span class="line">                    </span>&#123;</span><br><span class="line">                        ApacheStorm.LaunchPlugin(<span class="keyword">new</span> newPlugin(Splitter.Get));</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="function"><span class="keyword">else</span> <span class="title">if</span> (<span class="params"><span class="string">"counter"</span>.Equals(compName</span>))</span><br><span class="line">                    </span>&#123;</span><br><span class="line">                        ApacheStorm.LaunchPlugin(<span class="keyword">new</span> newPlugin(Counter.Get));</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">else</span></span><br><span class="line">                    &#123;</span><br><span class="line">                        <span class="keyword">throw</span> <span class="keyword">new</span> Exception(<span class="keyword">string</span>.Format(<span class="string">"unexpected compName: &#123;0&#125;"</span>, compName));</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">catch</span> (Exception ex)</span><br><span class="line">                &#123;</span><br><span class="line">                    Context.Logger.Error(ex.ToString());</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">            &#123;</span><br><span class="line">                Context.Logger.Error(<span class="string">"Not support local model."</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p> 我们在Main方法里使用参数来确定具体调用的是哪个Spout/Bolt，ApacheStorm是一个包含主要方法的类，之所以不使用Storm只是因为命名空间占用了它。Csharp端的代码到此就全部结束了，Java端的代码与部署发布将在下一篇详细介绍，敬请期待！下面让我们来看一看整个Topology的流程吧！</p>
 <p> <img src="http://www.tnidea.com/media/image/wordcount-topology.png" alt="WordCount Topology"></p>
-<h2 id="Storm系列文章">Storm系列文章</h2><p>（一）：<a href="http://www.tnidea.com/deploy-storm-environment.html" title="搭建dotNet开发Storm拓扑的环境">搭建dotNet开发Storm拓扑的环境</a></p>
-<p>（二）：<a href="http://www.tnidea.com/you-first-csharp-storm-topology.html" title="使用Csharp创建你的第一个Storm拓扑">使用Csharp创建你的第一个Storm拓扑（wordcount）</a></p>
-<p>（三）：<a href="http://www.tnidea.com/deploy-wordcount-topology" title="创建Maven项目打包提交wordcount到Storm集群">创建Maven项目打包提交wordcount到Storm集群</a></p>
 ]]></content>
     <summary type="html">
     <![CDATA[<p> WordCount在大数据领域就像学习一门语言时的hello world，得益于Storm的开源以及<a href="https://github.com/ziyunhx/storm-net-adapter" title="Storm.Net.Adapter">Storm.Net.Adapter</a>，现在我们也可以像Java或Python一样，使用Csharp创建原生支持的Storm Topologies。下面我将通过介绍wordcount来展示如何使用Csharp开发Storm拓扑。</p>]]>
@@ -394,66 +387,45 @@
     <link href="http://www.tnidea.com/deploy-storm-environment.html"/>
     <id>http://www.tnidea.com/deploy-storm-environment.html</id>
     <published>2015-05-19T16:00:00.000Z</published>
-    <updated>2015-09-28T14:24:29.000Z</updated>
+    <updated>2015-10-07T08:13:28.000Z</updated>
     <content type="html"><![CDATA[<p> 上篇博客比较了目前流行的计算框架特性，如果你是 Java 开发者，那么根据业务场景选择即可；但是如果你是 .Net 开发者，那么三者都不能拿来即用，至少在这篇文章出现之前是如此。基于上篇文章的比较发现，Storm 应该是对多语言支持比较好的框架了，但即便如此，官方也没有提供 .Net 的适配器，网上也找不到第三方的开源库。So，<a href="https://github.com/ziyunhx/storm-net-adapter" title="Storm.Net.Adapter" target="_blank" rel="external">Storm.Net.Adapter</a> 出现了，一个使用 Csharp 开发的 针对 Apache Storm 的适配器！</p>
 <a id="more"></a>
 <p> 本文是“Storm系列”的第一篇，后期会根据时间情况继续更新，欢迎大家关注文章末尾处的微信公众号：dotNet大数据，如果你愿意提供素材或建议，欢迎通过 About 中的邮箱与我联系。</p>
 <h2 id="安装Storm与依赖环境">安装Storm与依赖环境</h2><h3 id="安装Zookeeper">安装Zookeeper</h3><ul>
-<li><p>获取最新 Zookeeper 程序包：<a href="http://zookeeper.apache.org/" title="zookeeper" target="_blank" rel="external">官网</a></p>
-</li>
-<li><p>解压程序包，拷贝 conf 下 zoo_sample.cfg 为 zoo.cfg，修改相关配置</p>
-</li>
-<li><p>Windows 环境下直接执行 bin\zkServer.cmd；Linux 下执行 <code>bin/zkServer.sh start</code></p>
-</li>
+<li>获取最新 Zookeeper 程序包：<a href="http://zookeeper.apache.org/" title="zookeeper" target="_blank" rel="external">官网</a></li>
+<li>解压程序包，拷贝 conf 下 zoo_sample.cfg 为 zoo.cfg，修改相关配置</li>
+<li>Windows 环境下直接执行 bin\zkServer.cmd；Linux 下执行 <code>bin/zkServer.sh start</code></li>
 </ul>
 <h3 id="安装Python,_Java与Maven">安装Python, Java与Maven</h3><ul>
-<li><p>下载 Python 2.x 安装</p>
-</li>
-<li><p>下载 JAVA 6+ 安装，必须安装 JDK 版，否则使用 Maven 时会出错</p>
-</li>
-<li><p>下载 Maven 并安装</p>
-</li>
+<li>下载 Python 2.x 安装</li>
+<li>下载 JAVA 6+ 安装，必须安装 JDK 版，否则使用 Maven 时会出错</li>
+<li>下载 Maven 并安装</li>
 </ul>
 <h3 id="下载Storm">下载Storm</h3><ul>
-<li><p>获取最新 Storm 程序包：<a href="http://storm.apache.org/downloads.html" title="Storm" target="_blank" rel="external">官网</a></p>
-</li>
-<li><p>解压后修改 conf 下的 storm.yaml 里的相关配置</p>
-</li>
+<li>获取最新 Storm 程序包：<a href="http://storm.apache.org/downloads.html" title="Storm" target="_blank" rel="external">官网</a></li>
+<li>解压后修改 conf 下的 storm.yaml 里的相关配置</li>
 </ul>
 <h3 id="配置环境变量">配置环境变量</h3><ul>
-<li><p>配置 Storm_Home 与 Java_Home; 目录最好不要有空格</p>
-</li>
-<li><p>classPath 里增加 <code>.;%JAVA_HOME%\lib\dt.jar;%JAVA_HOME%\lib\toos.jar;</code></p>
-</li>
-<li><p>path 里增加 <code>%STORM_HOME%\bin;%JAVA_HOME%\bin;</code></p>
-</li>
-<li><p>将 Maven 的目录也加到 path 方便使用</p>
-</li>
+<li>配置 Storm_Home 与 Java_Home; 目录最好不要有空格</li>
+<li>classPath 里增加 <code>.;%JAVA_HOME%\lib\dt.jar;%JAVA_HOME%\lib\toos.jar;</code></li>
+<li>path 里增加 <code>%STORM_HOME%\bin;%JAVA_HOME%\bin;</code></li>
+<li>将 Maven 的目录也加到 path 方便使用</li>
 </ul>
 <h3 id="Storm启动">Storm启动</h3><ul>
-<li><p>启动 Zookeeper</p>
-</li>
-<li><p>运行 <code>storm nimbus</code> （如果未将 Storm 加到 path，需要先切换到 Storm 的 bin 目录，下同）</p>
-</li>
-<li><p>运行 <code>storm supervisor</code> （集群环境下，非主可以仅执行该句）</p>
-</li>
-<li><p>运行 <code>storm ui</code>，通过 <a href="http://localhost:8080/" target="_blank" rel="external">http://localhost:8080/</a> 监控 Storm 运行状况</p>
-</li>
+<li>启动 Zookeeper</li>
+<li>运行 <code>storm nimbus</code> （如果未将 Storm 加到 path，需要先切换到 Storm 的 bin 目录，下同）</li>
+<li>运行 <code>storm supervisor</code> （集群环境下，非主可以仅执行该句）</li>
+<li>运行 <code>storm ui</code>，通过 <a href="http://localhost:8080/" target="_blank" rel="external">http://localhost:8080/</a> 监控 Storm 运行状况</li>
 </ul>
 <h2 id="使用_Storm-Net-Adapter">使用 Storm.Net.Adapter</h2><h3 id="获取_Storm-Net-Adapter">获取 Storm.Net.Adapter</h3><p> 目前有以下几种方式获取最新的 Storm.Net.Adapter 库</p>
 <ul>
-<li><p>通过源代码编译自己的版本： <a href="https://github.com/ziyunhx/storm-net-adapter" title="Storm.Net.Adapter" target="_blank" rel="external">GitHub</a></p>
-</li>
-<li><p>下载编译好的版本加入引用： <a href="https://github.com/ziyunhx/storm-net-adapter/releases" title="Storm.Net.Adapter Release" target="_blank" rel="external">Release</a></p>
-</li>
-<li><p>使用 NuGet 获取最新版本（推荐）：<code>PM&gt; Install-Package Storm.Net.Adapter</code></p>
-</li>
+<li>通过源代码编译自己的版本： <a href="https://github.com/ziyunhx/storm-net-adapter" title="Storm.Net.Adapter" target="_blank" rel="external">GitHub</a></li>
+<li>下载编译好的版本加入引用： <a href="https://github.com/ziyunhx/storm-net-adapter/releases" title="Storm.Net.Adapter Release" target="_blank" rel="external">Release</a></li>
+<li>使用 NuGet 获取最新版本（推荐）：<code>PM&gt; Install-Package Storm.Net.Adapter</code></li>
 </ul>
 <h3 id="创建示例项目">创建示例项目</h3><ul>
-<li><p>在项目中引用 Storm.Net.Adapter，创建 Spout （基于ISpout）和 Bolt （基于IBolt或IBasicBolt），都需要 <code>using Storm;</code></p>
-</li>
-<li><p>创建一个使用 Maven 管理的 Java 项目，增加 dotNet 程序对应的 Topology</p>
-</li>
+<li>在项目中引用 Storm.Net.Adapter，创建 Spout （基于ISpout）和 Bolt （基于IBolt或IBasicBolt），都需要 <code>using Storm;</code></li>
+<li>创建一个使用 Maven 管理的 Java 项目，增加 dotNet 程序对应的 Topology</li>
 <li><p>Windows（.Net Framework）平台下，你可以通过下面的方式来调用你的 Spout 或 Bolt：</p>
 <pre><code><span class="keyword">super</span>(<span class="string">"cmd"</span>, <span class="string">"/k"</span>, <span class="string">"CALL"</span>, <span class="string">"StormSimple.exe"</span>, <span class="string">"generator"</span>);
 </code></pre></li>
@@ -469,9 +441,6 @@
 <pre><code>$ storm jar storm-starter-*-jar-with-dependencies<span class="class">.jar</span> storm<span class="class">.starter</span><span class="class">.WordCountTopologyCsharp</span> wordcount
 </code></pre></li>
 </ul>
-<h2 id="Storm系列文章">Storm系列文章</h2><p>（一）：<a href="http://www.tnidea.com/deploy-storm-environment.html" title="搭建dotNet开发Storm拓扑的环境">搭建dotNet开发Storm拓扑的环境</a></p>
-<p>（二）：<a href="http://www.tnidea.com/you-first-csharp-storm-topology.html" title="使用Csharp创建你的第一个Storm拓扑">使用Csharp创建你的第一个Storm拓扑（wordcount）</a></p>
-<p>（三）：<a href="http://www.tnidea.com/deploy-wordcount-topology" title="创建Maven项目打包提交wordcount到Storm集群">创建Maven项目打包提交wordcount到Storm集群</a></p>
 ]]></content>
     <summary type="html">
     <![CDATA[<p> 上篇博客比较了目前流行的计算框架特性，如果你是 Java 开发者，那么根据业务场景选择即可；但是如果你是 .Net 开发者，那么三者都不能拿来即用，至少在这篇文章出现之前是如此。基于上篇文章的比较发现，Storm 应该是对多语言支持比较好的框架了，但即便如此，官方也没有提供 .Net 的适配器，网上也找不到第三方的开源库。So，<a href="https://github.com/ziyunhx/storm-net-adapter" title="Storm.Net.Adapter">Storm.Net.Adapter</a> 出现了，一个使用 Csharp 开发的 针对 Apache Storm 的适配器！</p>]]>
@@ -497,7 +466,7 @@
     <link href="http://www.tnidea.com/compare-with-distributed-computation-system.html"/>
     <id>http://www.tnidea.com/compare-with-distributed-computation-system.html</id>
     <published>2015-05-02T16:00:00.000Z</published>
-    <updated>2015-10-05T09:32:32.000Z</updated>
+    <updated>2015-10-07T08:08:33.000Z</updated>
     <content type="html"><![CDATA[<p> 分布式计算在许多领域都有广泛需求，目前流行的分布式计算框架主要有 Hadoop MapReduce, Spark Streaming, Storm； 这三个框架各有优势，现在都属于 Apache 基金会下的顶级项目，下文将对三个框架的特点与适用场景进行分析，以便开发者能快速选择适合自己的框架进行开发。</p>
 <a id="more"></a>
 <p> Hadoop MapReduce 是三者中出现最早，知名度最大的分布式计算框架，最早由 Google Lab 开发，使用者遍布全球（<a href="http://wiki.apache.org/hadoop/PoweredBy" title="Hadoop PoweredBy" target="_blank" rel="external">Hadoop PoweredBy</a>）；主要适用于大批量的集群任务，由于是批量执行，故时效性偏低，原生支持 Java 语言开发 MapReduce ，其它语言需要使用到 Hadoop Streaming 来开发。Spark Streaming 保留了 Hadoop MapReduce 的优点，而且在时效性上有了很大提高，中间结果可以保存在内存中，从而对需要迭代计算和有较高时效性要求的系统提供了很好的支持，多用于能容忍小延时的推荐与计算系统。Storm 一开始就是为实时处理设计，因此在实时分析/性能监测等需要高时效性的领域广泛采用，而且它理论上支持所有语言，只需要少量代码即可完成适配器。</p>
@@ -505,7 +474,7 @@
 <table>
 <thead>
 <tr>
-<th style="text-align:right">比较项</th>
+<th>比较项</th>
 <th>Storm</th>
 <th>Spark Streaming</th>
 <th>Hadoop MapReduce</th>
@@ -513,85 +482,85 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:right">血统</td>
+<td>血统</td>
 <td>Twitter</td>
 <td>UC Berkeley AMP lab</td>
 <td>Google Lab</td>
 </tr>
 <tr>
-<td style="text-align:right">开源时间</td>
+<td>开源时间</td>
 <td>2011.9.16</td>
 <td>2011.5.24</td>
 <td>2007.9.4</td>
 </tr>
 <tr>
-<td style="text-align:right">当前版本</td>
+<td>当前版本</td>
 <td>0.9.4</td>
 <td>1.3.1</td>
 <td>2.7.0</td>
 </tr>
 <tr>
-<td style="text-align:right">相关资料</td>
+<td>相关资料</td>
 <td>多</td>
 <td>多</td>
 <td>极多</td>
 </tr>
 <tr>
-<td style="text-align:right">依赖环境</td>
+<td>依赖环境</td>
 <td>Zookeeper、Java、Python</td>
 <td>hadoop client、Scala</td>
 <td>Java、ssh</td>
 </tr>
 <tr>
-<td style="text-align:right">技术语言</td>
+<td>技术语言</td>
 <td>Java、Clojure</td>
 <td>Scala</td>
 <td>Java</td>
 </tr>
 <tr>
-<td style="text-align:right">支持语言</td>
+<td>支持语言</td>
 <td>Any</td>
 <td>Scala、Java、Python</td>
 <td>Java &amp; Others</td>
 </tr>
 <tr>
-<td style="text-align:right">延时</td>
+<td>延时</td>
 <td>实时</td>
 <td>秒级</td>
 <td>较高</td>
 </tr>
 <tr>
-<td style="text-align:right">网络带宽</td>
+<td>网络带宽</td>
 <td>一般</td>
 <td>一般</td>
 <td>一般</td>
 </tr>
 <tr>
-<td style="text-align:right">硬盘IO</td>
+<td>硬盘IO</td>
 <td>一般</td>
 <td>少</td>
 <td>较少</td>
 </tr>
 <tr>
-<td style="text-align:right">集群支持</td>
+<td>集群支持</td>
 <td>好</td>
 <td>超过1000节点</td>
 <td>数千个节点</td>
 </tr>
 <tr>
-<td style="text-align:right">吞吐量</td>
+<td>吞吐量</td>
 <td>较好</td>
 <td>好</td>
 <td>好</td>
 </tr>
 <tr>
-<td style="text-align:right">使用公司</td>
+<td>使用公司</td>
 <td>淘宝、百度、Twitte、Groupon、雅虎</td>
 <td>Intel、腾讯、淘宝、中移动、Google</td>
 <td>EBay、Facebook、Google、IBM</td>
 </tr>
 <tr>
-<td style="text-align:right">适用场景</td>
+<td>适用场景</td>
 <td>实时的小数据块的分析计算</td>
 <td>较大数据块又需要高时效性的小批量计算</td>
 <td>低时效性的大批量计算</td>
@@ -600,24 +569,17 @@
 </table>
 <p>表格说明：</p>
 <ul>
-<li><p>开源时间以 github 上最早的 commit 或者官网上最早发布版本的时间为准。</p>
-</li>
-<li><p>当前版本与特性描述截止 2015-5-3。</p>
-</li>
-<li><p>相关资料量通过比较官方文档、搜索引擎、论坛等途径得出。</p>
-</li>
-<li><p>部分比较数据来源于实践或相关文章（未找到出处）。</p>
-</li>
+<li>开源时间以 github 上最早的 commit 或者官网上最早发布版本的时间为准。</li>
+<li>当前版本与特性描述截止 2015-5-3。</li>
+<li>相关资料量通过比较官方文档、搜索引擎、论坛等途径得出。</li>
+<li>部分比较数据来源于实践或相关文章（未找到出处）。</li>
 </ul>
 <p>本文会保持更新，如果数据发现有出入，欢迎指正。</p>
 <p>参考资料：</p>
 <ul>
-<li><p><a href="http://hadoop.apache.org/index.html" title="hadoop" target="_blank" rel="external">Hadoop 官网</a></p>
-</li>
-<li><p><a href="http://spark.apache.org/streaming/" title="Spark Streaming" target="_blank" rel="external">Spark Streaming</a></p>
-</li>
-<li><p><a href="http://storm.apache.org/" title="storm" target="_blank" rel="external">Storm 官网</a></p>
-</li>
+<li><a href="http://hadoop.apache.org/index.html" title="hadoop" target="_blank" rel="external">Hadoop 官网</a></li>
+<li><a href="http://spark.apache.org/streaming/" title="Spark Streaming" target="_blank" rel="external">Spark Streaming</a></li>
+<li><a href="http://storm.apache.org/" title="storm" target="_blank" rel="external">Storm 官网</a></li>
 </ul>
 ]]></content>
     <summary type="html">
@@ -644,14 +606,13 @@
     <link href="http://www.tnidea.com/git-project-version.html"/>
     <id>http://www.tnidea.com/git-project-version.html</id>
     <published>2013-10-31T16:00:00.000Z</published>
-    <updated>2015-09-28T12:13:59.000Z</updated>
+    <updated>2015-10-07T08:15:59.000Z</updated>
     <content type="html"><![CDATA[<p> 上一篇博客写了如何在 .Net 项目使用 SVN 作为版本控制工具时生成与代码对应的组件版本号。虽然在公司一直使用 SVN ，但我却对 GIT 情有独钟，但少有文章提及如何具体在 Windows 平台来获得版本号。这让我有了迫切得到方法的希望。下面会具体实现如何在VS中使用Git版本号作为编译产生的文件版本号。</p>
 <a id="more"></a>
 <p> 上篇博客 <a href="http://www.tnidea.com/svn-project-version.html" title="在VS项目中使用SVN版本号作为编译版本号">《在VS项目中使用SVN版本号作为编译版本号》</a></p>
 <p> 将 GIT 的 commit 作为 .Net 项目编译后生成dll的文件版本号主要有以下几个困难。</p>
 <ul>
-<li><p>GIT 没有一个数字的序号，而是一个SHA散列码；</p>
-</li>
+<li>GIT 没有一个数字的序号，而是一个SHA散列码；</li>
 <li><p>GIT 提供的命令在 linux 十分方便，在 Windows 下需要额外的工具。</p>
 <p>第一个问题好解决，我们取当前文件夹 commit 的次数加上截取一段 SHA 码就可以作为文件版本号的最后一位。第二个问题目前想到的方法是调用 msysgit 提供的 Git Bash 来执行命令。</p>
 <p>好了，首先我们依旧得找到 msysgit 的安装目录，一查之下头就大了，各个地方的路径都感觉不靠谱，最后还是选用了<br><code>HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Git_is1</code> 的 <code>InstallLocation</code> ，当然也可以通过 temp 环境变量来获取路径，安装时选择第二或第三项：</p>
