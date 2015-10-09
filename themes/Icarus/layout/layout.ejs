@@ -1,6 +1,6 @@
 <%- partial('_partial/head') %>
-<body class="cbp-spmenu-push">
-  <div id="container">
+<body>
+  <div id="container" class="cbp-spmenu-push">
     <%- partial('_partial/header') %>
     <div class="outer">
       <% if (theme.profile){ %>
@@ -14,5 +14,6 @@
     <%- partial('_partial/footer', null, {cache: !config.relative_link}) %>
     <%- partial('_partial/after-footer') %>
   </div>
+  <%- partial('_partial/nav-menu') %>
 </body>
 </html>

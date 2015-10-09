@@ -120,6 +120,15 @@ $nav-link
     .menu-category-list
       display: block
 
+.main-nav-link
+  .menu-category-list-item
+    a
+      padding:0 0 0 16px
+
+.menu-category-list
+  -webkit-box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+  box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+
 #sub-nav
   @media mq-mini
     padding-right: 20px
@@ -239,6 +248,7 @@ $nav-link
 
 .menu-category-list
   display: none
+  padding: 0
 
 .main-nav-category-list
   border-color: #cccccc
@@ -273,7 +283,7 @@ $nav-link
     color: #47a3da
 
 .cbp-spmenu-vertical
-  width: 240px
+  width: nav-menu-width
   height: 100%
   top: 0
   z-index: 1000
@@ -286,28 +296,58 @@ $nav-link
       padding: 1em 2em 0.8em
 
 .cbp-spmenu-left
-  left: -240px
-
-.cbp-spmenu-right
-	right: -240px
+  transform:translateX( - nav-menu-width)
+  -ms-transform:translateX( - nav-menu-width)
+  -moz-transform:translateX( - nav-menu-width)
+  -webkit-transform:translateX( - nav-menu-width)
+  -o-transform:translateX( - nav-menu-width)
 
 .cbp-spmenu-left.cbp-spmenu-open
-	left: 0px
-
-.cbp-spmenu-right.cbp-spmenu-open
-	right: 0px
+  @media mq-mini
+    transform:translateX(0px)
+    -ms-transform:translateX(0px)
+    -moz-transform:translateX(0px)
+    -webkit-transform:translateX(0px)
+    -o-transform:translateX(0px)
+  @media mq-mobile
+    transform:translateX(0px)
+    -ms-transform:translateX(0px)
+    -moz-transform:translateX(0px)
+    -webkit-transform:translateX(0px)
+    -o-transform:translateX(0px)
 
 /* Push classes applied to the body */
 .cbp-spmenu-push
 	overflow-x: hidden
 	position: relative
-	left: 0
+
+.cbp-spmenu-push
+  @media mq-mini
+    transform:none
+    -ms-transform:none
+    -moz-transform:none
+    -webkit-transform:none
+    -o-transform:none
+  @media mq-mobile
+    transform:none
+    -ms-transform:none
+    -moz-transform:none
+    -webkit-transform:none
+    -o-transform:none
 
 .cbp-spmenu-push-toright
-	left: 240px
-
-.cbp-spmenu-push-toleft
-	left: -240px
+  @media mq-mini
+    transform:translateX(nav-menu-width)
+    -ms-transform:translateX(nav-menu-width)
+    -moz-transform:translateX(nav-menu-width)
+    -webkit-transform:translateX(nav-menu-width)
+    -o-transform:translateX(nav-menu-width)
+  @media mq-mobile
+    transform:translateX(nav-menu-width)
+    -ms-transform:translateX(nav-menu-width)
+    -moz-transform:translateX(nav-menu-width)
+    -webkit-transform:translateX(nav-menu-width)
+    -o-transform:translateX(nav-menu-width)
 
 /* Transitions */
 .cbp-spmenu,.cbp-spmenu-push

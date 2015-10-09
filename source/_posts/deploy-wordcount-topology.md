@@ -168,7 +168,7 @@ public class WordCountTopologyCsharp {
  - 初始化安装storm所需依赖：`$ mvn clean install -DskipTests=true`
  - 使用Maven打包storm拓扑：`$ mvn package`
  - 搭建好运行环境并提交：
- 
+
  `$ storm jar storm-starter-*-jar-with-dependencies.jar storm.starter.WordCountTopologyCsharp wordcount`
 
  storm集群的搭建请参考系列文章第一篇 [搭建dotNet开发Storm拓扑的环境](http://www.tnidea.com/deploy-storm-environment.html "搭建dotNet开发Storm拓扑的环境")
@@ -176,13 +176,4 @@ public class WordCountTopologyCsharp {
  ![image](http://www.tnidea.com/media/image/storm-3-01.png)
  
  ![image](http://www.tnidea.com/media/image/storm-3-02.png)
- 
-
-## Storm系列文章 ##
-
-（一）：[搭建dotNet开发Storm拓扑的环境](http://www.tnidea.com/deploy-storm-environment.html "搭建dotNet开发Storm拓扑的环境")
-
-（二）：[使用Csharp创建你的第一个Storm拓扑（wordcount）](http://www.tnidea.com/you-first-csharp-storm-topology.html "使用Csharp创建你的第一个Storm拓扑")
-
-（三）：[创建Maven项目打包提交wordcount到Storm集群](http://www.tnidea.com/deploy-wordcount-topology "创建Maven项目打包提交wordcount到Storm集群")
 

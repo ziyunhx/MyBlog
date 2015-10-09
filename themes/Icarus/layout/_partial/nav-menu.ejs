@@ -1,0 +1,28 @@
+  <div id="mobile-nav">
+    <nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left" id="cbp-spmenu-s1">
+      <% for (var i in theme.menu){ %>
+        <a href="<%- url_for(theme.menu[i]) %>"><%= __('nav.' + i) %></a>
+        <% if(i == "Categories" && site.categories.length) { %>
+          <%- list_categories(site.categories, {
+            show_count: false,
+            class: 'main-nav-category',
+            separator: ''
+          }) %>
+        <% } %>
+      <% } %>
+      <div id="nav-search-form">
+        <%- search_form({button: ' ', text: '搜索'}) %>
+      </div>
+    </nav>
+  </div>
+  <script>
+    var menuLeft = document.getElementById( 'cbp-spmenu-s1' ),
+        showMobileNav = document.getElementById( 'mobile-logo' ),
+        container = document.getElementById( 'container' );
+  
+    showMobileNav.onclick = function() {
+      classie.toggle( this, 'active' );
+      classie.toggle( container, 'cbp-spmenu-push-toright' );
+      classie.toggle( menuLeft, 'cbp-spmenu-open' );
+    };
+  </script>

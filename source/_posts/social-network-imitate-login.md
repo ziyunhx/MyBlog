@@ -32,7 +32,7 @@ tags:
  
  `thrift --gen <language> ImitateLogin.thrift`
  
- 将上面命令中的`<language>`替换为你所使用的语言。Thrift 目前支持以下参数所代表的语言：
+将上面命令中的`<language>`替换为你所使用的语言。Thrift 目前支持以下参数所代表的语言：
  
  - as3
  - c_glib
@@ -49,8 +49,8 @@ tags:
  - php
  - py
  - rb
- 
- 然后在csharp端添加服务端得代码：
+
+然后在csharp端添加服务端得代码：
  
 {% codeblock lang:csharp %}
 public void Start() 
@@ -73,23 +73,21 @@ Login.Client client = new Login.Client(protocol);
 client.Login("username", "password", LoginSite.Weibo);
 {% endcodeblock %}
 
- 将上述语句中的 username 和 password 替换为真实用于登录的微博账户。
+将上述语句中的 username 和 password 替换为真实用于登录的微博账户。
  
- 你可以在包含Mono或.Net Framework的环境下运行 **[imitate-login](https://github.com/ziyunhx/imitate-login)** 类库。该类库里包含一个使用Gtk+创建的测试窗体程序，如果你希望使用它，需要额外安装 Gtk+ for Mono.
+你可以在包含Mono或.Net Framework的环境下运行 **[imitate-login](https://github.com/ziyunhx/imitate-login)** 类库。该类库里包含一个使用Gtk+创建的测试窗体程序，如果你希望使用它，需要额外安装 Gtk+ for Mono.
  
- 该类库已经完成的社交网站支持：
- 
+该类库已经完成的社交网站支持：
+
  - Weibo
  - WeiboWap
- 
- 计划完成的支持：
- 
+
+计划完成的支持：
+
  - Taobao
  - QQ
  - Facebook
  - Twitter
  - Google
- 
- 计划支持部分会根据项目关注度来决定（**Star & fork**）是否更新以及更新时间。
- 
- **如果这个项目侵犯了您的权益，请及时与我联系（可通过留言或邮件）！我会在收到的一周内协商处理。**
+
+计划支持部分会根据项目关注度来决定（**Star & fork**）是否更新以及更新时间。

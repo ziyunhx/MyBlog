@@ -350,12 +350,3 @@ namespace StormSample
 
  ![WordCount Topology](http://www.tnidea.com/media/image/wordcount-topology.png)
 
-
-## Storm系列文章 ##
-
-（一）：[搭建dotNet开发Storm拓扑的环境](http://www.tnidea.com/deploy-storm-environment.html "搭建dotNet开发Storm拓扑的环境")
-
-（二）：[使用Csharp创建你的第一个Storm拓扑（wordcount）](http://www.tnidea.com/you-first-csharp-storm-topology.html "使用Csharp创建你的第一个Storm拓扑")
-
-（三）：[创建Maven项目打包提交wordcount到Storm集群](http://www.tnidea.com/deploy-wordcount-topology "创建Maven项目打包提交wordcount到Storm集群")
-

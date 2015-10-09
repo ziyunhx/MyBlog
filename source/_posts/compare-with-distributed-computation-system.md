@@ -21,7 +21,7 @@ tags:
 
 
 | 比较项	        | Storm    | Spark Streaming         | Hadoop MapReduce     |
-| ------------: | ----------- |-----------| -----------|
+| ------------- | ----------- |-----------| -----------|
 | 血统   		| Twitter       | UC Berkeley AMP lab | Google Lab	 |
 | 开源时间		| 2011.9.16     | 2011.5.24     | 2007.9.4          |
 | 当前版本 		| 0.9.4         | 1.3.1         | 2.7.0          |
@@ -41,11 +41,8 @@ tags:
 表格说明：
 
  - 开源时间以 github 上最早的 commit 或者官网上最早发布版本的时间为准。
- 
  - 当前版本与特性描述截止 2015-5-3。
- 
  - 相关资料量通过比较官方文档、搜索引擎、论坛等途径得出。
- 
  - 部分比较数据来源于实践或相关文章（未找到出处）。
 
 本文会保持更新，如果数据发现有出入，欢迎指正。
@@ -53,8 +50,5 @@ tags:
 参考资料：
 
  - [Hadoop 官网](http://hadoop.apache.org/index.html "hadoop")
- 
  - [Spark Streaming](http://spark.apache.org/streaming/ "Spark Streaming")
- 
  - [Storm 官网](http://storm.apache.org/ "storm")
-  
