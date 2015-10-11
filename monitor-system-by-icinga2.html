@@ -113,37 +113,37 @@
 <p>下面将介绍Icinga2与Icinga Web2的安装，所有的操作步骤均仅在CentOS 7上验证（特殊说明的除外），不保证其它系统下的完备性。</p>
 <h2 id="安装Icinga2">安装Icinga2</h2><h3 id="设置Icinga2安装源">设置Icinga2安装源</h3><p>首先你要根据你的系统选择执行下面的命令将Icinga2的项目库地址加入到包管理中。</p>
 <p>Debian (debmon):</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ wget -O - http://debmon.org/debmon/repo.key 2&#62;/dev/null | apt-key add -&#10;$ echo &#39;deb http://debmon.org/debmon debmon-jessie main&#39; &#62;/etc/apt/sources.list.d/debmon.list&#10;$ apt-get update</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ wget -O - http://debmon.org/debmon/repo.key 2&#62;/dev/null | apt-key add -&#10;$ echo &#39;deb http://debmon.org/debmon debmon-jessie main&#39; &#62;/etc/apt/sources.list.d/debmon.list&#10;$ apt-get update</span><br></pre></td></tr></table></figure>
 <p>Ubuntu (PPA):</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ add-apt-repository ppa:formorer/icinga&#10;$ apt-get update</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ add-apt-repository ppa:formorer/icinga&#10;$ apt-get update</span><br></pre></td></tr></table></figure>
 <p>RHEL/CentOS:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ rpm --import http://packages.icinga.org/icinga.key&#10;$ curl -o /etc/yum.repos.d/ICINGA-release.repo http://packages.icinga.org/epel/ICINGA-release.repo&#10;$ yum makecache</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ rpm --import http://packages.icinga.org/icinga.key&#10;$ curl -o /etc/yum.repos.d/ICINGA-release.repo http://packages.icinga.org/epel/ICINGA-release.repo&#10;$ yum makecache</span><br></pre></td></tr></table></figure>
 <ul>
 <li>这个软件包依赖于<a href="http://fedoraproject.org/wiki/EPEL" title="EPEL" target="_blank" rel="external">EPEL库</a>中的其它软件包，请确保以及允许了<a href="http://fedoraproject.org/wiki/EPEL" title="EPEL" target="_blank" rel="external">EPEL库</a>。CentOS 7可以直接通过以下命令来安装：$ yum install epel-release</li>
 </ul>
 <p>Fedora:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ rpm --import http://packages.icinga.org/icinga.key&#10;$ curl -o /etc/yum.repos.d/ICINGA-release.repo http://packages.icinga.org/fedora/ICINGA-release.repo&#10;$ yum makecache</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ rpm --import http://packages.icinga.org/icinga.key&#10;$ curl -o /etc/yum.repos.d/ICINGA-release.repo http://packages.icinga.org/fedora/ICINGA-release.repo&#10;$ yum makecache</span><br></pre></td></tr></table></figure>
 <p>SLES 11:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ zypper ar http://packages.icinga.org/SUSE/ICINGA-release-11.repo&#10;$ zypper ref</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ zypper ar http://packages.icinga.org/SUSE/ICINGA-release-11.repo&#10;$ zypper ref</span><br></pre></td></tr></table></figure>
 <ul>
 <li>这个软件包依赖于openssl1，它是SLES 11安全模块的一部分。</li>
 </ul>
 <p>SLES 12:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ zypper ar http://packages.icinga.org/SUSE/ICINGA-release.repo&#10;$ zypper ref</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ zypper ar http://packages.icinga.org/SUSE/ICINGA-release.repo&#10;$ zypper ref</span><br></pre></td></tr></table></figure>
 <p>openSUSE:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ zypper ar http://packages.icinga.org/openSUSE/ICINGA-release.repo&#10;$ zypper ref</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ zypper ar http://packages.icinga.org/openSUSE/ICINGA-release.repo&#10;$ zypper ref</span><br></pre></td></tr></table></figure>
 <h3 id="安装Icinga2-1">安装Icinga2</h3><p>Debian/Ubuntu:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ apt-get install icinga2</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ apt-get install icinga2</span><br></pre></td></tr></table></figure>
 <p>RHEL/CentOS 5/6:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ yum install icinga2&#10;$ chkconfig icinga2 on&#10;$ service icinga2 start</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ yum install icinga2&#10;$ chkconfig icinga2 on&#10;$ service icinga2 start</span><br></pre></td></tr></table></figure>
 <p>RHEL/CentOS 7 和 Fedora:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ yum install icinga2&#10;$ systemctl enable icinga2&#10;$ systemctl start icinga2</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ yum install icinga2&#10;$ systemctl enable icinga2&#10;$ systemctl start icinga2</span><br></pre></td></tr></table></figure>
 <p>SLES/openSUSE:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ zypper install icinga2</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ zypper install icinga2</span><br></pre></td></tr></table></figure>
 <h3 id="在安装过程中启用功能">在安装过程中启用功能</h3><p>在默认安装中，启用了checker mainlog notification这三个功能，你可以通过执行以下命令来获取当前开启和关闭的所有功能：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ icinga2 feature list</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ icinga2 feature list</span><br></pre></td></tr></table></figure>
 <p>如果你希望开启或关闭某个功能，可以enable/disable命令，例如我们现在开启command功能：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ icinga2 feature enable command</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ icinga2 feature enable command</span><br></pre></td></tr></table></figure>
 <ul>
 <li>如果你启用了某个功能导致在接下来的启动过程中出现错误，记得回来关闭掉！</li>
 </ul>
@@ -238,11 +238,11 @@
 <p>具体命令使用格式为 /etc/init.d/icinga2 {start|stop|restart|reload|checkconfig|status} ；命令具体含义与一般服务相同。</p>
 <p>对于部分操作系统，例如：Fedora，openSUSE 和 RHEL/CentOS 7 可以使用服务来操作，Icinga2在安装时已经安装了必要的服务。</p>
 <p>例如你可以使用以下命令来检查Icinga2的运行状态：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ systemctl status icinga2</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ systemctl status icinga2</span><br></pre></td></tr></table></figure>
 <p>将Icinga2设置为自启动：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ systemctl enable icinga2</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ systemctl enable icinga2</span><br></pre></td></tr></table></figure>
 <p>以及重启Icinga2:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ systemctl restart icinga2</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ systemctl restart icinga2</span><br></pre></td></tr></table></figure>
 <p>如果启动出错，别忘了检查插件以及配置文件，你也可以使用 journalctl -xn 来查看错误信息。由于篇幅过长，Icinga Web2的安装与配置将放到下篇博客中！</p>
 
               <p>本文来自 <a href="http://www.tnidea.com/" title="The NewIdea" target="_blank" rel="external">The NewIdea</a>，作者 Carey Tzou 。<br>永久地址：<a href="http://www.tnidea.com/monitor-system-by-icinga2.html" title="使用Icinga2和Icinga Web2搭建监控服务" target="_blank" rel="external">http://www.tnidea.com/monitor-system-by-icinga2.html</a><br>未经授权，拒绝任何全文及摘要转载！<br><br>文章还不错？打赏一下吧：</p>
