@@ -50,7 +50,7 @@
             <li class="main-nav-link">
               <a href="javascript:void(0)">分类</a>
               
-                <ul class="menu-category-list"><li class="menu-category-list-item"><a class="menu-category-list-link" href="/categories/Storm/">Storm</a></li><li class="menu-category-list-item"><a class="menu-category-list-link" href="/categories/爬虫/">爬虫</a></li><li class="menu-category-list-item"><a class="menu-category-list-link" href="/categories/项目管理/">项目管理</a></li></ul>
+                <ul class="menu-category-list"><li class="menu-category-list-item"><a class="menu-category-list-link" href="/categories/Storm/">Storm</a></li><li class="menu-category-list-item"><a class="menu-category-list-link" href="/categories/爬虫/">爬虫</a></li><li class="menu-category-list-item"><a class="menu-category-list-link" href="/categories/运维/">运维</a></li><li class="menu-category-list-item"><a class="menu-category-list-link" href="/categories/项目管理/">项目管理</a></li></ul>
               
             </li>
           
@@ -72,6 +72,60 @@
     <div class="outer">
       
       <section id="main">
+      <article id="post-monitor-system-by-icinga2" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/monitor-system-by-icinga2.html">使用Icinga2和Icinga Web2搭建监控服务</a>
+    </h1>
+  
+
+        <div class="article-meta">
+          
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/monitor-system-by-icinga2.html">
+      <time datetime="2015-10-09T16:00:00.000Z" itemprop="datePublished">2015-10-10</time>
+    </a>
+  </div>
+
+
+          
+  <div class="article-category">
+  	<i class="fa fa-folder"></i>
+    <a class="article-category-link" href="/categories/运维/">运维</a>
+  </div>
+
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>监控是系统运维的基础，Icinga是一个开源的监控系统框架，通过其广泛的插件支持，你可以监控几乎任何你能想到的网络资源；也可以在超过临界值时给予通知，根据监控数据生产报表。本文主要介绍其搭建过程，大部分内容翻译自官方文档。</p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://www.tnidea.com/monitor-system-by-icinga2.html" data-id="cifmo23q5000042s32u3lh3w1" class="article-share-link">分享到</a>
+      
+        <a href="http://www.tnidea.com/monitor-system-by-icinga2.html#ds-thread" class="article-comment-link">评论</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CentOS/">CentOS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Icinga-Web2/">Icinga Web2</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Icinga2/">Icinga2</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/服务器监控/">服务器监控</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+    
       <article id="post-call-dot-net-drpc-program" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -558,60 +612,6 @@
 
 
     
-      <article id="post-git-project-version" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/git-project-version.html">在VS项目中通过GIT生成版本号作为编译版本号</a>
-    </h1>
-  
-
-        <div class="article-meta">
-          
-  <div class="article-date">
-    <i class="fa fa-calendar"></i>
-    <a href="/git-project-version.html">
-      <time datetime="2013-10-31T16:00:00.000Z" itemprop="datePublished">2013-11-01</time>
-    </a>
-  </div>
-
-
-          
-  <div class="article-category">
-  	<i class="fa fa-folder"></i>
-    <a class="article-category-link" href="/categories/项目管理/">项目管理</a>
-  </div>
-
-        </div>
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p> 上一篇博客写了如何在 .Net 项目使用 SVN 作为版本控制工具时生成与代码对应的组件版本号。虽然在公司一直使用 SVN ，但我却对 GIT 情有独钟，但少有文章提及如何具体在 Windows 平台来获得版本号。这让我有了迫切得到方法的希望。下面会具体实现如何在VS中使用Git版本号作为编译产生的文件版本号。</p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://www.tnidea.com/git-project-version.html" data-id="cifjm6yem001ldbs3y68g3fpd" class="article-share-link">分享到</a>
-      
-        <a href="http://www.tnidea.com/git-project-version.html#ds-thread" class="article-comment-link">评论</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/VS/">VS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/git/">git</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/批处理/">批处理</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/文件版本号/">文件版本号</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-    
       <nav id="page-nav">
         <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">下一页 &raquo;</a>
       </nav>
@@ -623,7 +623,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">标签云</h3>
     <div class="widget tagcloud">
-      <a href="/tags/NET/" style="font-size: 20px;">.NET</a> <a href="/tags/C/" style="font-size: 20px;">C#</a> <a href="/tags/DRPC/" style="font-size: 13.33px;">DRPC</a> <a href="/tags/Hadoop-MapReduce/" style="font-size: 10px;">Hadoop MapReduce</a> <a href="/tags/HttpHelper/" style="font-size: 10px;">HttpHelper</a> <a href="/tags/HttpWebRequest/" style="font-size: 10px;">HttpWebRequest</a> <a href="/tags/ImitateLogin/" style="font-size: 10px;">ImitateLogin</a> <a href="/tags/OpenAuth/" style="font-size: 10px;">OpenAuth</a> <a href="/tags/SVN/" style="font-size: 10px;">SVN</a> <a href="/tags/Spark-Streaming/" style="font-size: 10px;">Spark Streaming</a> <a href="/tags/Storm/" style="font-size: 16.67px;">Storm</a> <a href="/tags/Topology/" style="font-size: 13.33px;">Topology</a> <a href="/tags/VS/" style="font-size: 13.33px;">VS</a> <a href="/tags/csharp/" style="font-size: 20px;">csharp</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/open-auth-assist/" style="font-size: 10px;">open-auth-assist</a> <a href="/tags/social-network/" style="font-size: 10px;">social network</a> <a href="/tags/storm/" style="font-size: 13.33px;">storm</a> <a href="/tags/thrift/" style="font-size: 10px;">thrift</a> <a href="/tags/wordcount/" style="font-size: 13.33px;">wordcount</a> <a href="/tags/zookeeper/" style="font-size: 10px;">zookeeper</a> <a href="/tags/分布式/" style="font-size: 13.33px;">分布式</a> <a href="/tags/批处理/" style="font-size: 13.33px;">批处理</a> <a href="/tags/文件版本号/" style="font-size: 13.33px;">文件版本号</a> <a href="/tags/流式框架/" style="font-size: 13.33px;">流式框架</a> <a href="/tags/部署/" style="font-size: 10px;">部署</a> <a href="/tags/项目管理/" style="font-size: 10px;">项目管理</a>
+      <a href="/tags/NET/" style="font-size: 20px;">.NET</a> <a href="/tags/C/" style="font-size: 20px;">C#</a> <a href="/tags/CentOS/" style="font-size: 10px;">CentOS</a> <a href="/tags/DRPC/" style="font-size: 13.33px;">DRPC</a> <a href="/tags/Hadoop-MapReduce/" style="font-size: 10px;">Hadoop MapReduce</a> <a href="/tags/HttpHelper/" style="font-size: 10px;">HttpHelper</a> <a href="/tags/HttpWebRequest/" style="font-size: 10px;">HttpWebRequest</a> <a href="/tags/Icinga-Web2/" style="font-size: 10px;">Icinga Web2</a> <a href="/tags/Icinga2/" style="font-size: 10px;">Icinga2</a> <a href="/tags/ImitateLogin/" style="font-size: 10px;">ImitateLogin</a> <a href="/tags/OpenAuth/" style="font-size: 10px;">OpenAuth</a> <a href="/tags/SVN/" style="font-size: 10px;">SVN</a> <a href="/tags/Spark-Streaming/" style="font-size: 10px;">Spark Streaming</a> <a href="/tags/Storm/" style="font-size: 16.67px;">Storm</a> <a href="/tags/Topology/" style="font-size: 13.33px;">Topology</a> <a href="/tags/VS/" style="font-size: 13.33px;">VS</a> <a href="/tags/csharp/" style="font-size: 20px;">csharp</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/open-auth-assist/" style="font-size: 10px;">open-auth-assist</a> <a href="/tags/social-network/" style="font-size: 10px;">social network</a> <a href="/tags/storm/" style="font-size: 13.33px;">storm</a> <a href="/tags/thrift/" style="font-size: 10px;">thrift</a> <a href="/tags/wordcount/" style="font-size: 13.33px;">wordcount</a> <a href="/tags/zookeeper/" style="font-size: 10px;">zookeeper</a> <a href="/tags/分布式/" style="font-size: 13.33px;">分布式</a> <a href="/tags/批处理/" style="font-size: 13.33px;">批处理</a> <a href="/tags/文件版本号/" style="font-size: 13.33px;">文件版本号</a> <a href="/tags/服务器监控/" style="font-size: 10px;">服务器监控</a> <a href="/tags/流式框架/" style="font-size: 13.33px;">流式框架</a> <a href="/tags/部署/" style="font-size: 10px;">部署</a> <a href="/tags/项目管理/" style="font-size: 10px;">项目管理</a>
     </div>
   </div>
 
@@ -632,7 +632,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">分类</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Storm/">Storm</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/爬虫/">爬虫</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/项目管理/">项目管理</a><span class="category-list-count">2</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Storm/">Storm</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/爬虫/">爬虫</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/运维/">运维</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/项目管理/">项目管理</a><span class="category-list-count">2</span></li></ul>
     </div>
   </div>
 
@@ -641,7 +641,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">归档</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">九月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">八月 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/07/">七月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/06/">六月 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/05/">五月 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/11/">十一月 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/10/">十月 2013</a><span class="archive-list-count">1</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">十月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">九月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">八月 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/07/">七月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/06/">六月 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/05/">五月 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/11/">十一月 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/10/">十月 2013</a><span class="archive-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -650,7 +650,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">标签</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/NET/">.NET</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C#</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DRPC/">DRPC</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hadoop-MapReduce/">Hadoop MapReduce</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HttpHelper/">HttpHelper</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HttpWebRequest/">HttpWebRequest</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ImitateLogin/">ImitateLogin</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OpenAuth/">OpenAuth</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SVN/">SVN</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spark-Streaming/">Spark Streaming</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Storm/">Storm</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Topology/">Topology</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VS/">VS</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/csharp/">csharp</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/open-auth-assist/">open-auth-assist</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/social-network/">social network</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/storm/">storm</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/thrift/">thrift</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/wordcount/">wordcount</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/zookeeper/">zookeeper</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/分布式/">分布式</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/批处理/">批处理</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/文件版本号/">文件版本号</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/流式框架/">流式框架</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/部署/">部署</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/项目管理/">项目管理</a><span class="tag-list-count">1</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/NET/">.NET</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C#</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CentOS/">CentOS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DRPC/">DRPC</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hadoop-MapReduce/">Hadoop MapReduce</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HttpHelper/">HttpHelper</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HttpWebRequest/">HttpWebRequest</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Icinga-Web2/">Icinga Web2</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Icinga2/">Icinga2</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ImitateLogin/">ImitateLogin</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OpenAuth/">OpenAuth</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SVN/">SVN</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spark-Streaming/">Spark Streaming</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Storm/">Storm</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Topology/">Topology</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VS/">VS</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/csharp/">csharp</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/open-auth-assist/">open-auth-assist</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/social-network/">social network</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/storm/">storm</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/thrift/">thrift</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/wordcount/">wordcount</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/zookeeper/">zookeeper</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/分布式/">分布式</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/批处理/">批处理</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/文件版本号/">文件版本号</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/服务器监控/">服务器监控</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/流式框架/">流式框架</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/部署/">部署</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/项目管理/">项目管理</a><span class="tag-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -724,7 +724,7 @@ var _hmt = _hmt || [];
       
         <a href="javascript:void(0)">分类</a>
         
-          <ul class="main-nav-category-list"><li class="main-nav-category-list-item"><a class="main-nav-category-list-link" href="/categories/Storm/">Storm</a></li><li class="main-nav-category-list-item"><a class="main-nav-category-list-link" href="/categories/爬虫/">爬虫</a></li><li class="main-nav-category-list-item"><a class="main-nav-category-list-link" href="/categories/项目管理/">项目管理</a></li></ul>
+          <ul class="main-nav-category-list"><li class="main-nav-category-list-item"><a class="main-nav-category-list-link" href="/categories/Storm/">Storm</a></li><li class="main-nav-category-list-item"><a class="main-nav-category-list-link" href="/categories/爬虫/">爬虫</a></li><li class="main-nav-category-list-item"><a class="main-nav-category-list-link" href="/categories/运维/">运维</a></li><li class="main-nav-category-list-item"><a class="main-nav-category-list-link" href="/categories/项目管理/">项目管理</a></li></ul>
         
       
         <a href="/about.html">关于</a>

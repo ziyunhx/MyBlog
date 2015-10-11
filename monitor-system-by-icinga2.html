@@ -3,19 +3,18 @@
 <head>
   <meta charset="utf-8">
   
-  <title>开源一个社交网站模拟登录的库 | The NewIdea</title>
+  <title>使用Icinga2和Icinga Web2搭建监控服务 | The NewIdea</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="网站的登录是抓取某些网站的必须步骤，大多数情况我们都是使用一个真实的浏览器去提交我们的登录信息，但是在代码中嵌套浏览器不仅会带来性能损耗，还会带来崩溃的风险。因此就有了这个使用httpRequest来模拟登录的库 imitate-login ，目前仅有微博网页版和微博Wap版的实现，其它计划实现会根据项目关注度来决定（Star &amp;amp; fork）是否更新以及更新时间。">
+  <meta name="description" content="监控是系统运维的基础，Icinga是一个开源的监控系统框架，通过其广泛的插件支持，你可以监控几乎任何你能想到的网络资源；也可以在超过临界值时给予通知，根据监控数据生产报表。本文主要介绍其搭建过程，大部分内容翻译自官方文档。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="开源一个社交网站模拟登录的库">
-<meta property="og:url" content="http://www.tnidea.com/social-network-imitate-login.html">
+<meta property="og:title" content="使用Icinga2和Icinga Web2搭建监控服务">
+<meta property="og:url" content="http://www.tnidea.com/monitor-system-by-icinga2.html">
 <meta property="og:site_name" content="The NewIdea">
-<meta property="og:description" content="网站的登录是抓取某些网站的必须步骤，大多数情况我们都是使用一个真实的浏览器去提交我们的登录信息，但是在代码中嵌套浏览器不仅会带来性能损耗，还会带来崩溃的风险。因此就有了这个使用httpRequest来模拟登录的库 imitate-login ，目前仅有微博网页版和微博Wap版的实现，其它计划实现会根据项目关注度来决定（Star &amp;amp; fork）是否更新以及更新时间。">
-<meta property="og:image" content="http://www.tnidea.com/media/image/imitate-login-weibo-setting.png">
-<meta property="og:updated_time" content="2015-10-07T08:17:21.000Z">
+<meta property="og:description" content="监控是系统运维的基础，Icinga是一个开源的监控系统框架，通过其广泛的插件支持，你可以监控几乎任何你能想到的网络资源；也可以在超过临界值时给予通知，根据监控数据生产报表。本文主要介绍其搭建过程，大部分内容翻译自官方文档。">
+<meta property="og:updated_time" content="2015-10-11T15:27:20.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="开源一个社交网站模拟登录的库">
-<meta name="twitter:description" content="网站的登录是抓取某些网站的必须步骤，大多数情况我们都是使用一个真实的浏览器去提交我们的登录信息，但是在代码中嵌套浏览器不仅会带来性能损耗，还会带来崩溃的风险。因此就有了这个使用httpRequest来模拟登录的库 imitate-login ，目前仅有微博网页版和微博Wap版的实现，其它计划实现会根据项目关注度来决定（Star &amp;amp; fork）是否更新以及更新时间。">
+<meta name="twitter:title" content="使用Icinga2和Icinga Web2搭建监控服务">
+<meta name="twitter:description" content="监控是系统运维的基础，Icinga是一个开源的监控系统框架，通过其广泛的插件支持，你可以监控几乎任何你能想到的网络资源；也可以在超过临界值时给予通知，根据监控数据生产报表。本文主要介绍其搭建过程，大部分内容翻译自官方文档。">
   
   
   <link rel="stylesheet" href="/css/style.css" type="text/css">
@@ -73,7 +72,7 @@
 
     <div class="outer">
       
-      <section id="main"><article id="post-social-network-imitate-login" class="article article-type-post" itemscope itemprop="blogPost">
+      <section id="main"><article id="post-monitor-system-by-icinga2" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
     
     
@@ -82,7 +81,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      开源一个社交网站模拟登录的库
+      使用Icinga2和Icinga Web2搭建监控服务
     </h1>
   
 
@@ -90,8 +89,8 @@
           
   <div class="article-date">
     <i class="fa fa-calendar"></i>
-    <a href="/social-network-imitate-login.html">
-      <time datetime="2015-06-26T16:00:00.000Z" itemprop="datePublished">2015-06-27</time>
+    <a href="/monitor-system-by-icinga2.html">
+      <time datetime="2015-10-09T16:00:00.000Z" itemprop="datePublished">2015-10-10</time>
     </a>
   </div>
 
@@ -99,7 +98,7 @@
           
   <div class="article-category">
   	<i class="fa fa-folder"></i>
-    <a class="article-category-link" href="/categories/爬虫/">爬虫</a>
+    <a class="article-category-link" href="/categories/运维/">运维</a>
   </div>
 
         </div>
@@ -108,69 +107,163 @@
     <div class="article-entry" itemprop="articleBody">
       
                 
-        <p> 网站的登录是抓取某些网站的必须步骤，大多数情况我们都是使用一个真实的浏览器去提交我们的登录信息，但是在代码中嵌套浏览器不仅会带来性能损耗，还会带来崩溃的风险。因此就有了这个使用httpRequest来模拟登录的库 <strong><a href="https://github.com/ziyunhx/imitate-login" target="_blank" rel="external">imitate-login</a></strong> ，目前仅有微博网页版和微博Wap版的实现，其它计划实现会根据项目关注度来决定（<strong>Star &amp; fork</strong>）是否更新以及更新时间。</p>
- <a id="more"></a>
-<p> <strong>如果这个项目侵犯了您的权益，请及时与我联系（可通过留言或邮件）！我会在收到的一周内协商处理。</strong></p>
-<p> 这个类库仅对外提供一个方法： </p>
-<p> <code>LoginResult Login(1: string userName, 2: string password, 3: LoginSite loginSite);</code> </p>
-<p> 这个方法位于ImitateLogin的LoginHelper类中，使用之前需要先对其进行实例化。通过传入 用户名、密码以及登录的网站，返回一个包含登录结果状态、描述信息以及Cookies字典的类。</p>
-<p> 这个类库并没有提供对验证码的支持，微博可以通过设置登录保护来避免验证码的出现：</p>
-<p> 位于 设置-&gt;账号安全-&gt;登录保护</p>
-<p> <img src="http://www.tnidea.com/media/image/imitate-login-weibo-setting.png" alt="image"></p>
-<p> 这个项目支持使用 Apache Thrift 来实现多语言环境下的RPC调用，首先安装Thrift，然后使用以下命令创建目标语言下的接口：</p>
-<p> <code>thrift --gen &lt;language&gt; ImitateLogin.thrift</code></p>
-<p>将上面命令中的<code>&lt;language&gt;</code>替换为你所使用的语言。Thrift 目前支持以下参数所代表的语言：</p>
+        <p>监控是系统运维的基础，Icinga是一个开源的监控系统框架，通过其广泛的插件支持，你可以监控几乎任何你能想到的网络资源；也可以在超过临界值时给予通知，根据监控数据生产报表。本文主要介绍其搭建过程，大部分内容翻译自官方文档。</p>
+<a id="more"></a>
+<p>在使用Icinga2前，我们曾经自己编写过监控框架，也用过其它的类似监控系统和在线服务。功能都大同小异，现在之所以选择Icinga2 + Icinga Web2来构建整个系统的监控平台主要是由于其高度可自定义性以及广泛的插件。但是由于该版本发布时间比较短，国内少有将最新版本用于生产环境，导致文档较少，很多问题需要自行摸索。写这个系列文章也是想将自己遇到的坑列出来让其它人少走弯路。</p>
+<p>下面将介绍Icinga2与Icinga Web2的安装，所有的操作步骤均仅在CentOS 7上验证（特殊说明的除外），不保证其它系统下的完备性。</p>
+<p>##安装Icinga2##</p>
+<p>###设置Icinga2安装源###</p>
+<p>首先你要根据你的系统选择执行下面的命令将Icinga2的项目库地址加入到包管理中。</p>
+<p>Debian (debmon):</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ wget -O - http://debmon.org/debmon/repo.key 2&#62;/dev/null | apt-key add -&#10;$ echo &#39;deb http://debmon.org/debmon debmon-jessie main&#39; &#62;/etc/apt/sources.list.d/debmon.list&#10;$ apt-get update</span><br></pre></td></tr></table></figure>
+<p>Ubuntu (PPA):</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ add-apt-repository ppa:formorer/icinga&#10;$ apt-get update</span><br></pre></td></tr></table></figure>
+<p>RHEL/CentOS:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ rpm --import http://packages.icinga.org/icinga.key&#10;$ curl -o /etc/yum.repos.d/ICINGA-release.repo http://packages.icinga.org/epel/ICINGA-release.repo&#10;$ yum makecache</span><br></pre></td></tr></table></figure>
 <ul>
-<li>as3</li>
-<li>c_glib</li>
-<li>cpp</li>
-<li>csharp</li>
-<li>delphi</li>
-<li>erl</li>
-<li>go</li>
-<li>hs</li>
-<li>java</li>
-<li>js</li>
-<li>ocaml</li>
-<li>perl</li>
-<li>php</li>
-<li>py</li>
-<li>rb</li>
+<li>这个软件包依赖于<a href="http://fedoraproject.org/wiki/EPEL" title="EPEL" target="_blank" rel="external">EPEL库</a>中的其它软件包，请确保以及允许了<a href="http://fedoraproject.org/wiki/EPEL" title="EPEL" target="_blank" rel="external">EPEL库</a>。CentOS 7可以直接通过以下命令来安装：$ yum install epel-release</li>
 </ul>
-<p>然后在csharp端添加服务端得代码：</p>
-<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Start</span>(<span class="params"></span>) </span><br><span class="line"></span>&#123; </span><br><span class="line">	TServerSocket serverTransport = <span class="keyword">new</span> TServerSocket(<span class="number">7901</span>, <span class="number">0</span>, <span class="keyword">false</span>); </span><br><span class="line">	Login.Processor processor = <span class="keyword">new</span> Login.Processor(<span class="keyword">new</span> LoginHelper()); </span><br><span class="line">	TServer server = <span class="keyword">new</span> TSimpleServer(processor, serverTransport); </span><br><span class="line">	Console.WriteLine(<span class="string">"Starting server on port 7901 ..."</span>); </span><br><span class="line">	server.Serve(); </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p> 然后在其它语言（例如JAVA）中实现客户端的方法：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">TTransport transport = <span class="keyword">new</span> TSocket(<span class="string">"localhost"</span>, <span class="number">7901</span>);</span><br><span class="line">transport.open();</span><br><span class="line">TProtocol protocol = <span class="keyword">new</span> TBinaryProtocol(transport);</span><br><span class="line">Login.Client client = <span class="keyword">new</span> Login.Client(protocol);</span><br><span class="line">client.Login(<span class="string">"username"</span>, <span class="string">"password"</span>, LoginSite.Weibo);</span><br></pre></td></tr></table></figure>
-<p>将上述语句中的 username 和 password 替换为真实用于登录的微博账户。</p>
-<p>你可以在包含Mono或.Net Framework的环境下运行 <strong><a href="https://github.com/ziyunhx/imitate-login" target="_blank" rel="external">imitate-login</a></strong> 类库。该类库里包含一个使用Gtk+创建的测试窗体程序，如果你希望使用它，需要额外安装 Gtk+ for Mono.</p>
-<p>该类库已经完成的社交网站支持：</p>
+<p>Fedora:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ rpm --import http://packages.icinga.org/icinga.key&#10;$ curl -o /etc/yum.repos.d/ICINGA-release.repo http://packages.icinga.org/fedora/ICINGA-release.repo&#10;$ yum makecache</span><br></pre></td></tr></table></figure>
+<p>SLES 11:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ zypper ar http://packages.icinga.org/SUSE/ICINGA-release-11.repo&#10;$ zypper ref</span><br></pre></td></tr></table></figure>
 <ul>
-<li>Weibo</li>
-<li>WeiboWap</li>
+<li>这个软件包依赖于openssl1，它是SLES 11安全模块的一部分。</li>
 </ul>
-<p>计划完成的支持：</p>
+<p>SLES 12:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ zypper ar http://packages.icinga.org/SUSE/ICINGA-release.repo&#10;$ zypper ref</span><br></pre></td></tr></table></figure>
+<p>openSUSE:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ zypper ar http://packages.icinga.org/openSUSE/ICINGA-release.repo&#10;$ zypper ref</span><br></pre></td></tr></table></figure>
+<p>###安装Icinga2###</p>
+<p>Debian/Ubuntu:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ apt-get install icinga2</span><br></pre></td></tr></table></figure>
+<p>RHEL/CentOS 5/6:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ yum install icinga2&#10;$ chkconfig icinga2 on&#10;$ service icinga2 start</span><br></pre></td></tr></table></figure>
+<p>RHEL/CentOS 7 和 Fedora:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ yum install icinga2&#10;$ systemctl enable icinga2&#10;$ systemctl start icinga2</span><br></pre></td></tr></table></figure>
+<p>SLES/openSUSE:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ zypper install icinga2</span><br></pre></td></tr></table></figure>
+<p>###在安装过程中启用功能###</p>
+<p>在默认安装中，启用了checker mainlog notification这三个功能，你可以通过执行以下命令来获取当前开启和关闭的所有功能：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ icinga2 feature list</span><br></pre></td></tr></table></figure></p>
+<p>如果你希望开启或关闭某个功能，可以enable/disable命令，例如我们现在开启command功能：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ icinga2 feature enable command</span><br></pre></td></tr></table></figure></p>
 <ul>
-<li>Taobao</li>
-<li>QQ</li>
-<li>Facebook</li>
-<li>Twitter</li>
-<li>Google</li>
+<li>如果你启用了某个功能导致在接下来的启动过程中出现错误，记得回来关闭掉！</li>
 </ul>
-<p>计划支持部分会根据项目关注度来决定（<strong>Star &amp; fork</strong>）是否更新以及更新时间。</p>
+<p>###文件默认位置###</p>
+<table>
+<thead>
+<tr>
+<th>路径</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>/etc/icinga2</td>
+<td>包含Icinga2所有的配置文件</td>
+</tr>
+<tr>
+<td>/etc/init.d/icinga2</td>
+<td>Icinga2的启动脚本</td>
+</tr>
+<tr>
+<td>/usr/sbin/icinga2</td>
+<td>Icinga2程序目录</td>
+</tr>
+<tr>
+<td>/usr/share/doc/icinga2</td>
+<td>Icinga2的文档目录</td>
+</tr>
+<tr>
+<td>/usr/share/icinga2/include</td>
+<td>模板库和插件命令配置</td>
+</tr>
+<tr>
+<td>/var/run/icinga2</td>
+<td>程序运行PID文件</td>
+</tr>
+<tr>
+<td>/var/run/icinga2/cmd</td>
+<td>命令通道和状态套接字</td>
+</tr>
+<tr>
+<td>/var/cache/icinga2</td>
+<td>缓存、调试、状态文件</td>
+</tr>
+<tr>
+<td>/var/spool/icinga2</td>
+<td>用于性能数据脱机文件</td>
+</tr>
+<tr>
+<td>/var/lib/icinga2</td>
+<td>状态文件，集群日志，本地证书和配置文件</td>
+</tr>
+<tr>
+<td>/var/log/icinga2</td>
+<td>CompatLogger功能产生的日志文件以及相关工具目录</td>
+</tr>
+</tbody>
+</table>
+<p>##安装Check插件</p>
+<p>Icinga2只是一个监控框架，如果没有插件，它将不知道如何检查外部服务。Icinga2是从nagios发展而来，因此它兼容nagios的插件。你可以直接使用包管理工具来安装插件包，下表将列出插件包得名称和默认安装路径。</p>
+<table>
+<thead>
+<tr>
+<th>操作系统</th>
+<th>包名称</th>
+<th>安装路径</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>RHEL/CentOS (EPEL)</td>
+<td>nagios-plugins-all</td>
+<td>/usr/lib/nagios/plugins 或 /usr/lib64/nagios/plugins</td>
+</tr>
+<tr>
+<td>Debian</td>
+<td>nagios-plugins</td>
+<td>/usr/lib/nagios/plugins</td>
+</tr>
+<tr>
+<td>FreeBSD</td>
+<td>nagios-plugins</td>
+<td>/usr/local/libexec/nagios</td>
+</tr>
+<tr>
+<td>OS X (MacPorts)</td>
+<td>nagios-plugins</td>
+<td>/opt/local/libexec</td>
+</tr>
+</tbody>
+</table>
+<p>根据安装目录的差异，你可能需要修改Icinga2的配置来指定插件包得安装位置。配置文件为 /etc/icinga2/constants.conf，修改PluginDir的值为插件目录即可。</p>
+<p>##运行Icinga2</p>
+<p>###启动脚本</p>
+<p>根据上面的文件位置表格，我们知道Icinga2的默认启动脚本位于： /etc/init.d/icinga2。</p>
+<p>具体命令使用格式为 /etc/init.d/icinga2 {start|stop|restart|reload|checkconfig|status} ；命令具体含义与一般服务相同。</p>
+<p>对于部分操作系统，例如：Fedora，openSUSE 和 RHEL/CentOS 7 可以使用服务来操作，Icinga2在安装时已经安装了必要的服务。</p>
+<p>例如你可以使用以下命令来检查Icinga2的运行状态：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ systemctl status icinga2</span><br></pre></td></tr></table></figure>
+<p>将Icinga2设置为自启动：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ systemctl enable icinga2</span><br></pre></td></tr></table></figure>
+<p>以及重启Icinga2:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ systemctl restart icinga2</span><br></pre></td></tr></table></figure>
+<p>如果启动出错，别忘了检查插件以及配置文件，你也可以使用 journalctl -xn 来查看错误信息。由于篇幅过长，Icinga Web2的安装与配置将放到下篇博客中！</p>
 
-              <p>本文来自 <a href="http://www.tnidea.com/" title="The NewIdea" target="_blank" rel="external">The NewIdea</a>，作者 Carey Tzou 。<br>永久地址：<a href="http://www.tnidea.com/social-network-imitate-login.html" title="开源一个社交网站模拟登录的库" target="_blank" rel="external">http://www.tnidea.com/social-network-imitate-login.html</a><br>未经授权，拒绝任何全文及摘要转载！<br><br>文章还不错？打赏一下吧：</p>
+              <p>本文来自 <a href="http://www.tnidea.com/" title="The NewIdea" target="_blank" rel="external">The NewIdea</a>，作者 Carey Tzou 。<br>永久地址：<a href="http://www.tnidea.com/monitor-system-by-icinga2.html" title="使用Icinga2和Icinga Web2搭建监控服务" target="_blank" rel="external">http://www.tnidea.com/monitor-system-by-icinga2.html</a><br>未经授权，拒绝任何全文及摘要转载！<br><br>文章还不错？打赏一下吧：</p>
       <form action="https://shenghuo.alipay.com/send/payment/fill.htm" method="POST" target="_blank" accept-charset="GBK"><input name="optEmail" type="hidden" value="ziyunhx@gmail.com"><input name="payAmount" type="hidden" value="10"><input id="title" name="title" type="hidden" value="写的不错哦，我很喜欢！"><input name="memo" type="hidden" value=""><input name="pay" type="image" value="转账" src="https://img.alipay.com/sys/personalprod/style/mc/btn-index.png"></form>
       <p>欢迎关注微信公众号：CareyTzou（dotNet大数据）</p>
       <a href="http://www.tnidea.com/media/image/wechat.jpg" title="Wechat:CareyTzou" class="fancybox" rel="article0"><img style="width:160px;display:inline;" src="http://www.tnidea.com/media/image/wechat.jpg" alt="Wechat:CareyTzou"></a>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.tnidea.com/social-network-imitate-login.html" data-id="cifjm6ye6000rdbs3iqfkly6h" class="article-share-link">分享到</a>
+      <a data-url="http://www.tnidea.com/monitor-system-by-icinga2.html" data-id="cifmo23q5000042s32u3lh3w1" class="article-share-link">分享到</a>
       
-        <a href="http://www.tnidea.com/social-network-imitate-login.html#ds-thread" class="article-comment-link">评论</a>
+        <a href="http://www.tnidea.com/monitor-system-by-icinga2.html#ds-thread" class="article-comment-link">评论</a>
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NET/">.NET</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/">C#</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/csharp/">csharp</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/social-network/">social network</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/thrift/">thrift</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CentOS/">CentOS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Icinga-Web2/">Icinga Web2</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Icinga2/">Icinga2</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/服务器监控/">服务器监控</a></li></ul>
 
     </footer>
   </div>
@@ -178,19 +271,10 @@
     
 <nav id="article-nav">
   
-    <a href="/http-helper-at-csharp.html" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">上一篇</strong>
-      <div class="article-nav-title">
-        
-          .Net使用HttpWebRequest模拟浏览器
-        
-      </div>
-    </a>
   
-  
-    <a href="/deploy-wordcount-topology.html" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/call-dot-net-drpc-program.html" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">下一篇</strong>
-      <div class="article-nav-title">创建Maven项目打包提交wordcount到Storm集群</div>
+      <div class="article-nav-title">使用DRPC调用.NET开发的Storm拓扑</div>
     </a>
   
 </nav>
@@ -201,7 +285,7 @@
 
 
   <section id="comments">
-    <div id="ds-thread" class="ds-thread" data-thread-key="http://www.tnidea.com/social-network-imitate-login.html" data-title="开源一个社交网站模拟登录的库" data-url="http://www.tnidea.com/social-network-imitate-login.html">
+    <div id="ds-thread" class="ds-thread" data-thread-key="http://www.tnidea.com/monitor-system-by-icinga2.html" data-title="使用Icinga2和Icinga Web2搭建监控服务" data-url="http://www.tnidea.com/monitor-system-by-icinga2.html">
       <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by DuoShuo.</a></noscript>
     </div>
   </section>

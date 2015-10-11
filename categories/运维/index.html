@@ -3,19 +3,17 @@
 <head>
   <meta charset="utf-8">
   
-  <title>开源一个社交网站模拟登录的库 | The NewIdea</title>
+  <title>Category: 运维 | The NewIdea</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="网站的登录是抓取某些网站的必须步骤，大多数情况我们都是使用一个真实的浏览器去提交我们的登录信息，但是在代码中嵌套浏览器不仅会带来性能损耗，还会带来崩溃的风险。因此就有了这个使用httpRequest来模拟登录的库 imitate-login ，目前仅有微博网页版和微博Wap版的实现，其它计划实现会根据项目关注度来决定（Star &amp;amp; fork）是否更新以及更新时间。">
-<meta property="og:type" content="article">
-<meta property="og:title" content="开源一个社交网站模拟登录的库">
-<meta property="og:url" content="http://www.tnidea.com/social-network-imitate-login.html">
+  <meta name="description" content="介绍个人的开源项目以及技术细节，分享构建在微软dotNet平台上的大数据技术、开源项目，分析大数据发展趋势与运用场景，分享实施案例。">
+<meta property="og:type" content="website">
+<meta property="og:title" content="The NewIdea">
+<meta property="og:url" content="http://www.tnidea.com/categories/运维/index.html">
 <meta property="og:site_name" content="The NewIdea">
-<meta property="og:description" content="网站的登录是抓取某些网站的必须步骤，大多数情况我们都是使用一个真实的浏览器去提交我们的登录信息，但是在代码中嵌套浏览器不仅会带来性能损耗，还会带来崩溃的风险。因此就有了这个使用httpRequest来模拟登录的库 imitate-login ，目前仅有微博网页版和微博Wap版的实现，其它计划实现会根据项目关注度来决定（Star &amp;amp; fork）是否更新以及更新时间。">
-<meta property="og:image" content="http://www.tnidea.com/media/image/imitate-login-weibo-setting.png">
-<meta property="og:updated_time" content="2015-10-07T08:17:21.000Z">
+<meta property="og:description" content="介绍个人的开源项目以及技术细节，分享构建在微软dotNet平台上的大数据技术、开源项目，分析大数据发展趋势与运用场景，分享实施案例。">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="开源一个社交网站模拟登录的库">
-<meta name="twitter:description" content="网站的登录是抓取某些网站的必须步骤，大多数情况我们都是使用一个真实的浏览器去提交我们的登录信息，但是在代码中嵌套浏览器不仅会带来性能损耗，还会带来崩溃的风险。因此就有了这个使用httpRequest来模拟登录的库 imitate-login ，目前仅有微博网页版和微博Wap版的实现，其它计划实现会根据项目关注度来决定（Star &amp;amp; fork）是否更新以及更新时间。">
+<meta name="twitter:title" content="The NewIdea">
+<meta name="twitter:description" content="介绍个人的开源项目以及技术细节，分享构建在微软dotNet平台上的大数据技术、开源项目，分析大数据发展趋势与运用场景，分享实施案例。">
   
   
   <link rel="stylesheet" href="/css/style.css" type="text/css">
@@ -73,140 +71,49 @@
 
     <div class="outer">
       
-      <section id="main"><article id="post-social-network-imitate-login" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
+      <section id="main">
+    <section class="archives-wrap">
+    <div class="archive-category-wrap">
+      <span class="archive-category">运维</span>
+    </div>
+    <div class="archives">
     
+      <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
     
-    
-      <header class="article-header">
-        
+    <div class="archive-article-thumbnail">
+      <a href="/monitor-system-by-icinga2.html" class="thumbnail">
   
-    <h1 class="article-title" itemprop="name">
-      开源一个社交网站模拟登录的库
+    <span class="thumbnail-image thumbnail-none"></span>
+  
+</a>
+    </div>
+    
+    <header class="archive-article-header">
+      
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/monitor-system-by-icinga2.html">使用Icinga2和Icinga Web2搭建监控服务</a>
     </h1>
   
 
-        <div class="article-meta">
-          
-  <div class="article-date">
+      
+        
+  <div class="archive-article-date">
     <i class="fa fa-calendar"></i>
-    <a href="/social-network-imitate-login.html">
-      <time datetime="2015-06-26T16:00:00.000Z" itemprop="datePublished">2015-06-27</time>
+    <a href="/monitor-system-by-icinga2.html">
+      <time datetime="2015-10-09T16:00:00.000Z" itemprop="datePublished">2015 10月 10</time>
     </a>
   </div>
 
 
-          
-  <div class="article-category">
-  	<i class="fa fa-folder"></i>
-    <a class="article-category-link" href="/categories/爬虫/">爬虫</a>
+      
+    </header>
   </div>
-
-        </div>
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-                
-        <p> 网站的登录是抓取某些网站的必须步骤，大多数情况我们都是使用一个真实的浏览器去提交我们的登录信息，但是在代码中嵌套浏览器不仅会带来性能损耗，还会带来崩溃的风险。因此就有了这个使用httpRequest来模拟登录的库 <strong><a href="https://github.com/ziyunhx/imitate-login" target="_blank" rel="external">imitate-login</a></strong> ，目前仅有微博网页版和微博Wap版的实现，其它计划实现会根据项目关注度来决定（<strong>Star &amp; fork</strong>）是否更新以及更新时间。</p>
- <a id="more"></a>
-<p> <strong>如果这个项目侵犯了您的权益，请及时与我联系（可通过留言或邮件）！我会在收到的一周内协商处理。</strong></p>
-<p> 这个类库仅对外提供一个方法： </p>
-<p> <code>LoginResult Login(1: string userName, 2: string password, 3: LoginSite loginSite);</code> </p>
-<p> 这个方法位于ImitateLogin的LoginHelper类中，使用之前需要先对其进行实例化。通过传入 用户名、密码以及登录的网站，返回一个包含登录结果状态、描述信息以及Cookies字典的类。</p>
-<p> 这个类库并没有提供对验证码的支持，微博可以通过设置登录保护来避免验证码的出现：</p>
-<p> 位于 设置-&gt;账号安全-&gt;登录保护</p>
-<p> <img src="http://www.tnidea.com/media/image/imitate-login-weibo-setting.png" alt="image"></p>
-<p> 这个项目支持使用 Apache Thrift 来实现多语言环境下的RPC调用，首先安装Thrift，然后使用以下命令创建目标语言下的接口：</p>
-<p> <code>thrift --gen &lt;language&gt; ImitateLogin.thrift</code></p>
-<p>将上面命令中的<code>&lt;language&gt;</code>替换为你所使用的语言。Thrift 目前支持以下参数所代表的语言：</p>
-<ul>
-<li>as3</li>
-<li>c_glib</li>
-<li>cpp</li>
-<li>csharp</li>
-<li>delphi</li>
-<li>erl</li>
-<li>go</li>
-<li>hs</li>
-<li>java</li>
-<li>js</li>
-<li>ocaml</li>
-<li>perl</li>
-<li>php</li>
-<li>py</li>
-<li>rb</li>
-</ul>
-<p>然后在csharp端添加服务端得代码：</p>
-<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Start</span>(<span class="params"></span>) </span><br><span class="line"></span>&#123; </span><br><span class="line">	TServerSocket serverTransport = <span class="keyword">new</span> TServerSocket(<span class="number">7901</span>, <span class="number">0</span>, <span class="keyword">false</span>); </span><br><span class="line">	Login.Processor processor = <span class="keyword">new</span> Login.Processor(<span class="keyword">new</span> LoginHelper()); </span><br><span class="line">	TServer server = <span class="keyword">new</span> TSimpleServer(processor, serverTransport); </span><br><span class="line">	Console.WriteLine(<span class="string">"Starting server on port 7901 ..."</span>); </span><br><span class="line">	server.Serve(); </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p> 然后在其它语言（例如JAVA）中实现客户端的方法：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">TTransport transport = <span class="keyword">new</span> TSocket(<span class="string">"localhost"</span>, <span class="number">7901</span>);</span><br><span class="line">transport.open();</span><br><span class="line">TProtocol protocol = <span class="keyword">new</span> TBinaryProtocol(transport);</span><br><span class="line">Login.Client client = <span class="keyword">new</span> Login.Client(protocol);</span><br><span class="line">client.Login(<span class="string">"username"</span>, <span class="string">"password"</span>, LoginSite.Weibo);</span><br></pre></td></tr></table></figure>
-<p>将上述语句中的 username 和 password 替换为真实用于登录的微博账户。</p>
-<p>你可以在包含Mono或.Net Framework的环境下运行 <strong><a href="https://github.com/ziyunhx/imitate-login" target="_blank" rel="external">imitate-login</a></strong> 类库。该类库里包含一个使用Gtk+创建的测试窗体程序，如果你希望使用它，需要额外安装 Gtk+ for Mono.</p>
-<p>该类库已经完成的社交网站支持：</p>
-<ul>
-<li>Weibo</li>
-<li>WeiboWap</li>
-</ul>
-<p>计划完成的支持：</p>
-<ul>
-<li>Taobao</li>
-<li>QQ</li>
-<li>Facebook</li>
-<li>Twitter</li>
-<li>Google</li>
-</ul>
-<p>计划支持部分会根据项目关注度来决定（<strong>Star &amp; fork</strong>）是否更新以及更新时间。</p>
-
-              <p>本文来自 <a href="http://www.tnidea.com/" title="The NewIdea" target="_blank" rel="external">The NewIdea</a>，作者 Carey Tzou 。<br>永久地址：<a href="http://www.tnidea.com/social-network-imitate-login.html" title="开源一个社交网站模拟登录的库" target="_blank" rel="external">http://www.tnidea.com/social-network-imitate-login.html</a><br>未经授权，拒绝任何全文及摘要转载！<br><br>文章还不错？打赏一下吧：</p>
-      <form action="https://shenghuo.alipay.com/send/payment/fill.htm" method="POST" target="_blank" accept-charset="GBK"><input name="optEmail" type="hidden" value="ziyunhx@gmail.com"><input name="payAmount" type="hidden" value="10"><input id="title" name="title" type="hidden" value="写的不错哦，我很喜欢！"><input name="memo" type="hidden" value=""><input name="pay" type="image" value="转账" src="https://img.alipay.com/sys/personalprod/style/mc/btn-index.png"></form>
-      <p>欢迎关注微信公众号：CareyTzou（dotNet大数据）</p>
-      <a href="http://www.tnidea.com/media/image/wechat.jpg" title="Wechat:CareyTzou" class="fancybox" rel="article0"><img style="width:160px;display:inline;" src="http://www.tnidea.com/media/image/wechat.jpg" alt="Wechat:CareyTzou"></a>
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://www.tnidea.com/social-network-imitate-login.html" data-id="cifjm6ye6000rdbs3iqfkly6h" class="article-share-link">分享到</a>
-      
-        <a href="http://www.tnidea.com/social-network-imitate-login.html#ds-thread" class="article-comment-link">评论</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NET/">.NET</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/">C#</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/csharp/">csharp</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/social-network/">social network</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/thrift/">thrift</a></li></ul>
-
-    </footer>
-  </div>
-  
-    
-<nav id="article-nav">
-  
-    <a href="/http-helper-at-csharp.html" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">上一篇</strong>
-      <div class="article-nav-title">
-        
-          .Net使用HttpWebRequest模拟浏览器
-        
-      </div>
-    </a>
-  
-  
-    <a href="/deploy-wordcount-topology.html" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">下一篇</strong>
-      <div class="article-nav-title">创建Maven项目打包提交wordcount到Storm集群</div>
-    </a>
-  
-</nav>
-
-
-  
 </article>
-
-
-  <section id="comments">
-    <div id="ds-thread" class="ds-thread" data-thread-key="http://www.tnidea.com/social-network-imitate-login.html" data-title="开源一个社交网站模拟登录的库" data-url="http://www.tnidea.com/social-network-imitate-login.html">
-      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by DuoShuo.</a></noscript>
-    </div>
-  </section>
-
-</section>
+    
+    </div></section>
+    </section>
       
         <aside id="sidebar">
   
