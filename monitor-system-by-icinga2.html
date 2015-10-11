@@ -11,7 +11,7 @@
 <meta property="og:url" content="http://www.tnidea.com/monitor-system-by-icinga2.html">
 <meta property="og:site_name" content="The NewIdea">
 <meta property="og:description" content="监控是系统运维的基础，Icinga是一个开源的监控系统框架，通过其广泛的插件支持，你可以监控几乎任何你能想到的网络资源；也可以在超过临界值时给予通知，根据监控数据生产报表。本文主要介绍其搭建过程，大部分内容翻译自官方文档。">
-<meta property="og:updated_time" content="2015-10-11T15:27:20.000Z">
+<meta property="og:updated_time" content="2015-10-11T15:44:53.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="使用Icinga2和Icinga Web2搭建监控服务">
 <meta name="twitter:description" content="监控是系统运维的基础，Icinga是一个开源的监控系统框架，通过其广泛的插件支持，你可以监控几乎任何你能想到的网络资源；也可以在超过临界值时给予通知，根据监控数据生产报表。本文主要介绍其搭建过程，大部分内容翻译自官方文档。">
@@ -111,9 +111,7 @@
 <a id="more"></a>
 <p>在使用Icinga2前，我们曾经自己编写过监控框架，也用过其它的类似监控系统和在线服务。功能都大同小异，现在之所以选择Icinga2 + Icinga Web2来构建整个系统的监控平台主要是由于其高度可自定义性以及广泛的插件。但是由于该版本发布时间比较短，国内少有将最新版本用于生产环境，导致文档较少，很多问题需要自行摸索。写这个系列文章也是想将自己遇到的坑列出来让其它人少走弯路。</p>
 <p>下面将介绍Icinga2与Icinga Web2的安装，所有的操作步骤均仅在CentOS 7上验证（特殊说明的除外），不保证其它系统下的完备性。</p>
-<p>##安装Icinga2##</p>
-<p>###设置Icinga2安装源###</p>
-<p>首先你要根据你的系统选择执行下面的命令将Icinga2的项目库地址加入到包管理中。</p>
+<h2 id="安装Icinga2">安装Icinga2</h2><h3 id="设置Icinga2安装源">设置Icinga2安装源</h3><p>首先你要根据你的系统选择执行下面的命令将Icinga2的项目库地址加入到包管理中。</p>
 <p>Debian (debmon):</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ wget -O - http://debmon.org/debmon/repo.key 2&#62;/dev/null | apt-key add -&#10;$ echo &#39;deb http://debmon.org/debmon debmon-jessie main&#39; &#62;/etc/apt/sources.list.d/debmon.list&#10;$ apt-get update</span><br></pre></td></tr></table></figure>
 <p>Ubuntu (PPA):</p>
@@ -134,8 +132,7 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ zypper ar http://packages.icinga.org/SUSE/ICINGA-release.repo&#10;$ zypper ref</span><br></pre></td></tr></table></figure>
 <p>openSUSE:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ zypper ar http://packages.icinga.org/openSUSE/ICINGA-release.repo&#10;$ zypper ref</span><br></pre></td></tr></table></figure>
-<p>###安装Icinga2###</p>
-<p>Debian/Ubuntu:</p>
+<h3 id="安装Icinga2-1">安装Icinga2</h3><p>Debian/Ubuntu:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ apt-get install icinga2</span><br></pre></td></tr></table></figure>
 <p>RHEL/CentOS 5/6:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ yum install icinga2&#10;$ chkconfig icinga2 on&#10;$ service icinga2 start</span><br></pre></td></tr></table></figure>
@@ -143,14 +140,14 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ yum install icinga2&#10;$ systemctl enable icinga2&#10;$ systemctl start icinga2</span><br></pre></td></tr></table></figure>
 <p>SLES/openSUSE:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ zypper install icinga2</span><br></pre></td></tr></table></figure>
-<p>###在安装过程中启用功能###</p>
-<p>在默认安装中，启用了checker mainlog notification这三个功能，你可以通过执行以下命令来获取当前开启和关闭的所有功能：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ icinga2 feature list</span><br></pre></td></tr></table></figure></p>
-<p>如果你希望开启或关闭某个功能，可以enable/disable命令，例如我们现在开启command功能：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ icinga2 feature enable command</span><br></pre></td></tr></table></figure></p>
+<h3 id="在安装过程中启用功能">在安装过程中启用功能</h3><p>在默认安装中，启用了checker mainlog notification这三个功能，你可以通过执行以下命令来获取当前开启和关闭的所有功能：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ icinga2 feature list</span><br></pre></td></tr></table></figure>
+<p>如果你希望开启或关闭某个功能，可以enable/disable命令，例如我们现在开启command功能：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ icinga2 feature enable command</span><br></pre></td></tr></table></figure>
 <ul>
 <li>如果你启用了某个功能导致在接下来的启动过程中出现错误，记得回来关闭掉！</li>
 </ul>
-<p>###文件默认位置###</p>
-<table>
+<h3 id="文件默认位置">文件默认位置</h3><table>
 <thead>
 <tr>
 <th>路径</th>
@@ -204,8 +201,7 @@
 </tr>
 </tbody>
 </table>
-<p>##安装Check插件</p>
-<p>Icinga2只是一个监控框架，如果没有插件，它将不知道如何检查外部服务。Icinga2是从nagios发展而来，因此它兼容nagios的插件。你可以直接使用包管理工具来安装插件包，下表将列出插件包得名称和默认安装路径。</p>
+<h2 id="安装Check插件">安装Check插件</h2><p>Icinga2只是一个监控框架，如果没有插件，它将不知道如何检查外部服务。Icinga2是从nagios发展而来，因此它兼容nagios的插件。你可以直接使用包管理工具来安装插件包，下表将列出插件包得名称和默认安装路径。</p>
 <table>
 <thead>
 <tr>
@@ -238,9 +234,7 @@
 </tbody>
 </table>
 <p>根据安装目录的差异，你可能需要修改Icinga2的配置来指定插件包得安装位置。配置文件为 /etc/icinga2/constants.conf，修改PluginDir的值为插件目录即可。</p>
-<p>##运行Icinga2</p>
-<p>###启动脚本</p>
-<p>根据上面的文件位置表格，我们知道Icinga2的默认启动脚本位于： /etc/init.d/icinga2。</p>
+<h2 id="运行Icinga2">运行Icinga2</h2><h3 id="启动脚本">启动脚本</h3><p>根据上面的文件位置表格，我们知道Icinga2的默认启动脚本位于： /etc/init.d/icinga2。</p>
 <p>具体命令使用格式为 /etc/init.d/icinga2 {start|stop|restart|reload|checkconfig|status} ；命令具体含义与一般服务相同。</p>
 <p>对于部分操作系统，例如：Fedora，openSUSE 和 RHEL/CentOS 7 可以使用服务来操作，Icinga2在安装时已经安装了必要的服务。</p>
 <p>例如你可以使用以下命令来检查Icinga2的运行状态：</p>
