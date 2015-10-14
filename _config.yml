@@ -44,7 +44,7 @@ relative_link: false
 future: true
 highlight:
   enable: true
-  line_number: true
+  line_number: false
   tab_replace:
 
 # Category & Tag
@@ -79,9 +79,12 @@ duoshuo_shortname: tnidea
 # Deployment
 ## Docs: http://hexo.io/docs/deployment.html
 deploy:
-  type: git
+- type: git
   repository: git@github.com:ziyunhx/MyBlog.git
   branch: gh-pages
+- type: git
+  repository: git@gitcafe.com:ziyunhx/ziyunhx.git
+  branch: gitcafe-pages
   
 sitemap:
     path: sitemap.xml
