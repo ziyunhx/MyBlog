@@ -1,4 +1,4 @@
-title: 安装与配置Icinga Web2
+title: 安装Icinga Web2所需服务
 date: 2015-10-25
 categories: 
 - 运维
@@ -17,8 +17,6 @@ Icinga Web2是Icinga2的Web前端展示界面之一，它也是支持Icinga2的W
 Icinga2通过DB IDO模块将所有配置与状态信息都保存在一个数据库中，这些数据会被Icinga Web2，Icinga Reporting或Icinga Web 1.x使用。
 
 目前Icinga2支持使用MySQL和PostgreSQL作为后端数据库，本文仅介绍MySQL作为后端数据库的情况，如果你使用PostgreSQL，请依据官方文档配置好PostgreSQL。
-
-## 配置 DB IDO MySQL ##
 
 ### 安装MySQL数据库服务 ###
 
@@ -117,45 +115,43 @@ mysql>  CREATE DATABASE icingaweb2;
         GRANT SELECT, INSERT, UPDATE, DELETE, DROP, CREATE VIEW, INDEX, EXECUTE ON icingaweb2.* TO 'icinga'@'localhost' IDENTIFIED BY 'icinga';
 {% endcodeblock %}
 
-Enabling the IDO MySQL module
+启用MySQL IDO模块
 
-The package provides a new configuration file that is installed in /etc/icinga2/features-available/ido-mysql.conf. You will need to update the database credentials in this file.
-
-All available attributes are explained in the IdoMysqlConnection object chapter.
-
-You can enable the ido-mysql feature configuration file using icinga2 feature enable:
-
+{% codeblock %}
 $ icinga2 feature enable ido-mysql
 {% endcodeblock %}
 
-Module 'ido-mysql' was enabled.
-Make sure to restart Icinga 2 for these changes to take effect.
-After enabling the ido-mysql feature you have to restart Icinga 2:
+启用后别忘了重启Icinga2服务：
 
-Debian/Ubuntu, RHEL/CentOS 6 and SUSE:
+Debian/Ubuntu, RHEL/CentOS 6 和 SUSE:
 
+{% codeblock %}
 $ service icinga2 restart
 {% endcodeblock %}
 
-RHEL/CentOS 7 and Fedora:
+RHEL/CentOS 7 和 Fedora:
 
+{% codeblock %}
 $ systemctl restart icinga2
 {% endcodeblock %}
 
 FreeBSD:
 
+{% codeblock %}
 $ service icinga2 restart
 {% endcodeblock %}
 
-Webserver
+### 安装Web服务 ###
 
 Debian/Ubuntu:
 
+{% codeblock %}
 $ apt-get install apache2
 {% endcodeblock %}
 
 RHEL/CentOS 6:
 
+{% codeblock %}
 $ yum install httpd
 $ chkconfig httpd on
 $ service httpd start
@@ -163,6 +159,7 @@ $ service httpd start
 
 RHEL/CentOS 7/Fedora:
 
+{% codeblock %}
 $ yum install httpd
 $ systemctl enable httpd
 $ systemctl start httpd
@@ -170,13 +167,15 @@ $ systemctl start httpd
 
 SUSE:
 
+{% codeblock %}
 $ zypper install apache2
 $ chkconfig on
 $ service apache2 start
 {% endcodeblock %}
 
-FreeBSD (nginx, but you could also use the apache24 package):
+FreeBSD (nginx，你也可以使用 apache24 来作为Web服务)：
 
+{% codeblock %}
 $ pkg install nginx php56-gettext php56-ldap php56-openssl php56-mysql php56-pdo_mysql php56-pgsql php56-pdo_pgsql php56-sockets php56-gd pecl-imagick pecl-intl
 $ sysrc php_fpm_enable=yes
 $ sysrc nginx_enable=yes
@@ -188,70 +187,47 @@ $ service php-fpm start
 $ service nginx start
 {% endcodeblock %}
 
-Firewall Rules
+### 配置防火墙规则 ###
 
-Example:
+例如：
 
+{% codeblock %}
 $ iptables -A INPUT -p tcp -m tcp --dport 80 -j ACCEPT
 $ service iptables save
 {% endcodeblock %}
 
-RHEL/CentOS 7 specific:
+RHEL/CentOS 7 使用下面命令：
 
+{% codeblock %}
 $ firewall-cmd --add-service=http
 $ firewall-cmd --permanent --add-service=http
 {% endcodeblock %}
 
-FreeBSD: Please consult the FreeBSD Handbook how to configure one of FreeBSD's firewalls.
+### 配置额外的命令通道 ###
 
-Setting Up External Command Pipe
+Web接口和一些其它模块通过额外的命令通道来向Icinga2发送命令，你可以使用下面的命令启用它： 
 
-Web interfaces and other Icinga addons are able to send commands to Icinga 2 through the external command pipe.
-
-You can enable the External Command Pipe using the CLI:
-
+{% codeblock %}
 $ icinga2 feature enable command
 {% endcodeblock %}
 
-After that you will have to restart Icinga 2:
+同样，你需要重启Icinga2服务来使它生效。
 
-Debian/Ubuntu, RHEL/CentOS 6 and SUSE:
+默认情况下，icingacmd用户组拥有读写命令通道文件的权限，因此你需要使用下面的命令将Web服务的用户加入到该组：
 
-$ service icinga2 restart
-{% endcodeblock %}
-
-RHEL/CentOS 7 and Fedora:
-
-$ systemctl restart icinga2
-{% endcodeblock %}
-
-FreeBSD:
-
-$ service icinga2 restart
-{% endcodeblock %}
-
-By default the command pipe file is owned by the group icingacmd with read/write permissions. Add your webserver's user to the group icingacmd to enable sending commands to Icinga 2 through your web interface:
-
+{% codeblock %}
 $ usermod -a -G icingacmd www-data
 {% endcodeblock %}
 
-FreeBSD: On FreeBSD the rw directory is owned by the group www. You do not need to add the user icinga to the group www.
+FreeBSD: www用户组拥有文件的读写权限，你不需要额外操作什么。
 
-Debian packages use nagios as the default user and group name. Therefore change icingacmd to nagios.
+Debian包使用nagios作为默认用户名和用户组，因此你需要将上述命令中的icingacmd修改为nagios。
 
-The webserver's user is different between distributions so you might have to change www-data to wwwrun, www, or apache.
+Web服务的用户名在不同的环境下是不同的，因此你可以尝试修改www-data为wwwrun、www、或者 apache。
 
-Change "www-data" to the user you're using to run queries.
+你可以使用以下命令来检测是否成功将用户加入到icingacmd用户组：
 
-You can verify that the user has been successfully added to the icingacmd group using the id command:
-
+{% codeblock %}
 $ id <your-webserver-user>
 {% endcodeblock %}
 
-Installing up Icinga Web 2
-
-Please consult the installation documentation for further instructions on how to install Icinga Web 2.
-
-Addons
-
-A number of additional features are available in the form of addons. A list of popular addons is available in the Addons and Plugins chapter.
