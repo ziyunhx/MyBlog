@@ -8,7 +8,8 @@ Carey Tzou，男，与80后一起长大的90后，非典型处女座，间歇性
 
 C#, Java, Python, JS, Html
 
-<a href="http://www.tnidea.com/media/image/mvp-logo.jpg" title="MVP(2015 .Net)" class="fancybox" rel="article0"><img style="display:inline;" src="http://www.tnidea.com/media/image/mvp-logo.png" alt="MVP(2015 .Net)"></a>
+<a href="http://www.tnidea.com/media/image/mvp-logo.png" title="MVP(2015 .Net)" class="fancybox" rel="article0"><img style="display:inline;width:200px;" src="http://www.tnidea.com/media/image/mvp-logo.png" alt="MVP(2015 .Net)"></a>
+
 MVP(2015 .Net)
 
 #### 工作
