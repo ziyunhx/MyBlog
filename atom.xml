@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://www.tnidea.com/"/>
-  <updated>2015-10-11T16:00:41.000Z</updated>
+  <updated>2015-10-28T14:51:15.000Z</updated>
   <id>http://www.tnidea.com/</id>
   
   <author>
@@ -13,6 +13,93 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[安装Icinga Web2所需服务]]></title>
+    <link href="http://www.tnidea.com/prepare-for-setting-up-icinga-web2.html"/>
+    <id>http://www.tnidea.com/prepare-for-setting-up-icinga-web2.html</id>
+    <published>2015-10-24T16:00:00.000Z</published>
+    <updated>2015-10-28T14:51:15.000Z</updated>
+    <content type="html"><![CDATA[<p>Icinga Web2是Icinga2的Web前端展示界面之一，它也是支持Icinga2的Web界面中我个人最喜欢的。通过Icinga Web2，你可以方便的展示与管理你的监控，也可以自定义一些显示模块。本文将介绍Icinga Web2的安装与配置，其中部分经验可能在Icinga2的其它Web界面也适用。</p>
+<a id="more"></a>
+<p>Icinga2通过DB IDO模块将所有配置与状态信息都保存在一个数据库中，这些数据会被Icinga Web2，Icinga Reporting或Icinga Web 1.x使用。</p>
+<p>目前Icinga2支持使用MySQL和PostgreSQL作为后端数据库，本文仅介绍MySQL作为后端数据库的情况，如果你使用PostgreSQL，请依据官方文档配置好PostgreSQL。</p>
+<h3 id="安装MySQL数据库服务">安装MySQL数据库服务</h3><p>Debian/Ubuntu:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ apt-get install mysql-server mysql-client</span><br></pre></td></tr></table></figure>
+<p>RHEL/CentOS 5/6:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ yum install mysql-server mysql&#10;$ chkconfig mysqld on&#10;$ service mysqld start&#10;$ mysql_secure_installation</span><br></pre></td></tr></table></figure>
+<p>RHEL/CentOS 7 和 Fedora:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ yum install mariadb-server mariadb&#10;$ systemctl enable mariadb&#10;$ systemctl start mariadb&#10;$ mysql_secure_installation</span><br></pre></td></tr></table></figure>
+<p>SUSE:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ zypper install mysql mysql-client&#10;$ chkconfig mysqld on&#10;$ service mysqld start</span><br></pre></td></tr></table></figure>
+<p>FreeBSD:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ pkg install mysql56-server&#10;$ sysrc mysql_enable=yes&#10;$ service mysql-server restart&#10;$ mysql_secure_installation</span><br></pre></td></tr></table></figure>
+<h3 id="安装MySQL的IDO模块">安装MySQL的IDO模块</h3><p>通过默认的包管理器安装icinga2-ido-mysql包：</p>
+<p>Debian/Ubuntu:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ apt-get install icinga2-ido-mysql</span><br></pre></td></tr></table></figure>
+<p>RHEL/CentOS:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ yum install icinga2-ido-mysql</span><br></pre></td></tr></table></figure>
+<p>SUSE:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ zypper install icinga2-ido-mysql</span><br></pre></td></tr></table></figure>
+<p>FreeBSD:</p>
+<p>FreeBSD的MySQL IDO模块已经包含在icinga2包中，位于 /usr/local/share/icinga2-ido-mysql/schema/mysql.sql。</p>
+<p>注意：Debian/Ubuntu的包中提供了一个数据库配置向导，你可以根据个人喜好来选择是否使用它。</p>
+<h3 id="设置MySQL数据库">设置MySQL数据库</h3><p>为Icinga 2设置一个MySQL数据库:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ mysql -u root -p&#10;&#10;mysql&#62;  CREATE DATABASE icinga;&#10;        GRANT SELECT, INSERT, UPDATE, DELETE, DROP, CREATE VIEW, INDEX, EXECUTE ON icinga.* TO &#39;icinga&#39;@&#39;localhost&#39; IDENTIFIED BY &#39;icinga&#39;;</span><br></pre></td></tr></table></figure>
+<p>在创建数据库完成后，使用以下命令导入Icinga2 IDO数据库结构：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ mysql -u root -p icinga &#60; /usr/share/icinga2-ido-mysql/schema/mysql.sql</span><br></pre></td></tr></table></figure>
+<p>为了使用Icinga Web2，我们为Icinga Web2也创建一个空的数据库：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ mysql -u root -p&#10;&#10;mysql&#62;  CREATE DATABASE icingaweb2;&#10;        GRANT SELECT, INSERT, UPDATE, DELETE, DROP, CREATE VIEW, INDEX, EXECUTE ON icingaweb2.* TO &#39;icinga&#39;@&#39;localhost&#39; IDENTIFIED BY &#39;icinga&#39;;</span><br></pre></td></tr></table></figure>
+<p>启用MySQL IDO模块</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ icinga2 feature enable ido-mysql</span><br></pre></td></tr></table></figure>
+<p>启用后别忘了重启Icinga2服务：</p>
+<p>Debian/Ubuntu, RHEL/CentOS 6 和 SUSE:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ service icinga2 restart</span><br></pre></td></tr></table></figure>
+<p>RHEL/CentOS 7 和 Fedora:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ systemctl restart icinga2</span><br></pre></td></tr></table></figure>
+<p>FreeBSD:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ service icinga2 restart</span><br></pre></td></tr></table></figure>
+<h3 id="安装Web服务">安装Web服务</h3><p>Debian/Ubuntu:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ apt-get install apache2</span><br></pre></td></tr></table></figure>
+<p>RHEL/CentOS 6:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ yum install httpd&#10;$ chkconfig httpd on&#10;$ service httpd start</span><br></pre></td></tr></table></figure>
+<p>RHEL/CentOS 7/Fedora:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ yum install httpd&#10;$ systemctl enable httpd&#10;$ systemctl start httpd</span><br></pre></td></tr></table></figure>
+<p>SUSE:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ zypper install apache2&#10;$ chkconfig on&#10;$ service apache2 start</span><br></pre></td></tr></table></figure>
+<p>FreeBSD (nginx，你也可以使用 apache24 来作为Web服务)：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ pkg install nginx php56-gettext php56-ldap php56-openssl php56-mysql php56-pdo_mysql php56-pgsql php56-pdo_pgsql php56-sockets php56-gd pecl-imagick pecl-intl&#10;$ sysrc php_fpm_enable=yes&#10;$ sysrc nginx_enable=yes&#10;$ sed -i &#39;&#39; &#34;s/listen\ =\ 127.0.0.1:9000/listen\ =\ \/var\/run\/php5-fpm.sock/&#34; /usr/local/etc/php-fpm.conf&#10;$ sed -i &#39;&#39; &#34;s/;listen.owner/listen.owner/&#34; /usr/local/etc/php-fpm.conf&#10;$ sed -i &#39;&#39; &#34;s/;listen.group/listen.group/&#34; /usr/local/etc/php-fpm.conf&#10;$ sed -i &#39;&#39; &#34;s/;listen.mode/listen.mode/&#34; /usr/local/etc/php-fpm.conf&#10;$ service php-fpm start&#10;$ service nginx start</span><br></pre></td></tr></table></figure>
+<h3 id="配置防火墙规则">配置防火墙规则</h3><p>例如：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ iptables -A INPUT -p tcp -m tcp --dport 80 -j ACCEPT&#10;$ service iptables save</span><br></pre></td></tr></table></figure>
+<p>RHEL/CentOS 7 使用下面命令：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ firewall-cmd --add-service=http&#10;$ firewall-cmd --permanent --add-service=http</span><br></pre></td></tr></table></figure>
+<h3 id="配置额外的命令通道">配置额外的命令通道</h3><p>Web接口和一些其它模块通过额外的命令通道来向Icinga2发送命令，你可以使用下面的命令启用它： </p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ icinga2 feature enable command</span><br></pre></td></tr></table></figure>
+<p>同样，你需要重启Icinga2服务来使它生效。</p>
+<p>默认情况下，icingacmd用户组拥有读写命令通道文件的权限，因此你需要使用下面的命令将Web服务的用户加入到该组：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ usermod -a -G icingacmd www-data</span><br></pre></td></tr></table></figure>
+<p>FreeBSD: www用户组拥有文件的读写权限，你不需要额外操作什么。</p>
+<p>Debian包使用nagios作为默认用户名和用户组，因此你需要将上述命令中的icingacmd修改为nagios。</p>
+<p>Web服务的用户名在不同的环境下是不同的，因此你可以尝试修改www-data为wwwrun、www、或者 apache。</p>
+<p>你可以使用以下命令来检测是否成功将用户加入到icingacmd用户组：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ id &#60;your-webserver-user&#62;</span><br></pre></td></tr></table></figure>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>Icinga Web2是Icinga2的Web前端展示界面之一，它也是支持Icinga2的Web界面中我个人最喜欢的。通过Icinga Web2，你可以方便的展示与管理你的监控，也可以自定义一些显示模块。本文将介绍Icinga Web2的安装与配置，其中部分经验可能在Icinga2的其它Web界面也适用。</p>]]>
+    
+    </summary>
+    
+      <category term="CentOS" scheme="http://www.tnidea.com/tags/CentOS/"/>
+    
+      <category term="Icinga Web2" scheme="http://www.tnidea.com/tags/Icinga-Web2/"/>
+    
+      <category term="Icinga2" scheme="http://www.tnidea.com/tags/Icinga2/"/>
+    
+      <category term="服务器监控" scheme="http://www.tnidea.com/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9B%91%E6%8E%A7/"/>
+    
+      <category term="运维" scheme="http://www.tnidea.com/categories/%E8%BF%90%E7%BB%B4/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[使用Icinga2和Icinga Web2搭建监控服务]]></title>
