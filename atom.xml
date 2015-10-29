@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://www.tnidea.com/"/>
-  <updated>2015-10-29T13:01:55.000Z</updated>
+  <updated>2015-10-29T13:20:42.000Z</updated>
   <id>http://www.tnidea.com/</id>
   
   <author>
@@ -19,7 +19,7 @@
     <link href="http://www.tnidea.com/setting-up-icinga-web2.html"/>
     <id>http://www.tnidea.com/setting-up-icinga-web2.html</id>
     <published>2015-10-30T16:00:00.000Z</published>
-    <updated>2015-10-29T13:01:55.000Z</updated>
+    <updated>2015-10-29T13:20:42.000Z</updated>
     <content type="html"><![CDATA[<p>Icinga Web2是Icinga2的Web前端展示界面之一，它也是支持Icinga2的Web界面中我个人最喜欢的。通过Icinga Web2，你可以方便的展示与管理你的监控，也可以自定义一些显示模块。本文将介绍Icinga Web2的安装与配置，其中部分经验可能在Icinga2的其它Web界面也适用。</p>
 <a id="more"></a>
 <h3 id="设置包管理库">设置包管理库</h3><p>你需要使用以下命令将Icinga2的所在的包管理库加入到你的系统中，如果你按照我之前的文章操作的话，其实这步已经做过了。</p>
@@ -40,7 +40,7 @@
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">zypper ar http://packages.icinga.org/openSUSE/ICINGA-release.repo&#10;zypper ref</span><br></pre></td></tr></table></figure>
 <p>RHEL/CentOS的软件包依赖于EPEL，确保你已经配置了它！这步应该在安装Icinga2时已经完成。<br>Debian wheezy的软件包依赖于wheezy-packports库，请在安装前启用它。</p>
 <h3 id="安装_Icinga_Web2">安装 Icinga Web2</h3><p>你可以通过系统的包管理器来安装Icinga Web2，下面是一些系统的具体命令：</p>
-<p>Debian and Ubuntu:</p>
+<p>Debian 和 Ubuntu:</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">apt-get install icingaweb2</span><br></pre></td></tr></table></figure>
 <p>RHEL, CentOS 和 Fedora:</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">yum install icingaweb2 icingacli</span><br></pre></td></tr></table></figure>
@@ -51,26 +51,26 @@
 <p>STEP 1: 通过icingacli创建一个token，用来安装Icinga Web2：</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">icingacli setup token create&#10;icingacli setup token show</span><br></pre></td></tr></table></figure>
 <p>STEP 2: 使用浏览器访问 <a href="http://127.0.0.1/icingaweb2/setup" target="_blank" rel="external">http://127.0.0.1/icingaweb2/setup</a> （将IP替换为实际IP或域名），将上一步命令行得到的token输入到Steup Token的输入框中，继续下一步。</p>
-<p> <img src="http://www.tnidea.com/media/image/icinga-websetup-1.png" alt="DRPC-workflow"></p>
+<p> <img src="http://www.tnidea.com/media/image/icinga-websetup-1.png" alt="Image"></p>
 <p>STEP 3: 根据需要选择需要安装的模块，我这边选择了除翻译外的所有模块。</p>
-<p> <img src="http://www.tnidea.com/media/image/icinga-websetup-2.png" alt="DRPC-workflow"></p>
+<p> <img src="http://www.tnidea.com/media/image/icinga-websetup-2.png" alt="Image"></p>
 <p>STEP 4: 根据系统检查结果，解决需要修改的项，全部完成后刷新确认。</p>
-<p> <img src="http://www.tnidea.com/media/image/icinga-websetup-3.png" alt="DRPC-workflow"></p>
+<p> <img src="http://www.tnidea.com/media/image/icinga-websetup-3.png" alt="Image"></p>
 <p>本例中，需要解决的有PHP时区，LDAP，PDO-MySQL，PDO-PostgreSQL问题。PDO-MySQL，PDO-PostgreSQL只需要重启Web服务器即可解决。</p>
 <p>修改PHP时区：<br><code>使用 vi 打开 /etc/php.ini；查找 date.timezone，删除最前面的分号，在结尾增加时区标签，这里使用： Asia/Shanghai 。</code></p>
 <p>启用LDAP：<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">yum install php-ldap</span><br></pre></td></tr></table></figure></p>
 <p>重启Web服务器，CentOS 7直接使用 systemctl restart httpd 重启。<br>现在界面上所有的状态应该都已经变成了绿色，继续下一步吧，后面没有特别讲到的步骤都是直接点击下一步的！</p>
 <p>STEP 5: 配置Icinga Web2数据库</p>
-<p> <img src="http://www.tnidea.com/media/image/icinga-websetup-4.png" alt="DRPC-workflow"></p>
+<p> <img src="http://www.tnidea.com/media/image/icinga-websetup-4.png" alt="Image"></p>
 <p>此处直接填写我们创建的icingaweb2数据库的信息，默认情况下用户名和密码都是icingaweb2。由于我们并没有给予icingaweb2用户创建表的权限，因此你还需要给一个有创建数据库和表权限的用户。</p>
-<p><img src="http://www.tnidea.com/media/image/icinga-websetup-5.png" alt="DRPC-workflow"></p>
+<p><img src="http://www.tnidea.com/media/image/icinga-websetup-5.png" alt="Image"></p>
 <p>STEP 6: 创建一个Icinga Web2的管理员账号</p>
-<p><img src="http://www.tnidea.com/media/image/icinga-websetup-6.png" alt="DRPC-workflow"></p>
+<p><img src="http://www.tnidea.com/media/image/icinga-websetup-6.png" alt="Image"></p>
 <p>STEP 7: 配置Icinga IDO数据库信息</p>
-<p><img src="http://www.tnidea.com/media/image/icinga-websetup-7.png" alt="DRPC-workflow"></p>
+<p><img src="http://www.tnidea.com/media/image/icinga-websetup-7.png" alt="Image"></p>
 <p>此处直接填写我们创建的icinga数据库的信息，默认情况下用户名和密码都是icinga。</p>
 <p>ok! 一切就绪，登陆进去瞅瞅吧！</p>
-<p><img src="http://www.tnidea.com/media/image/icinga-websetup-8.png" alt="DRPC-workflow"></p>
+<p><img src="http://www.tnidea.com/media/image/icinga-websetup-8.png" alt="Image"></p>
 ]]></content>
     <summary type="html">
     <![CDATA[<p>Icinga Web2是Icinga2的Web前端展示界面之一，它也是支持Icinga2的Web界面中我个人最喜欢的。通过Icinga Web2，你可以方便的展示与管理你的监控，也可以自定义一些显示模块。本文将介绍Icinga Web2的安装与配置，其中部分经验可能在Icinga2的其它Web界面也适用。</p>]]>
