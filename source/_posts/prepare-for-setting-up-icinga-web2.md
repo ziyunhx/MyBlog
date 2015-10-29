@@ -112,7 +112,8 @@ $ mysql -u root -p icinga < /usr/share/icinga2-ido-mysql/schema/mysql.sql
 $ mysql -u root -p
 
 mysql>  CREATE DATABASE icingaweb2;
-        GRANT SELECT, INSERT, UPDATE, DELETE, DROP, CREATE VIEW, INDEX, EXECUTE ON icingaweb2.* TO 'icinga'@'localhost' IDENTIFIED BY 'icinga';
+        GRANT SELECT, INSERT, UPDATE, DELETE, DROP, CREATE VIEW, INDEX, EXECUTE ON icingaweb2.* TO 'icingaweb2'@'localhost' IDENTIFIED BY 'icingaweb2';
+        quit
 {% endcodeblock %}
 
 启用MySQL IDO模块
