@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://www.tnidea.com/"/>
-  <updated>2015-10-28T14:51:15.000Z</updated>
+  <updated>2015-10-29T13:01:55.000Z</updated>
   <id>http://www.tnidea.com/</id>
   
   <author>
@@ -15,11 +15,86 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title><![CDATA[安装与配置Icinga Web2]]></title>
+    <link href="http://www.tnidea.com/setting-up-icinga-web2.html"/>
+    <id>http://www.tnidea.com/setting-up-icinga-web2.html</id>
+    <published>2015-10-30T16:00:00.000Z</published>
+    <updated>2015-10-29T13:01:55.000Z</updated>
+    <content type="html"><![CDATA[<p>Icinga Web2是Icinga2的Web前端展示界面之一，它也是支持Icinga2的Web界面中我个人最喜欢的。通过Icinga Web2，你可以方便的展示与管理你的监控，也可以自定义一些显示模块。本文将介绍Icinga Web2的安装与配置，其中部分经验可能在Icinga2的其它Web界面也适用。</p>
+<a id="more"></a>
+<h3 id="设置包管理库">设置包管理库</h3><p>你需要使用以下命令将Icinga2的所在的包管理库加入到你的系统中，如果你按照我之前的文章操作的话，其实这步已经做过了。</p>
+<p>Debian (debmon):</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">wget -O - http://debmon.org/debmon/repo.key 2&#62;/dev/null | apt-key add -&#10;echo &#39;deb http://debmon.org/debmon debmon-wheezy main&#39; &#62;/etc/apt/sources.list.d/debmon.list&#10;apt-get update</span><br></pre></td></tr></table></figure>
+<p>Ubuntu Trusty:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">wget -O - http://packages.icinga.org/icinga.key | apt-key add -&#10;add-apt-repository &#39;deb http://packages.icinga.org/ubuntu icinga-trusty main&#39;&#10;apt-get update</span><br></pre></td></tr></table></figure>
+<p>如果你使用的是其它的Ubuntu版本，只需要将trusty替换成你实际环境的名字。</p>
+<p>RHEL 和 CentOS:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">rpm --import http://packages.icinga.org/icinga.key&#10;curl -o /etc/yum.repos.d/ICINGA-release.repo http://packages.icinga.org/epel/ICINGA-release.repo&#10;yum makecache</span><br></pre></td></tr></table></figure>
+<p>Fedora:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">rpm --import http://packages.icinga.org/icinga.key&#10;curl -o /etc/yum.repos.d/ICINGA-release.repo http://packages.icinga.org/fedora/ICINGA-release.repo&#10;yum makecache</span><br></pre></td></tr></table></figure>
+<p>SLES 11:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">zypper ar http://packages.icinga.org/SUSE/ICINGA-release-11.repo&#10;zypper ref</span><br></pre></td></tr></table></figure>
+<p>SLES 12:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">zypper ar http://packages.icinga.org/SUSE/ICINGA-release.repo&#10;zypper ref</span><br></pre></td></tr></table></figure>
+<p>openSUSE:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">zypper ar http://packages.icinga.org/openSUSE/ICINGA-release.repo&#10;zypper ref</span><br></pre></td></tr></table></figure>
+<p>RHEL/CentOS的软件包依赖于EPEL，确保你已经配置了它！这步应该在安装Icinga2时已经完成。<br>Debian wheezy的软件包依赖于wheezy-packports库，请在安装前启用它。</p>
+<h3 id="安装_Icinga_Web2">安装 Icinga Web2</h3><p>你可以通过系统的包管理器来安装Icinga Web2，下面是一些系统的具体命令：</p>
+<p>Debian and Ubuntu:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">apt-get install icingaweb2</span><br></pre></td></tr></table></figure>
+<p>RHEL, CentOS 和 Fedora:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">yum install icingaweb2 icingacli</span><br></pre></td></tr></table></figure>
+<p>Debian wheezy/RHEL/CentOS用户请仔细阅读包管理库的提示。</p>
+<p>SLES 和 openSUSE:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">zypper install icingaweb2 icingacli</span><br></pre></td></tr></table></figure>
+<h3 id="配置Icinga_Web2">配置Icinga Web2</h3><p>你可以通过Icinga Web2配置向导，或者直接通过执行命令来完成配置，本文仅介绍通过配置向导来完成配置，如果需要使用命令行来完成，请查看 Icinga Web 2官方文档。</p>
+<p>STEP 1: 通过icingacli创建一个token，用来安装Icinga Web2：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">icingacli setup token create&#10;icingacli setup token show</span><br></pre></td></tr></table></figure>
+<p>STEP 2: 使用浏览器访问 <a href="http://127.0.0.1/icingaweb2/setup" target="_blank" rel="external">http://127.0.0.1/icingaweb2/setup</a> （将IP替换为实际IP或域名），将上一步命令行得到的token输入到Steup Token的输入框中，继续下一步。</p>
+<p> <img src="http://www.tnidea.com/media/image/icinga-websetup-1.png" alt="DRPC-workflow"></p>
+<p>STEP 3: 根据需要选择需要安装的模块，我这边选择了除翻译外的所有模块。</p>
+<p> <img src="http://www.tnidea.com/media/image/icinga-websetup-2.png" alt="DRPC-workflow"></p>
+<p>STEP 4: 根据系统检查结果，解决需要修改的项，全部完成后刷新确认。</p>
+<p> <img src="http://www.tnidea.com/media/image/icinga-websetup-3.png" alt="DRPC-workflow"></p>
+<p>本例中，需要解决的有PHP时区，LDAP，PDO-MySQL，PDO-PostgreSQL问题。PDO-MySQL，PDO-PostgreSQL只需要重启Web服务器即可解决。</p>
+<p>修改PHP时区：<br><code>使用 vi 打开 /etc/php.ini；查找 date.timezone，删除最前面的分号，在结尾增加时区标签，这里使用： Asia/Shanghai 。</code></p>
+<p>启用LDAP：<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">yum install php-ldap</span><br></pre></td></tr></table></figure></p>
+<p>重启Web服务器，CentOS 7直接使用 systemctl restart httpd 重启。<br>现在界面上所有的状态应该都已经变成了绿色，继续下一步吧，后面没有特别讲到的步骤都是直接点击下一步的！</p>
+<p>STEP 5: 配置Icinga Web2数据库</p>
+<p> <img src="http://www.tnidea.com/media/image/icinga-websetup-4.png" alt="DRPC-workflow"></p>
+<p>此处直接填写我们创建的icingaweb2数据库的信息，默认情况下用户名和密码都是icingaweb2。由于我们并没有给予icingaweb2用户创建表的权限，因此你还需要给一个有创建数据库和表权限的用户。</p>
+<p><img src="http://www.tnidea.com/media/image/icinga-websetup-5.png" alt="DRPC-workflow"></p>
+<p>STEP 6: 创建一个Icinga Web2的管理员账号</p>
+<p><img src="http://www.tnidea.com/media/image/icinga-websetup-6.png" alt="DRPC-workflow"></p>
+<p>STEP 7: 配置Icinga IDO数据库信息</p>
+<p><img src="http://www.tnidea.com/media/image/icinga-websetup-7.png" alt="DRPC-workflow"></p>
+<p>此处直接填写我们创建的icinga数据库的信息，默认情况下用户名和密码都是icinga。</p>
+<p>ok! 一切就绪，登陆进去瞅瞅吧！</p>
+<p><img src="http://www.tnidea.com/media/image/icinga-websetup-8.png" alt="DRPC-workflow"></p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>Icinga Web2是Icinga2的Web前端展示界面之一，它也是支持Icinga2的Web界面中我个人最喜欢的。通过Icinga Web2，你可以方便的展示与管理你的监控，也可以自定义一些显示模块。本文将介绍Icinga Web2的安装与配置，其中部分经验可能在Icinga2的其它Web界面也适用。</p>]]>
+    
+    </summary>
+    
+      <category term="CentOS" scheme="http://www.tnidea.com/tags/CentOS/"/>
+    
+      <category term="Icinga Web2" scheme="http://www.tnidea.com/tags/Icinga-Web2/"/>
+    
+      <category term="Icinga2" scheme="http://www.tnidea.com/tags/Icinga2/"/>
+    
+      <category term="服务器监控" scheme="http://www.tnidea.com/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9B%91%E6%8E%A7/"/>
+    
+      <category term="运维" scheme="http://www.tnidea.com/categories/%E8%BF%90%E7%BB%B4/"/>
+    
+  </entry>
+  
+  <entry>
     <title><![CDATA[安装Icinga Web2所需服务]]></title>
     <link href="http://www.tnidea.com/prepare-for-setting-up-icinga-web2.html"/>
     <id>http://www.tnidea.com/prepare-for-setting-up-icinga-web2.html</id>
     <published>2015-10-24T16:00:00.000Z</published>
-    <updated>2015-10-28T14:51:15.000Z</updated>
+    <updated>2015-10-29T13:01:55.000Z</updated>
     <content type="html"><![CDATA[<p>Icinga Web2是Icinga2的Web前端展示界面之一，它也是支持Icinga2的Web界面中我个人最喜欢的。通过Icinga Web2，你可以方便的展示与管理你的监控，也可以自定义一些显示模块。本文将介绍Icinga Web2的安装与配置，其中部分经验可能在Icinga2的其它Web界面也适用。</p>
 <a id="more"></a>
 <p>Icinga2通过DB IDO模块将所有配置与状态信息都保存在一个数据库中，这些数据会被Icinga Web2，Icinga Reporting或Icinga Web 1.x使用。</p>
@@ -49,7 +124,7 @@
 <p>在创建数据库完成后，使用以下命令导入Icinga2 IDO数据库结构：</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ mysql -u root -p icinga &#60; /usr/share/icinga2-ido-mysql/schema/mysql.sql</span><br></pre></td></tr></table></figure>
 <p>为了使用Icinga Web2，我们为Icinga Web2也创建一个空的数据库：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ mysql -u root -p&#10;&#10;mysql&#62;  CREATE DATABASE icingaweb2;&#10;        GRANT SELECT, INSERT, UPDATE, DELETE, DROP, CREATE VIEW, INDEX, EXECUTE ON icingaweb2.* TO &#39;icinga&#39;@&#39;localhost&#39; IDENTIFIED BY &#39;icinga&#39;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ mysql -u root -p&#10;&#10;mysql&#62;  CREATE DATABASE icingaweb2;&#10;        GRANT SELECT, INSERT, UPDATE, DELETE, DROP, CREATE VIEW, INDEX, EXECUTE ON icingaweb2.* TO &#39;icingaweb2&#39;@&#39;localhost&#39; IDENTIFIED BY &#39;icingaweb2&#39;;&#10;        quit</span><br></pre></td></tr></table></figure>
 <p>启用MySQL IDO模块</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ icinga2 feature enable ido-mysql</span><br></pre></td></tr></table></figure>
 <p>启用后别忘了重启Icinga2服务：</p>
@@ -267,11 +342,11 @@
     <link href="http://www.tnidea.com/call-dot-net-drpc-program.html"/>
     <id>http://www.tnidea.com/call-dot-net-drpc-program.html</id>
     <published>2015-09-11T16:00:00.000Z</published>
-    <updated>2015-10-05T13:07:21.000Z</updated>
+    <updated>2015-10-29T13:01:55.000Z</updated>
     <content type="html"><![CDATA[<p> 在上一篇文章里介绍了.Net版本的DRPC的类库，结尾处的例子使用了Java版 BasicDRPCTopology ，本文我将介绍如何使用C#来开发 Storm Topology 并供远程DRPC调用，这篇文章将作为.Net Storm系列文章的一个暂时的结束，新的文章将随着 <a href="https://github.com/ziyunhx/storm-net-adapter" title="storm-net-adapter" target="_blank" rel="external">storm-net-adapter</a> 新特性来更新!</p>
 <a id="more"></a>
 <p> 在开始介绍具体代码之前，我们先回顾一下DRPC的数据流图：</p>
-<p> <img src="http://www.tnidea.com/media/image/drpc-workflow.png" alt="image"></p>
+<p> <img src="http://www.tnidea.com/media/image/drpc-workflow.png" alt="DRPC-workflow"></p>
 <p> 从图中可以看到，DRPC实际上并不会影响的具体的业务逻辑代码的编写，只是在传入参数中增加了一个 request-id 用于辨别任务，在结束时增加了一个 return-info 用来返回结果。那么，在Bolt的编写中，我们为每一个Bolt的输入输出增加一个 id 参数来标识任务，在结束时额外增加一个返回结果的参数。我们还是写一个简单的字符操作的例子。</p>
 <figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">using</span> Storm;</span><br><span class="line"><span class="keyword">using</span> System;</span><br><span class="line"><span class="keyword">using</span> System.Collections.Generic;</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">StormSample</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">class</span> <span class="title">SimpleDRPC</span> : <span class="title">IBolt</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">private</span> Context ctx;</span><br><span class="line"></span><br><span class="line">        <span class="comment"><span class="xmlDocTag">///</span> <span class="xmlDocTag">&lt;summary&gt;</span></span></span><br><span class="line">        <span class="comment"><span class="xmlDocTag">///</span>  Implements of delegate "newPlugin", which is used to create a instance of this spout/bolt</span></span><br><span class="line">        <span class="comment"><span class="xmlDocTag">///</span> <span class="xmlDocTag">&lt;/summary&gt;</span></span></span><br><span class="line">        <span class="comment"><span class="xmlDocTag">///</span> <span class="xmlDocTag">&lt;param name="ctx"&gt;</span>Context instance<span class="xmlDocTag">&lt;/param&gt;</span></span></span><br><span class="line">        <span class="comment"><span class="xmlDocTag">///</span> <span class="xmlDocTag">&lt;returns&gt;</span><span class="xmlDocTag">&lt;/returns&gt;</span></span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> SimpleDRPC <span class="title">Get</span>(<span class="params">Context ctx</span>)</span><br><span class="line">        </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">new</span> SimpleDRPC(ctx);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="title">SimpleDRPC</span>(<span class="params">Context ctx</span>)</span><br><span class="line">        </span>&#123;</span><br><span class="line">            Context.Logger.Info(<span class="string">"SimpleDRPC constructor called"</span>);</span><br><span class="line">            <span class="keyword">this</span>.ctx = ctx;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// Declare Input and Output schemas</span></span><br><span class="line">            Dictionary&lt;<span class="keyword">string</span>, List&lt;Type&gt;&gt; inputSchema = <span class="keyword">new</span> Dictionary&lt;<span class="keyword">string</span>, List&lt;Type&gt;&gt;();</span><br><span class="line">            inputSchema.Add(<span class="string">"default"</span>, <span class="keyword">new</span> List&lt;Type&gt;() &#123; <span class="keyword">typeof</span>(<span class="keyword">string</span>), <span class="keyword">typeof</span>(<span class="keyword">object</span>) &#125;);</span><br><span class="line">            Dictionary&lt;<span class="keyword">string</span>, List&lt;Type&gt;&gt; outputSchema = <span class="keyword">new</span> Dictionary&lt;<span class="keyword">string</span>, List&lt;Type&gt;&gt;();</span><br><span class="line">            outputSchema.Add(<span class="string">"default"</span>, <span class="keyword">new</span> List&lt;Type&gt;() &#123; <span class="keyword">typeof</span>(<span class="keyword">string</span>), <span class="keyword">typeof</span>(<span class="keyword">object</span>) &#125;);</span><br><span class="line">            <span class="keyword">this</span>.ctx.DeclareComponentSchema(<span class="keyword">new</span> ComponentStreamSchema(inputSchema, outputSchema));</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Execute</span>(<span class="params">StormTuple tuple</span>)</span><br><span class="line">        </span>&#123;</span><br><span class="line">            Context.Logger.Info(<span class="string">"SimpleDRPC Execute enter"</span>);</span><br><span class="line">            </span><br><span class="line">            <span class="keyword">string</span> sentence = tuple.GetString(<span class="number">0</span>) + <span class="string">"!"</span>;</span><br><span class="line">            <span class="keyword">this</span>.ctx.Emit(<span class="string">"default"</span>, <span class="keyword">new</span> List&lt;StormTuple&gt; &#123; tuple &#125;, <span class="keyword">new</span> List&lt;<span class="keyword">object</span>&gt; &#123; sentence, tuple.GetValue(<span class="number">1</span>) &#125;);</span><br><span class="line">            Context.Logger.Info(<span class="string">"SimpleDRPC Execute exit"</span>);</span><br><span class="line">            ApacheStorm.Ack(tuple);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Prepare</span>(<span class="params">Config stormConf, TopologyContext context</span>)</span><br><span class="line">        </span>&#123;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>以上代码需要引用<a href="https://github.com/ziyunhx/storm-net-adapter" title="storm-net-adapter" target="_blank" rel="external">storm-net-adapter</a>，详细信息可以查看我之前的文章，下面我们来使用Java定义这个DRPC Topology:</p>
