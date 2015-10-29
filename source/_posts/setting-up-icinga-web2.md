@@ -1,5 +1,5 @@
 title: 安装与配置Icinga Web2
-date: 2015-10-31
+date: 2015-10-30
 categories: 
 - 运维
 tags: 
