@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://www.tnidea.com/"/>
-  <updated>2015-11-18T13:30:54.000Z</updated>
+  <updated>2015-11-18T13:34:33.000Z</updated>
   <id>http://www.tnidea.com/</id>
   
   <author>
@@ -19,15 +19,10 @@
     <link href="http://www.tnidea.com/deploy-storm-by-docker.html"/>
     <id>http://www.tnidea.com/deploy-storm-by-docker.html</id>
     <published>2015-11-17T16:00:00.000Z</published>
-    <updated>2015-11-18T13:30:54.000Z</updated>
+    <updated>2015-11-18T13:34:33.000Z</updated>
     <content type="html"><![CDATA[<p>Storm的部署虽然不是特别麻烦，但是在生产环境中，为了提高部署效率，方便管理维护，使用Docker来统一管理部署是一个不错的选择。下面是我开源的一个新的项目，一个配置好了storm与mono环境的Docker镜像编排：<a href="https://github.com/ziyunhx/storm-mono-docker" target="_blank" rel="external">storm-mono-docker</a>。</p>
 <a id="more"></a>
-<ul>
-<li><p>这个项目得益于<a href="https://github.com/ptgoetz/storm-vagrant" target="_blank" rel="external">https://github.com/ptgoetz/storm-vagrant</a>和<a href="https://github.com/wurstmeister/storm-docker" target="_blank" rel="external">https://github.com/wurstmeister/storm-docker</a>；在此感谢他们的付出！</p>
-</li>
-<li><p>项目使用的Docker镜像托管在 <a href="https://index.docker.io" target="_blank" rel="external">https://index.docker.io</a>。</p>
-</li>
-</ul>
+<p>这个项目得益于<a href="https://github.com/ptgoetz/storm-vagrant" target="_blank" rel="external">https://github.com/ptgoetz/storm-vagrant</a>和<a href="https://github.com/wurstmeister/storm-docker" target="_blank" rel="external">https://github.com/wurstmeister/storm-docker</a>；在此感谢他们的付出！<br>项目使用的Docker镜像托管在 <a href="https://index.docker.io" target="_blank" rel="external">https://index.docker.io</a>。</p>
 <h2 id="准备工作">准备工作</h2><ul>
 <li><p>安装 Docker Engine，<a href="https://docs.docker.com/" target="_blank" rel="external">https://docs.docker.com/</a></p>
 </li>
