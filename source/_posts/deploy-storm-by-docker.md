@@ -16,9 +16,8 @@ Storm的部署虽然不是特别麻烦，但是在生产环境中，为了提高
 
 <!--more-->
 
-- 这个项目得益于[https://github.com/ptgoetz/storm-vagrant](https://github.com/ptgoetz/storm-vagrant)和[https://github.com/wurstmeister/storm-docker](https://github.com/wurstmeister/storm-docker)；在此感谢他们的付出！
-
-- 项目使用的Docker镜像托管在 [https://index.docker.io](https://index.docker.io)。
+这个项目得益于[https://github.com/ptgoetz/storm-vagrant](https://github.com/ptgoetz/storm-vagrant)和[https://github.com/wurstmeister/storm-docker](https://github.com/wurstmeister/storm-docker)；在此感谢他们的付出！
+项目使用的Docker镜像托管在 [https://index.docker.io](https://index.docker.io)。
 
 ## 准备工作 ##
 
@@ -26,7 +25,9 @@ Storm的部署虽然不是特别麻烦，但是在生产环境中，为了提高
 
 - 安装 docker-compose [http://docs.docker.com/compose/install/](http://docs.docker.com/compose/install/)
 
-- 克隆git项目： ````git clone https://github.com/ziyunhx/storm-mono-docker````
+- 克隆git项目： 
+
+		git clone https://github.com/ziyunhx/storm-mono-docker
 
 ## 使用 ##
 
@@ -34,36 +35,32 @@ Storm的部署虽然不是特别麻烦，但是在生产环境中，为了提高
 
 通过以下命令启动集群：
 
-- ```docker-compose up -d```
+	docker-compose up -d
 
-- 你也可以使用 ```docker-compose up``` 命令来将结果输出到当前命令行界面，但是在你结束它之前无法进行任何其它操作，而一旦命令行退出，所有的容器都将停止。而 ```docker-compose up -d``` 将在后台启动所有容器。
+- 你也可以使用 docker-compose up 命令来将结果输出到当前命令行界面，但是在你结束它之前无法进行任何其它操作，而一旦命令行退出，所有的容器都将停止。而 docker-compose up -d 将在后台启动所有容器。
 
 停止这个集群的所有容器：
 
-- ```docker-compose stop```
+	docker-compose stop
 
 容器一旦停止，下次直接启动将无法正常链接容器，导致storm运行异常，你可以在结束后使用以下命令结束和移除所有的Docker缓存：
 
-- ```docker kill $(docker ps -q) ; docker rm $(docker ps -a -q)```
+	docker kill $(docker ps -q) ; docker rm $(docker ps -a -q)
 
 增加更多的supervisors：
 
-- ```docker-compose scale supervisor=4```
+	docker-compose scale supervisor=4
 
 
 使用以下命令删除所有的镜像文件（小心，这会让你下一次启动时花费更多时间下载容器，仅在不想继续使用时执行）：
 
-- ```docker rmi $(docker images -q -a)```
+	docker rmi $(docker images -q -a)
 
 ## 重新构建和更新 ##
 
-你可以在修改Dockerfile后使用以下命令来重新构建镜像：
+你可以在修改Dockerfile后使用以下命令来重新构建镜像：rebuild.sh ；
 
-- ```rebuild.sh```
-
-使用以下命令来更新镜像到最新版本：
-
-- ```refresh.sh```
+使用以下命令来更新镜像到最新版本：refresh.sh 。
 
 ## 问与答 ##
 
@@ -98,7 +95,7 @@ Storm的部署虽然不是特别麻烦，但是在生产环境中，为了提高
 	storm jar target/your-topology-fat-jar.jar com.your.package.AndTopology topology-name
 
 ### 如何连接我的容器? ###
-通过使用 ```docker-compose ps``` 找到你希望连接的容器的ssh端口，然后通过ssh连接：
+通过使用 docker-compose ps 找到你希望连接的容器的ssh端口，然后通过ssh连接：
 
     $ ssh root@`boot2docker ip` -p $CONTAINER_PORT
 
