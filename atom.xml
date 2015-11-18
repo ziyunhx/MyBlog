@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://www.tnidea.com/"/>
-  <updated>2015-10-29T15:03:56.000Z</updated>
+  <updated>2015-11-18T13:19:50.000Z</updated>
   <id>http://www.tnidea.com/</id>
   
   <author>
@@ -13,6 +13,85 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[使用Docker快速部署Storm环境]]></title>
+    <link href="http://www.tnidea.com/deploy-storm-by-docker.html"/>
+    <id>http://www.tnidea.com/deploy-storm-by-docker.html</id>
+    <published>2015-11-17T16:00:00.000Z</published>
+    <updated>2015-11-18T13:19:50.000Z</updated>
+    <content type="html"><![CDATA[<p>Storm的部署虽然不是特别麻烦，但是在生产环境中，为了提高部署效率，方便管理维护，使用Docker来统一管理部署是一个不错的选择。下面是我开源的一个新的项目，一个配置好了storm与mono环境的Docker镜像编排：<a href="https://github.com/ziyunhx/storm-mono-docker" target="_blank" rel="external">storm-mono-docker</a>。</p>
+<a id="more"></a>
+<ul>
+<li><p>这个项目得益于<a href="https://github.com/ptgoetz/storm-vagrant" target="_blank" rel="external">https://github.com/ptgoetz/storm-vagrant</a>和<a href="https://github.com/wurstmeister/storm-docker" target="_blank" rel="external">https://github.com/wurstmeister/storm-docker</a>；在此感谢他们的付出！</p>
+</li>
+<li><p>项目使用的Docker镜像托管在 <a href="https://index.docker.io" target="_blank" rel="external">https://index.docker.io</a>。</p>
+</li>
+</ul>
+<h2 id="准备工作">准备工作</h2><ul>
+<li><p>安装 Docker Engine，<a href="https://docs.docker.com/" target="_blank" rel="external">https://docs.docker.com/</a></p>
+</li>
+<li><p>安装 docker-compose <a href="http://docs.docker.com/compose/install/" target="_blank" rel="external">http://docs.docker.com/compose/install/</a></p>
+</li>
+<li><p>克隆git项目： <figure class="highlight"><figcaption><span>clone</span><a href="https://github.com/ziyunhx/storm-mono-docker````" target="_blank" rel="external">link</a></figcaption><table><tr><td class="code"><pre><span class="line">&#10;## &#20351;&#29992; ##&#10;&#10;&#39318;&#20808;&#23558;&#21629;&#20196;&#34892;&#30446;&#24405;&#20999;&#25442;&#21040;&#21018;&#21018;&#20811;&#38534;&#19979;&#26469;&#30340;git&#39033;&#30446;&#30446;&#24405;&#65307;&#10;&#10;&#36890;&#36807;&#20197;&#19979;&#21629;&#20196;&#21551;&#21160;&#38598;&#32676;&#65306;&#10;&#10;- ```docker-compose up -d</span><br></pre></td></tr></table></figure></p>
+</li>
+<li><p>你也可以使用 <figure class="highlight"><figcaption><span>up``` 命令来将结果输出到当前命令行界面，但是在你结束它之前无法进行任何其它操作，而一旦命令行退出，所有的容器都将停止。而 ```docker-compose up -d``` 将在后台启动所有容器。</span></figcaption><table><tr><td class="code"><pre><span class="line">&#10;&#20572;&#27490;&#36825;&#20010;&#38598;&#32676;&#30340;&#25152;&#26377;&#23481;&#22120;&#65306;&#10;&#10;- ```docker-compose stop</span><br></pre></td></tr></table></figure></p>
+</li>
+</ul>
+<p>容器一旦停止，下次直接启动将无法正常链接容器，导致storm运行异常，你可以在结束后使用以下命令结束和移除所有的Docker缓存：</p>
+<ul>
+<li><figure class="highlight docker"><figcaption><span>kill $(docker ps -q) ; docker rm $(docker ps -a -q)```</span></figcaption><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">增加更多的supervisors：</span><br><span class="line"></span><br><span class="line">- ```docker-compose scale supervisor=4</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>使用以下命令删除所有的镜像文件（小心，这会让你下一次启动时花费更多时间下载容器，仅在不想继续使用时执行）：</p>
+<ul>
+<li><figure class="highlight docker"><figcaption><span>rmi $(docker images -q -a)```</span></figcaption><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">## 重新构建和更新 ##</span></span><br><span class="line"></span><br><span class="line">你可以在修改Dockerfile后使用以下命令来重新构建镜像：</span><br><span class="line"></span><br><span class="line">- ```rebuild.sh</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>使用以下命令来更新镜像到最新版本：</p>
+<ul>
+<li><code>refresh.sh</code></li>
+</ul>
+<h2 id="问与答">问与答</h2><h3 id="如何访问Storm_UI来查看运行状况？">如何访问Storm UI来查看运行状况？</h3><p>在docker-compose.yml中有下面这段配置：</p>
+<pre><code><span class="attribute">ui</span>:
+  <span class="attribute">image</span>: ziyunhx/storm-ui
+      <span class="attribute">ports</span>:
+        - <span class="string">"49080:8080"</span>
+</code></pre><p>它告诉我们将Docker镜像的8080端口映射到了主机的49080，因此你可以通过访问 <a href="http://localhost:49080" target="_blank" rel="external">http://localhost:49080</a> 来访问。如果你使用 boot2docker ，你可以通过以下命令得到虚拟机的IP：</p>
+<pre><code>$ <span class="keyword">boot2docker </span><span class="literal">ip</span>
+<span class="label">The</span> VM<span class="string">'s Host only interface IP address is: 192.168.59.103</span>
+</code></pre><p>返回的结果就是你的IP，本例中可以通过 <a href="http://192.168.59.103:49080" target="_blank" rel="external">http://192.168.59.103:49080</a> 来访问。</p>
+<h3 id="如何部署提交一个topology？">如何部署提交一个topology？</h3><p>如果 nimbus 的IP与端口不是默认的，你需要指定它们后来提交，本例中可以使用以下命令：</p>
+<pre><code>storm jar target/your-topology-fat-jar<span class="class">.jar</span> com<span class="class">.your</span><span class="class">.package</span><span class="class">.AndTopology</span> topology-name -c nimbus.host=<span class="number">192.168</span>.<span class="number">59.103</span> -c nimbus<span class="class">.thrift</span><span class="class">.port</span>=<span class="number">49627</span>
+</code></pre><p>如果上述命令没有起作用，你可以在本地的Storm配置文件（storm.yaml）配置以下项：</p>
+<pre><code>nimbus<span class="class">.host</span>: <span class="string">"192.168.59.103"</span>    
+nimbus<span class="class">.thrift</span><span class="class">.port</span>: <span class="number">49627</span>
+</code></pre><p>然后执行以下命令提交：</p>
+<pre><code>storm jar target/your-topology-fat-jar<span class="class">.jar</span> com<span class="class">.your</span><span class="class">.package</span><span class="class">.AndTopology</span> topology-name
+</code></pre><h3 id="如何连接我的容器?">如何连接我的容器?</h3><p>通过使用 <code>docker-compose ps</code> 找到你希望连接的容器的ssh端口，然后通过ssh连接：</p>
+<pre><code>$ ssh root@`boot2docker ip` -p <span class="variable">$CONTAINER</span>_PORT
+</code></pre><p>密码是 ‘ziyunhxpass’ （位于：<a href="https://registry.hub.docker.com/u/ziyunhx/base/dockerfile/）。" target="_blank" rel="external">https://registry.hub.docker.com/u/ziyunhx/base/dockerfile/）。</a></p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>Storm的部署虽然不是特别麻烦，但是在生产环境中，为了提高部署效率，方便管理维护，使用Docker来统一管理部署是一个不错的选择。下面是我开源的一个新的项目，一个配置好了storm与mono环境的Docker镜像编排：<a href="https://github.com/ziyunhx/storm-mono-docker">storm-mono-docker</a>。</p>]]>
+    
+    </summary>
+    
+      <category term=".NET" scheme="http://www.tnidea.com/tags/NET/"/>
+    
+      <category term="C#" scheme="http://www.tnidea.com/tags/C/"/>
+    
+      <category term="Docker" scheme="http://www.tnidea.com/tags/Docker/"/>
+    
+      <category term="csharp" scheme="http://www.tnidea.com/tags/csharp/"/>
+    
+      <category term="mono" scheme="http://www.tnidea.com/tags/mono/"/>
+    
+      <category term="storm" scheme="http://www.tnidea.com/tags/storm/"/>
+    
+      <category term="Storm" scheme="http://www.tnidea.com/categories/Storm/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[安装与配置Icinga Web2]]></title>
