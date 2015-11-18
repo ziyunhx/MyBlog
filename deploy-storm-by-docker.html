@@ -11,7 +11,7 @@
 <meta property="og:url" content="http://www.tnidea.com/deploy-storm-by-docker.html">
 <meta property="og:site_name" content="The NewIdea">
 <meta property="og:description" content="Storm的部署虽然不是特别麻烦，但是在生产环境中，为了提高部署效率，方便管理维护，使用Docker来统一管理部署是一个不错的选择。下面是我开源的一个新的项目，一个配置好了storm与mono环境的Docker镜像编排：storm-mono-docker。">
-<meta property="og:updated_time" content="2015-11-18T13:19:50.000Z">
+<meta property="og:updated_time" content="2015-11-18T13:26:09.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="使用Docker快速部署Storm环境">
 <meta name="twitter:description" content="Storm的部署虽然不是特别麻烦，但是在生产环境中，为了提高部署效率，方便管理维护，使用Docker来统一管理部署是一个不错的选择。下面是我开源的一个新的项目，一个配置好了storm与mono环境的Docker镜像编排：storm-mono-docker。">
@@ -120,7 +120,7 @@
 </li>
 <li><p>安装 docker-compose <a href="http://docs.docker.com/compose/install/" target="_blank" rel="external">http://docs.docker.com/compose/install/</a></p>
 </li>
-<li><p>克隆git项目： <figure class="highlight"><figcaption><span>clone</span><a href="https://github.com/ziyunhx/storm-mono-docker````" target="_blank" rel="external">link</a></figcaption><table><tr><td class="code"><pre><span class="line">&#10;## &#20351;&#29992; ##&#10;&#10;&#39318;&#20808;&#23558;&#21629;&#20196;&#34892;&#30446;&#24405;&#20999;&#25442;&#21040;&#21018;&#21018;&#20811;&#38534;&#19979;&#26469;&#30340;git&#39033;&#30446;&#30446;&#24405;&#65307;&#10;&#10;&#36890;&#36807;&#20197;&#19979;&#21629;&#20196;&#21551;&#21160;&#38598;&#32676;&#65306;&#10;&#10;- ```docker-compose up -d</span><br></pre></td></tr></table></figure></p>
+<li><p>克隆git项目： <figure class="highlight"><figcaption><span>clone</span><a href="https://github.com/ziyunhx/storm-mono-docker```" target="_blank" rel="external">link</a></figcaption><table><tr><td class="code"><pre><span class="line">&#10;## &#20351;&#29992; ##&#10;&#10;&#39318;&#20808;&#23558;&#21629;&#20196;&#34892;&#30446;&#24405;&#20999;&#25442;&#21040;&#21018;&#21018;&#20811;&#38534;&#19979;&#26469;&#30340;git&#39033;&#30446;&#30446;&#24405;&#65307;&#10;&#10;&#36890;&#36807;&#20197;&#19979;&#21629;&#20196;&#21551;&#21160;&#38598;&#32676;&#65306;&#10;&#10;- ```docker-compose up -d</span><br></pre></td></tr></table></figure></p>
 </li>
 <li><p>你也可以使用 <figure class="highlight"><figcaption><span>up``` 命令来将结果输出到当前命令行界面，但是在你结束它之前无法进行任何其它操作，而一旦命令行退出，所有的容器都将停止。而 ```docker-compose up -d``` 将在后台启动所有容器。</span></figcaption><table><tr><td class="code"><pre><span class="line">&#10;&#20572;&#27490;&#36825;&#20010;&#38598;&#32676;&#30340;&#25152;&#26377;&#23481;&#22120;&#65306;&#10;&#10;- ```docker-compose stop</span><br></pre></td></tr></table></figure></p>
 </li>
