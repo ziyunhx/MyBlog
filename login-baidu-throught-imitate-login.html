@@ -5,16 +5,16 @@
   
   <title>使用ImitateLogin模拟登录百度 | The NewIdea</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="在之前的文章中，我已经介绍过一个社交网站模拟登录的类库：imitate-login ，这是一个通过c#的HttpWebRequest来模拟网站登录的库，之前实现了微博网页版和微博Wap版；现在，模拟百度登录的部分也已经完成。">
+  <meta name="description" content="在之前的文章中，我已经介绍过一个社交网站模拟登录的类库：imitate-login ，这是一个通过c#的HttpWebRequest来模拟网站登录的库，之前实现了微博网页版和微博Wap版；现在，模拟百度登录的部分也已经完成。由于个人时间的限制，加上目前有多个项目在同时进行，因此更新频率会根据项目关注度来决定（Star &amp;amp; fork）。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="使用ImitateLogin模拟登录百度">
 <meta property="og:url" content="http://www.tnidea.com/login-baidu-throught-imitate-login.html">
 <meta property="og:site_name" content="The NewIdea">
-<meta property="og:description" content="在之前的文章中，我已经介绍过一个社交网站模拟登录的类库：imitate-login ，这是一个通过c#的HttpWebRequest来模拟网站登录的库，之前实现了微博网页版和微博Wap版；现在，模拟百度登录的部分也已经完成。">
-<meta property="og:updated_time" content="2015-11-30T16:13:55.000Z">
+<meta property="og:description" content="在之前的文章中，我已经介绍过一个社交网站模拟登录的类库：imitate-login ，这是一个通过c#的HttpWebRequest来模拟网站登录的库，之前实现了微博网页版和微博Wap版；现在，模拟百度登录的部分也已经完成。由于个人时间的限制，加上目前有多个项目在同时进行，因此更新频率会根据项目关注度来决定（Star &amp;amp; fork）。">
+<meta property="og:updated_time" content="2015-11-30T16:21:18.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="使用ImitateLogin模拟登录百度">
-<meta name="twitter:description" content="在之前的文章中，我已经介绍过一个社交网站模拟登录的类库：imitate-login ，这是一个通过c#的HttpWebRequest来模拟网站登录的库，之前实现了微博网页版和微博Wap版；现在，模拟百度登录的部分也已经完成。">
+<meta name="twitter:description" content="在之前的文章中，我已经介绍过一个社交网站模拟登录的类库：imitate-login ，这是一个通过c#的HttpWebRequest来模拟网站登录的库，之前实现了微博网页版和微博Wap版；现在，模拟百度登录的部分也已经完成。由于个人时间的限制，加上目前有多个项目在同时进行，因此更新频率会根据项目关注度来决定（Star &amp;amp; fork）。">
   
   
   <link rel="stylesheet" href="/css/style.css" type="text/css">
@@ -107,9 +107,9 @@
     <div class="article-entry" itemprop="articleBody">
       
                 
-        <p>在之前的文章中，我已经介绍过一个社交网站模拟登录的类库：<a href="https://github.com/ziyunhx/imitate-login" target="_blank" rel="external">imitate-login</a> ，这是一个通过c#的HttpWebRequest来模拟网站登录的库，之前实现了微博网页版和微博Wap版；现在，模拟百度登录的部分也已经完成。</p>
+        <p>在之前的文章中，我已经介绍过一个社交网站模拟登录的类库：<a href="https://github.com/ziyunhx/imitate-login" target="_blank" rel="external">imitate-login</a> ，这是一个通过c#的HttpWebRequest来模拟网站登录的库，之前实现了微博网页版和微博Wap版；现在，模拟百度登录的部分也已经完成。由于个人时间的限制，加上目前有多个项目在同时进行，因此更新频率会根据项目关注度来决定（<strong>Star &amp; fork</strong>）。</p>
  <a id="more"></a>
-<p>由于个人时间的限制，加上目前有多个项目在同时进行，因此更新频率会根据项目关注度来决定（<strong>Star &amp; fork</strong>）。这个类库的使用方法非常简单，仅对外提供一个方法： </p>
+<p>这个类库的使用方法非常简单，仅对外提供一个方法： </p>
 <p><code>LoginResult Login(1: string userName, 2: string password, 3: LoginSite loginSite);</code> </p>
 <p>这个方法位于ImitateLogin的LoginHelper类中，使用之前需要先对其进行实例化。通过传入 用户名、密码以及登录的网站，返回一个包含登录结果状态、描述信息和Cookies字典的类。它通过 Thrift 来实现多语言的支持。</p>
 <p>下面将通过介绍模拟百度登录的实现来介绍如何进行扩充与二次开发：</p>
