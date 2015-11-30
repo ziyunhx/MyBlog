@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://www.tnidea.com/"/>
-  <updated>2015-11-18T13:34:33.000Z</updated>
+  <updated>2015-11-30T16:13:55.000Z</updated>
   <id>http://www.tnidea.com/</id>
   
   <author>
@@ -13,6 +13,60 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[使用ImitateLogin模拟登录百度]]></title>
+    <link href="http://www.tnidea.com/login-baidu-throught-imitate-login.html"/>
+    <id>http://www.tnidea.com/login-baidu-throught-imitate-login.html</id>
+    <published>2015-11-29T16:00:00.000Z</published>
+    <updated>2015-11-30T16:13:55.000Z</updated>
+    <content type="html"><![CDATA[<p>在之前的文章中，我已经介绍过一个社交网站模拟登录的类库：<a href="https://github.com/ziyunhx/imitate-login" target="_blank" rel="external">imitate-login</a> ，这是一个通过c#的HttpWebRequest来模拟网站登录的库，之前实现了微博网页版和微博Wap版；现在，模拟百度登录的部分也已经完成。</p>
+ <a id="more"></a>
+<p>由于个人时间的限制，加上目前有多个项目在同时进行，因此更新频率会根据项目关注度来决定（<strong>Star &amp; fork</strong>）。这个类库的使用方法非常简单，仅对外提供一个方法： </p>
+<p><code>LoginResult Login(1: string userName, 2: string password, 3: LoginSite loginSite);</code> </p>
+<p>这个方法位于ImitateLogin的LoginHelper类中，使用之前需要先对其进行实例化。通过传入 用户名、密码以及登录的网站，返回一个包含登录结果状态、描述信息和Cookies字典的类。它通过 Thrift 来实现多语言的支持。</p>
+<p>下面将通过介绍模拟百度登录的实现来介绍如何进行扩充与二次开发：</p>
+<p>首先，创建百度登录类 BaiduLogin.cs 继承 ILogin 接口；实现其生成的 DoLogin 方法。</p>
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="preprocessor">#<span class="keyword">region</span> ILogin implementation</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> LoginResult <span class="title">DoLogin</span>(<span class="params"><span class="keyword">string</span> UserName, <span class="keyword">string</span> Password</span>)</span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> NotImplementedException();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> CookieContainer cookies &#123; <span class="keyword">set</span>; <span class="keyword">get</span>;&#125;</span><br><span class="line"><span class="preprocessor">#<span class="keyword">endregion</span></span></span><br></pre></td></tr></table></figure>
+<p>然后我们通过监听百度登录过程中的网络请求，梳理出修改过Cookies和最终提交登录所需的参数的请求。</p>
+<p>Step1: 访问以下链接生成初始Cookies：<a href="https://passport.baidu.com/passApi/html/_blank.html" target="_blank" rel="external">https://passport.baidu.com/passApi/html/_blank.html</a> 。</p>
+<p>Step2: 获取最终登录提交所需的token：</p>
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="comment">//1. Get the token.</span></span><br><span class="line"><span class="keyword">string</span> token_url = <span class="keyword">string</span>.Format(<span class="string">"https://passport.baidu.com/v2/api/?getapi&amp;tpl=mn&amp;apiver=v3&amp;tt=&#123;0&#125;&amp;class=login&amp;gid=&#123;1&#125;&amp;logintype=dialogLogin&amp;callback=bd__cbs__&#123;2&#125;"</span>, TimeHelper.ConvertDateTimeInt(DateTime.Now), Guid.NewGuid().ToString().ToUpper(), build_callback());</span><br><span class="line"><span class="keyword">string</span> prepareContent = HttpHelper.GetHttpContent(token_url, <span class="keyword">null</span>, cookies, referer: <span class="string">"https://www.baidu.com/"</span>, encode: Encoding.GetEncoding(<span class="string">"GB2312"</span>), cookiesDomain: <span class="string">"passport.baidu.com"</span>);</span><br><span class="line"><span class="comment">//string prepareJson = prepareContent.Split('(')[1].Split(')')[0];</span></span><br><span class="line"><span class="keyword">dynamic</span> prepareJson = JsonConvert.DeserializeObject(prepareContent.Split(<span class="string">'('</span>)[<span class="number">1</span>].Split(<span class="string">')'</span>)[<span class="number">0</span>]);</span><br><span class="line"><span class="keyword">string</span> token = prepareJson.data.token;</span><br></pre></td></tr></table></figure>
+<p>其中 build_callback 为随机生成6位字母或数字的组合的方法。</p>
+<p>Step3: 获取用于加密密码的publickey：</p>
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="comment">//2. Get public key</span></span><br><span class="line"><span class="keyword">string</span> pubkey_url = <span class="string">"https://passport.baidu.com/v2/getpublickey?token=&#123;0&#125;&amp;tpl=mn&amp;apiver=v3&amp;tt=&#123;1&#125;&amp;gid=&#123;2&#125;&amp;callback=bd__cbs__&#123;3&#125;"</span>;</span><br><span class="line"><span class="keyword">string</span> pubkeyContent = HttpHelper.GetHttpContent(<span class="keyword">string</span>.Format(pubkey_url, token, TimeHelper.ConvertDateTimeInt(DateTime.Now), Guid.NewGuid().ToString().ToUpper(), build_callback()), <span class="keyword">null</span>, cookies, referer: <span class="string">"https://www.baidu.com/"</span>, encode: Encoding.GetEncoding(<span class="string">"GB2312"</span>), cookiesDomain: <span class="string">"passport.baidu.com"</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">dynamic</span> pubkeyJson = JsonConvert.DeserializeObject(pubkeyContent.Split(<span class="string">'('</span>)[<span class="number">1</span>].Split(<span class="string">')'</span>)[<span class="number">0</span>]);</span><br><span class="line">rsa_pub_baidu = pubkeyJson.pubkey;</span><br><span class="line"><span class="keyword">string</span> KEY = pubkeyJson.key;</span><br></pre></td></tr></table></figure>
+<p>Step4: 模拟执行最终的登录：</p>
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="comment">//3. Build post data</span></span><br><span class="line"><span class="keyword">string</span> login_data = <span class="string">"staticpage=https%3A%2F%2Fwww.baidu.com%2Fcache%2Fuser%2Fhtml%2Fv3Jump.html&amp;charset=UTF-8&amp;token=&#123;0&#125;&amp;tpl=mn&amp;subpro=&amp;apiver=v3&amp;tt=&#123;1&#125;&amp;codestring=&amp;safeflg=0&amp;u=https%3A%2F%2Fwww.baidu.com%2F&amp;isPhone=&amp;detect=1&amp;gid=&#123;2&#125;&amp;quick_user=0&amp;logintype=dialogLogin&amp;logLoginType=pc_loginDialog&amp;idc=&amp;loginmerge=true&amp;splogin=rate&amp;username=&#123;3&#125;&amp;password=&#123;4&#125;&amp;verifycode=&amp;mem_pass=on&amp;rsakey=&#123;5&#125;&amp;crypttype=12&amp;ppui_logintime=&#123;6&#125;&amp;countrycode=&amp;callback=parent.bd__pcbs__&#123;7&#125;"</span>;</span><br><span class="line">login_data = <span class="keyword">string</span>.Format(login_data, token, TimeHelper.ConvertDateTimeInt(DateTime.Now), Guid.NewGuid().ToString().ToUpper(), HttpUtility.UrlEncode(UserName), HttpUtility.UrlEncode(get_pwa_rsa(Password)), HttpUtility.UrlEncode(KEY), stopwatch.ElapsedMilliseconds, build_callback());</span><br><span class="line"></span><br><span class="line"><span class="comment">//4. Post the login data</span></span><br><span class="line"><span class="keyword">string</span> login_url = <span class="string">"https://passport.baidu.com/v2/api/?login"</span>;</span><br><span class="line">HttpHelper.GetHttpContent(login_url, login_data, cookies, referer: <span class="string">"https://www.baidu.com/"</span>, cookiesDomain: <span class="string">"passport.baidu.com"</span>);</span><br></pre></td></tr></table></figure>
+<p>stopwatch 是一个记录从最初执行到最终提交之前的耗时的一个计时器，get_pwa_rsa 为加密密码的方法。</p>
+<p>Step5：验证最终的登录结果：</p>
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">string</span> home_url = <span class="string">"https://www.baidu.com"</span>;</span><br><span class="line"><span class="keyword">string</span> result = HttpHelper.GetHttpContent(home_url, cookies: cookies, cookiesDomain: <span class="string">"passport.baidu.com"</span>);</span><br><span class="line"><span class="comment">//5. Verifty the login result</span></span><br><span class="line"><span class="keyword">if</span> (<span class="keyword">string</span>.IsNullOrWhiteSpace(result) || result.Contains(<span class="string">"账号存在异常"</span>) || !result.Contains(<span class="string">"bds.comm.user=\""</span>))</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> LoginResult() &#123; Result = ResultType.AccounntLimit, Msg = <span class="string">"Fail, Msg: Login fail! Maybe you account is disable or captcha is needed."</span> &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Step6：创建返回结果类：</p>
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line">LoginResult loginResult = <span class="keyword">new</span> LoginResult() &#123; Result = ResultType.Success, Msg = <span class="string">"Success"</span>, Cookies = HttpHelper.GetAllCookies(cookies) &#125;;</span><br></pre></td></tr></table></figure>
+<p>至此，模拟登录部分的代码就完成了，为了能够被其它程序调用，你还需要在 LoginSite 的枚举中新增一条来标识这个登录方法，此处增加了一个 Baidu = 5，并设置 [Description(“Baidu”)]。</p>
+<p>然后在 LoginHelper.cs 的 Login 方法中的 switch (loginSite) 里增加一个 case：</p>
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">case</span> LoginSite.Baidu:</span><br><span class="line">    LoginClass = <span class="keyword">new</span> BaiduLogin ();</span><br><span class="line">    <span class="keyword">break</span>;</span><br></pre></td></tr></table></figure>
+<p>好了，大功告成！Todo List中还有淘宝、QQ、Facebook、Twitter、Google要做呢，我还想加入GitHub、Wechat…<br>现在，你可以帮我了吗？</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>在之前的文章中，我已经介绍过一个社交网站模拟登录的类库：<a href="https://github.com/ziyunhx/imitate-login">imitate-login</a> ，这是一个通过c#的HttpWebRequest来模拟网站登录的库，之前实现了微博网页版和微博Wap版；现在，模拟百度登录的部分也已经完成。</p>]]>
+    
+    </summary>
+    
+      <category term=".NET" scheme="http://www.tnidea.com/tags/NET/"/>
+    
+      <category term="Baidu" scheme="http://www.tnidea.com/tags/Baidu/"/>
+    
+      <category term="C#" scheme="http://www.tnidea.com/tags/C/"/>
+    
+      <category term="csharp" scheme="http://www.tnidea.com/tags/csharp/"/>
+    
+      <category term="social network" scheme="http://www.tnidea.com/tags/social-network/"/>
+    
+      <category term="thrift" scheme="http://www.tnidea.com/tags/thrift/"/>
+    
+      <category term="爬虫" scheme="http://www.tnidea.com/categories/%E7%88%AC%E8%99%AB/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[使用Docker快速部署Storm环境]]></title>
