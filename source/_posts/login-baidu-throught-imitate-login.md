@@ -12,11 +12,11 @@ tags:
 
 ---
 
-在之前的文章中，我已经介绍过一个社交网站模拟登录的类库：[imitate-login](https://github.com/ziyunhx/imitate-login) ，这是一个通过c#的HttpWebRequest来模拟网站登录的库，之前实现了微博网页版和微博Wap版；现在，模拟百度登录的部分也已经完成。
+在之前的文章中，我已经介绍过一个社交网站模拟登录的类库：[imitate-login](https://github.com/ziyunhx/imitate-login) ，这是一个通过c#的HttpWebRequest来模拟网站登录的库，之前实现了微博网页版和微博Wap版；现在，模拟百度登录的部分也已经完成。由于个人时间的限制，加上目前有多个项目在同时进行，因此更新频率会根据项目关注度来决定（**Star & fork**）。
  
  <!--more-->
  
-由于个人时间的限制，加上目前有多个项目在同时进行，因此更新频率会根据项目关注度来决定（**Star & fork**）。这个类库的使用方法非常简单，仅对外提供一个方法： 
+这个类库的使用方法非常简单，仅对外提供一个方法： 
  
 `LoginResult Login(1: string userName, 2: string password, 3: LoginSite loginSite);` 
  
@@ -39,7 +39,11 @@ public CookieContainer cookies { set; get;}
 
 然后我们通过监听百度登录过程中的网络请求，梳理出修改过Cookies和最终提交登录所需的参数的请求。
 
-Step1: 访问以下链接生成初始Cookies：https://passport.baidu.com/passApi/html/_blank.html 。
+Step1: 访问以下链接生成初始Cookies：
+
+{% codeblock lang:csharp %}
+HttpHelper.GetHttpContent("https://passport.baidu.com/passApi/html/_blank.html", cookies: cookies, cookiesDomain: "passport.baidu.com");
+{% endcodeblock %}
 
 Step2: 获取最终登录提交所需的token：
 
