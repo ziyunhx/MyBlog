@@ -82,9 +82,6 @@ deploy:
 - type: git
   repository: git@github.com:ziyunhx/MyBlog.git
   branch: gh-pages
-- type: git
-  repository: git@gitcafe.com:ziyunhx/ziyunhx.git
-  branch: gitcafe-pages
   
 sitemap:
     path: sitemap.xml
