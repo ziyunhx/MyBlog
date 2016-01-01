@@ -25,7 +25,7 @@ widgets:
 #- recent_posts
 - category
 - archive
-- tag
+#- tag
 
 thumbnail: true
 

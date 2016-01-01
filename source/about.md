@@ -22,10 +22,6 @@ MVP(2015 .Net)
 
 本站架构: hexo + Markdown + Github Pages 
 
-#### 打赏
- 
-<form action="https://shenghuo.alipay.com/send/payment/fill.htm" method="POST" target="_blank" accept-charset="GBK"><input name="optEmail" type="hidden" value="ziyunhx@gmail.com" /><input name="payAmount" type="hidden" value="10" /><input id="title" name="title" type="hidden" value="写的不错哦，我很喜欢！" /><input name="memo" type="hidden" value="" /><input name="pay" type="image" value="转账" src="https://img.alipay.com/sys/personalprod/style/mc/btn-index.png" /></form>
-
 #### 联系
 
  - [GitHub](https://github.com/ziyunhx "GitHub-ziyunhx")
