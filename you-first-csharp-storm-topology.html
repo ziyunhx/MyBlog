@@ -109,7 +109,7 @@
     <div class="article-entry" itemprop="articleBody">
       
                 
-        <p> WordCount在大数据领域就像学习一门语言时的hello world，得益于Storm的开源以及<a href="https://github.com/ziyunhx/storm-net-adapter" title="Storm.Net.Adapter" target="_blank" rel="external">Storm.Net.Adapter</a>，现在我们也可以像Java或Python一样，使用Csharp创建原生支持的Storm Topologies。下面我将通过介绍wordcount来展示如何使用Csharp开发Storm拓扑。</p>
+    <p> WordCount在大数据领域就像学习一门语言时的hello world，得益于Storm的开源以及<a href="https://github.com/ziyunhx/storm-net-adapter" title="Storm.Net.Adapter" target="_blank" rel="external">Storm.Net.Adapter</a>，现在我们也可以像Java或Python一样，使用Csharp创建原生支持的Storm Topologies。下面我将通过介绍wordcount来展示如何使用Csharp开发Storm拓扑。</p>
 <a id="more"></a>
 <p> 上篇博客已经介绍了如何部署Storm开发环境，本文所讲述demo已包含在<a href="https://github.com/ziyunhx/storm-net-adapter" title="Storm.Net.Adapter" target="_blank" rel="external">Storm.Net.Adapter</a>中，如果你觉得对你有帮助，欢迎Star和Fork，让更多人看到来帮助完善这个项目。</p>
 <p> 首先，我们创建一个控制台应用程序（使用控制台是方便调用） StormSimple；使用Nuget添加添加Storm.Net.Adapter（该类库的namespace为Storm）。</p>
@@ -143,10 +143,10 @@
 <p> 我们在Main方法里使用参数来确定具体调用的是哪个Spout/Bolt，ApacheStorm是一个包含主要方法的类，之所以不使用Storm只是因为命名空间占用了它。Csharp端的代码到此就全部结束了，Java端的代码与部署发布将在下一篇详细介绍，敬请期待！下面让我们来看一看整个Topology的流程吧！</p>
 <p> <img src="http://www.tnidea.com/media/image/wordcount-topology.png" alt="WordCount Topology"></p>
 
-              <p>本文来自 <a href="http://www.tnidea.com/" title="The NewIdea" target="_blank" rel="external">The NewIdea</a>，作者 Carey Tzou 。<br>永久地址：<a href="http://www.tnidea.com/you-first-csharp-storm-topology.html" title="使用Csharp创建你的第一个Storm拓扑（wordcount）" target="_blank" rel="external">http://www.tnidea.com/you-first-csharp-storm-topology.html</a><br>未经授权，拒绝任何全文及摘要转载！<br><br>文章还不错？打赏一下吧：</p>
-      <p>欢迎关注微信公众号：CareyTzou（dotNet大数据）</p>
-      <a href="http://www.tnidea.com/media/image/wechat.jpg" title="Wechat:CareyTzou" class="fancybox" rel="article0"><img style="width:160px;display:inline;" src="http://www.tnidea.com/media/image/wechat.jpg" alt="Wechat:CareyTzou"></a>
-      
+    <p>本文来自 <a href="http://www.tnidea.com/" title="The NewIdea" target="_blank" rel="external">The NewIdea</a>，作者 Carey Tzou 。<br>永久地址：<a href="http://www.tnidea.com/you-first-csharp-storm-topology.html" title="使用Csharp创建你的第一个Storm拓扑（wordcount）" target="_blank" rel="external">http://www.tnidea.com/you-first-csharp-storm-topology.html</a><br>未经授权，拒绝任何全文及摘要转载！<br>
+    <p>欢迎关注微信公众号：CareyTzou（dotNet大数据）</p>
+    <a href="http://www.tnidea.com/media/image/wechat.jpg" title="Wechat:CareyTzou" class="fancybox" rel="article0"><img style="width:160px;display:inline;" src="http://www.tnidea.com/media/image/wechat.jpg" alt="Wechat:CareyTzou"></a>
+    
     </div>
     <footer class="article-footer">
       <a data-url="http://www.tnidea.com/you-first-csharp-storm-topology.html" data-id="cifjm6ydn0001dbs3qpdy06nv" class="article-share-link">分享到</a>

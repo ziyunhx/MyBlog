@@ -109,7 +109,7 @@
     <div class="article-entry" itemprop="articleBody">
       
                 
-        <p> <a href="https://github.com/ziyunhx/storm-net-adapter" title="storm-net-adapter" target="_blank" rel="external">storm-net-adapter</a> 是一个使用C#编写的 Apache Storm 适配器；用于在 .Net 环境下开发 Storm 原生支持的拓扑，以及通过DRPC来远程跨语言使用集群计算资源。距离首次介绍已经更新了3个版本，带来了数项功能与性能的改进！下面将对改进部分进行说明。</p>
+    <p> <a href="https://github.com/ziyunhx/storm-net-adapter" title="storm-net-adapter" target="_blank" rel="external">storm-net-adapter</a> 是一个使用C#编写的 Apache Storm 适配器；用于在 .Net 环境下开发 Storm 原生支持的拓扑，以及通过DRPC来远程跨语言使用集群计算资源。距离首次介绍已经更新了3个版本，带来了数项功能与性能的改进！下面将对改进部分进行说明。</p>
 <a id="more"></a>
 <p> 首先，在V1.2版本加入了对DRPC的支持；通过使用DRPC，你可以方便调用任何使用Storm支持语言编写的Topology，你仅需将它们部署到集群。详细介绍可以通过 <a href="http://www.tnidea.com/dot-net-drpc-storm.html">.NET使用DRPC远程调用运行在Storm上的拓扑</a> 和 <a href="http://www.tnidea.com/call-dot-net-drpc-program.html">使用DRPC调用.NET开发的Storm拓扑</a> 来了解。<br> 在刚刚发布的V1.4版本中，对DRPC的支持进一步增强，默认使用线程池来管理连接。在之前的版本中，单机单进程环境下，如果所有并发使用各自连接，并发100的环境下长时间运行会出现连接数过大导致失败；如果使用单连接加锁模式，在并发30的情况下延时以及在5000ms以上。通过使用线程池来控制（默认配置），在生产环境下，峰值200并发的条件下，使用外网访问DRPC的延时保持在200ms内；每日调用量保持在2500万次，单个小时调用量峰值在300万次。Storm集群使用Docker部署在单台服务器上，部署方式可以查看 <a href="http://www.tnidea.com/deploy-storm-by-docker.html">使用Docker快速部署Storm环境</a>。下面是连续10天Storm运行的截图：</p>
 <p> <img src="http://www.tnidea.com/media/image/storm-run-status-1.png" alt="Storm UI"></p>
@@ -119,10 +119,10 @@
 <p> 在V1.4版本中，移除了项目对于Json.Net的依赖，采用SimpleJson作为替代；现在，再也不用慢慢等待Nuget的龟速了。另外，该类库支持.Net 3.5及以上；这是由于最新的Thrift并不支持.Net 3.5以下的版本，如果你需要使用更低版本的.Net，你可以从Apache Thrift官方网站下载源码修改后自行编译。</p>
 <p> 好了，在未来的版本中，我们还计划增加直接通过.Net打包发布Topology的支持，如果你有什么希望增加或完善的部分，可以通过博客留言、公众号评论、GitHub或邮件与我交流！</p>
 
-              <p>本文来自 <a href="http://www.tnidea.com/" title="The NewIdea" target="_blank" rel="external">The NewIdea</a>，作者 Carey Tzou 。<br>永久地址：<a href="http://www.tnidea.com/dot-net-storm-adapter-upgrade.html" title="Storm适配器(.Net)升级说明以及一些性能数据" target="_blank" rel="external">http://www.tnidea.com/dot-net-storm-adapter-upgrade.html</a><br>未经授权，拒绝任何全文及摘要转载！<br><br>文章还不错？打赏一下吧：</p>
-      <p>欢迎关注微信公众号：CareyTzou（dotNet大数据）</p>
-      <a href="http://www.tnidea.com/media/image/wechat.jpg" title="Wechat:CareyTzou" class="fancybox" rel="article0"><img style="width:160px;display:inline;" src="http://www.tnidea.com/media/image/wechat.jpg" alt="Wechat:CareyTzou"></a>
-      
+    <p>本文来自 <a href="http://www.tnidea.com/" title="The NewIdea" target="_blank" rel="external">The NewIdea</a>，作者 Carey Tzou 。<br>永久地址：<a href="http://www.tnidea.com/dot-net-storm-adapter-upgrade.html" title="Storm适配器(.Net)升级说明以及一些性能数据" target="_blank" rel="external">http://www.tnidea.com/dot-net-storm-adapter-upgrade.html</a><br>未经授权，拒绝任何全文及摘要转载！<br>
+    <p>欢迎关注微信公众号：CareyTzou（dotNet大数据）</p>
+    <a href="http://www.tnidea.com/media/image/wechat.jpg" title="Wechat:CareyTzou" class="fancybox" rel="article0"><img style="width:160px;display:inline;" src="http://www.tnidea.com/media/image/wechat.jpg" alt="Wechat:CareyTzou"></a>
+    
     </div>
     <footer class="article-footer">
       <a data-url="http://www.tnidea.com/dot-net-storm-adapter-upgrade.html" data-id="ciht3ihqb0000fis3s2fnrweb" class="article-share-link">分享到</a>
