@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>使用Icinga2监控Linux和Windows服务器 | The NewIdea</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Icinga2可以通过Agent来监控其它设备，这些设备包含各种操作系统的服务器以及网络设备。一些简单的网络指标监控是不需要创建Agent的，例如ping和ssh；但是某些无法通过网络获取的指标则需要在被监测服务器创建一个监控代理来将指标返回给监控服务器。本文将介绍如何在Linux和Windows服务器上安装和配置Agent来实现多机器的监控。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用Icinga2监控Linux和Windows服务器">
+<meta property="og:url" content="http://www.tnidea.com/icinga2-monitor-other-machine.html">
+<meta property="og:site_name" content="The NewIdea">
+<meta property="og:description" content="Icinga2可以通过Agent来监控其它设备，这些设备包含各种操作系统的服务器以及网络设备。一些简单的网络指标监控是不需要创建Agent的，例如ping和ssh；但是某些无法通过网络获取的指标则需要在被监测服务器创建一个监控代理来将指标返回给监控服务器。本文将介绍如何在Linux和Windows服务器上安装和配置Agent来实现多机器的监控。">
+<meta property="og:updated_time" content="2016-01-06T15:57:02.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="使用Icinga2监控Linux和Windows服务器">
+<meta name="twitter:description" content="Icinga2可以通过Agent来监控其它设备，这些设备包含各种操作系统的服务器以及网络设备。一些简单的网络指标监控是不需要创建Agent的，例如ping和ssh；但是某些无法通过网络获取的指标则需要在被监测服务器创建一个监控代理来将指标返回给监控服务器。本文将介绍如何在Linux和Windows服务器上安装和配置Agent来实现多机器的监控。">
+  
+  
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" type="text/css">
+  
+
+  
+
+  
+  <script src="/js/classie.js" type="text/javascript"></script>
+  <script src="/js/modernizr.custom.js" type="text/javascript"></script>
+</head>
+<body>
+  <div id="container" class="cbp-spmenu-push">
+    <header id="header">
+  <div id="header-main" class="header-inner">
+    <div class="outer">
+      <span id="mobile-logo" class="navigation-menu-button" id="js-mobile-menu"><i class="fa fa-bars mobile-menu-img">&nbsp;</i><span class="site-title">The NewIdea</span></span>
+      <a href="/" id="logo"><i class="logo" style="background-image: url(/css/images/logo.png)"></i><span class="site-title">The NewIdea</span></a>
+      <!-- Nav -->
+      <nav id="main-nav">
+        <ul>
+          
+            <li class="main-nav-link">
+              <a href="/.">首页</a>
+              
+            </li>
+          
+            <li class="main-nav-link">
+              <a href="/archives">归档</a>
+              
+            </li>
+          
+            <li class="main-nav-link">
+              <a href="javascript:void(0)">分类</a>
+              
+                <ul class="menu-category-list"><li class="menu-category-list-item"><a class="menu-category-list-link" href="/categories/Storm/">Storm</a></li><li class="menu-category-list-item"><a class="menu-category-list-link" href="/categories/爬虫/">爬虫</a></li><li class="menu-category-list-item"><a class="menu-category-list-link" href="/categories/运维/">运维</a></li><li class="menu-category-list-item"><a class="menu-category-list-link" href="/categories/项目管理/">项目管理</a></li></ul>
+              
+            </li>
+          
+            <li class="main-nav-link">
+              <a href="/about.html">关于</a>
+              
+            </li>
+          
+        </ul>
+      </nav>
+      
+      <div id="search-form-wrap">
+        <form class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="搜索"><button type="submit" class="search-form-submit"> </button></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+    <div class="outer">
+      
+      <section id="main"><article id="post-icinga2-monitor-other-machine" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      使用Icinga2监控Linux和Windows服务器
+    </h1>
+  
+
+        <div class="article-meta">
+          
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/icinga2-monitor-other-machine.html">
+      <time datetime="2015-12-05T16:00:00.000Z" itemprop="datePublished">2015-12-06</time>
+    </a>
+  </div>
+
+
+          
+  <div class="article-category">
+  	<i class="fa fa-folder"></i>
+    <a class="article-category-link" href="/categories/运维/">运维</a>
+  </div>
+
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+                
+    <p>Icinga2可以通过Agent来监控其它设备，这些设备包含各种操作系统的服务器以及网络设备。一些简单的网络指标监控是不需要创建Agent的，例如ping和ssh；但是某些无法通过网络获取的指标则需要在被监测服务器创建一个监控代理来将指标返回给监控服务器。本文将介绍如何在Linux和Windows服务器上安装和配置Agent来实现多机器的监控。</p>
+<a id="more"></a>
+<h1 id="配置监控服务器">配置监控服务器</h1><p>在配置远程监控代理之前，你首先需要设置一下主节点；这个设置过程主要是完成了一下几个步骤：</p>
+<ul>
+<li>为主节点生成SSL加密的CA证书；</li>
+<li>启用 API 功能，在配置文件增加本地 Endpoint 和 Zone 的配置；</li>
+<li>设置防火墙允许通信端口（默认为 5665）。</li>
+</ul>
+<p>你可以使用命令行界面来设置一个主节点，它需要以root权限来执行，如果你是使用该命令来设置主节点，注意第一个选项需要选择NO（n）。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># icinga2 node wizard&#10;Welcome to the Icinga 2 Setup Wizard!&#10;&#10;We&#39;ll guide you through all required configuration details.&#10;&#10;Please specify if this is a satellite setup (&#39;n&#39; installs a master setup) [Y/n]: n&#10;Starting the Master setup routine...&#10;Please specifiy the common name (CN) [icinga2-node1.localdomain]: &#10;Checking the &#39;api&#39; feature...&#10;&#39;api&#39; feature not enabled, running &#39;api setup&#39; now.&#10;information/cli: Generating new CA.&#10;&#10;information/base: Writing private key to &#39;/var/lib/icinga2/ca/ca.key&#39;.&#10;information/base: Writing X509 certificate to &#39;/var/lib/icinga2/ca/ca.crt&#39;.&#10;information/cli: Initializing serial file in &#39;/var/lib/icinga2/ca/serial.txt&#39;.&#10;information/cli: Generating new CSR in &#39;/etc/icinga2/pki/icinga2-node1.localdomain.csr&#39;.&#10;&#10;information/base: Writing private key to &#39;/etc/icinga2/pki/icinga2-node1.localdomain.key&#39;.&#10;information/base: Writing certificate signing request to &#39;/etc/icinga2/pki/icinga2-node1.localdomain.csr&#39;.&#10;information/cli: Signing CSR with CA and writing certificate to &#39;/etc/icinga2/pki/icinga2-node1.localdomain.crt&#39;.&#10;&#10;information/cli: Copying CA certificate to &#39;/etc/icinga2/pki/ca.crt&#39;.&#10;&#10;information/cli: Adding new ApiUser &#39;root&#39; in &#39;/etc/icinga2/conf.d/api-users.conf&#39;.&#10;&#10;information/cli: Enabling the ApiListener feature.&#10;&#10;Enabling feature api. Make sure to restart Icinga 2 for these changes to take effect.&#10;information/cli: Dumping config items to file &#39;/etc/icinga2/zones.conf&#39;.&#10;Please specify the API bind host/port (optional):&#10;Bind Host []: &#10;Bind Port []: &#10;information/cli: Updating constants.conf.&#10;information/cli: Updating constants file &#39;/etc/icinga2/constants.conf&#39;.&#10;information/cli: Updating constants file &#39;/etc/icinga2/constants.conf&#39;.&#10;Done.&#10;&#10;Now restart your Icinga 2 daemon to finish the installation!</span><br></pre></td></tr></table></figure>
+<p>验证配置文件，检查该步骤是否成功：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># egrep &#39;NodeName|TicketSalt&#39; /etc/icinga2/constants.conf&#10;# cat /etc/icinga2/zones.conf&#10;/*&#10; * Generated by Icinga 2 node setup commands&#10; * on 2015-02-09 15:21:49 +0100&#10; */&#10;object Endpoint &#34;icinga2-node1.localdomain&#34; &#123;&#10;&#125;&#10;&#10;object Zone &#34;master&#34; &#123;&#10;    //this is the local node master named  = &#34;master&#34;&#10;    endpoints = [ &#34;icinga2-node1.localdomain&#34; ]&#10;&#125;</span><br></pre></td></tr></table></figure>
+<p>验证完成后重启 Icinga2。</p>
+<p>在主节点使用命令行生成 ticket，其中 icinga2-node2.localdomain 为远程节点的 CN：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># icinga2 pki ticket --cn icinga2-node2.localdomain</span><br></pre></td></tr></table></figure>
+<h1 id="监控Linux服务器">监控Linux服务器</h1><p>Linux的远程节点安装与主节点相同，安装完Icinga2后，使用 icinga2 node wizard 配置远程节点，此处在第一次选择时直接使用回车选择默认选项：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># icinga2 node wizard&#10;Welcome to the Icinga 2 Setup Wizard!&#10;We&#39;ll guide you through all required configuration details.&#10;&#10;Please specify if this is a satellite setup (&#39;n&#39; installs a master setup) [Y/n]:&#10;Starting the Node setup routine...&#10;Please specifiy the common name (CN) [icinga2-node2.localdomain]:&#10;Please specifiy the local zone name [icinga2-node2.localdomain]:&#10;Please specify the master endpoint(s) this node should connect to:&#10;Master Common Name (CN from your master setup): icinga2-node1.localdomain&#10;Please fill out the master connection information:&#10;Master endpoint host (optional, your master&#39;s IP address or FQDN): 192.168.56.101&#10;Master endpoint port (optional) []:&#10;Add more master endpoints? [y/N]&#10;Please specify the master connection for CSR auto-signing (defaults to master endpoint host):&#10;Host [192.168.56.101]:&#10;Port [5665]:&#10;information/base: Writing private key to &#39;/etc/icinga2/pki/icinga2-node2.localdomain.key&#39;.&#10;information/base: Writing X509 certificate to &#39;/etc/icinga2/pki/icinga2-node2.localdomain.crt&#39;.&#10;information/cli: Generating self-signed certifiate:&#10;information/cli: Fetching public certificate from master (192.168.56.101, 5665):&#10;&#10;information/cli: Writing trusted certificate to file &#39;/etc/icinga2/pki/trusted-master.crt&#39;.&#10;information/cli: Stored trusted master certificate in &#39;/etc/icinga2/pki/trusted-master.crt&#39;.&#10;&#10;Please specify the request ticket generated on your Icinga 2 master.&#10; (Hint: # icinga2 pki ticket --cn &#39;icinga2-node2.localdomain&#39;): ead2d570e18c78abf285d6b85524970a0f69c22d&#10;information/cli: Processing self-signed certificate request. Ticket &#39;ead2d570e18c78abf285d6b85524970a0f69c22d&#39;.&#10;&#10;information/cli: Writing signed certificate to file &#39;/etc/icinga2/pki/icinga2-node2.localdomain.crt&#39;.&#10;information/cli: Writing CA certificate to file &#39;/etc/icinga2/pki/ca.crt&#39;.&#10;Please specify the API bind host/port (optional):&#10;Bind Host []:&#10;Bind Port []:&#10;information/cli: Disabling the Notification feature.&#10;Disabling feature notification. Make sure to restart Icinga 2 for these changes to take effect.&#10;information/cli: Enabling the Apilistener feature.&#10;Enabling feature api. Make sure to restart Icinga 2 for these changes to take effect.&#10;information/cli: Created backup file &#39;/etc/icinga2/features-available/api.conf.orig&#39;.&#10;information/cli: Generating local zones.conf.&#10;information/cli: Dumping config items to file &#39;/etc/icinga2/zones.conf&#39;.&#10;information/cli: Created backup file &#39;/etc/icinga2/zones.conf.orig&#39;.&#10;information/cli: Updating constants.conf.&#10;information/cli: Created backup file &#39;/etc/icinga2/constants.conf.orig&#39;.&#10;information/cli: Updating constants file &#39;/etc/icinga2/constants.conf&#39;.&#10;information/cli: Updating constants file &#39;/etc/icinga2/constants.conf&#39;.&#10;Done.&#10;&#10;Now restart your Icinga 2 daemon to finish the installation!</span><br></pre></td></tr></table></figure>
+<p>安装设置过程完成了以下过程：</p>
+<ul>
+<li>生成一个新的自签名证书并拷贝到 /etc/icinga2/pki；</li>
+<li>保存主节点证书到信任证书； </li>
+<li>生成一个客户端节点的本地空间和终结点配置；</li>
+<li>禁用客户端通知功能；</li>
+<li>启用API功能，设置 bind_host 和 bind_port；</li>
+<li>在 constants.conf 文件设置 NodeName 常量。</li>
+</ul>
+<p>验证配置文件并重启 Icinga2：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># grep &#39;NodeName&#39; /etc/icinga2/constants.conf&#10;&#10;# cat /etc/icinga2/zones.conf&#10;/*&#10; * Generated by Icinga 2 node setup commands&#10; * on 2015-02-09 16:56:10 +0100&#10; */&#10;&#10;object Endpoint &#34;icinga2-node1.localdomain&#34; &#123;&#10;    host = &#34;192.168.56.101&#34;&#10;&#125;&#10;&#10;object Zone &#34;master&#34; &#123;&#10;    endpoints = [ &#34;icinga2-node1.localdomain&#34; ]&#10;&#125;&#10;&#10;object Endpoint &#34;icinga2-node2.localdomain&#34; &#123;&#10;&#125;&#10;&#10;object Zone &#34;icinga2-node2.localdomain&#34; &#123;&#10;    //this is the local node = &#34;icinga2-node2.localdomain&#34;&#10;    endpoints = [ &#34;icinga2-node2.localdomain&#34; ]&#10;    parent = &#34;master&#34;&#10;&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="监控Windows服务器">监控Windows服务器</h1><p>下载 Icinga2 的安装包，网址：<a href="http://packages.icinga.org/windows/" target="_blank" rel="external">http://packages.icinga.org/windows/</a> 。</p>
+<p>系统环境需求：</p>
+<p>Windows Vista/Server 2008 或者更高；<br>Microsoft .NET Framework 2.0。</p>
+<p>通过图形界面配置主节点的IP与端口，配置完成后会创建一个服务，使用以下命令进行配置文件验证：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">C:&#62; icinga2.exe daemon -C</span><br></pre></td></tr></table></figure>
+<p>配置完成远程节点后，你可以在主节点使用以下命令发现节点：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># icinga2 node list&#10;Node &#39;icinga2-node2.localdomain&#39; (last seen: Mon Feb  9 16:58:21 2015)&#10;    * Host &#39;icinga2-node2.localdomain&#39;&#10;        * Service &#39;ping4&#39;&#10;        * Service &#39;ping6&#39;&#10;        * Service &#39;ssh&#39;&#10;        * Service &#39;http&#39;&#10;        * Service &#39;disk&#39;&#10;        * Service &#39;disk /&#39;&#10;        * Service &#39;icinga&#39;&#10;        * Service &#39;load&#39;&#10;        * Service &#39;procs&#39;&#10;        * Service &#39;swap&#39;&#10;        * Service &#39;users&#39;</span><br></pre></td></tr></table></figure>
+<p>如果未发现你配置的节点，请确保远程节点重启过。</p>
+
+    <p>本文来自 <a href="http://www.tnidea.com/" title="The NewIdea" target="_blank" rel="external">The NewIdea</a>，作者 Carey Tzou 。<br>永久地址：<a href="http://www.tnidea.com/icinga2-monitor-other-machine.html" title="使用Icinga2监控Linux和Windows服务器" target="_blank" rel="external">http://www.tnidea.com/icinga2-monitor-other-machine.html</a><br>未经授权，拒绝任何全文及摘要转载！<br>
+    <p>欢迎关注微信公众号：CareyTzou（dotNet大数据）</p>
+    <a href="http://www.tnidea.com/media/image/wechat.jpg" title="Wechat:CareyTzou" class="fancybox" rel="article0"><img style="width:160px;display:inline;" src="http://www.tnidea.com/media/image/wechat.jpg" alt="Wechat:CareyTzou"></a>
+    
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://www.tnidea.com/icinga2-monitor-other-machine.html" data-id="cij30f3zd0000j7s330fpwaqt" class="article-share-link">分享到</a>
+      
+        <a href="http://www.tnidea.com/icinga2-monitor-other-machine.html#ds-thread" class="article-comment-link">评论</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CentOS/">CentOS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Icinga-Web2/">Icinga Web2</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Icinga2/">Icinga2</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/服务器监控/">服务器监控</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/dot-net-storm-adapter-upgrade.html" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">下一篇</strong>
+      <div class="article-nav-title">Storm适配器(.Net)升级说明以及一些性能数据</div>
+    </a>
+  
+</nav>
+
+
+  
+</article>
+
+
+  <section id="comments">
+    <div id="ds-thread" class="ds-thread" data-thread-key="http://www.tnidea.com/icinga2-monitor-other-machine.html" data-title="使用Icinga2监控Linux和Windows服务器" data-url="http://www.tnidea.com/icinga2-monitor-other-machine.html">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by DuoShuo.</a></noscript>
+    </div>
+  </section>
+
+</section>
+      
+        <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/NET/" style="font-size: 20px;">.NET</a> <a href="/tags/Baidu/" style="font-size: 10px;">Baidu</a> <a href="/tags/C/" style="font-size: 20px;">C#</a> <a href="/tags/CentOS/" style="font-size: 17.5px;">CentOS</a> <a href="/tags/DRPC/" style="font-size: 15px;">DRPC</a> <a href="/tags/Docker/" style="font-size: 10px;">Docker</a> <a href="/tags/Hadoop-MapReduce/" style="font-size: 10px;">Hadoop MapReduce</a> <a href="/tags/HttpHelper/" style="font-size: 10px;">HttpHelper</a> <a href="/tags/HttpWebRequest/" style="font-size: 10px;">HttpWebRequest</a> <a href="/tags/Icinga-Web2/" style="font-size: 17.5px;">Icinga Web2</a> <a href="/tags/Icinga2/" style="font-size: 17.5px;">Icinga2</a> <a href="/tags/ImitateLogin/" style="font-size: 10px;">ImitateLogin</a> <a href="/tags/OpenAuth/" style="font-size: 10px;">OpenAuth</a> <a href="/tags/SVN/" style="font-size: 10px;">SVN</a> <a href="/tags/Spark-Streaming/" style="font-size: 10px;">Spark Streaming</a> <a href="/tags/Storm/" style="font-size: 17.5px;">Storm</a> <a href="/tags/Topology/" style="font-size: 15px;">Topology</a> <a href="/tags/VS/" style="font-size: 12.5px;">VS</a> <a href="/tags/csharp/" style="font-size: 20px;">csharp</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/mono/" style="font-size: 10px;">mono</a> <a href="/tags/open-auth-assist/" style="font-size: 10px;">open-auth-assist</a> <a href="/tags/social-network/" style="font-size: 12.5px;">social network</a> <a href="/tags/storm/" style="font-size: 17.5px;">storm</a> <a href="/tags/thrift/" style="font-size: 12.5px;">thrift</a> <a href="/tags/wordcount/" style="font-size: 12.5px;">wordcount</a> <a href="/tags/zookeeper/" style="font-size: 10px;">zookeeper</a> <a href="/tags/分布式/" style="font-size: 12.5px;">分布式</a> <a href="/tags/批处理/" style="font-size: 12.5px;">批处理</a> <a href="/tags/文件版本号/" style="font-size: 12.5px;">文件版本号</a> <a href="/tags/服务器监控/" style="font-size: 17.5px;">服务器监控</a> <a href="/tags/流式框架/" style="font-size: 12.5px;">流式框架</a> <a href="/tags/部署/" style="font-size: 10px;">部署</a> <a href="/tags/项目管理/" style="font-size: 10px;">项目管理</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Storm/">Storm</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/爬虫/">爬虫</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/运维/">运维</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/项目管理/">项目管理</a><span class="category-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">十二月 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">十一月 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">十月 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">九月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">八月 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/07/">七月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/06/">六月 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/05/">五月 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/11/">十一月 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/10/">十月 2013</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+</aside>
+      
+    </div>
+    <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2013-2016 The NewIdea Inc.  <span id="footer-info-extend">鄂ICP备15011767号-1</span>
+    </div>
+  </div>
+</footer>
+    
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"tnidea"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+
+
+
+ <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+
+
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+  <script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+
+
+<script src="/js/script.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install','e2e3X_cz-QvzonvQg7eP','2.0.0');
+</script>
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?855c1789992bb648e4734a1e1045c672";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+  </div>
+    <div id="mobile-nav">
+    <nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left" id="cbp-spmenu-s1">
+      
+        <a href="/.">首页</a>
+        
+      
+        <a href="/archives">归档</a>
+        
+      
+        <a href="javascript:void(0)">分类</a>
+        
+          <ul class="main-nav-category-list"><li class="main-nav-category-list-item"><a class="main-nav-category-list-link" href="/categories/Storm/">Storm</a></li><li class="main-nav-category-list-item"><a class="main-nav-category-list-link" href="/categories/爬虫/">爬虫</a></li><li class="main-nav-category-list-item"><a class="main-nav-category-list-link" href="/categories/运维/">运维</a></li><li class="main-nav-category-list-item"><a class="main-nav-category-list-link" href="/categories/项目管理/">项目管理</a></li></ul>
+        
+      
+        <a href="/about.html">关于</a>
+        
+      
+      <div id="nav-search-form">
+        <form class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="搜索"><button type="submit" class="search-form-submit"> </button></form>
+      </div>
+    </nav>
+  </div>
+  <script>
+    var menuLeft = document.getElementById( 'cbp-spmenu-s1' ),
+        showMobileNav = document.getElementById( 'mobile-logo' ),
+        container = document.getElementById( 'container' );
+  
+    showMobileNav.onclick = function() {
+      classie.toggle( this, 'active' );
+      classie.toggle( container, 'cbp-spmenu-push-toright' );
+      classie.toggle( menuLeft, 'cbp-spmenu-open' );
+    };
+  </script>
+</body>
+</html>
