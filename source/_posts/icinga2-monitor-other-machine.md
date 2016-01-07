@@ -1,5 +1,5 @@
 title: 使用Icinga2监控Linux和Windows服务器
-date: 2015-12-6
+date: 2016-1-6
 categories: 
 - 运维
 tags: 
