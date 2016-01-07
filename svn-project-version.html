@@ -104,7 +104,10 @@
         </div>
       </header>
     
-    <br>
+    <div class="article-entry" itemprop="articleBody">
+      
+                
+<br>
     <div style="border-top:1px solid #eceff2;margin:0 20px;">
     <br>
         <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
@@ -118,9 +121,7 @@
     (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
     </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-                
+
     <p> 在生产项目中，版本号是必不可少的一部分。版本号的规则也有许多种，在此不讨论具体的编码规范。对于迭代的产品，版本繁多，特别是有多个实施项目所使用产品的版本不同（基于定制需求）时，清楚的标识组件与代码的对应关系十分重要。 本文主要说明如何在 .Net 项目使用 SVN 作为版本控制工具时生成与代码对应的组件版本号。</p>
 <a id="more"></a>
 <p> 我们知道，SVN 在 commit 时会生成一串数字作为序号，所以基本思路是把这个序号作为 .Net 项目编译后生成dll的文件版本号的最后一段。下面所列方法需要使用到TortoiseSVN 提供的 SubWCRev.exe 。</p>
