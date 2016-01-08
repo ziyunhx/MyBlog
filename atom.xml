@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://www.tnidea.com/"/>
-  <updated>2016-01-06T16:02:29.000Z</updated>
+  <updated>2016-01-08T16:19:52.000Z</updated>
   <id>http://www.tnidea.com/</id>
   
   <author>
@@ -13,6 +13,68 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[ImitateLogin新增插件机制以及又一个社交网站的支持]]></title>
+    <link href="http://www.tnidea.com/imitate-login-support-plugin-now.html"/>
+    <id>http://www.tnidea.com/imitate-login-support-plugin-now.html</id>
+    <published>2016-01-08T16:00:00.000Z</published>
+    <updated>2016-01-08T16:19:52.000Z</updated>
+    <content type="html"><![CDATA[<p>我的文章里已经多次介绍 <a href="https://github.com/ziyunhx/imitate-login" target="_blank" rel="external">imitate-login</a> ，这是我最近一直在维护的一个使用c#模拟社交网站登录的开源项目，现在新增了对插件的支持以及一个新的网站（由于某种原因，会在文章结束部分介绍；而且仅会出现在博客中）。希望喜欢的读者可以通过 <strong>Star &amp; fork</strong> 来支持我，我也会据此来决定时间的分配。</p>
+ <a id="more"></a>
+<p>说点无关的东西，最近把博客从 GitHub Page 迁移到了 Azure，为了减轻域名与服务器的费用，在文章的正文开头和结尾放了点小广告，如果影响了你的阅读体验，请自行使用 Adblock Plus。 </p>
+<p>好了，言归正常！<a href="https://github.com/ziyunhx/imitate-login" target="_blank" rel="external">imitate-login</a> 现在已经提供了对插件的支持；目前有两个部分使用到了插件机制，登录过程以及登录过程中的验证码识别过程；其中登录过程仅支持 MEF（Managed Extensibility Framework）模式，而验证码识别过程支持 Thrift RPC (Apache Thrift)、HTTP RESTful (POST/GET)、MEF 三种方式。下面将介绍这三种插件的开发与配置方式，所有代码均已经在 <a href="https://github.com/ziyunhx/imitate-login/tree/master/Extensions" target="_blank" rel="external">Extensions</a> 。</p>
+<h3 id="Thrift_RPC">Thrift RPC</h3><p>在 Imitate Login 的库中有通过 Thrift 文件生成的类 ThriftOperation，如果你使用其它语言开发，请通过 Thrift 生成对应的类，下面将介绍使用C#来开发插件。</p>
+<p>首先，创建一个控制台应用程序，新增一个类继承 ThriftOperation.Iface 并实现，这里直接 return 一下：</p>
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">class demo : ThriftOperation.Iface</span><br><span class="line">&#123;</span><br><span class="line">    public string Operation(OperationObj operationObj)</span><br><span class="line">    &#123;</span><br><span class="line">        return "1234";</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后在主函数里增加一个创建 Thrift 服务端得方法：</p>
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>(<span class="params"><span class="keyword">string</span>[] args</span>)</span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> port = <span class="number">7801</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">string</span> str = ConfigurationManager.AppSettings[<span class="string">"ServerPort"</span>];</span><br><span class="line">    <span class="keyword">if</span> (!<span class="keyword">string</span>.IsNullOrEmpty(str))</span><br><span class="line">        <span class="keyword">int</span>.TryParse(str, <span class="keyword">out</span> port);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (args != <span class="keyword">null</span> &amp;&amp; args.Length == <span class="number">1</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">int</span>.TryParse(args[<span class="number">0</span>], <span class="keyword">out</span> port);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    Start(port);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Start</span>(<span class="params"><span class="keyword">int</span> port</span>)</span><br><span class="line"></span>&#123;</span><br><span class="line">    TServerSocket serverTransport = <span class="keyword">new</span> TServerSocket(port, <span class="number">0</span>, <span class="keyword">false</span>);</span><br><span class="line">    ThriftOperation.Processor processor = <span class="keyword">new</span> ThriftOperation.Processor(<span class="keyword">new</span> demo());</span><br><span class="line">    TServer server = <span class="keyword">new</span> TSimpleServer(processor, serverTransport);</span><br><span class="line">    Console.WriteLine(<span class="string">"Starting server on port &#123;0&#125; ..."</span>, port);</span><br><span class="line">    server.Serve();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在使用时，你需要先启动该插件程序，然后将下面配置部分合并放到程序运行目录的 extension.conf 文件：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#123;&#10;    &#34;ExtendType&#34;: 3,&#10;    &#34;SupportSite&#34;: [2],&#10;    &#34;Path&#34;: null,&#10;    &#34;Host&#34;: &#34;127.0.0.1&#34;,&#10;    &#34;Port&#34;: 7801,&#10;    &#34;UrlFormat&#34;: null,&#10;    &#34;HttpMethod&#34;: null&#10;&#125;</span><br></pre></td></tr></table></figure>
+<p>你可以使用 <a href="https://github.com/ziyunhx/imitate-login/tree/master/Tools/PluginConfigBuild" target="_blank" rel="external">PluginConfigBuild</a> 工具来生成配置文件，此处不再解释具体细节。</p>
+<h3 id="HTTP_RESTful">HTTP RESTful</h3><p>另外一种插件方式即使用通用的 Http RESTful API 来实现，如果通过 GET 方法，你仅能传入一个枚举用来表明网站以及一个字符串作为参数；如果你通过 POST 方法，需要通过 Thrift 获得一个 OperationObj 类的定义，当然 C# 可以通过直接引用 <a href="https://github.com/ziyunhx/imitate-login" target="_blank" rel="external">imitate-login</a> 库来获得。API 的编写方法不再累述，接下来你需要将以下配置部分合并放到程序运行目录的 extension.conf 文件：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#123;&#10;    &#34;ExtendType&#34;: 2,&#10;    &#34;SupportSite&#34;: [6],&#10;    &#34;Path&#34;: null,&#10;    &#34;Host&#34;: null,&#10;    &#34;Port&#34;: 0,&#10;    &#34;UrlFormat&#34;: &#34;http://localhost:2920/Mail/SendMail?loginSite=&#123;0&#125;&#38;imageUrl=&#123;1&#125;&#34;,&#10;    &#34;HttpMethod&#34;: &#34;GET&#34;&#10;&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="MEF">MEF</h3><p>MEF 是微软在 .NET 4.0 以后原生提供的一种插件模式；使用该方法需要用到 IMEFOperation 类，你需要通过引用 <a href="https://github.com/ziyunhx/imitate-login" target="_blank" rel="external">imitate-login</a> 得到，demo 代码如下：</p>
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line">[Export(<span class="keyword">typeof</span>(IMEFOperation))]</span><br><span class="line">[ExportMetadata(<span class="string">"loginSite"</span>, LoginSite.Baidu)]</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">demo</span> : <span class="title">IMEFOperation</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">string</span> <span class="title">Operate</span>(<span class="params"><span class="keyword">string</span> imageUrl = <span class="string">""</span>, Image image = <span class="keyword">null</span>, <span class="keyword">params</span> <span class="keyword">string</span>[] param</span>)</span><br><span class="line">    </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"1234"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这种方式需要在配置文件中指定插件的存放位置，位置支持相对运行目录或绝对目录；本例为将该插件生成的 dll 拷贝到程序运行目录下的 Extensions 目录中，配置文件如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#123;&#10;    &#34;ExtendType&#34;: 1,&#10;    &#34;SupportSite&#34;: [5, 1],&#10;    &#34;Path&#34;: &#34;Extensions&#34;,&#10;    &#34;Host&#34;: null,&#10;    &#34;Port&#34;: 0,&#10;    &#34;UrlFormat&#34;: null,&#10;    &#34;HttpMethod&#34;: null&#10;&#125;</span><br></pre></td></tr></table></figure>
+<p>所有的配置文件均可以通过 <a href="https://github.com/ziyunhx/imitate-login/tree/master/Tools/PluginConfigBuild" target="_blank" rel="external">PluginConfigBuild</a> 工具来生成，其中 SupportSite 为支持的登录网站的枚举数组。</p>
+<hr>
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 博客正文广告 -->
+<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6541442242935379" data-ad-slot="9453052931" data-ad-format="auto"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+<p>以下内容将仅在博客中展示！</p>
+<p>为了展示插件机制，我将微信网页版的登录增加到了库中；该方式为登录时将二维码通过邮件发送到指定的邮箱，人工使用手机微信扫描后登录微信。该方法仅供展示插件机制，无生成环境使用价值，请轻喷！</p>
+<p>修改 <a href="https://github.com/ziyunhx/imitate-login/tree/master/Extensions/MailNotication" target="_blank" rel="external">MailNotication</a> 插件的 web.config 中的发信邮箱与收信邮箱设置，在 IIS 中部署好WebAPI，配置好插件配置文件，即可测试微信登录功能。</p>
+<hr>
+<p>好了，接下来需要什么自己动手试试吧！</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>我的文章里已经多次介绍 <a href="https://github.com/ziyunhx/imitate-login">imitate-login</a> ，这是我最近一直在维护的一个使用c#模拟社交网站登录的开源项目，现在新增了对插件的支持以及一个新的网站（由于某种原因，会在文章结束部分介绍；而且仅会出现在博客中）。希望喜欢的读者可以通过 <strong>Star &amp; fork</strong> 来支持我，我也会据此来决定时间的分配。</p>]]>
+    
+    </summary>
+    
+      <category term=".NET" scheme="http://www.tnidea.com/tags/NET/"/>
+    
+      <category term="C#" scheme="http://www.tnidea.com/tags/C/"/>
+    
+      <category term="social network" scheme="http://www.tnidea.com/tags/social-network/"/>
+    
+      <category term="thrift" scheme="http://www.tnidea.com/tags/thrift/"/>
+    
+      <category term="wechat" scheme="http://www.tnidea.com/tags/wechat/"/>
+    
+      <category term="微信" scheme="http://www.tnidea.com/tags/%E5%BE%AE%E4%BF%A1/"/>
+    
+      <category term="插件机制" scheme="http://www.tnidea.com/tags/%E6%8F%92%E4%BB%B6%E6%9C%BA%E5%88%B6/"/>
+    
+      <category term="爬虫" scheme="http://www.tnidea.com/categories/%E7%88%AC%E8%99%AB/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[使用Icinga2监控Linux和Windows服务器]]></title>
