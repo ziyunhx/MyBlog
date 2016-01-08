@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://www.tnidea.com/"/>
-  <updated>2016-01-08T16:19:52.000Z</updated>
+  <updated>2016-01-08T16:25:39.000Z</updated>
   <id>http://www.tnidea.com/</id>
   
   <author>
@@ -19,11 +19,11 @@
     <link href="http://www.tnidea.com/imitate-login-support-plugin-now.html"/>
     <id>http://www.tnidea.com/imitate-login-support-plugin-now.html</id>
     <published>2016-01-08T16:00:00.000Z</published>
-    <updated>2016-01-08T16:19:52.000Z</updated>
+    <updated>2016-01-08T16:25:39.000Z</updated>
     <content type="html"><![CDATA[<p>我的文章里已经多次介绍 <a href="https://github.com/ziyunhx/imitate-login" target="_blank" rel="external">imitate-login</a> ，这是我最近一直在维护的一个使用c#模拟社交网站登录的开源项目，现在新增了对插件的支持以及一个新的网站（由于某种原因，会在文章结束部分介绍；而且仅会出现在博客中）。希望喜欢的读者可以通过 <strong>Star &amp; fork</strong> 来支持我，我也会据此来决定时间的分配。</p>
  <a id="more"></a>
 <p>说点无关的东西，最近把博客从 GitHub Page 迁移到了 Azure，为了减轻域名与服务器的费用，在文章的正文开头和结尾放了点小广告，如果影响了你的阅读体验，请自行使用 Adblock Plus。 </p>
-<p>好了，言归正常！<a href="https://github.com/ziyunhx/imitate-login" target="_blank" rel="external">imitate-login</a> 现在已经提供了对插件的支持；目前有两个部分使用到了插件机制，登录过程以及登录过程中的验证码识别过程；其中登录过程仅支持 MEF（Managed Extensibility Framework）模式，而验证码识别过程支持 Thrift RPC (Apache Thrift)、HTTP RESTful (POST/GET)、MEF 三种方式。下面将介绍这三种插件的开发与配置方式，所有代码均已经在 <a href="https://github.com/ziyunhx/imitate-login/tree/master/Extensions" target="_blank" rel="external">Extensions</a> 。</p>
+<p>好了，言归正常！<a href="https://github.com/ziyunhx/imitate-login" target="_blank" rel="external">imitate-login</a> 现在已经提供了对插件的支持；目前有两个部分使用到了插件机制，登录自身实现以及登录过程中的验证码识别过程；其中登录过程仅支持 MEF（Managed Extensibility Framework）模式，而验证码识别过程支持 Thrift RPC (Apache Thrift)、HTTP RESTful (POST/GET)、MEF 三种方式。下面将介绍这三种插件的开发与配置方式，所有代码均已经在 <a href="https://github.com/ziyunhx/imitate-login/tree/master/Extensions" target="_blank" rel="external">Extensions</a> 。</p>
 <h3 id="Thrift_RPC">Thrift RPC</h3><p>在 Imitate Login 的库中有通过 Thrift 文件生成的类 ThriftOperation，如果你使用其它语言开发，请通过 Thrift 生成对应的类，下面将介绍使用C#来开发插件。</p>
 <p>首先，创建一个控制台应用程序，新增一个类继承 ThriftOperation.Iface 并实现，这里直接 return 一下：</p>
 <figure class="highlight"><table><tr><td class="code"><pre><span class="line">class demo : ThriftOperation.Iface</span><br><span class="line">&#123;</span><br><span class="line">    public string Operation(OperationObj operationObj)</span><br><span class="line">    &#123;</span><br><span class="line">        return "1234";</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -40,6 +40,7 @@
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#123;&#10;    &#34;ExtendType&#34;: 1,&#10;    &#34;SupportSite&#34;: [5, 1],&#10;    &#34;Path&#34;: &#34;Extensions&#34;,&#10;    &#34;Host&#34;: null,&#10;    &#34;Port&#34;: 0,&#10;    &#34;UrlFormat&#34;: null,&#10;    &#34;HttpMethod&#34;: null&#10;&#125;</span><br></pre></td></tr></table></figure>
 <p>所有的配置文件均可以通过 <a href="https://github.com/ziyunhx/imitate-login/tree/master/Tools/PluginConfigBuild" target="_blank" rel="external">PluginConfigBuild</a> 工具来生成，其中 SupportSite 为支持的登录网站的枚举数组。</p>
 <hr>
+<p>以下内容将仅在博客中展示！</p>
 <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 <!-- 博客正文广告 -->
 <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6541442242935379" data-ad-slot="9453052931" data-ad-format="auto"></ins>
@@ -47,7 +48,6 @@
 (adsbygoogle = window.adsbygoogle || []).push({});
 </script>
 
-<p>以下内容将仅在博客中展示！</p>
 <p>为了展示插件机制，我将微信网页版的登录增加到了库中；该方式为登录时将二维码通过邮件发送到指定的邮箱，人工使用手机微信扫描后登录微信。该方法仅供展示插件机制，无生成环境使用价值，请轻喷！</p>
 <p>修改 <a href="https://github.com/ziyunhx/imitate-login/tree/master/Extensions/MailNotication" target="_blank" rel="external">MailNotication</a> 插件的 web.config 中的发信邮箱与收信邮箱设置，在 IIS 中部署好WebAPI，配置好插件配置文件，即可测试微信登录功能。</p>
 <hr>

@@ -11,7 +11,7 @@
 <meta property="og:url" content="http://www.tnidea.com/imitate-login-support-plugin-now.html">
 <meta property="og:site_name" content="The NewIdea">
 <meta property="og:description" content="我的文章里已经多次介绍 imitate-login ，这是我最近一直在维护的一个使用c#模拟社交网站登录的开源项目，现在新增了对插件的支持以及一个新的网站（由于某种原因，会在文章结束部分介绍；而且仅会出现在博客中）。希望喜欢的读者可以通过 Star &amp;amp; fork 来支持我，我也会据此来决定时间的分配。">
-<meta property="og:updated_time" content="2016-01-08T16:19:52.000Z">
+<meta property="og:updated_time" content="2016-01-08T16:25:39.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ImitateLogin新增插件机制以及又一个社交网站的支持">
 <meta name="twitter:description" content="我的文章里已经多次介绍 imitate-login ，这是我最近一直在维护的一个使用c#模拟社交网站登录的开源项目，现在新增了对插件的支持以及一个新的网站（由于某种原因，会在文章结束部分介绍；而且仅会出现在博客中）。希望喜欢的读者可以通过 Star &amp;amp; fork 来支持我，我也会据此来决定时间的分配。">
@@ -124,7 +124,7 @@
     <p>我的文章里已经多次介绍 <a href="https://github.com/ziyunhx/imitate-login" target="_blank" rel="external">imitate-login</a> ，这是我最近一直在维护的一个使用c#模拟社交网站登录的开源项目，现在新增了对插件的支持以及一个新的网站（由于某种原因，会在文章结束部分介绍；而且仅会出现在博客中）。希望喜欢的读者可以通过 <strong>Star &amp; fork</strong> 来支持我，我也会据此来决定时间的分配。</p>
  <a id="more"></a>
 <p>说点无关的东西，最近把博客从 GitHub Page 迁移到了 Azure，为了减轻域名与服务器的费用，在文章的正文开头和结尾放了点小广告，如果影响了你的阅读体验，请自行使用 Adblock Plus。 </p>
-<p>好了，言归正常！<a href="https://github.com/ziyunhx/imitate-login" target="_blank" rel="external">imitate-login</a> 现在已经提供了对插件的支持；目前有两个部分使用到了插件机制，登录过程以及登录过程中的验证码识别过程；其中登录过程仅支持 MEF（Managed Extensibility Framework）模式，而验证码识别过程支持 Thrift RPC (Apache Thrift)、HTTP RESTful (POST/GET)、MEF 三种方式。下面将介绍这三种插件的开发与配置方式，所有代码均已经在 <a href="https://github.com/ziyunhx/imitate-login/tree/master/Extensions" target="_blank" rel="external">Extensions</a> 。</p>
+<p>好了，言归正常！<a href="https://github.com/ziyunhx/imitate-login" target="_blank" rel="external">imitate-login</a> 现在已经提供了对插件的支持；目前有两个部分使用到了插件机制，登录自身实现以及登录过程中的验证码识别过程；其中登录过程仅支持 MEF（Managed Extensibility Framework）模式，而验证码识别过程支持 Thrift RPC (Apache Thrift)、HTTP RESTful (POST/GET)、MEF 三种方式。下面将介绍这三种插件的开发与配置方式，所有代码均已经在 <a href="https://github.com/ziyunhx/imitate-login/tree/master/Extensions" target="_blank" rel="external">Extensions</a> 。</p>
 <h3 id="Thrift_RPC">Thrift RPC</h3><p>在 Imitate Login 的库中有通过 Thrift 文件生成的类 ThriftOperation，如果你使用其它语言开发，请通过 Thrift 生成对应的类，下面将介绍使用C#来开发插件。</p>
 <p>首先，创建一个控制台应用程序，新增一个类继承 ThriftOperation.Iface 并实现，这里直接 return 一下：</p>
 <figure class="highlight"><table><tr><td class="code"><pre><span class="line">class demo : ThriftOperation.Iface</span><br><span class="line">&#123;</span><br><span class="line">    public string Operation(OperationObj operationObj)</span><br><span class="line">    &#123;</span><br><span class="line">        return "1234";</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -141,6 +141,7 @@
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#123;&#10;    &#34;ExtendType&#34;: 1,&#10;    &#34;SupportSite&#34;: [5, 1],&#10;    &#34;Path&#34;: &#34;Extensions&#34;,&#10;    &#34;Host&#34;: null,&#10;    &#34;Port&#34;: 0,&#10;    &#34;UrlFormat&#34;: null,&#10;    &#34;HttpMethod&#34;: null&#10;&#125;</span><br></pre></td></tr></table></figure>
 <p>所有的配置文件均可以通过 <a href="https://github.com/ziyunhx/imitate-login/tree/master/Tools/PluginConfigBuild" target="_blank" rel="external">PluginConfigBuild</a> 工具来生成，其中 SupportSite 为支持的登录网站的枚举数组。</p>
 <hr>
+<p>以下内容将仅在博客中展示！</p>
 <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 <!-- 博客正文广告 -->
 <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6541442242935379" data-ad-slot="9453052931" data-ad-format="auto"></ins>
@@ -148,7 +149,6 @@
 (adsbygoogle = window.adsbygoogle || []).push({});
 </script>
 
-<p>以下内容将仅在博客中展示！</p>
 <p>为了展示插件机制，我将微信网页版的登录增加到了库中；该方式为登录时将二维码通过邮件发送到指定的邮箱，人工使用手机微信扫描后登录微信。该方法仅供展示插件机制，无生成环境使用价值，请轻喷！</p>
 <p>修改 <a href="https://github.com/ziyunhx/imitate-login/tree/master/Extensions/MailNotication" target="_blank" rel="external">MailNotication</a> 插件的 web.config 中的发信邮箱与收信邮箱设置，在 IIS 中部署好WebAPI，配置好插件配置文件，即可测试微信登录功能。</p>
 <hr>
@@ -173,9 +173,9 @@
     </div>
     
     <footer class="article-footer">
-      <a data-url="http://www.tnidea.com/imitate-login-support-plugin-now.html" data-id="cij5w4b75002j71s3m446h574" class="article-share-link">分享到</a>
+      <a data-url="http://www.tnidea.com/imitate-login-support-plugin-now.html" data-id="cij5w4b75002j71s3m446h574" class="article-share-link">Bagikan</a>
       
-        <a href="http://www.tnidea.com/imitate-login-support-plugin-now.html#ds-thread" class="article-comment-link">评论</a>
+        <a href="http://www.tnidea.com/imitate-login-support-plugin-now.html#ds-thread" class="article-comment-link">Komentar</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NET/">.NET</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/">C#</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/social-network/">social network</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/thrift/">thrift</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/wechat/">wechat</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/微信/">微信</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/插件机制/">插件机制</a></li></ul>
@@ -188,7 +188,7 @@
   
   
     <a href="/icinga2-monitor-other-machine.html" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">下一篇</strong>
+      <strong class="article-nav-caption">Lebih Tua</strong>
       <div class="article-nav-title">使用Icinga2监控Linux和Windows服务器</div>
     </a>
   
@@ -211,7 +211,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">标签云</h3>
+    <h3 class="widget-title">awan tag</h3>
     <div class="widget tagcloud">
       <a href="/tags/NET/" style="font-size: 20px;">.NET</a> <a href="/tags/Baidu/" style="font-size: 10px;">Baidu</a> <a href="/tags/C/" style="font-size: 20px;">C#</a> <a href="/tags/CentOS/" style="font-size: 16px;">CentOS</a> <a href="/tags/DRPC/" style="font-size: 14px;">DRPC</a> <a href="/tags/Docker/" style="font-size: 10px;">Docker</a> <a href="/tags/Hadoop-MapReduce/" style="font-size: 10px;">Hadoop MapReduce</a> <a href="/tags/HttpHelper/" style="font-size: 10px;">HttpHelper</a> <a href="/tags/HttpWebRequest/" style="font-size: 10px;">HttpWebRequest</a> <a href="/tags/Icinga-Web2/" style="font-size: 16px;">Icinga Web2</a> <a href="/tags/Icinga2/" style="font-size: 16px;">Icinga2</a> <a href="/tags/ImitateLogin/" style="font-size: 10px;">ImitateLogin</a> <a href="/tags/OpenAuth/" style="font-size: 10px;">OpenAuth</a> <a href="/tags/SVN/" style="font-size: 10px;">SVN</a> <a href="/tags/Spark-Streaming/" style="font-size: 10px;">Spark Streaming</a> <a href="/tags/Storm/" style="font-size: 16px;">Storm</a> <a href="/tags/Topology/" style="font-size: 14px;">Topology</a> <a href="/tags/VS/" style="font-size: 12px;">VS</a> <a href="/tags/csharp/" style="font-size: 18px;">csharp</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/mono/" style="font-size: 10px;">mono</a> <a href="/tags/open-auth-assist/" style="font-size: 10px;">open-auth-assist</a> <a href="/tags/social-network/" style="font-size: 14px;">social network</a> <a href="/tags/storm/" style="font-size: 16px;">storm</a> <a href="/tags/thrift/" style="font-size: 14px;">thrift</a> <a href="/tags/wechat/" style="font-size: 10px;">wechat</a> <a href="/tags/wordcount/" style="font-size: 12px;">wordcount</a> <a href="/tags/zookeeper/" style="font-size: 10px;">zookeeper</a> <a href="/tags/分布式/" style="font-size: 12px;">分布式</a> <a href="/tags/微信/" style="font-size: 10px;">微信</a> <a href="/tags/批处理/" style="font-size: 12px;">批处理</a> <a href="/tags/插件机制/" style="font-size: 10px;">插件机制</a> <a href="/tags/文件版本号/" style="font-size: 12px;">文件版本号</a> <a href="/tags/服务器监控/" style="font-size: 16px;">服务器监控</a> <a href="/tags/流式框架/" style="font-size: 12px;">流式框架</a> <a href="/tags/部署/" style="font-size: 10px;">部署</a> <a href="/tags/项目管理/" style="font-size: 10px;">项目管理</a>
     </div>
@@ -220,7 +220,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">分类</h3>
+    <h3 class="widget-title">kategori</h3>
     <div class="widget">
       <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Storm/">Storm</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/爬虫/">爬虫</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/运维/">运维</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/项目管理/">项目管理</a><span class="category-list-count">2</span></li></ul>
     </div>
@@ -229,7 +229,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">归档</h3>
+    <h3 class="widget-title">arsip</h3>
     <div class="widget">
       <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">一月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">十二月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">十一月 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">十月 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">九月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">八月 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/07/">七月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/06/">六月 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/05/">五月 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/11/">十一月 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/10/">十月 2013</a><span class="archive-list-count">1</span></li></ul>
     </div>
