@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>使用Icinga2监控服务器带宽以及内存占用 | The NewIdea</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="监控是系统运维的基础，Icinga是一个开源的监控系统框架，通过其广泛的插件支持，你可以监控几乎任何你能想到的网络资源；也可以在超过临界值时给予通知，根据监控数据生产报表。本文将介绍如何通过SNMP协议来监控服务器的带宽以及内存占用。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用Icinga2监控服务器带宽以及内存占用">
+<meta property="og:url" content="http://www.tnidea.com/add-network-memory-for-icinga2-monitor.html">
+<meta property="og:site_name" content="The NewIdea">
+<meta property="og:description" content="监控是系统运维的基础，Icinga是一个开源的监控系统框架，通过其广泛的插件支持，你可以监控几乎任何你能想到的网络资源；也可以在超过临界值时给予通知，根据监控数据生产报表。本文将介绍如何通过SNMP协议来监控服务器的带宽以及内存占用。">
+<meta property="og:updated_time" content="2016-01-10T13:57:38.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="使用Icinga2监控服务器带宽以及内存占用">
+<meta name="twitter:description" content="监控是系统运维的基础，Icinga是一个开源的监控系统框架，通过其广泛的插件支持，你可以监控几乎任何你能想到的网络资源；也可以在超过临界值时给予通知，根据监控数据生产报表。本文将介绍如何通过SNMP协议来监控服务器的带宽以及内存占用。">
+  
+  
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" type="text/css">
+  
+
+  
+
+  
+  <script src="/js/classie.js" type="text/javascript"></script>
+  <script src="/js/modernizr.custom.js" type="text/javascript"></script>
+</head>
+<body>
+  <div id="container" class="cbp-spmenu-push">
+    <header id="header">
+  <div id="header-main" class="header-inner">
+    <div class="outer">
+      <span id="mobile-logo" class="navigation-menu-button" id="js-mobile-menu"><i class="fa fa-bars mobile-menu-img">&nbsp;</i><span class="site-title">The NewIdea</span></span>
+      <a href="/" id="logo"><i class="logo" style="background-image: url(/css/images/logo.png)"></i><span class="site-title">The NewIdea</span></a>
+      <!-- Nav -->
+      <nav id="main-nav">
+        <ul>
+          
+            <li class="main-nav-link">
+              <a href="/.">首页</a>
+              
+            </li>
+          
+            <li class="main-nav-link">
+              <a href="/archives">归档</a>
+              
+            </li>
+          
+            <li class="main-nav-link">
+              <a href="javascript:void(0)">分类</a>
+              
+                <ul class="menu-category-list"><li class="menu-category-list-item"><a class="menu-category-list-link" href="/categories/Storm/">Storm</a></li><li class="menu-category-list-item"><a class="menu-category-list-link" href="/categories/爬虫/">爬虫</a></li><li class="menu-category-list-item"><a class="menu-category-list-link" href="/categories/运维/">运维</a></li><li class="menu-category-list-item"><a class="menu-category-list-link" href="/categories/项目管理/">项目管理</a></li></ul>
+              
+            </li>
+          
+            <li class="main-nav-link">
+              <a href="/about.html">关于</a>
+              
+            </li>
+          
+        </ul>
+      </nav>
+      
+      <div id="search-form-wrap">
+        <form class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="搜索"><button type="submit" class="search-form-submit"> </button></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+    <div class="outer">
+      
+      <section id="main"><article id="post-add-network-memory-for-icinga2-monitor" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      使用Icinga2监控服务器带宽以及内存占用
+    </h1>
+  
+
+        <div class="article-meta">
+          
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/add-network-memory-for-icinga2-monitor.html">
+      <time datetime="2016-01-10T16:00:00.000Z" itemprop="datePublished">2016-01-11</time>
+    </a>
+  </div>
+
+
+          
+  <div class="article-category">
+  	<i class="fa fa-folder"></i>
+    <a class="article-category-link" href="/categories/运维/">运维</a>
+  </div>
+
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+                
+<br>
+    <p style="border-top:1px solid #eceff2;margin:0 20px;"></p>
+    <br>
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <!-- 博客正文广告 -->
+    <ins class="adsbygoogle"
+        style="display:block"
+        data-ad-client="ca-pub-6541442242935379"
+        data-ad-slot="9453052931"
+        data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+
+    <p>监控是系统运维的基础，Icinga是一个开源的监控系统框架，通过其广泛的插件支持，你可以监控几乎任何你能想到的网络资源；也可以在超过临界值时给予通知，根据监控数据生产报表。本文将介绍如何通过SNMP协议来监控服务器的带宽以及内存占用。</p>
+<a id="more"></a>
+<p>SNMP（简单网络管理协议），由一组网络管理的标准组成，包含一个应用层协议、数据库模型和一组资源对象。该协议能够支持网络管理系统，用以监测连接到网络上的设备是否有任何引起管理上关注的情况。SNMP的目标是管理互联网 Internet 上众多厂家生产的软硬件平台，因此SNMP受Internet标准网络管理框架的影响也很大。</p>
+<p>下表是 Icinga2 通过 SNMP 在各类系统上支持的项，本文仅介绍 Centos7 和 Windows 系统下的网络和内存的监控设置。</p>
+<table>
+<thead>
+<tr>
+<th>主机类型</th>
+<th>接口</th>
+<th>存储</th>
+<th>CPU负载</th>
+<th>内存</th>
+<th>进程</th>
+<th>环境变量</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Linux</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>NO</td>
+<td></td>
+</tr>
+<tr>
+<td>Windows</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>NO</td>
+<td>check_snmp_win.pl</td>
+</tr>
+<tr>
+<td>Cisco router/switch</td>
+<td>YES</td>
+<td>N/A</td>
+<td>YES</td>
+<td>YES</td>
+<td>N/A</td>
+<td>YES</td>
+<td></td>
+</tr>
+<tr>
+<td>HP router/switch</td>
+<td>YES</td>
+<td>N/A</td>
+<td>YES</td>
+<td>YES</td>
+<td>N/A</td>
+<td>NO</td>
+<td></td>
+</tr>
+<tr>
+<td>Bluecoat proxy</td>
+<td>YES</td>
+<td>SNMP</td>
+<td>YES</td>
+<td>SNMP</td>
+<td>NO</td>
+<td>YES</td>
+<td></td>
+</tr>
+<tr>
+<td>CheckPoint on SPLAT</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>NO</td>
+<td>check_snmp_cpfw.pl</td>
+</tr>
+<tr>
+<td>CheckPoint on Nokia IP</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>NO</td>
+<td>–</td>
+<td>NO</td>
+<td>check_snmp_vrrp.pl</td>
+</tr>
+<tr>
+<td>Boostedge</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>–</td>
+<td>NO</td>
+<td>check_snmp_boostedge.pl</td>
+</tr>
+<tr>
+<td>AS400</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>NO</td>
+<td>NO</td>
+<td></td>
+</tr>
+<tr>
+<td>NetsecureOne Netbox</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>–</td>
+<td>YES</td>
+<td>NO</td>
+<td></td>
+</tr>
+<tr>
+<td>Radware Linkproof</td>
+<td>YES</td>
+<td>N/A</td>
+<td>SNMP</td>
+<td>SNMP</td>
+<td>NO</td>
+<td>NO</td>
+<td>check_snmp_linkproof_nhr, check_snmp_vrrp.pl</td>
+</tr>
+<tr>
+<td>IronPort</td>
+<td>YES</td>
+<td>SNMP</td>
+<td>SNMP</td>
+<td>SNMP</td>
+<td>NO</td>
+<td>YES</td>
+<td></td>
+</tr>
+<tr>
+<td>Cisco CSS</td>
+<td>YES</td>
+<td>–</td>
+<td>YES</td>
+<td>YES</td>
+<td>NO</td>
+<td>–</td>
+<td>check_snmp_css.pl</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>N/A, NO: 不支持或不存在</li>
+<li>SNMP: 仅支持简单的SNMP查询</li>
+<li>–: 未测试</li>
+</ul>
+<h1 id="安装与配置SNMP">安装与配置SNMP</h1><h4 id="安装_NET-SNMP">安装 NET-SNMP</h4><p>CentOS可以直接通过yum安装 NET-SNMP 的包，其它系统也可以通过 <a href="http://sourceforge.net/projects/net-snmp/" target="_blank" rel="external">NET-SNMP项目</a> 下载安装。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># yum install net-snmp net-snmp-devel net-snmp-utils</span><br></pre></td></tr></table></figure>
+<h4 id="配置_NET-SNMP">配置 NET-SNMP</h4><p>CentOS需要关闭selinux才能正常使用snmp v3，使用以下命令查看SELinux状态：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># /usr/sbin/sestatus -v</span><br></pre></td></tr></table></figure>
+<p>如果SELinux status参数为enabled即为开启状态。</p>
+<p>关闭SELinux：</p>
+<p>1: 临时关闭（不用重启机器），但机器重启后会失效： <code># setenforce 0</code></p>
+<p>2: 永久关闭，需要修改配置文件需要重启机器：<br>修改/etc/selinux/config 文件，将SELINUX=enforcing改为SELINUX=disabled，重启系统。</p>
+<p>停用 NET-SNMP 服务，并配置用户：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># service snmpd stop&#10;# net-snmp-config --create-snmpv3-user -ro -A tnidea@carey -a MD5 carey</span><br></pre></td></tr></table></figure>
+<p>以上命令，创建了一个用户名为carey，密码为tnidea@carey的snmpv3用户，使用MD5加密。</p>
+<h4 id="运行_NET-SNMP">运行 NET-SNMP</h4><p>运行 NET-SNMP 服务，并加入到开机启动项。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># service snmpd start&#10;# chkconfig snmpd on</span><br></pre></td></tr></table></figure>
+<p>使用 snmpwalk 命令检测snmp服务是否正常启动，正常将返回相关结果：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># snmpwalk -v 3 -u carey -a MD5 -A &#34;tnidea@carey&#34; -l authNoPriv 127.0.0.1 sysDescr</span><br></pre></td></tr></table></figure>
+<p>Windows系统包中已经自带了 SNMP 功能，直接在 控制面板-&gt;添加或删除程序 中找到 简单网络管理协议(SNMP) 并勾选，安装完成后到服务中配置相关安全选项。</p>
+<p>另外你还需要在防火墙上允许 SNMP 端口进行通讯，其默认端口为 161 。</p>
+<h1 id="安装SNMP模块监控网络与内存">安装SNMP模块监控网络与内存</h1><p>首先安装 perl 环境，下面是以 Centos 为例：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># yum install perl*&#10;# yum install cpan</span><br></pre></td></tr></table></figure>
+<p>然后通过 CPAN 来安装 Net-SNMP：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># perl -MCPAN -e shell&#10;cpan shell -- CPAN exploration and modules installation (v1.76)&#10;ReadLine support enabled&#10;cpan&#62; install Net::SNMP</span><br></pre></td></tr></table></figure>
+<p>CPAN 的安装目录可能在ROOT目录下，这会导致 Icinga2 无法调用，你需要根据安装结果提示将安装的文件复制到支持的目录，比如：<code>/usr/local/lib64/perl5/</code>。</p>
+<p>另外还需要将 utils.pm 链接到 perl 的运行目录：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># ln -s /usr/lib64/nagios/plugins/utils.pm /usr/local/lib64/perl5/</span><br></pre></td></tr></table></figure>
+<p>另外你还需要通过修改配置文件 icinga2.conf 来启用 SNMP 插件检查命令，在该文件中增加 <code>include &lt;manubulon&gt;</code>。</p>
+<h4 id="通过_SNMP_检查内存">通过 SNMP 检查内存</h4><p>该功能需要 <a href="http://nagios.manubulon.com/snmp_mem.html" target="_blank" rel="external">check_snmp_mem.pl</a> 命令，如果不存在需要下载后放到 manubulon 定义的目录。下面是支持的一些参数：</p>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>snmp_address</td>
+<td>可选，主机地址，默认为变量 “$address$” 所设置的值。</td>
+</tr>
+<tr>
+<td>snmp_nocrypt</td>
+<td>可选，定义 SNMP 加密方式，仅在使用 snmp_v3 时需要设置，默认为 false。</td>
+</tr>
+<tr>
+<td>snmp_community</td>
+<td>可选，SNMP 接受团体，默认为 “public”。</td>
+</tr>
+<tr>
+<td>snmp_port</td>
+<td>可选，SNMP 连接端口。</td>
+</tr>
+<tr>
+<td>snmp_v2</td>
+<td>可选，SNMP 版本为 2c？默认为 false。</td>
+</tr>
+<tr>
+<td>snmp_v3</td>
+<td>可选，SNMP 版本为 3？默认为 false。</td>
+</tr>
+<tr>
+<td>snmp_login</td>
+<td>可选，snmp_v3 时的用户名，默认为 “snmpuser”。</td>
+</tr>
+<tr>
+<td>snmp_password</td>
+<td>必须，snmp_v3 时的密码，无默认值。</td>
+</tr>
+<tr>
+<td>snmp_v3_use_privpass</td>
+<td>可选，定义 snmp_v3 使用的私钥，默认为 false。</td>
+</tr>
+<tr>
+<td>snmp_authprotocol</td>
+<td>可选，snmp_v3的验证接口，默认为 “md5,des”。</td>
+</tr>
+<tr>
+<td>snmp_privpass</td>
+<td>必须，snmp_v3 时的私钥，仅在使用私钥时需要，无默认值。</td>
+</tr>
+<tr>
+<td>snmp_warn</td>
+<td>可选，提示警告时的取值范围。</td>
+</tr>
+<tr>
+<td>snmp_crit</td>
+<td>可选，提示错误时的取值返回。</td>
+</tr>
+<tr>
+<td>snmp_is_cisco</td>
+<td>可选，修改 Cisco switches 的 OIDs，默认为 false。</td>
+</tr>
+<tr>
+<td>snmp_perf</td>
+<td>可选，允许生成 perfdata 的值（用于图表），默认为 true。</td>
+</tr>
+<tr>
+<td>snmp_timeout</td>
+<td>可选，命令超时时间，默认为 5秒。</td>
+</tr>
+</tbody>
+</table>
+<p>下面是一个检查内存的例子，放在 services.conf：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">apply Service &#34;memory&#34; &#123;&#10;  import &#34;generic-service&#34;&#10;&#10;  check_command = &#34;snmp-memory&#34;&#10;  vars.snmp_nocrypt = &#34;authNoPriv&#34;&#10;  vars.snmp_v3 = true&#10;  vars.snmp_login = &#34;carey&#34;&#10;  vars.snmp_password = &#34;tnidea@carey&#34;&#10;  vars.snmp_authprotocol = &#34;MD5&#34;&#10;  assign where host.name == NodeName&#10;&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="通过_SNMP_检查网络">通过 SNMP 检查网络</h4><p>该功能需要 <a href="http://nagios.manubulon.com/snmp_int.html" target="_blank" rel="external">check_snmp_int.pl</a> 命令，如果不存在需要下载后放到 manubulon 定义的目录。下面是支持的一些参数：</p>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>snmp_address</td>
+<td>可选，主机地址，默认为变量 “$address$” 所设置的值。</td>
+</tr>
+<tr>
+<td>snmp_nocrypt</td>
+<td>可选，定义 SNMP 加密方式，仅在使用 snmp_v3 时需要设置，默认为 false。</td>
+</tr>
+<tr>
+<td>snmp_community</td>
+<td>可选，SNMP 接受团体，默认为 “public”。</td>
+</tr>
+<tr>
+<td>snmp_port</td>
+<td>可选，SNMP 连接端口。</td>
+</tr>
+<tr>
+<td>snmp_v2</td>
+<td>可选，SNMP 版本为 2c？默认为 false。</td>
+</tr>
+<tr>
+<td>snmp_v3</td>
+<td>可选，SNMP 版本为 3？默认为 false。</td>
+</tr>
+<tr>
+<td>snmp_login</td>
+<td>可选，snmp_v3 时的用户名，默认为 “snmpuser”。</td>
+</tr>
+<tr>
+<td>snmp_password</td>
+<td>必须，snmp_v3 时的密码，无默认值。</td>
+</tr>
+<tr>
+<td>snmp_v3_use_privpass</td>
+<td>可选，定义 snmp_v3 使用的私钥，默认为 false。</td>
+</tr>
+<tr>
+<td>snmp_authprotocol</td>
+<td>可选，snmp_v3的验证接口，默认为 “md5,des”。</td>
+</tr>
+<tr>
+<td>snmp_privpass</td>
+<td>必须，snmp_v3 时的私钥，仅在使用私钥时需要，无默认值。</td>
+</tr>
+<tr>
+<td>snmp_warn</td>
+<td>可选，提示警告时的取值范围。</td>
+</tr>
+<tr>
+<td>snmp_crit</td>
+<td>可选，提示错误时的取值返回。</td>
+</tr>
+<tr>
+<td>snmp_interface</td>
+<td>可选，网卡名称，默认为 “eth0”。注意该项是模糊匹配。</td>
+</tr>
+<tr>
+<td>snmp_interface_perf</td>
+<td>可选，检查输入输出端口的带宽，默认为 true。</td>
+</tr>
+<tr>
+<td>snmp_interface_label</td>
+<td>可选，在输出前自定义字段，例如 in=, out=, errors-out=, 等等…</td>
+</tr>
+<tr>
+<td>snmp_interface_bits_bytes</td>
+<td>可选，输出数据格式使用 bits/s 或者 Bytes/s。需要 snmp_interface_kbits 设置为 true。默认为 true。</td>
+</tr>
+<tr>
+<td>snmp_interface_percent</td>
+<td>可选， 输出数据使用相对于最大值的百分比表述，默认为 false。</td>
+</tr>
+<tr>
+<td>snmp_interface_kbits</td>
+<td>可选，使用 KBits/s 来定义警告与错误的等级，默认为 true。</td>
+</tr>
+<tr>
+<td>snmp_interface_megabytes</td>
+<td>可选，使用 Mbps 或 MBps 来定义警告与错误的等级，需要 snmp_interface_kbits 设置为 true。默认为 true。</td>
+</tr>
+<tr>
+<td>snmp_interface_64bit</td>
+<td>可选，使用64位的计数器取代默认的计数器，当带宽大于等于 1Gb 时使用，默认为 false。</td>
+</tr>
+<tr>
+<td>snmp_interface_errors</td>
+<td>可选，在输出时输出错误信息，默认为 true。</td>
+</tr>
+<tr>
+<td>snmp_interface_noregexp</td>
+<td>可选，不使用正则匹配网卡名称，默认为 false。</td>
+</tr>
+<tr>
+<td>snmp_interface_delta</td>
+<td>可选，检查间隔时间，默认为 “300” (5 分钟)。</td>
+</tr>
+<tr>
+<td>snmp_warncrit_percent</td>
+<td>可选，将警告与错误的等级通过报告速度的百分比来定义，如果设置了 snmp_interface_megabytes 则需要设置为 false。 默认为 false。</td>
+</tr>
+<tr>
+<td>snmp_perf</td>
+<td>可选，允许生成 perfdata 的值（用于图表），默认为 true。</td>
+</tr>
+<tr>
+<td>snmp_timeout</td>
+<td>可选，命令超时时间，默认为 5秒。</td>
+</tr>
+</tbody>
+</table>
+<p>下面是一个检查网络的例子，同样放在 services.conf：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">apply Service &#34;network&#34; &#123;&#10;  import &#34;generic-service&#34;&#10;&#10;  check_command = &#34;snmp-interface&#34;&#10;  vars.snmp_nocrypt = &#34;authNoPriv&#34;&#10;  vars.snmp_v3 = true&#10;  vars.snmp_login = &#34;carey&#34;&#10;  vars.snmp_password = &#34;tnidea@carey&#34;&#10;  vars.snmp_interface = &#34;eth0&#34;&#10;  vars.snmp_authprotocol = &#34;MD5&#34;&#10;  vars.snmp_interface_megabytes = false&#10;  assign where host.name == NodeName&#10;&#125;</span><br></pre></td></tr></table></figure>
+    <p>本文来自 <a href="http://www.tnidea.com/" title="The NewIdea" target="_blank" rel="external">The NewIdea</a>，作者 Carey Tzou 。<br>永久地址：<a href="http://www.tnidea.com/add-network-memory-for-icinga2-monitor.html" title="使用Icinga2监控服务器带宽以及内存占用" target="_blank" rel="external">http://www.tnidea.com/add-network-memory-for-icinga2-monitor.html</a><br>未经授权，拒绝任何全文及摘要转载！<br>
+    <br>
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <!-- 博客正文广告 -->
+    <ins class="adsbygoogle"
+        style="display:block"
+        data-ad-client="ca-pub-6541442242935379"
+        data-ad-slot="9453052931"
+        data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+
+    <p>欢迎关注微信公众号：CareyTzou（dotNet大数据）</p>
+    <a href="http://www.tnidea.com/media/image/wechat.jpg" title="Wechat:CareyTzou" class="fancybox" rel="article0"><img style="width:160px;display:inline;" src="http://www.tnidea.com/media/image/wechat.jpg" alt="Wechat:CareyTzou"></a>
+    
+    </div>
+    
+    <footer class="article-footer">
+      <a data-url="http://www.tnidea.com/add-network-memory-for-icinga2-monitor.html" data-id="cij8lxqxn0000o8s3q8gpe2uy" class="article-share-link">分享到</a>
+      
+        <a href="http://www.tnidea.com/add-network-memory-for-icinga2-monitor.html#ds-thread" class="article-comment-link">评论</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CentOS/">CentOS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Icinga-Web2/">Icinga Web2</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Icinga2/">Icinga2</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Memory/">Memory</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Network/">Network</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/服务器监控/">服务器监控</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/imitate-login-support-plugin-now.html" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">下一篇</strong>
+      <div class="article-nav-title">ImitateLogin新增插件机制以及又一个社交网站的支持</div>
+    </a>
+  
+</nav>
+
+
+  
+</article>
+
+
+  <section id="comments">
+    <div id="ds-thread" class="ds-thread" data-thread-key="http://www.tnidea.com/add-network-memory-for-icinga2-monitor.html" data-title="使用Icinga2监控服务器带宽以及内存占用" data-url="http://www.tnidea.com/add-network-memory-for-icinga2-monitor.html">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by DuoShuo.</a></noscript>
+    </div>
+  </section>
+
+</section>
+      
+        <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/NET/" style="font-size: 20px;">.NET</a> <a href="/tags/Baidu/" style="font-size: 10px;">Baidu</a> <a href="/tags/C/" style="font-size: 20px;">C#</a> <a href="/tags/CentOS/" style="font-size: 16.67px;">CentOS</a> <a href="/tags/DRPC/" style="font-size: 13.33px;">DRPC</a> <a href="/tags/Docker/" style="font-size: 10px;">Docker</a> <a href="/tags/Hadoop-MapReduce/" style="font-size: 10px;">Hadoop MapReduce</a> <a href="/tags/HttpHelper/" style="font-size: 10px;">HttpHelper</a> <a href="/tags/HttpWebRequest/" style="font-size: 10px;">HttpWebRequest</a> <a href="/tags/Icinga-Web2/" style="font-size: 16.67px;">Icinga Web2</a> <a href="/tags/Icinga2/" style="font-size: 16.67px;">Icinga2</a> <a href="/tags/ImitateLogin/" style="font-size: 10px;">ImitateLogin</a> <a href="/tags/Memory/" style="font-size: 10px;">Memory</a> <a href="/tags/Network/" style="font-size: 10px;">Network</a> <a href="/tags/OpenAuth/" style="font-size: 10px;">OpenAuth</a> <a href="/tags/SVN/" style="font-size: 10px;">SVN</a> <a href="/tags/Spark-Streaming/" style="font-size: 10px;">Spark Streaming</a> <a href="/tags/Storm/" style="font-size: 15px;">Storm</a> <a href="/tags/Topology/" style="font-size: 13.33px;">Topology</a> <a href="/tags/VS/" style="font-size: 11.67px;">VS</a> <a href="/tags/csharp/" style="font-size: 18.33px;">csharp</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/mono/" style="font-size: 10px;">mono</a> <a href="/tags/open-auth-assist/" style="font-size: 10px;">open-auth-assist</a> <a href="/tags/social-network/" style="font-size: 13.33px;">social network</a> <a href="/tags/storm/" style="font-size: 15px;">storm</a> <a href="/tags/thrift/" style="font-size: 13.33px;">thrift</a> <a href="/tags/wechat/" style="font-size: 10px;">wechat</a> <a href="/tags/wordcount/" style="font-size: 11.67px;">wordcount</a> <a href="/tags/zookeeper/" style="font-size: 10px;">zookeeper</a> <a href="/tags/分布式/" style="font-size: 11.67px;">分布式</a> <a href="/tags/微信/" style="font-size: 10px;">微信</a> <a href="/tags/批处理/" style="font-size: 11.67px;">批处理</a> <a href="/tags/插件机制/" style="font-size: 10px;">插件机制</a> <a href="/tags/文件版本号/" style="font-size: 11.67px;">文件版本号</a> <a href="/tags/服务器监控/" style="font-size: 16.67px;">服务器监控</a> <a href="/tags/流式框架/" style="font-size: 11.67px;">流式框架</a> <a href="/tags/部署/" style="font-size: 10px;">部署</a> <a href="/tags/项目管理/" style="font-size: 10px;">项目管理</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Storm/">Storm</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/爬虫/">爬虫</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/运维/">运维</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/项目管理/">项目管理</a><span class="category-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">一月 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">十二月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">十一月 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">十月 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">九月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">八月 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/07/">七月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/06/">六月 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/05/">五月 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/11/">十一月 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/10/">十月 2013</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+</aside>
+      
+    </div>
+    <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2013-2016 The NewIdea Inc.  <span id="footer-info-extend">鄂ICP备15011767号-1</span>
+    </div>
+  </div>
+</footer>
+    
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"tnidea"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+
+
+
+ <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+
+
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+  <script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+
+
+<script src="/js/script.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install','e2e3X_cz-QvzonvQg7eP','2.0.0');
+</script>
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?855c1789992bb648e4734a1e1045c672";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+  </div>
+    <div id="mobile-nav">
+    <nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left" id="cbp-spmenu-s1">
+      
+        <a href="/.">首页</a>
+        
+      
+        <a href="/archives">归档</a>
+        
+      
+        <a href="javascript:void(0)">分类</a>
+        
+          <ul class="main-nav-category-list"><li class="main-nav-category-list-item"><a class="main-nav-category-list-link" href="/categories/Storm/">Storm</a></li><li class="main-nav-category-list-item"><a class="main-nav-category-list-link" href="/categories/爬虫/">爬虫</a></li><li class="main-nav-category-list-item"><a class="main-nav-category-list-link" href="/categories/运维/">运维</a></li><li class="main-nav-category-list-item"><a class="main-nav-category-list-link" href="/categories/项目管理/">项目管理</a></li></ul>
+        
+      
+        <a href="/about.html">关于</a>
+        
+      
+      <div id="nav-search-form">
+        <form class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="搜索"><button type="submit" class="search-form-submit"> </button></form>
+      </div>
+    </nav>
+  </div>
+  <script>
+    var menuLeft = document.getElementById( 'cbp-spmenu-s1' ),
+        showMobileNav = document.getElementById( 'mobile-logo' ),
+        container = document.getElementById( 'container' );
+  
+    showMobileNav.onclick = function() {
+      classie.toggle( this, 'active' );
+      classie.toggle( container, 'cbp-spmenu-push-toright' );
+      classie.toggle( menuLeft, 'cbp-spmenu-open' );
+    };
+  </script>
+</body>
+</html>

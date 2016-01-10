@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://www.tnidea.com/"/>
-  <updated>2016-01-08T16:25:39.000Z</updated>
+  <updated>2016-01-10T13:57:38.000Z</updated>
   <id>http://www.tnidea.com/</id>
   
   <author>
@@ -13,6 +13,411 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[使用Icinga2监控服务器带宽以及内存占用]]></title>
+    <link href="http://www.tnidea.com/add-network-memory-for-icinga2-monitor.html"/>
+    <id>http://www.tnidea.com/add-network-memory-for-icinga2-monitor.html</id>
+    <published>2016-01-10T16:00:00.000Z</published>
+    <updated>2016-01-10T13:57:38.000Z</updated>
+    <content type="html"><![CDATA[<p>监控是系统运维的基础，Icinga是一个开源的监控系统框架，通过其广泛的插件支持，你可以监控几乎任何你能想到的网络资源；也可以在超过临界值时给予通知，根据监控数据生产报表。本文将介绍如何通过SNMP协议来监控服务器的带宽以及内存占用。</p>
+<a id="more"></a>
+<p>SNMP（简单网络管理协议），由一组网络管理的标准组成，包含一个应用层协议、数据库模型和一组资源对象。该协议能够支持网络管理系统，用以监测连接到网络上的设备是否有任何引起管理上关注的情况。SNMP的目标是管理互联网 Internet 上众多厂家生产的软硬件平台，因此SNMP受Internet标准网络管理框架的影响也很大。</p>
+<p>下表是 Icinga2 通过 SNMP 在各类系统上支持的项，本文仅介绍 Centos7 和 Windows 系统下的网络和内存的监控设置。</p>
+<table>
+<thead>
+<tr>
+<th>主机类型</th>
+<th>接口</th>
+<th>存储</th>
+<th>CPU负载</th>
+<th>内存</th>
+<th>进程</th>
+<th>环境变量</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Linux</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>NO</td>
+<td></td>
+</tr>
+<tr>
+<td>Windows</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>NO</td>
+<td>check_snmp_win.pl</td>
+</tr>
+<tr>
+<td>Cisco router/switch</td>
+<td>YES</td>
+<td>N/A</td>
+<td>YES</td>
+<td>YES</td>
+<td>N/A</td>
+<td>YES</td>
+<td></td>
+</tr>
+<tr>
+<td>HP router/switch</td>
+<td>YES</td>
+<td>N/A</td>
+<td>YES</td>
+<td>YES</td>
+<td>N/A</td>
+<td>NO</td>
+<td></td>
+</tr>
+<tr>
+<td>Bluecoat proxy</td>
+<td>YES</td>
+<td>SNMP</td>
+<td>YES</td>
+<td>SNMP</td>
+<td>NO</td>
+<td>YES</td>
+<td></td>
+</tr>
+<tr>
+<td>CheckPoint on SPLAT</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>NO</td>
+<td>check_snmp_cpfw.pl</td>
+</tr>
+<tr>
+<td>CheckPoint on Nokia IP</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>NO</td>
+<td>–</td>
+<td>NO</td>
+<td>check_snmp_vrrp.pl</td>
+</tr>
+<tr>
+<td>Boostedge</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>–</td>
+<td>NO</td>
+<td>check_snmp_boostedge.pl</td>
+</tr>
+<tr>
+<td>AS400</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>NO</td>
+<td>NO</td>
+<td></td>
+</tr>
+<tr>
+<td>NetsecureOne Netbox</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>–</td>
+<td>YES</td>
+<td>NO</td>
+<td></td>
+</tr>
+<tr>
+<td>Radware Linkproof</td>
+<td>YES</td>
+<td>N/A</td>
+<td>SNMP</td>
+<td>SNMP</td>
+<td>NO</td>
+<td>NO</td>
+<td>check_snmp_linkproof_nhr, check_snmp_vrrp.pl</td>
+</tr>
+<tr>
+<td>IronPort</td>
+<td>YES</td>
+<td>SNMP</td>
+<td>SNMP</td>
+<td>SNMP</td>
+<td>NO</td>
+<td>YES</td>
+<td></td>
+</tr>
+<tr>
+<td>Cisco CSS</td>
+<td>YES</td>
+<td>–</td>
+<td>YES</td>
+<td>YES</td>
+<td>NO</td>
+<td>–</td>
+<td>check_snmp_css.pl</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>N/A, NO: 不支持或不存在</li>
+<li>SNMP: 仅支持简单的SNMP查询</li>
+<li>–: 未测试</li>
+</ul>
+<h1 id="安装与配置SNMP">安装与配置SNMP</h1><h4 id="安装_NET-SNMP">安装 NET-SNMP</h4><p>CentOS可以直接通过yum安装 NET-SNMP 的包，其它系统也可以通过 <a href="http://sourceforge.net/projects/net-snmp/" target="_blank" rel="external">NET-SNMP项目</a> 下载安装。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># yum install net-snmp net-snmp-devel net-snmp-utils</span><br></pre></td></tr></table></figure>
+<h4 id="配置_NET-SNMP">配置 NET-SNMP</h4><p>CentOS需要关闭selinux才能正常使用snmp v3，使用以下命令查看SELinux状态：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># /usr/sbin/sestatus -v</span><br></pre></td></tr></table></figure>
+<p>如果SELinux status参数为enabled即为开启状态。</p>
+<p>关闭SELinux：</p>
+<p>1: 临时关闭（不用重启机器），但机器重启后会失效： <code># setenforce 0</code></p>
+<p>2: 永久关闭，需要修改配置文件需要重启机器：<br>修改/etc/selinux/config 文件，将SELINUX=enforcing改为SELINUX=disabled，重启系统。</p>
+<p>停用 NET-SNMP 服务，并配置用户：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># service snmpd stop&#10;# net-snmp-config --create-snmpv3-user -ro -A tnidea@carey -a MD5 carey</span><br></pre></td></tr></table></figure>
+<p>以上命令，创建了一个用户名为carey，密码为tnidea@carey的snmpv3用户，使用MD5加密。</p>
+<h4 id="运行_NET-SNMP">运行 NET-SNMP</h4><p>运行 NET-SNMP 服务，并加入到开机启动项。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># service snmpd start&#10;# chkconfig snmpd on</span><br></pre></td></tr></table></figure>
+<p>使用 snmpwalk 命令检测snmp服务是否正常启动，正常将返回相关结果：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># snmpwalk -v 3 -u carey -a MD5 -A &#34;tnidea@carey&#34; -l authNoPriv 127.0.0.1 sysDescr</span><br></pre></td></tr></table></figure>
+<p>Windows系统包中已经自带了 SNMP 功能，直接在 控制面板-&gt;添加或删除程序 中找到 简单网络管理协议(SNMP) 并勾选，安装完成后到服务中配置相关安全选项。</p>
+<p>另外你还需要在防火墙上允许 SNMP 端口进行通讯，其默认端口为 161 。</p>
+<h1 id="安装SNMP模块监控网络与内存">安装SNMP模块监控网络与内存</h1><p>首先安装 perl 环境，下面是以 Centos 为例：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># yum install perl*&#10;# yum install cpan</span><br></pre></td></tr></table></figure>
+<p>然后通过 CPAN 来安装 Net-SNMP：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># perl -MCPAN -e shell&#10;cpan shell -- CPAN exploration and modules installation (v1.76)&#10;ReadLine support enabled&#10;cpan&#62; install Net::SNMP</span><br></pre></td></tr></table></figure>
+<p>CPAN 的安装目录可能在ROOT目录下，这会导致 Icinga2 无法调用，你需要根据安装结果提示将安装的文件复制到支持的目录，比如：<code>/usr/local/lib64/perl5/</code>。</p>
+<p>另外还需要将 utils.pm 链接到 perl 的运行目录：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># ln -s /usr/lib64/nagios/plugins/utils.pm /usr/local/lib64/perl5/</span><br></pre></td></tr></table></figure>
+<p>另外你还需要通过修改配置文件 icinga2.conf 来启用 SNMP 插件检查命令，在该文件中增加 <code>include &lt;manubulon&gt;</code>。</p>
+<h4 id="通过_SNMP_检查内存">通过 SNMP 检查内存</h4><p>该功能需要 <a href="http://nagios.manubulon.com/snmp_mem.html" target="_blank" rel="external">check_snmp_mem.pl</a> 命令，如果不存在需要下载后放到 manubulon 定义的目录。下面是支持的一些参数：</p>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>snmp_address</td>
+<td>可选，主机地址，默认为变量 “$address$” 所设置的值。</td>
+</tr>
+<tr>
+<td>snmp_nocrypt</td>
+<td>可选，定义 SNMP 加密方式，仅在使用 snmp_v3 时需要设置，默认为 false。</td>
+</tr>
+<tr>
+<td>snmp_community</td>
+<td>可选，SNMP 接受团体，默认为 “public”。</td>
+</tr>
+<tr>
+<td>snmp_port</td>
+<td>可选，SNMP 连接端口。</td>
+</tr>
+<tr>
+<td>snmp_v2</td>
+<td>可选，SNMP 版本为 2c？默认为 false。</td>
+</tr>
+<tr>
+<td>snmp_v3</td>
+<td>可选，SNMP 版本为 3？默认为 false。</td>
+</tr>
+<tr>
+<td>snmp_login</td>
+<td>可选，snmp_v3 时的用户名，默认为 “snmpuser”。</td>
+</tr>
+<tr>
+<td>snmp_password</td>
+<td>必须，snmp_v3 时的密码，无默认值。</td>
+</tr>
+<tr>
+<td>snmp_v3_use_privpass</td>
+<td>可选，定义 snmp_v3 使用的私钥，默认为 false。</td>
+</tr>
+<tr>
+<td>snmp_authprotocol</td>
+<td>可选，snmp_v3的验证接口，默认为 “md5,des”。</td>
+</tr>
+<tr>
+<td>snmp_privpass</td>
+<td>必须，snmp_v3 时的私钥，仅在使用私钥时需要，无默认值。</td>
+</tr>
+<tr>
+<td>snmp_warn</td>
+<td>可选，提示警告时的取值范围。</td>
+</tr>
+<tr>
+<td>snmp_crit</td>
+<td>可选，提示错误时的取值返回。</td>
+</tr>
+<tr>
+<td>snmp_is_cisco</td>
+<td>可选，修改 Cisco switches 的 OIDs，默认为 false。</td>
+</tr>
+<tr>
+<td>snmp_perf</td>
+<td>可选，允许生成 perfdata 的值（用于图表），默认为 true。</td>
+</tr>
+<tr>
+<td>snmp_timeout</td>
+<td>可选，命令超时时间，默认为 5秒。</td>
+</tr>
+</tbody>
+</table>
+<p>下面是一个检查内存的例子，放在 services.conf：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">apply Service &#34;memory&#34; &#123;&#10;  import &#34;generic-service&#34;&#10;&#10;  check_command = &#34;snmp-memory&#34;&#10;  vars.snmp_nocrypt = &#34;authNoPriv&#34;&#10;  vars.snmp_v3 = true&#10;  vars.snmp_login = &#34;carey&#34;&#10;  vars.snmp_password = &#34;tnidea@carey&#34;&#10;  vars.snmp_authprotocol = &#34;MD5&#34;&#10;  assign where host.name == NodeName&#10;&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="通过_SNMP_检查网络">通过 SNMP 检查网络</h4><p>该功能需要 <a href="http://nagios.manubulon.com/snmp_int.html" target="_blank" rel="external">check_snmp_int.pl</a> 命令，如果不存在需要下载后放到 manubulon 定义的目录。下面是支持的一些参数：</p>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>snmp_address</td>
+<td>可选，主机地址，默认为变量 “$address$” 所设置的值。</td>
+</tr>
+<tr>
+<td>snmp_nocrypt</td>
+<td>可选，定义 SNMP 加密方式，仅在使用 snmp_v3 时需要设置，默认为 false。</td>
+</tr>
+<tr>
+<td>snmp_community</td>
+<td>可选，SNMP 接受团体，默认为 “public”。</td>
+</tr>
+<tr>
+<td>snmp_port</td>
+<td>可选，SNMP 连接端口。</td>
+</tr>
+<tr>
+<td>snmp_v2</td>
+<td>可选，SNMP 版本为 2c？默认为 false。</td>
+</tr>
+<tr>
+<td>snmp_v3</td>
+<td>可选，SNMP 版本为 3？默认为 false。</td>
+</tr>
+<tr>
+<td>snmp_login</td>
+<td>可选，snmp_v3 时的用户名，默认为 “snmpuser”。</td>
+</tr>
+<tr>
+<td>snmp_password</td>
+<td>必须，snmp_v3 时的密码，无默认值。</td>
+</tr>
+<tr>
+<td>snmp_v3_use_privpass</td>
+<td>可选，定义 snmp_v3 使用的私钥，默认为 false。</td>
+</tr>
+<tr>
+<td>snmp_authprotocol</td>
+<td>可选，snmp_v3的验证接口，默认为 “md5,des”。</td>
+</tr>
+<tr>
+<td>snmp_privpass</td>
+<td>必须，snmp_v3 时的私钥，仅在使用私钥时需要，无默认值。</td>
+</tr>
+<tr>
+<td>snmp_warn</td>
+<td>可选，提示警告时的取值范围。</td>
+</tr>
+<tr>
+<td>snmp_crit</td>
+<td>可选，提示错误时的取值返回。</td>
+</tr>
+<tr>
+<td>snmp_interface</td>
+<td>可选，网卡名称，默认为 “eth0”。注意该项是模糊匹配。</td>
+</tr>
+<tr>
+<td>snmp_interface_perf</td>
+<td>可选，检查输入输出端口的带宽，默认为 true。</td>
+</tr>
+<tr>
+<td>snmp_interface_label</td>
+<td>可选，在输出前自定义字段，例如 in=, out=, errors-out=, 等等…</td>
+</tr>
+<tr>
+<td>snmp_interface_bits_bytes</td>
+<td>可选，输出数据格式使用 bits/s 或者 Bytes/s。需要 snmp_interface_kbits 设置为 true。默认为 true。</td>
+</tr>
+<tr>
+<td>snmp_interface_percent</td>
+<td>可选， 输出数据使用相对于最大值的百分比表述，默认为 false。</td>
+</tr>
+<tr>
+<td>snmp_interface_kbits</td>
+<td>可选，使用 KBits/s 来定义警告与错误的等级，默认为 true。</td>
+</tr>
+<tr>
+<td>snmp_interface_megabytes</td>
+<td>可选，使用 Mbps 或 MBps 来定义警告与错误的等级，需要 snmp_interface_kbits 设置为 true。默认为 true。</td>
+</tr>
+<tr>
+<td>snmp_interface_64bit</td>
+<td>可选，使用64位的计数器取代默认的计数器，当带宽大于等于 1Gb 时使用，默认为 false。</td>
+</tr>
+<tr>
+<td>snmp_interface_errors</td>
+<td>可选，在输出时输出错误信息，默认为 true。</td>
+</tr>
+<tr>
+<td>snmp_interface_noregexp</td>
+<td>可选，不使用正则匹配网卡名称，默认为 false。</td>
+</tr>
+<tr>
+<td>snmp_interface_delta</td>
+<td>可选，检查间隔时间，默认为 “300” (5 分钟)。</td>
+</tr>
+<tr>
+<td>snmp_warncrit_percent</td>
+<td>可选，将警告与错误的等级通过报告速度的百分比来定义，如果设置了 snmp_interface_megabytes 则需要设置为 false。 默认为 false。</td>
+</tr>
+<tr>
+<td>snmp_perf</td>
+<td>可选，允许生成 perfdata 的值（用于图表），默认为 true。</td>
+</tr>
+<tr>
+<td>snmp_timeout</td>
+<td>可选，命令超时时间，默认为 5秒。</td>
+</tr>
+</tbody>
+</table>
+<p>下面是一个检查网络的例子，同样放在 services.conf：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">apply Service &#34;network&#34; &#123;&#10;  import &#34;generic-service&#34;&#10;&#10;  check_command = &#34;snmp-interface&#34;&#10;  vars.snmp_nocrypt = &#34;authNoPriv&#34;&#10;  vars.snmp_v3 = true&#10;  vars.snmp_login = &#34;carey&#34;&#10;  vars.snmp_password = &#34;tnidea@carey&#34;&#10;  vars.snmp_interface = &#34;eth0&#34;&#10;  vars.snmp_authprotocol = &#34;MD5&#34;&#10;  vars.snmp_interface_megabytes = false&#10;  assign where host.name == NodeName&#10;&#125;</span><br></pre></td></tr></table></figure>]]></content>
+    <summary type="html">
+    <![CDATA[<p>监控是系统运维的基础，Icinga是一个开源的监控系统框架，通过其广泛的插件支持，你可以监控几乎任何你能想到的网络资源；也可以在超过临界值时给予通知，根据监控数据生产报表。本文将介绍如何通过SNMP协议来监控服务器的带宽以及内存占用。</p>]]>
+    
+    </summary>
+    
+      <category term="CentOS" scheme="http://www.tnidea.com/tags/CentOS/"/>
+    
+      <category term="Icinga Web2" scheme="http://www.tnidea.com/tags/Icinga-Web2/"/>
+    
+      <category term="Icinga2" scheme="http://www.tnidea.com/tags/Icinga2/"/>
+    
+      <category term="Memory" scheme="http://www.tnidea.com/tags/Memory/"/>
+    
+      <category term="Network" scheme="http://www.tnidea.com/tags/Network/"/>
+    
+      <category term="服务器监控" scheme="http://www.tnidea.com/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9B%91%E6%8E%A7/"/>
+    
+      <category term="运维" scheme="http://www.tnidea.com/categories/%E8%BF%90%E7%BB%B4/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[ImitateLogin新增插件机制以及又一个社交网站的支持]]></title>
