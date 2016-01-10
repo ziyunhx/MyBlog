@@ -32,7 +32,7 @@ SNMP（简单网络管理协议），由一组网络管理的标准组成，包�
 | Boostedge   		| YES     | YES   | YES      |YES 	| --  | NO     |  check_snmp_boostedge.pl     |
 | AS400		| YES     | YES   | YES      |YES 	| NO  | NO     |       |
 | NetsecureOne Netbox | YES     | YES   | YES      |-- 	| YES  | NO     |       |
-| Radware Linkproof	| YES     | N/A   | SNMP      |SNMP 	| NO  | NO     |  check_snmp_linkproof_nhr, check_snmp_vrrp.pl     |
+| Radware Linkproof	| YES     | N/A   | SNMP      |SNMP 	| NO  | NO     |  check_snmp_linkproof_nhr <br> check_snmp_vrrp.pl     |
 | IronPort 		| YES     | SNMP   | SNMP      |SNMP 	| NO  | YES     |       |
 | Cisco CSS   	| YES     | --   | YES      |YES 	| NO  | --     | check_snmp_css.pl      |
 
