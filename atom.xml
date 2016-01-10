@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://www.tnidea.com/"/>
-  <updated>2016-01-10T13:57:38.000Z</updated>
+  <updated>2016-01-10T14:03:39.000Z</updated>
   <id>http://www.tnidea.com/</id>
   
   <author>
@@ -19,7 +19,7 @@
     <link href="http://www.tnidea.com/add-network-memory-for-icinga2-monitor.html"/>
     <id>http://www.tnidea.com/add-network-memory-for-icinga2-monitor.html</id>
     <published>2016-01-10T16:00:00.000Z</published>
-    <updated>2016-01-10T13:57:38.000Z</updated>
+    <updated>2016-01-10T14:03:39.000Z</updated>
     <content type="html"><![CDATA[<p>监控是系统运维的基础，Icinga是一个开源的监控系统框架，通过其广泛的插件支持，你可以监控几乎任何你能想到的网络资源；也可以在超过临界值时给予通知，根据监控数据生产报表。本文将介绍如何通过SNMP协议来监控服务器的带宽以及内存占用。</p>
 <a id="more"></a>
 <p>SNMP（简单网络管理协议），由一组网络管理的标准组成，包含一个应用层协议、数据库模型和一组资源对象。该协议能够支持网络管理系统，用以监测连接到网络上的设备是否有任何引起管理上关注的情况。SNMP的目标是管理互联网 Internet 上众多厂家生产的软硬件平台，因此SNMP受Internet标准网络管理框架的影响也很大。</p>
@@ -146,7 +146,7 @@
 <td>SNMP</td>
 <td>NO</td>
 <td>NO</td>
-<td>check_snmp_linkproof_nhr, check_snmp_vrrp.pl</td>
+<td>check_snmp_linkproof_nhr <br> check_snmp_vrrp.pl</td>
 </tr>
 <tr>
 <td>IronPort</td>
