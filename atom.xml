@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://www.tnidea.com/"/>
-  <updated>2016-01-10T14:03:39.000Z</updated>
+  <updated>2016-01-29T16:26:26.000Z</updated>
   <id>http://www.tnidea.com/</id>
   
   <author>
@@ -13,6 +13,51 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[使用C#自动识别网页编码]]></title>
+    <link href="http://www.tnidea.com/recog-http-charset-by-dot-net.html"/>
+    <id>http://www.tnidea.com/recog-http-charset-by-dot-net.html</id>
+    <published>2016-01-26T16:00:00.000Z</published>
+    <updated>2016-01-29T16:26:26.000Z</updated>
+    <content type="html"><![CDATA[<p>在大规模的网络爬虫编程中，网页编码识别是必不可少的，本文将介绍如何通过C#来自动识别网页的编码。文中会分析几种可行的方法并提供源码，部分源码来源于开源代码改写而来。</p>
+<a id="more"></a>
+<p>网页在传输中为了能够正确识别编码，一般在头部都会声明编码格式，例如：</p>
+<meta charset="utf-8">
+
+<p>或者像这样：</p>
+<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+
+<p>因此，很自然的我们想到通过读取这个字段来来识别编码。下面代码中 ResponseStream 是从 HTTP 网络流里读取后转化为 Stream 的流。</p>
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">string</span> CharsetReg = <span class="string">@"(meta.*?charset=""?(?&lt;Charset&gt;[^\s""'&gt;;]+)""?)|(xml.*?encoding=""?(?&lt;Charset&gt;[^\s""&gt;;]+)""?)"</span>;</span><br><span class="line"></span><br><span class="line">Encoding encode = <span class="keyword">null</span>;</span><br><span class="line">String cache = <span class="keyword">string</span>.Empty;</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> (<span class="keyword">true</span>)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">var</span> b = (<span class="keyword">byte</span>)ResponseStream.ReadByte();</span><br><span class="line">    <span class="keyword">if</span> (b &lt; <span class="number">0</span> || b == <span class="number">255</span>) <span class="comment">//end of stream</span></span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (!cache.EndsWith(<span class="string">"&lt;/head&gt;"</span>, StringComparison.OrdinalIgnoreCase))</span><br><span class="line">        cache += (<span class="keyword">char</span>)b;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (httpWebResponse.CharacterSet == <span class="string">"ISO-8859-1"</span> || httpWebResponse.CharacterSet == <span class="string">"zh-cn"</span>)</span><br><span class="line">&#123;</span><br><span class="line">    Match match = Regex.Match(cache, CharsetReg, RegexOptions.IgnoreCase | RegexOptions.Multiline);</span><br><span class="line">    <span class="keyword">if</span> (match.Success)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">try</span></span><br><span class="line">        &#123;</span><br><span class="line">            charset = match.Groups[<span class="string">"Charset"</span>].Value;</span><br><span class="line">            encode = Encoding.GetEncoding(charset);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">catch</span> &#123; &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (httpWebResponse.CharacterSet != <span class="keyword">null</span> &amp;&amp; encode == <span class="keyword">null</span>)</span><br><span class="line">    encode = Encoding.GetEncoding(httpWebResponse.CharacterSet);</span><br></pre></td></tr></table></figure>
+<p>这个方法仅考虑了中文与英文环境下的情况，如果还有其它编码，请自行修改。</p>
+<p>当你满心欢喜的以为可以喝杯咖啡打个盹时，运维妹妹发来了乱码的截图。。。这是哪个实习生在网页写的GB2312，实际却是UTF-8的编码。好吧，看在就这一个的情况下，我写个参数配置一下这个网站的编码吧。</p>
+<p>一个小时过去了。。。</p>
+<p>已经是第7张乱码截图了，看来乱写编码已经成为了反爬虫的招数之一了！再一次打开网站，发现浏览器中并没有乱码，看来是有其它的判断方式。于是，找到了这个库 <a href="http://www-archive.mozilla.org/projects/intl/chardet.html" target="_blank" rel="external">chardet</a> ，它是mozilla自动字符编码识别程序库，我直接使用了社区中贡献的 .Net 实现版本 <a href="http://www.cnblogs.com/hhh/archive/2007/01/27/632251.html" target="_blank" rel="external">Nchardet</a>。链接是我所能搜索到的最早的文章，如果有错误还望指出！</p>
+<p>原程序使用了一种通知模式来反馈编码结果，个人感觉与习惯使用的方式不同，于是改成了静态方法，将 HandleData 等用于识别编码的方法增加了编码返回，另外创建了一个 Nchardet 的 Helper 类：</p>
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">using</span> System;</span><br><span class="line"><span class="keyword">using</span> System.Linq;</span><br><span class="line"><span class="keyword">using</span> System.Text;</span><br><span class="line"><span class="keyword">using</span> Thrinax.Data;</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">Thrinax.Helper</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">class</span> <span class="title">NChardetHelper</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment"><span class="xmlDocTag">///</span> <span class="xmlDocTag">&lt;summary&gt;</span></span></span><br><span class="line">        <span class="comment"><span class="xmlDocTag">///</span> Recog the Encoding from byte array.</span></span><br><span class="line">        <span class="comment"><span class="xmlDocTag">///</span> <span class="xmlDocTag">&lt;/summary&gt;</span></span></span><br><span class="line">        <span class="comment"><span class="xmlDocTag">///</span> <span class="xmlDocTag">&lt;param name="bytes"&gt;</span>the byte array.<span class="xmlDocTag">&lt;/param&gt;</span></span></span><br><span class="line">        <span class="comment"><span class="xmlDocTag">///</span> <span class="xmlDocTag">&lt;param name="language"&gt;</span>the language.<span class="xmlDocTag">&lt;/param&gt;</span></span></span><br><span class="line">        <span class="comment"><span class="xmlDocTag">///</span> <span class="xmlDocTag">&lt;returns&gt;</span>charset string, will be empty when can't recog.<span class="xmlDocTag">&lt;/returns&gt;</span></span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Encoding <span class="title">RecogEncoding</span>(<span class="params"><span class="keyword">byte</span>[] bytes, NChardetLanguage language = NChardetLanguage.ALL</span>)</span><br><span class="line">        </span>&#123;</span><br><span class="line">            <span class="keyword">string</span> charset = RecogCharset(bytes, language);</span><br><span class="line">            <span class="keyword">if</span> (!<span class="keyword">string</span>.IsNullOrEmpty(charset))</span><br><span class="line">                <span class="keyword">return</span> Encoding.GetEncoding(charset); </span><br><span class="line"></span><br><span class="line">            <span class="keyword">return</span> Encoding.Default;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment"><span class="xmlDocTag">///</span> <span class="xmlDocTag">&lt;summary&gt;</span></span></span><br><span class="line">        <span class="comment"><span class="xmlDocTag">///</span> Recog the charset from byte array.</span></span><br><span class="line">        <span class="comment"><span class="xmlDocTag">///</span> <span class="xmlDocTag">&lt;/summary&gt;</span></span></span><br><span class="line">        <span class="comment"><span class="xmlDocTag">///</span> <span class="xmlDocTag">&lt;param name="bytes"&gt;</span>the byte array.<span class="xmlDocTag">&lt;/param&gt;</span></span></span><br><span class="line">        <span class="comment"><span class="xmlDocTag">///</span> <span class="xmlDocTag">&lt;param name="language"&gt;</span>the language.<span class="xmlDocTag">&lt;/param&gt;</span></span></span><br><span class="line">        <span class="comment"><span class="xmlDocTag">///</span> <span class="xmlDocTag">&lt;param name="maxLength"&gt;</span>max length per time. the default is 1024, -1 to without limit.<span class="xmlDocTag">&lt;/param&gt;</span></span></span><br><span class="line">        <span class="comment"><span class="xmlDocTag">///</span> <span class="xmlDocTag">&lt;returns&gt;</span>charset string, will be empty when can't recog.<span class="xmlDocTag">&lt;/returns&gt;</span></span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">string</span> <span class="title">RecogCharset</span>(<span class="params"><span class="keyword">byte</span>[] bytes, NChardetLanguage language = NChardetLanguage.ALL, <span class="keyword">int</span> maxLength = <span class="number">1024</span></span>)</span><br><span class="line">        </span>&#123;</span><br><span class="line">            <span class="keyword">if</span> (bytes == <span class="keyword">null</span> || bytes.Length == <span class="number">0</span>)</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line">            PSMDetector detector = <span class="keyword">new</span> PSMDetector(language);</span><br><span class="line">            <span class="keyword">string</span> charset = String.Empty;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (maxLength &gt; <span class="number">0</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">int</span> count = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">                <span class="keyword">do</span></span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="keyword">var</span> tempBytes = bytes.Skip(maxLength * count).Take(maxLength);</span><br><span class="line">                    <span class="keyword">if</span> (tempBytes == <span class="keyword">null</span> || tempBytes.Count() == <span class="number">0</span>)</span><br><span class="line">                        <span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line">                    detector.HandleData(tempBytes.ToArray(), tempBytes.Count(), <span class="keyword">ref</span> charset);</span><br><span class="line">                    <span class="keyword">if</span> (!<span class="keyword">string</span>.IsNullOrEmpty(charset))</span><br><span class="line">                        <span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line">                    count++;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">while</span> (<span class="keyword">true</span>);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">            &#123;</span><br><span class="line">                detector.HandleData(bytes, bytes.Length, <span class="keyword">ref</span> charset);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (<span class="keyword">string</span>.IsNullOrEmpty(charset))</span><br><span class="line">                detector.DataEnd(<span class="keyword">ref</span> charset);</span><br><span class="line"></span><br><span class="line">            <span class="keyword">return</span> charset;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>为了平衡效率与准确度，RecogCharset 方法提供了一个 maxLength 的参数，用于指定每次识别的最大byte数，如果指定长度的byte数组无法识别出编码，则会循环直至识别出编码或者所有byte都已参与识别。生成环境下测试该值使用 1024 效果较好。</p>
+<p>你以为这样就完了，不，没有，竟然还有一个网站头部与正文部分使用不同编码的，为了避嫌，暂时不点名了。还好目前也就发现了这一个网站，好吧，拿回之前删除的指定编码的代码，把编码指定为我们要获取的部分的编码，最终改写后的方法如下：</p>
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">string</span> CharsetReg = <span class="string">@"(meta.*?charset=""?(?&lt;Charset&gt;[^\s""'&gt;;]+)""?)|(xml.*?encoding=""?(?&lt;Charset&gt;[^\s""&gt;;]+)""?)"</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">string</span> Content = <span class="keyword">null</span>;</span><br><span class="line"><span class="keyword">var</span> bytes = <span class="keyword">new</span> List&lt;<span class="keyword">byte</span>&gt;();</span><br><span class="line">Encoding encode = <span class="keyword">null</span>;</span><br><span class="line">String cache = <span class="keyword">string</span>.Empty;</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> (<span class="keyword">true</span>)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">var</span> b = (<span class="keyword">byte</span>)ResponseStream.ReadByte();</span><br><span class="line">    <span class="keyword">if</span> (b &lt; <span class="number">0</span> || b == <span class="number">255</span>) <span class="comment">//end of stream</span></span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    bytes.Add(b);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (!cache.EndsWith(<span class="string">"&lt;/head&gt;"</span>, StringComparison.OrdinalIgnoreCase))</span><br><span class="line">        cache += (<span class="keyword">char</span>)b;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Charset check: input &gt; NChardet &gt; Parser</span></span><br><span class="line"><span class="keyword">if</span> (encode == <span class="keyword">null</span>)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">string</span> charset = NChardetHelper.RecogCharset(bytes.ToArray());</span><br><span class="line">    <span class="keyword">if</span> (!<span class="keyword">string</span>.IsNullOrEmpty(charset))</span><br><span class="line">        encode = Encoding.GetEncoding(charset);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (encode == <span class="keyword">null</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (httpWebResponse.CharacterSet == <span class="string">"ISO-8859-1"</span> || httpWebResponse.CharacterSet == <span class="string">"zh-cn"</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            Match match = Regex.Match(cache, CharsetReg, RegexOptions.IgnoreCase | RegexOptions.Multiline);</span><br><span class="line">            <span class="keyword">if</span> (match.Success)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">try</span></span><br><span class="line">                &#123;</span><br><span class="line">                    charset = match.Groups[<span class="string">"Charset"</span>].Value;</span><br><span class="line">                    encode = Encoding.GetEncoding(charset);</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">catch</span> &#123; &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (httpWebResponse.CharacterSet != <span class="keyword">null</span> &amp;&amp; encode == <span class="keyword">null</span>)</span><br><span class="line">            encode = Encoding.GetEncoding(httpWebResponse.CharacterSet);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (encode == <span class="keyword">null</span>)</span><br><span class="line">    encode = Encoding.Default;</span><br><span class="line"></span><br><span class="line">Content = encode.GetString(bytes.ToArray());</span><br><span class="line">ResponseStream.Close();</span><br></pre></td></tr></table></figure>
+<p>所有代码以及里面的一些依赖都已经在 <a href="https://github.com/ziyunhx/thrinax" target="_blank" rel="external">thrinax</a> 库中了，<a href="https://github.com/ziyunhx/thrinax" target="_blank" rel="external">thrinax</a> 的定位是一个使用 .Net 提供网络抓取，信息抽取，自然语言处理的库，其中的大部分代码都会来源于社区或其它开源算法或者论文，该库只是筛选统一方便调用。如果大家有这三方面的好的推荐，可以通过 Issue 或者博客评论发给我！</p>
+<p>本文涉及 HttpHelper 与</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>在大规模的网络爬虫编程中，网页编码识别是必不可少的，本文将介绍如何通过C#来自动识别网页的编码。文中会分析几种可行的方法并提供源码，部分源码来源于开源代码改写而来。</p>]]>
+    
+    </summary>
+    
+      <category term=".NET" scheme="http://www.tnidea.com/tags/NET/"/>
+    
+      <category term="C#" scheme="http://www.tnidea.com/tags/C/"/>
+    
+      <category term="charset" scheme="http://www.tnidea.com/tags/charset/"/>
+    
+      <category term="csharp" scheme="http://www.tnidea.com/tags/csharp/"/>
+    
+      <category term="爬虫" scheme="http://www.tnidea.com/categories/%E7%88%AC%E8%99%AB/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[使用Icinga2监控服务器带宽以及内存占用]]></title>
@@ -1763,75 +1808,6 @@ GIT_VERSION=<span class="variable">$VER</span>
       <category term="批处理" scheme="http://www.tnidea.com/tags/%E6%89%B9%E5%A4%84%E7%90%86/"/>
     
       <category term="文件版本号" scheme="http://www.tnidea.com/tags/%E6%96%87%E4%BB%B6%E7%89%88%E6%9C%AC%E5%8F%B7/"/>
-    
-      <category term="项目管理" scheme="http://www.tnidea.com/categories/%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[在VS项目中使用SVN版本号作为编译版本号]]></title>
-    <link href="http://www.tnidea.com/svn-project-version.html"/>
-    <id>http://www.tnidea.com/svn-project-version.html</id>
-    <published>2013-10-26T16:00:00.000Z</published>
-    <updated>2015-09-23T14:40:35.000Z</updated>
-    <content type="html"><![CDATA[<p> 在生产项目中，版本号是必不可少的一部分。版本号的规则也有许多种，在此不讨论具体的编码规范。对于迭代的产品，版本繁多，特别是有多个实施项目所使用产品的版本不同（基于定制需求）时，清楚的标识组件与代码的对应关系十分重要。 本文主要说明如何在 .Net 项目使用 SVN 作为版本控制工具时生成与代码对应的组件版本号。</p>
-<a id="more"></a>
-<p> 我们知道，SVN 在 commit 时会生成一串数字作为序号，所以基本思路是把这个序号作为 .Net 项目编译后生成dll的文件版本号的最后一段。下面所列方法需要使用到TortoiseSVN 提供的 SubWCRev.exe 。</p>
-<p> 首先，我们需要通过注册表查找 TortoiseSVN 的安装目录。</p>
-<pre><code><span class="comment">Rem Search TSVN Path</span>
-<span class="flow">For</span> /f "tokens=*" <span class="envvar">%%i</span> <span class="flow">In</span> ('Reg Query HKLM\Software\TortoiseSVN /v Directory') <span class="flow">Do</span> (
-   <span class="keyword">ECHO</span> <span class="envvar">%%i</span> | <span class="built_in">Find</span> "Directory"&gt;<span class="stream">NUL</span>
-   <span class="flow">IF</span> <span class="envvar">%ERRORLEVEL%</span> == <span class="number">0</span> (<span class="flow">For</span> /f "tokens=<span class="number">1</span>,<span class="number">2</span>,*" <span class="envvar">%%j</span> <span class="flow">In</span> ("<span class="envvar">%%i</span>") <span class="flow">Do</span> (<span class="keyword">SET</span> TSVN_PATH=<span class="envvar">%%1</span>))
-)
-<span class="keyword">SET</span> TSVN_PATH=<span class="envvar">%TSVN_PATH%</span>bin\SubWCRev.exe
-</code></pre><p> SubWCRev 是通过替换文件中指定的关键字来实现获得 commit 序号的，点击查看详细的列表。 </p>
-<p> 然后我们建立以一个 AssemblyInfo.tpl 作为替换使用的模板，由于 AssemblyInfo.cs 中除了固定的值外还有类似 GUID 变化的值，所以我们不能全部替换，因此仅将需要修改的部分放在 tpl 中，内容如下：</p>
-<pre><code>[assembly: <span class="function"><span class="title">AssemblyVersion</span><span class="params">(<span class="string">"1.0.0.0"</span>)</span></span>]
-[assembly: <span class="function"><span class="title">AssemblyFileVersion</span><span class="params">(<span class="string">"1.0.0.$WCREV$"</span>)</span></span>]
-</code></pre><p> 接下来使用批处理替换原来的 AssemblyInfo.cs 文件，为了在每次编译时都自动替换，我们把调用批处理的命令写在项目生成事件的生成前事件中，例如下面这样：</p>
-<pre><code><span class="string">"(TargetDir)BeforeBuildProject.bat"</span><span class="string">"(ProjectDir)"</span> <span class="string">"<span class="variable">$(TargetDir)</span>AssemblyInfo.tpl"</span> .\Properties\AssemblyInfo.cs
-</code></pre><p> <code>$(TargetDir)</code>表示编译输出目录，更多可用全局变量请在生成事件中点击“宏”查看。</p>
-<p> 替换 AssemblyInfo.cs 的批处理代码：</p>
-<pre><code><span class="keyword">SET</span> WorkDir=%<span class="number">1</span>
-<span class="keyword">SET</span> Template=%<span class="number">2</span>
-<span class="keyword">SET</span> target=%<span class="number">3</span>
-<span class="keyword">SET</span> AssemblyInfo=ASSEMBLY_INFO.tmp
-
-<span class="built_in">PushD</span> <span class="envvar">%WorkDir%</span>
-<span class="keyword">SET</span> WorkDir=.\
-
-<span class="comment">Rem Generate a template file</span>
-<span class="built_in">FindStr</span> /v "AssemblyVersion AssemblyFileVersion" <span class="envvar">%target%</span> &gt; <span class="envvar">%AssemblyInfo%</span>
-<span class="built_in">FindStr</span> ".*" <span class="envvar">%Template%</span> &gt;&gt; <span class="envvar">%AssemblyInfo%</span>
-
-<span class="comment">Rem Using TSVN Replace Tlp</span>
-"<span class="envvar">%TSVN_PATH%</span>" <span class="envvar">%WorkDir%</span> <span class="envvar">%AssemblyInfo%</span> <span class="envvar">%target%</span>&gt;<span class="stream">NUL</span>
-</code></pre><p> 当然这样还不是一劳永逸，你会发现每次编译 AssemblyInfo.cs 文件都会变化，因此你的 commit 序号也会一直跟着增加，这并不是我们所想要的效果。这里提出一种解决方案，在每次替换后生成 dll 后又将 AssemblyInfo.cs 还原回去。</p>
-<p> 为此，我们在生成前事件中增加备份命令：</p>
-<pre><code><span class="built_in">COPY</span> <span class="bash">/y <span class="string">"%target%"</span> <span class="string">"%target%.bak"</span>&gt;NUL</span>
-</code></pre><p> 然后增加生成后事件，调用命令为：</p>
-<pre><code><span class="string">"(TargetDir)AfterBuildProject.bat<span class="dquote">""</span>(ProjectDir)Properties\AssemblyInfo.cs"</span>
-</code></pre><p> 在 AfterBuildProject.bat 中我们需要完成还原  AssemblyInfo.cs 和删除备份文件的工作，代码如下：</p>
-<pre><code><span class="keyword">SET</span> target=%<span class="number">1</span>
-<span class="keyword">COPY</span> "<span class="envvar">%target%</span>.bak" <span class="envvar">%target%</span>
-<span class="winutils">DEL</span> /Q "<span class="envvar">%target%</span>.bak" <span class="number">2</span>&gt;<span class="stream">NUL</span>
-</code></pre><p> 就此，每次编译时，系统都会自动将 commit 序号放到 dll 的文件版本中了。</p>
-<p> 完整代码下载：<a href="http://pan.baidu.com/s/1pD5TJ" title="SVN生成版本号.rar" target="_blank" rel="external">点击下载</a></p>
-]]></content>
-    <summary type="html">
-    <![CDATA[<p> 在生产项目中，版本号是必不可少的一部分。版本号的规则也有许多种，在此不讨论具体的编码规范。对于迭代的产品，版本繁多，特别是有多个实施项目所使用产品的版本不同（基于定制需求）时，清楚的标识组件与代码的对应关系十分重要。 本文主要说明如何在 .Net 项目使用 SVN 作为版本控制工具时生成与代码对应的组件版本号。</p>]]>
-    
-    </summary>
-    
-      <category term="SVN" scheme="http://www.tnidea.com/tags/SVN/"/>
-    
-      <category term="VS" scheme="http://www.tnidea.com/tags/VS/"/>
-    
-      <category term="批处理" scheme="http://www.tnidea.com/tags/%E6%89%B9%E5%A4%84%E7%90%86/"/>
-    
-      <category term="文件版本号" scheme="http://www.tnidea.com/tags/%E6%96%87%E4%BB%B6%E7%89%88%E6%9C%AC%E5%8F%B7/"/>
-    
-      <category term="项目管理" scheme="http://www.tnidea.com/tags/%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/"/>
     
       <category term="项目管理" scheme="http://www.tnidea.com/categories/%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/"/>
     
