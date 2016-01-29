@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://www.tnidea.com/"/>
-  <updated>2016-01-29T16:26:26.000Z</updated>
+  <updated>2016-01-29T16:30:42.000Z</updated>
   <id>http://www.tnidea.com/</id>
   
   <author>
@@ -19,15 +19,13 @@
     <link href="http://www.tnidea.com/recog-http-charset-by-dot-net.html"/>
     <id>http://www.tnidea.com/recog-http-charset-by-dot-net.html</id>
     <published>2016-01-26T16:00:00.000Z</published>
-    <updated>2016-01-29T16:26:26.000Z</updated>
+    <updated>2016-01-29T16:30:42.000Z</updated>
     <content type="html"><![CDATA[<p>在大规模的网络爬虫编程中，网页编码识别是必不可少的，本文将介绍如何通过C#来自动识别网页的编码。文中会分析几种可行的方法并提供源码，部分源码来源于开源代码改写而来。</p>
 <a id="more"></a>
 <p>网页在传输中为了能够正确识别编码，一般在头部都会声明编码格式，例如：</p>
-<meta charset="utf-8">
-
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#60;meta charset=&#34;utf-8&#34;&#62;</span><br></pre></td></tr></table></figure>
 <p>或者像这样：</p>
-<meta http-equiv="Content-type" content="text/html; charset=utf-8">
-
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#60;meta http-equiv=&#34;Content-type&#34; content=&#34;text/html; charset=utf-8&#34;&#62;</span><br></pre></td></tr></table></figure>
 <p>因此，很自然的我们想到通过读取这个字段来来识别编码。下面代码中 ResponseStream 是从 HTTP 网络流里读取后转化为 Stream 的流。</p>
 <figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">string</span> CharsetReg = <span class="string">@"(meta.*?charset=""?(?&lt;Charset&gt;[^\s""'&gt;;]+)""?)|(xml.*?encoding=""?(?&lt;Charset&gt;[^\s""&gt;;]+)""?)"</span>;</span><br><span class="line"></span><br><span class="line">Encoding encode = <span class="keyword">null</span>;</span><br><span class="line">String cache = <span class="keyword">string</span>.Empty;</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> (<span class="keyword">true</span>)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">var</span> b = (<span class="keyword">byte</span>)ResponseStream.ReadByte();</span><br><span class="line">    <span class="keyword">if</span> (b &lt; <span class="number">0</span> || b == <span class="number">255</span>) <span class="comment">//end of stream</span></span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (!cache.EndsWith(<span class="string">"&lt;/head&gt;"</span>, StringComparison.OrdinalIgnoreCase))</span><br><span class="line">        cache += (<span class="keyword">char</span>)b;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (httpWebResponse.CharacterSet == <span class="string">"ISO-8859-1"</span> || httpWebResponse.CharacterSet == <span class="string">"zh-cn"</span>)</span><br><span class="line">&#123;</span><br><span class="line">    Match match = Regex.Match(cache, CharsetReg, RegexOptions.IgnoreCase | RegexOptions.Multiline);</span><br><span class="line">    <span class="keyword">if</span> (match.Success)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">try</span></span><br><span class="line">        &#123;</span><br><span class="line">            charset = match.Groups[<span class="string">"Charset"</span>].Value;</span><br><span class="line">            encode = Encoding.GetEncoding(charset);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">catch</span> &#123; &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (httpWebResponse.CharacterSet != <span class="keyword">null</span> &amp;&amp; encode == <span class="keyword">null</span>)</span><br><span class="line">    encode = Encoding.GetEncoding(httpWebResponse.CharacterSet);</span><br></pre></td></tr></table></figure>
 <p>这个方法仅考虑了中文与英文环境下的情况，如果还有其它编码，请自行修改。</p>
