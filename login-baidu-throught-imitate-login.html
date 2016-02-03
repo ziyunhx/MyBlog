@@ -3,13 +3,13 @@
 <head>
   <meta charset="utf-8">
   
-  <title>使用ImitateLogin模拟登录百度 | The NewIdea</title>
+  <title>使用ImitateLogin模拟登录百度 | 地平线</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="在之前的文章中，我已经介绍过一个社交网站模拟登录的类库：imitate-login ，这是一个通过c#的HttpWebRequest来模拟网站登录的库，之前实现了微博网页版和微博Wap版；现在，模拟百度登录的部分也已经完成。由于个人时间的限制，加上目前有多个项目在同时进行，因此更新频率会根据项目关注度来决定（Star &amp;amp; fork）。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="使用ImitateLogin模拟登录百度">
 <meta property="og:url" content="http://www.tnidea.com/login-baidu-throught-imitate-login.html">
-<meta property="og:site_name" content="The NewIdea">
+<meta property="og:site_name" content="地平线">
 <meta property="og:description" content="在之前的文章中，我已经介绍过一个社交网站模拟登录的类库：imitate-login ，这是一个通过c#的HttpWebRequest来模拟网站登录的库，之前实现了微博网页版和微博Wap版；现在，模拟百度登录的部分也已经完成。由于个人时间的限制，加上目前有多个项目在同时进行，因此更新频率会根据项目关注度来决定（Star &amp;amp; fork）。">
 <meta property="og:updated_time" content="2015-11-30T16:23:54.000Z">
 <meta name="twitter:card" content="summary">
@@ -18,7 +18,7 @@
   
   
   <link rel="stylesheet" href="/css/style.css" type="text/css">
-  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" type="text/css">
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" type="text/css">
   
 
   
@@ -32,33 +32,36 @@
     <header id="header">
   <div id="header-main" class="header-inner">
     <div class="outer">
-      <span id="mobile-logo" class="navigation-menu-button" id="js-mobile-menu"><i class="fa fa-bars mobile-menu-img">&nbsp;</i><span class="site-title">The NewIdea</span></span>
-      <a href="/" id="logo"><i class="logo" style="background-image: url(/css/images/logo.png)"></i><span class="site-title">The NewIdea</span></a>
+      <span id="mobile-logo" class="navigation-menu-button" id="js-mobile-menu"><i class="fa fa-bars mobile-menu-img">&nbsp;</i><span class="site-title">地平线</span></span>
+      <a href="/" id="logo"><i class="logo" style="background-image: url(/css/images/logo.png)"></i></a>
       <!-- Nav -->
       <nav id="main-nav">
         <ul>
           
-            <li class="main-nav-link">
-              <a href="/.">首页</a>
-              
-            </li>
+            
           
-            <li class="main-nav-link">
-              <a href="/archives">归档</a>
-              
-            </li>
+            
+                <li class="main-nav-link">
+                <a href="/archives">时间线</a>
+                
+                </li>
+            
           
-            <li class="main-nav-link">
-              <a href="javascript:void(0)">分类</a>
-              
-                <ul class="menu-category-list"><li class="menu-category-list-item"><a class="menu-category-list-link" href="/categories/Storm/">Storm</a></li><li class="menu-category-list-item"><a class="menu-category-list-link" href="/categories/爬虫/">爬虫</a></li><li class="menu-category-list-item"><a class="menu-category-list-link" href="/categories/运维/">运维</a></li><li class="menu-category-list-item"><a class="menu-category-list-link" href="/categories/项目管理/">项目管理</a></li></ul>
-              
-            </li>
+            
+                <li class="main-nav-link">
+                <a href="javascript:void(0)">分类</a>
+                
+                    <ul class="menu-category-list"><li class="menu-category-list-item"><a class="menu-category-list-link" href="/categories/Storm/">Storm</a></li><li class="menu-category-list-item"><a class="menu-category-list-link" href="/categories/爬虫/">爬虫</a></li><li class="menu-category-list-item"><a class="menu-category-list-link" href="/categories/运维/">运维</a></li><li class="menu-category-list-item"><a class="menu-category-list-link" href="/categories/项目管理/">项目管理</a></li></ul>
+                
+                </li>
+            
           
-            <li class="main-nav-link">
-              <a href="/about.html">关于</a>
-              
-            </li>
+            
+                <li class="main-nav-link">
+                <a href="/about.html">关于我</a>
+                
+                </li>
+            
           
         </ul>
       </nav>
@@ -85,23 +88,6 @@
     </h1>
   
 
-        <div class="article-meta">
-          
-  <div class="article-date">
-    <i class="fa fa-calendar"></i>
-    <a href="/login-baidu-throught-imitate-login.html">
-      <time datetime="2015-11-29T16:00:00.000Z" itemprop="datePublished">2015-11-30</time>
-    </a>
-  </div>
-
-
-          
-  <div class="article-category">
-  	<i class="fa fa-folder"></i>
-    <a class="article-category-link" href="/categories/爬虫/">爬虫</a>
-  </div>
-
-        </div>
       </header>
     
     <div class="article-entry" itemprop="articleBody">
@@ -168,12 +154,23 @@
     </div>
     
     <footer class="article-footer">
+    
+  <div class="article-date">
+    <a href="/login-baidu-throught-imitate-login.html">
+      <time datetime="2015-11-29T16:00:00.000Z" itemprop="datePublished">2015-11-30</time>
+    </a>
+  </div>
+
+
       <a data-url="http://www.tnidea.com/login-baidu-throught-imitate-login.html" data-id="cij8lxqzb0029o8s3hhyq3e0l" class="article-share-link">分享到</a>
       
         <a href="http://www.tnidea.com/login-baidu-throught-imitate-login.html#ds-thread" class="article-comment-link">评论</a>
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NET/">.NET</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Baidu/">Baidu</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/">C#</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/csharp/">csharp</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/social-network/">social network</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/thrift/">thrift</a></li></ul>
+  <div class="article-tag">
+    <i class="fa fa-tags"></i>&nbsp;&nbsp;
+  </div>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NET/">.NET</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Baidu/">Baidu</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/">C#</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/csharp/">csharp</a></li></ul>
 
     </footer>
   </div>
@@ -233,7 +230,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">归档</h3>
+    <h3 class="widget-title">时间线</h3>
     <div class="widget">
       <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">一月 2016</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">十二月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">十一月 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">十月 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">九月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">八月 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/07/">七月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/06/">六月 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/05/">五月 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/11/">十一月 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/10/">十月 2013</a><span class="archive-list-count">1</span></li></ul>
     </div>
@@ -304,7 +301,7 @@ var _hmt = _hmt || [];
         <a href="/.">首页</a>
         
       
-        <a href="/archives">归档</a>
+        <a href="/archives">时间线</a>
         
       
         <a href="javascript:void(0)">分类</a>
@@ -312,7 +309,7 @@ var _hmt = _hmt || [];
           <ul class="main-nav-category-list"><li class="main-nav-category-list-item"><a class="main-nav-category-list-link" href="/categories/Storm/">Storm</a></li><li class="main-nav-category-list-item"><a class="main-nav-category-list-link" href="/categories/爬虫/">爬虫</a></li><li class="main-nav-category-list-item"><a class="main-nav-category-list-link" href="/categories/运维/">运维</a></li><li class="main-nav-category-list-item"><a class="main-nav-category-list-link" href="/categories/项目管理/">项目管理</a></li></ul>
         
       
-        <a href="/about.html">关于</a>
+        <a href="/about.html">关于我</a>
         
       
       <div id="nav-search-form">

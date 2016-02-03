@@ -3,13 +3,13 @@
 <head>
   <meta charset="utf-8">
   
-  <title>.Net使用HttpWebRequest模拟浏览器 | The NewIdea</title>
+  <title>.Net使用HttpWebRequest模拟浏览器 | 地平线</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="在编写网络爬虫时，HttpWebRequest几乎可以完成绝大多数网站的抓取，为了更好的使用这一技术，我将常用的几个功能进行了封装，以方便调用。这个类已经在多个项目中得到使用，主要解决了Cookies相关的一些问题；如果有其它方面的问题可以提出来，我会进一步完善。">
 <meta property="og:type" content="article">
 <meta property="og:title" content=".Net使用HttpWebRequest模拟浏览器">
 <meta property="og:url" content="http://www.tnidea.com/http-helper-at-csharp.html">
-<meta property="og:site_name" content="The NewIdea">
+<meta property="og:site_name" content="地平线">
 <meta property="og:description" content="在编写网络爬虫时，HttpWebRequest几乎可以完成绝大多数网站的抓取，为了更好的使用这一技术，我将常用的几个功能进行了封装，以方便调用。这个类已经在多个项目中得到使用，主要解决了Cookies相关的一些问题；如果有其它方面的问题可以提出来，我会进一步完善。">
 <meta property="og:updated_time" content="2015-10-07T08:16:21.000Z">
 <meta name="twitter:card" content="summary">
@@ -18,7 +18,7 @@
   
   
   <link rel="stylesheet" href="/css/style.css" type="text/css">
-  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" type="text/css">
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" type="text/css">
   
 
   
@@ -32,33 +32,36 @@
     <header id="header">
   <div id="header-main" class="header-inner">
     <div class="outer">
-      <span id="mobile-logo" class="navigation-menu-button" id="js-mobile-menu"><i class="fa fa-bars mobile-menu-img">&nbsp;</i><span class="site-title">The NewIdea</span></span>
-      <a href="/" id="logo"><i class="logo" style="background-image: url(/css/images/logo.png)"></i><span class="site-title">The NewIdea</span></a>
+      <span id="mobile-logo" class="navigation-menu-button" id="js-mobile-menu"><i class="fa fa-bars mobile-menu-img">&nbsp;</i><span class="site-title">地平线</span></span>
+      <a href="/" id="logo"><i class="logo" style="background-image: url(/css/images/logo.png)"></i></a>
       <!-- Nav -->
       <nav id="main-nav">
         <ul>
           
-            <li class="main-nav-link">
-              <a href="/.">首页</a>
-              
-            </li>
+            
           
-            <li class="main-nav-link">
-              <a href="/archives">归档</a>
-              
-            </li>
+            
+                <li class="main-nav-link">
+                <a href="/archives">时间线</a>
+                
+                </li>
+            
           
-            <li class="main-nav-link">
-              <a href="javascript:void(0)">分类</a>
-              
-                <ul class="menu-category-list"><li class="menu-category-list-item"><a class="menu-category-list-link" href="/categories/Storm/">Storm</a></li><li class="menu-category-list-item"><a class="menu-category-list-link" href="/categories/爬虫/">爬虫</a></li><li class="menu-category-list-item"><a class="menu-category-list-link" href="/categories/运维/">运维</a></li><li class="menu-category-list-item"><a class="menu-category-list-link" href="/categories/项目管理/">项目管理</a></li></ul>
-              
-            </li>
+            
+                <li class="main-nav-link">
+                <a href="javascript:void(0)">分类</a>
+                
+                    <ul class="menu-category-list"><li class="menu-category-list-item"><a class="menu-category-list-link" href="/categories/Storm/">Storm</a></li><li class="menu-category-list-item"><a class="menu-category-list-link" href="/categories/爬虫/">爬虫</a></li><li class="menu-category-list-item"><a class="menu-category-list-link" href="/categories/运维/">运维</a></li><li class="menu-category-list-item"><a class="menu-category-list-link" href="/categories/项目管理/">项目管理</a></li></ul>
+                
+                </li>
+            
           
-            <li class="main-nav-link">
-              <a href="/about.html">关于</a>
-              
-            </li>
+            
+                <li class="main-nav-link">
+                <a href="/about.html">关于我</a>
+                
+                </li>
+            
           
         </ul>
       </nav>
@@ -85,23 +88,6 @@
     </h1>
   
 
-        <div class="article-meta">
-          
-  <div class="article-date">
-    <i class="fa fa-calendar"></i>
-    <a href="/http-helper-at-csharp.html">
-      <time datetime="2015-07-09T16:00:00.000Z" itemprop="datePublished">2015-07-10</time>
-    </a>
-  </div>
-
-
-          
-  <div class="article-category">
-  	<i class="fa fa-folder"></i>
-    <a class="article-category-link" href="/categories/爬虫/">爬虫</a>
-  </div>
-
-        </div>
       </header>
     
     <div class="article-entry" itemprop="articleBody">
@@ -155,12 +141,23 @@
     </div>
     
     <footer class="article-footer">
+    
+  <div class="article-date">
+    <a href="/http-helper-at-csharp.html">
+      <time datetime="2015-07-09T16:00:00.000Z" itemprop="datePublished">2015-07-10</time>
+    </a>
+  </div>
+
+
       <a data-url="http://www.tnidea.com/http-helper-at-csharp.html" data-id="cij8lxqzm0030o8s3vyhgkf3u" class="article-share-link">分享到</a>
       
         <a href="http://www.tnidea.com/http-helper-at-csharp.html#ds-thread" class="article-comment-link">评论</a>
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NET/">.NET</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/">C#</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/HttpHelper/">HttpHelper</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/HttpWebRequest/">HttpWebRequest</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/csharp/">csharp</a></li></ul>
+  <div class="article-tag">
+    <i class="fa fa-tags"></i>&nbsp;&nbsp;
+  </div>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NET/">.NET</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/">C#</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/HttpHelper/">HttpHelper</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/HttpWebRequest/">HttpWebRequest</a></li></ul>
 
     </footer>
   </div>
@@ -220,7 +217,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">归档</h3>
+    <h3 class="widget-title">时间线</h3>
     <div class="widget">
       <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">一月 2016</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">十二月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">十一月 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">十月 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">九月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">八月 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/07/">七月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/06/">六月 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/05/">五月 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/11/">十一月 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/10/">十月 2013</a><span class="archive-list-count">1</span></li></ul>
     </div>
@@ -291,7 +288,7 @@ var _hmt = _hmt || [];
         <a href="/.">首页</a>
         
       
-        <a href="/archives">归档</a>
+        <a href="/archives">时间线</a>
         
       
         <a href="javascript:void(0)">分类</a>
@@ -299,7 +296,7 @@ var _hmt = _hmt || [];
           <ul class="main-nav-category-list"><li class="main-nav-category-list-item"><a class="main-nav-category-list-link" href="/categories/Storm/">Storm</a></li><li class="main-nav-category-list-item"><a class="main-nav-category-list-link" href="/categories/爬虫/">爬虫</a></li><li class="main-nav-category-list-item"><a class="main-nav-category-list-link" href="/categories/运维/">运维</a></li><li class="main-nav-category-list-item"><a class="main-nav-category-list-link" href="/categories/项目管理/">项目管理</a></li></ul>
         
       
-        <a href="/about.html">关于</a>
+        <a href="/about.html">关于我</a>
         
       
       <div id="nav-search-form">

@@ -3,13 +3,13 @@
 <head>
   <meta charset="utf-8">
   
-  <title>开源分布式计算系统框架比较 | The NewIdea</title>
+  <title>开源分布式计算系统框架比较 | 地平线</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="分布式计算在许多领域都有广泛需求，目前流行的分布式计算框架主要有 Hadoop MapReduce, Spark Streaming, Storm； 这三个框架各有优势，现在都属于 Apache 基金会下的顶级项目，下文将对三个框架的特点与适用场景进行分析，以便开发者能快速选择适合自己的框架进行开发。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="开源分布式计算系统框架比较">
 <meta property="og:url" content="http://www.tnidea.com/compare-with-distributed-computation-system.html">
-<meta property="og:site_name" content="The NewIdea">
+<meta property="og:site_name" content="地平线">
 <meta property="og:description" content="分布式计算在许多领域都有广泛需求，目前流行的分布式计算框架主要有 Hadoop MapReduce, Spark Streaming, Storm； 这三个框架各有优势，现在都属于 Apache 基金会下的顶级项目，下文将对三个框架的特点与适用场景进行分析，以便开发者能快速选择适合自己的框架进行开发。">
 <meta property="og:updated_time" content="2015-10-07T08:08:33.000Z">
 <meta name="twitter:card" content="summary">
@@ -18,7 +18,7 @@
   
   
   <link rel="stylesheet" href="/css/style.css" type="text/css">
-  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" type="text/css">
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" type="text/css">
   
 
   
@@ -32,33 +32,36 @@
     <header id="header">
   <div id="header-main" class="header-inner">
     <div class="outer">
-      <span id="mobile-logo" class="navigation-menu-button" id="js-mobile-menu"><i class="fa fa-bars mobile-menu-img">&nbsp;</i><span class="site-title">The NewIdea</span></span>
-      <a href="/" id="logo"><i class="logo" style="background-image: url(/css/images/logo.png)"></i><span class="site-title">The NewIdea</span></a>
+      <span id="mobile-logo" class="navigation-menu-button" id="js-mobile-menu"><i class="fa fa-bars mobile-menu-img">&nbsp;</i><span class="site-title">地平线</span></span>
+      <a href="/" id="logo"><i class="logo" style="background-image: url(/css/images/logo.png)"></i></a>
       <!-- Nav -->
       <nav id="main-nav">
         <ul>
           
-            <li class="main-nav-link">
-              <a href="/.">首页</a>
-              
-            </li>
+            
           
-            <li class="main-nav-link">
-              <a href="/archives">归档</a>
-              
-            </li>
+            
+                <li class="main-nav-link">
+                <a href="/archives">时间线</a>
+                
+                </li>
+            
           
-            <li class="main-nav-link">
-              <a href="javascript:void(0)">分类</a>
-              
-                <ul class="menu-category-list"><li class="menu-category-list-item"><a class="menu-category-list-link" href="/categories/Storm/">Storm</a></li><li class="menu-category-list-item"><a class="menu-category-list-link" href="/categories/爬虫/">爬虫</a></li><li class="menu-category-list-item"><a class="menu-category-list-link" href="/categories/运维/">运维</a></li><li class="menu-category-list-item"><a class="menu-category-list-link" href="/categories/项目管理/">项目管理</a></li></ul>
-              
-            </li>
+            
+                <li class="main-nav-link">
+                <a href="javascript:void(0)">分类</a>
+                
+                    <ul class="menu-category-list"><li class="menu-category-list-item"><a class="menu-category-list-link" href="/categories/Storm/">Storm</a></li><li class="menu-category-list-item"><a class="menu-category-list-link" href="/categories/爬虫/">爬虫</a></li><li class="menu-category-list-item"><a class="menu-category-list-link" href="/categories/运维/">运维</a></li><li class="menu-category-list-item"><a class="menu-category-list-link" href="/categories/项目管理/">项目管理</a></li></ul>
+                
+                </li>
+            
           
-            <li class="main-nav-link">
-              <a href="/about.html">关于</a>
-              
-            </li>
+            
+                <li class="main-nav-link">
+                <a href="/about.html">关于我</a>
+                
+                </li>
+            
           
         </ul>
       </nav>
@@ -85,23 +88,6 @@
     </h1>
   
 
-        <div class="article-meta">
-          
-  <div class="article-date">
-    <i class="fa fa-calendar"></i>
-    <a href="/compare-with-distributed-computation-system.html">
-      <time datetime="2015-05-02T16:00:00.000Z" itemprop="datePublished">2015-05-03</time>
-    </a>
-  </div>
-
-
-          
-  <div class="article-category">
-  	<i class="fa fa-folder"></i>
-    <a class="article-category-link" href="/categories/Storm/">Storm</a>
-  </div>
-
-        </div>
       </header>
     
     <div class="article-entry" itemprop="articleBody">
@@ -255,12 +241,23 @@
     </div>
     
     <footer class="article-footer">
+    
+  <div class="article-date">
+    <a href="/compare-with-distributed-computation-system.html">
+      <time datetime="2015-05-02T16:00:00.000Z" itemprop="datePublished">2015-05-03</time>
+    </a>
+  </div>
+
+
       <a data-url="http://www.tnidea.com/compare-with-distributed-computation-system.html" data-id="cij8lxr0d004ro8s3hbxq7wty" class="article-share-link">分享到</a>
       
         <a href="http://www.tnidea.com/compare-with-distributed-computation-system.html#ds-thread" class="article-comment-link">评论</a>
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Hadoop-MapReduce/">Hadoop MapReduce</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Spark-Streaming/">Spark Streaming</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Storm/">Storm</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/分布式/">分布式</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/流式框架/">流式框架</a></li></ul>
+  <div class="article-tag">
+    <i class="fa fa-tags"></i>&nbsp;&nbsp;
+  </div>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Hadoop-MapReduce/">Hadoop MapReduce</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Spark-Streaming/">Spark Streaming</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Storm/">Storm</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/分布式/">分布式</a></li></ul>
 
     </footer>
   </div>
@@ -320,7 +317,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">归档</h3>
+    <h3 class="widget-title">时间线</h3>
     <div class="widget">
       <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">一月 2016</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">十二月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">十一月 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">十月 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">九月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">八月 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/07/">七月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/06/">六月 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/05/">五月 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/11/">十一月 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/10/">十月 2013</a><span class="archive-list-count">1</span></li></ul>
     </div>
@@ -391,7 +388,7 @@ var _hmt = _hmt || [];
         <a href="/.">首页</a>
         
       
-        <a href="/archives">归档</a>
+        <a href="/archives">时间线</a>
         
       
         <a href="javascript:void(0)">分类</a>
@@ -399,7 +396,7 @@ var _hmt = _hmt || [];
           <ul class="main-nav-category-list"><li class="main-nav-category-list-item"><a class="main-nav-category-list-link" href="/categories/Storm/">Storm</a></li><li class="main-nav-category-list-item"><a class="main-nav-category-list-link" href="/categories/爬虫/">爬虫</a></li><li class="main-nav-category-list-item"><a class="main-nav-category-list-link" href="/categories/运维/">运维</a></li><li class="main-nav-category-list-item"><a class="main-nav-category-list-link" href="/categories/项目管理/">项目管理</a></li></ul>
         
       
-        <a href="/about.html">关于</a>
+        <a href="/about.html">关于我</a>
         
       
       <div id="nav-search-form">
