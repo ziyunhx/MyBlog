@@ -24,7 +24,12 @@
 .article-date
   @extend $block-caption
   float: left
+  margin-right: 20px
 
+.article-tag
+  @extend $block-caption
+  float: left
+  
 .article-category
   float: left
   line-height: 1em
@@ -39,7 +44,6 @@
   padding: article-padding article-padding 0
   .article-title
     display: block
-    margin-bottom: 14px
 
 .article-title
   text-decoration: none
@@ -51,6 +55,24 @@
     color: color-default
   a&:hover
     color: color-link
+    
+.article-header, .archive-article-header
+  .article-tag-bg
+    float: left
+    height: 23px
+    margin: 1px 8px 1px 0
+    padding: 0 10px
+    font-size: 12px
+    background-color: #3498db!important
+    color: #fff
+    border-radius: 2px
+    line-height: 23px
+    a
+      color: #fff
+    a&:visited
+      color: #fff
+    a&:hover
+      color: #fff
 
 .article-entry
   @extend $base-style

@@ -1,5 +1,9 @@
 <% if (post.tags && post.tags.length){ %>
+  <div class="article-tag">
+    <i class="fa fa-tags"></i>&nbsp;&nbsp;
+  </div>
   <%- list_tags(post.tags, {
+    amount: 4,
     show_count: false,
     class: 'article-tag'
   }) %>

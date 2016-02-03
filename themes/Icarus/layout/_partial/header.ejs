@@ -2,21 +2,23 @@
   <div id="header-main" class="header-inner">
     <div class="outer">
       <span id="mobile-logo" class="navigation-menu-button" id="js-mobile-menu"><i class="fa fa-bars mobile-menu-img">&nbsp;</i><span class="site-title"><%= config.title %></span></span>
-      <a href="<%- url_for() %>" id="logo"><%- (theme.logo? '<i class="logo" style="background-image: url(' + url_for(theme.logo) + ')"></i>':'') %><span class="site-title"><%= config.title %></span></a>
+      <a href="<%- url_for() %>" id="logo"><%- (theme.logo? '<i class="logo" style="background-image: url(' + url_for(theme.logo) + ')"></i>':'') %></a>
       <!-- Nav -->
       <nav id="main-nav">
         <ul>
           <% for (var i in theme.menu){ %>
-            <li class="main-nav-link">
-              <a href="<%- url_for(theme.menu[i]) %>"><%= __('nav.' + i) %></a>
-              <% if(i == "Categories" && site.categories.length) { %>
-                <%- list_categories(site.categories, {
-                  show_count: false,
-                  class: 'menu-category',
-                  separator: ''
-                }) %>
-              <% } %>
-            </li>
+            <% if(i != "Home") { %>
+                <li class="main-nav-link">
+                <a href="<%- url_for(theme.menu[i]) %>"><%= __('nav.' + i) %></a>
+                <% if(i == "Categories" && site.categories.length) { %>
+                    <%- list_categories(site.categories, {
+                    show_count: false,
+                    class: 'menu-category',
+                    separator: ''
+                    }) %>
+                <% } %>
+                </li>
+            <% } %>
           <% } %>
         </ul>
       </nav>

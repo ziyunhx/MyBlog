@@ -28,6 +28,7 @@ line-height-title = 1.1em
 
 // Header
 logo-size = 30px
+logo-width = 154px
 header-height = 54px
 header-sub-height = 38px
 
@@ -47,7 +48,7 @@ nav-menu-width = 180px
 main-column = 8
 sidebar-column = 3
 profile-column = 3
-sidebar-column-tablet = 4
+sidebar-column-tablet = 3
 
 if sidebar
   _sidebar-column = sidebar-column
@@ -69,12 +70,12 @@ else
   columns = main-column + _sidebar-column + _profile-column
 
 if sidebar
-  main-column-tablet = 7
+  main-column-tablet = 8
   if profile
     main-column-tablet = 9
 
 // Media queries
-mq-mini = "screen and (max-width: 559px)"
-mq-mobile = "screen and (min-width: 560px) and (max-width: 799px)"
-mq-tablet = "screen and (min-width: 800px) and (max-width: 1199px)"
+mq-mini = "screen and (max-width: 399px)"
+mq-mobile = "screen and (min-width: 400px) and (max-width: 719px)"
+mq-tablet = "screen and (min-width: 720px) and (max-width: 1199px)"
 mq-normal = "screen and (min-width: 1200px)"
