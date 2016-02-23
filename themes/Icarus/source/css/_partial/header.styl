@@ -80,12 +80,59 @@ $header-block-right
     display: none
 
 #main-nav
-  @extend $header-block
+  height: logo-size
+  line-height: logo-size
   @extend $header-block-left
   @media mq-mobile
     display: none
   @media mq-mini
     display: none
+  li > a
+    display: block; 
+    width: 90px; 
+    height: 30px; 
+    padding: 10px 0 10px; 
+    font-size: 14px; 
+    color: #34495e; 
+    line-height: 30px; 
+    text-align: center; 
+    border-top: 4px solid transparent;
+  li.on > a
+    color: #3498db;
+  li.on > a, li > a:hover
+    background-color: #fff; 
+    box-shadow: 0px 0 2px rgba(0,0,0,.1); 
+    border-top: 4px solid #3498db;
+
+#main-nav
+  .menu-category-list
+    float: left;
+    width: 90px; 
+    box-shadow: 0px 1px 2px rgba(0,0,0,.1); 
+    transition: all .2s;
+    li > a
+      display: block;
+      height: 20px; 
+      padding: 0 auto; 
+      font-size: 14px; 
+      color: #7a8e9d; 
+      line-height: 20px; 
+      background-color: #fff;
+      border: none;
+    li.on > a, li > a:hover
+      font-size: 14px; 
+      color: #3498db; 
+      font-weight: bold; 
+      background-color: #eff3f5;
+      border: none;
+ 
+.subnav-hd { display: none; z-index: 90; position: absolute; top: 70px; left: 0; width: 120px; }
+.subnav-ct-hd { float: left; min-width: 80px; box-shadow: 0px 1px 2px rgba(0,0,0,.1); transition: all .2s;}
+.subnav-ct-hd > li { }
+.subnav-ct-hd > li > a { display: block; height: 40px; padding: 0 15px; font-size: 14px; color: #7a8e9d; line-height: 40px; background-color: #fff; }
+.subnav-ct-hd > li.on > a,
+.subnav-ct-hd > li > a:hover { font-size: 14px; color: #3498db; font-weight: bold; background-color: #eff3f5; }
+ 
     
 #main-nav-mobile
   @media mq-tablet

@@ -102,5 +102,14 @@
   }).on('click', '#toTop', function () {
     $(document).scrollTop(0);
   });
+  
+  $(".nav-hd li").hover( function () {
+$(this).find("a").addClass("on");
+    $(this).find(".subnav-hd").show();
+ },
+ function () {
+$(this).find("a").removeClass("on");
+    $(this).find(".subnav-hd").hide();
+ } );
 
 })(jQuery);
