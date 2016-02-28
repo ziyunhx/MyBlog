@@ -5,10 +5,13 @@ logo: css/images/logo.png # Empty this to unset logo
 menu:
   Home: .
   Archives: archives
+  #News: news.html
   Categories: javascript:void(0)
-  #Tags: tags
+  #Projects: javascript:void(0)
+  #Products: javascript:void(0)
+  GitHub: https://github.com/ziyunhx/
   About: about.html
-
+  
 # Content
 excerpt_link:
 fancybox: true

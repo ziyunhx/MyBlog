@@ -12,7 +12,11 @@ nav:
   newer: '上一篇'
   Home: '首页'
   Archives: '时间线'
-  Categories: '分类'
+  GitHub: 'GitHub'
+  Categories: '技术'
+  Projects: '项目'
+  Products: '产品'
+  News: '资讯'
   About: '关于我'
 widget:
   recents: '最新文章'

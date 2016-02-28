@@ -11,7 +11,7 @@
                 <li class="main-nav-link">
                 <a href="<%- url_for(theme.menu[i]) %>"><%= __('nav.' + i) %>
                     <% if(i == "Categories" && site.categories.length) { %>
-                        <i class="fa fa-angle-down fa-fw fa-lg" style="font-weight:600;color:#b6c1c9;"></i>
+                        <i class="fa fa-angle-down" style="font-weight:600;color:#b6c1c9;"></i>
                     <% } %>
                 </a>
                 <% if(i == "Categories" && site.categories.length) { %>

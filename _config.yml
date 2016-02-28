@@ -70,10 +70,10 @@ pagination_dir: page
 theme: icarus
 
 # Disqus
-#disqus_shortname: tnidea
+disqus_shortname: tnidea
 
 # DuoShuo
-duoshuo_shortname: tnidea
+#duoshuo_shortname: tnidea
 
 
 # Deployment
