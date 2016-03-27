@@ -3,18 +3,19 @@
 <head>
   <meta charset="utf-8">
   
-  <title>使用Icinga2和Icinga Web2搭建监控服务 | 地平线</title>
+  <title>使用DRPC构建分布式多语言编程架构 | 地平线</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="监控是系统运维的基础，Icinga是一个开源的监控系统框架，通过其广泛的插件支持，你可以监控几乎任何你能想到的网络资源；也可以在超过临界值时给予通知，根据监控数据生产报表。本文主要介绍其搭建过程，大部分内容翻译自官方文档。">
+  <meta name="description" content="Distributed RPC（DRPC）作为Storm基于Thrift协议的RPC实现，已在之前的文章中被多次提及；在一个多开发语言的环境中，RPC是必不可少的一环，常见的RPC实现方式除了thrift外也还有很多，甚至基于Http协议的RESTful API也可以算作是其中的一员。本文将为您解读：为什么在这么多的RPC方式中选择使用DRPC来构建多语言编程架构，而不是使用其基于的thrift或">
 <meta property="og:type" content="article">
-<meta property="og:title" content="使用Icinga2和Icinga Web2搭建监控服务">
-<meta property="og:url" content="http://www.tnidea.com/monitor-system-by-icinga2.html">
+<meta property="og:title" content="使用DRPC构建分布式多语言编程架构">
+<meta property="og:url" content="http://www.tnidea.com/build-multi-language-framework-by-drpc.html">
 <meta property="og:site_name" content="地平线">
-<meta property="og:description" content="监控是系统运维的基础，Icinga是一个开源的监控系统框架，通过其广泛的插件支持，你可以监控几乎任何你能想到的网络资源；也可以在超过临界值时给予通知，根据监控数据生产报表。本文主要介绍其搭建过程，大部分内容翻译自官方文档。">
-<meta property="og:updated_time" content="2015-10-11T16:00:41.000Z">
+<meta property="og:description" content="Distributed RPC（DRPC）作为Storm基于Thrift协议的RPC实现，已在之前的文章中被多次提及；在一个多开发语言的环境中，RPC是必不可少的一环，常见的RPC实现方式除了thrift外也还有很多，甚至基于Http协议的RESTful API也可以算作是其中的一员。本文将为您解读：为什么在这么多的RPC方式中选择使用DRPC来构建多语言编程架构，而不是使用其基于的thrift或">
+<meta property="og:image" content="http://www.tnidea.com/media/image/drpc-flow.jpg">
+<meta property="og:updated_time" content="2016-03-27T06:10:30.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="使用Icinga2和Icinga Web2搭建监控服务">
-<meta name="twitter:description" content="监控是系统运维的基础，Icinga是一个开源的监控系统框架，通过其广泛的插件支持，你可以监控几乎任何你能想到的网络资源；也可以在超过临界值时给予通知，根据监控数据生产报表。本文主要介绍其搭建过程，大部分内容翻译自官方文档。">
+<meta name="twitter:title" content="使用DRPC构建分布式多语言编程架构">
+<meta name="twitter:description" content="Distributed RPC（DRPC）作为Storm基于Thrift协议的RPC实现，已在之前的文章中被多次提及；在一个多开发语言的环境中，RPC是必不可少的一环，常见的RPC实现方式除了thrift外也还有很多，甚至基于Http协议的RESTful API也可以算作是其中的一员。本文将为您解读：为什么在这么多的RPC方式中选择使用DRPC来构建多语言编程架构，而不是使用其基于的thrift或">
   
   
   <link rel="stylesheet" href="/css/style.css" type="text/css">
@@ -92,7 +93,7 @@
 
     <div class="outer">
       
-      <section id="main"><article id="post-monitor-system-by-icinga2" class="article article-type-post" itemscope itemprop="blogPost">
+      <section id="main"><article id="post-build-multi-language-framework-by-drpc" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
     
     
@@ -101,7 +102,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      使用Icinga2和Icinga Web2搭建监控服务
+      使用DRPC构建分布式多语言编程架构
     </h1>
   
 
@@ -124,145 +125,38 @@
     (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
 
-    <p>监控是系统运维的基础，Icinga是一个开源的监控系统框架，通过其广泛的插件支持，你可以监控几乎任何你能想到的网络资源；也可以在超过临界值时给予通知，根据监控数据生产报表。本文主要介绍其搭建过程，大部分内容翻译自官方文档。</p>
+    <p>Distributed RPC（DRPC）作为Storm基于Thrift协议的RPC实现，已在之前的文章中被多次提及；在一个多开发语言的环境中，RPC是必不可少的一环，常见的RPC实现方式除了thrift外也还有很多，甚至基于Http协议的RESTful API也可以算作是其中的一员。本文将为您解读：为什么在这么多的RPC方式中选择使用DRPC来构建多语言编程架构，而不是使用其基于的thrift或者其它方式？</p>
 <a id="more"></a>
-<p>在使用Icinga2前，我们曾经自己编写过监控框架，也用过其它的类似监控系统和在线服务。功能都大同小异，现在之所以选择Icinga2 + Icinga Web2来构建整个系统的监控平台主要是由于其高度可自定义性以及广泛的插件。但是由于该版本发布时间比较短，国内少有将最新版本用于生产环境，导致文档较少，很多问题需要自行摸索。写这个系列文章也是想将自己遇到的坑列出来让其它人少走弯路。</p>
-<p>下面将介绍Icinga2与Icinga Web2的安装，所有的操作步骤均仅在CentOS 7上验证（特殊说明的除外），不保证其它系统下的完备性。</p>
-<h2 id="安装Icinga2">安装Icinga2</h2><h3 id="设置Icinga2安装源">设置Icinga2安装源</h3><p>首先你要根据你的系统选择执行下面的命令将Icinga2的项目库地址加入到包管理中。</p>
-<p>Debian (debmon):</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ wget -O - http://debmon.org/debmon/repo.key 2&#62;/dev/null | apt-key add -&#10;$ echo &#39;deb http://debmon.org/debmon debmon-jessie main&#39; &#62;/etc/apt/sources.list.d/debmon.list&#10;$ apt-get update</span><br></pre></td></tr></table></figure>
-<p>Ubuntu (PPA):</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ add-apt-repository ppa:formorer/icinga&#10;$ apt-get update</span><br></pre></td></tr></table></figure>
-<p>RHEL/CentOS:</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ rpm --import http://packages.icinga.org/icinga.key&#10;$ curl -o /etc/yum.repos.d/ICINGA-release.repo http://packages.icinga.org/epel/ICINGA-release.repo&#10;$ yum makecache</span><br></pre></td></tr></table></figure>
+<p>如果你开始阅读这篇文章，我相信你至少同意一家公司出现多种编程语言是一个再正常不过的事情。随着编程语言的发展，大多数语言都会有其最佳使用场景的概念，有些偏向快速开发，有些则更注重效率；不同的部门使用各自熟悉的或合适的语言开发，最终需要协同使用时，有人力的公司可以选择用一种语言重写一遍，那么另一些公司呢？</p>
+<p>一开始，你写这个模块可能只是自己的程序有需要，甚至只是做一个可行性的实验；突然大家发现很好用，你不得不为了方便别人使用进一步封装，优化代码性能，考虑如何部署成服务，怎么实现负载均衡……</p>
+<p>自己创造的代码被广泛使用确实让我信心爆棚，但越来越多的时间花在我原本并不擅长的方向，有人会告诉你这就是成长的过程；其实我只是一个安静的程序员，有没有一种方案让我只需要专心的写代码，多语言调用、部署、负载均衡、分布式什么都我都不需要去管？</p>
+<p>答案当然是肯定的啦，下面我就给大家介绍基于 DRPC 构建的分布式多语言编程模式，个人才疏学浅，如果疏漏，请轻拍！</p>
+<p> <img src="http://www.tnidea.com/media/image/drpc-flow.jpg" alt="DRPC-flow"></p>
+<p>DRPC的整个过程与一般的RPC并没有区别，它的实现也是基于Thrift协议；让它变得与众不同的原因便是让你能方便的使用Storm集群的计算能力，当然这也意味着你的整个计算集群都得基于Storm。如果你对大数据的技术有过了解，即时没有听说过Storm，也一定听说过Hadoop吧，Storm类似于Hadoop中MapReduce，它最大的改变便是将MapReduce中批处理的方式换成了实时的方式，另一个号称实时的框架spark streaming则只是把批处理变得更小更敏捷罢了。更多关于这三者比较的信息可以查看我之前的文章：<a href="http://www.tnidea.com/compare-with-distributed-computation-system.html" title="开源分布式计算系统框架比较">开源分布式计算系统框架比较</a>。</p>
+<p>编写运行在Storm框架上的DRPC模块是非常容易的，你只需要将你原来编写的逻辑代码包裹在Storm Bolt的封装代码中即可。当然，也会有一些限制，首先是需要将复杂的逻辑尽量拆解，将一个需要运行很久的代码直接封装可能会导致Bolt运行超时；其次，目前的DRPC版本仅支持一个字符串的输入输出，这也意味着复杂的对象需要额外的序列化与反序列化开销；第三，目前并非所有语言均已支持Storm，幸运的是完成对Storm的支持并不困难，下面给大家列出我整理的一些支持语言的DEMO（需要支持DRPC仅需将输入与输出参数的末尾增加一个ID）。</p>
 <ul>
-<li>这个软件包依赖于<a href="http://fedoraproject.org/wiki/EPEL" title="EPEL" target="_blank" rel="external">EPEL库</a>中的其它软件包，请确保以及允许了<a href="http://fedoraproject.org/wiki/EPEL" title="EPEL" target="_blank" rel="external">EPEL库</a>。CentOS 7可以直接通过以下命令来安装：$ yum install epel-release</li>
+<li>[C# Demo] (<a href="https://github.com/ziyunhx/storm-net-adapter/blob/master/samples/StormSample/Counter.cs" target="_blank" rel="external">https://github.com/ziyunhx/storm-net-adapter/blob/master/samples/StormSample/Counter.cs</a>)</li>
+<li>[Java Demo] (<a href="https://github.com/apache/storm/blob/master/examples/storm-starter/src/jvm/storm/starter/bolt/PrinterBolt.java" target="_blank" rel="external">https://github.com/apache/storm/blob/master/examples/storm-starter/src/jvm/storm/starter/bolt/PrinterBolt.java</a>)</li>
+<li>[Python Demo] (<a href="https://github.com/apache/storm/blob/master/examples/storm-starter/multilang/resources/splitsentence.py" target="_blank" rel="external">https://github.com/apache/storm/blob/master/examples/storm-starter/multilang/resources/splitsentence.py</a>)</li>
+<li>[NodeJS Demo] (<a href="https://github.com/apache/storm/blob/master/examples/storm-starter/multilang/resources/splitsentence.js" target="_blank" rel="external">https://github.com/apache/storm/blob/master/examples/storm-starter/multilang/resources/splitsentence.js</a>)</li>
+<li>[Ruby Demo] (<a href="https://github.com/apache/storm/blob/master/examples/storm-starter/multilang/resources/splitsentence.rb" target="_blank" rel="external">https://github.com/apache/storm/blob/master/examples/storm-starter/multilang/resources/splitsentence.rb</a>)</li>
 </ul>
-<p>Fedora:</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ rpm --import http://packages.icinga.org/icinga.key&#10;$ curl -o /etc/yum.repos.d/ICINGA-release.repo http://packages.icinga.org/fedora/ICINGA-release.repo&#10;$ yum makecache</span><br></pre></td></tr></table></figure>
-<p>SLES 11:</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ zypper ar http://packages.icinga.org/SUSE/ICINGA-release-11.repo&#10;$ zypper ref</span><br></pre></td></tr></table></figure>
+<p>另一个需要关心的便是在其它语言中的调用问题，它的实现相比支持Storm更加简单，毕竟只是对Thrift的进一步封装，同样提供我搜集的开源项目地址：</p>
 <ul>
-<li>这个软件包依赖于openssl1，它是SLES 11安全模块的一部分。</li>
+<li>C#/.Net    [Storm.Net.Apapter] (<a href="https://github.com/ziyunhx/storm-net-adapter" target="_blank" rel="external">https://github.com/ziyunhx/storm-net-adapter</a>)</li>
+<li>Java    [Storm 官方项目] (<a href="http://storm.apache.org/" target="_blank" rel="external">http://storm.apache.org/</a>)</li>
+<li>Python    [storm-drpc-client] (<a href="https://pypi.python.org/pypi/storm-drpc-client" target="_blank" rel="external">https://pypi.python.org/pypi/storm-drpc-client</a>)</li>
+<li>Php    [php-drpc] (<a href="https://github.com/mithunsatheesh/php-drpc" target="_blank" rel="external">https://github.com/mithunsatheesh/php-drpc</a>)</li>
 </ul>
-<p>SLES 12:</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ zypper ar http://packages.icinga.org/SUSE/ICINGA-release.repo&#10;$ zypper ref</span><br></pre></td></tr></table></figure>
-<p>openSUSE:</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ zypper ar http://packages.icinga.org/openSUSE/ICINGA-release.repo&#10;$ zypper ref</span><br></pre></td></tr></table></figure>
-<h3 id="安装Icinga2-1">安装Icinga2</h3><p>Debian/Ubuntu:</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ apt-get install icinga2</span><br></pre></td></tr></table></figure>
-<p>RHEL/CentOS 5/6:</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ yum install icinga2&#10;$ chkconfig icinga2 on&#10;$ service icinga2 start</span><br></pre></td></tr></table></figure>
-<p>RHEL/CentOS 7 和 Fedora:</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ yum install icinga2&#10;$ systemctl enable icinga2&#10;$ systemctl start icinga2</span><br></pre></td></tr></table></figure>
-<p>SLES/openSUSE:</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ zypper install icinga2</span><br></pre></td></tr></table></figure>
-<h3 id="在安装过程中启用功能">在安装过程中启用功能</h3><p>在默认安装中，启用了checker mainlog notification这三个功能，你可以通过执行以下命令来获取当前开启和关闭的所有功能：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ icinga2 feature list</span><br></pre></td></tr></table></figure>
-<p>如果你希望开启或关闭某个功能，可以enable/disable命令，例如我们现在开启command功能：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ icinga2 feature enable command</span><br></pre></td></tr></table></figure>
+<p>如果需要使用到生产环境中，性能和安全性也是需要考虑的问题。使用DRPC会带来一定性能损耗，但是不要担心，不论是官方的测试报告还是我们实际使用的结论都表明这一损耗在分布式集群中是可接受的，对于大部分的用户甚至无法感知；它的负载能力同样不俗，而且DRPC本身也是支持分布式的。DRPC目前并没有做许多额外的安全性的防护，我们目前也是只能通过切换默认端口号，不开放外网访问或者使用IP白名单，程序中验证访问权限的方式来完成。相信在今后这一块也会受到官方的重视。</p>
+<p>如果你已经下定决心想要尝试下，我已经给你准备了一个Docker快速编排的镜像，你可以查看我之前的文章或者直接依据开源项目的步骤操作，虽然现在在Docker中使用JDK已经违反了协议，还望大家放我一马啊。</p>
 <ul>
-<li>如果你启用了某个功能导致在接下来的启动过程中出现错误，记得回来关闭掉！</li>
+<li><a href="http://www.tnidea.com/deploy-storm-by-docker.html">使用Docker快速部署Storm环境</a></li>
+<li><a href="https://github.com/ziyunhx/storm-mono-docker" target="_blank" rel="external">storm-mono-docker</a></li>
 </ul>
-<h3 id="文件默认位置">文件默认位置</h3><table>
-<thead>
-<tr>
-<th>路径</th>
-<th>描述</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>/etc/icinga2</td>
-<td>包含Icinga2所有的配置文件</td>
-</tr>
-<tr>
-<td>/etc/init.d/icinga2</td>
-<td>Icinga2的启动脚本</td>
-</tr>
-<tr>
-<td>/usr/sbin/icinga2</td>
-<td>Icinga2程序目录</td>
-</tr>
-<tr>
-<td>/usr/share/doc/icinga2</td>
-<td>Icinga2的文档目录</td>
-</tr>
-<tr>
-<td>/usr/share/icinga2/include</td>
-<td>模板库和插件命令配置</td>
-</tr>
-<tr>
-<td>/var/run/icinga2</td>
-<td>程序运行PID文件</td>
-</tr>
-<tr>
-<td>/var/run/icinga2/cmd</td>
-<td>命令通道和状态套接字</td>
-</tr>
-<tr>
-<td>/var/cache/icinga2</td>
-<td>缓存、调试、状态文件</td>
-</tr>
-<tr>
-<td>/var/spool/icinga2</td>
-<td>用于性能数据脱机文件</td>
-</tr>
-<tr>
-<td>/var/lib/icinga2</td>
-<td>状态文件，集群日志，本地证书和配置文件</td>
-</tr>
-<tr>
-<td>/var/log/icinga2</td>
-<td>CompatLogger功能产生的日志文件以及相关工具目录</td>
-</tr>
-</tbody>
-</table>
-<h2 id="安装Check插件">安装Check插件</h2><p>Icinga2只是一个监控框架，如果没有插件，它将不知道如何检查外部服务。Icinga2是从nagios发展而来，因此它兼容nagios的插件。你可以直接使用包管理工具来安装插件包，下表将列出插件包得名称和默认安装路径。</p>
-<table>
-<thead>
-<tr>
-<th>操作系统</th>
-<th>包名称</th>
-<th>安装路径</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>RHEL/CentOS (EPEL)</td>
-<td>nagios-plugins-all</td>
-<td>/usr/lib/nagios/plugins 或 /usr/lib64/nagios/plugins</td>
-</tr>
-<tr>
-<td>Debian</td>
-<td>nagios-plugins</td>
-<td>/usr/lib/nagios/plugins</td>
-</tr>
-<tr>
-<td>FreeBSD</td>
-<td>nagios-plugins</td>
-<td>/usr/local/libexec/nagios</td>
-</tr>
-<tr>
-<td>OS X (MacPorts)</td>
-<td>nagios-plugins</td>
-<td>/opt/local/libexec</td>
-</tr>
-</tbody>
-</table>
-<p>根据安装目录的差异，你可能需要修改Icinga2的配置来指定插件包得安装位置。配置文件为 /etc/icinga2/constants.conf，修改PluginDir的值为插件目录即可。</p>
-<h2 id="运行Icinga2">运行Icinga2</h2><h3 id="启动脚本">启动脚本</h3><p>根据上面的文件位置表格，我们知道Icinga2的默认启动脚本位于： /etc/init.d/icinga2。</p>
-<p>具体命令使用格式为 /etc/init.d/icinga2 {start|stop|restart|reload|checkconfig|status} ；命令具体含义与一般服务相同。</p>
-<p>对于部分操作系统，例如：Fedora，openSUSE 和 RHEL/CentOS 7 可以使用服务来操作，Icinga2在安装时已经安装了必要的服务。</p>
-<p>例如你可以使用以下命令来检查Icinga2的运行状态：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ systemctl status icinga2</span><br></pre></td></tr></table></figure>
-<p>将Icinga2设置为自启动：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ systemctl enable icinga2</span><br></pre></td></tr></table></figure>
-<p>以及重启Icinga2:</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ systemctl restart icinga2</span><br></pre></td></tr></table></figure>
-<p>如果启动出错，别忘了检查插件以及配置文件，你也可以使用 journalctl -xn 来查看错误信息。由于篇幅过长，Icinga Web2的安装与配置将放到下篇博客中！</p>
+<p>另外，现在微信公众号已开通评论和打赏功能，有什么建议或者觉得文章对您有帮助，请移步公众号支持一下哦！</p>
 
-    <p>本文来自 <a href="http://www.tnidea.com/" title="The NewIdea" target="_blank" rel="external">The NewIdea</a>，作者 Carey Tzou 。<br>永久地址：<a href="http://www.tnidea.com/monitor-system-by-icinga2.html" title="使用Icinga2和Icinga Web2搭建监控服务" target="_blank" rel="external">http://www.tnidea.com/monitor-system-by-icinga2.html</a><br>未经授权，拒绝任何全文及摘要转载！<br>
+    <p>本文来自 <a href="http://www.tnidea.com/" title="The NewIdea" target="_blank" rel="external">The NewIdea</a>，作者 Carey Tzou 。<br>永久地址：<a href="http://www.tnidea.com/build-multi-language-framework-by-drpc.html" title="使用DRPC构建分布式多语言编程架构" target="_blank" rel="external">http://www.tnidea.com/build-multi-language-framework-by-drpc.html</a><br>未经授权，拒绝任何全文及摘要转载！<br>
     <br>
     <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
     <!-- 博客正文广告 -->
@@ -283,21 +177,21 @@
     <footer class="article-footer">
     
   <div class="article-date">
-    <a href="/monitor-system-by-icinga2.html">
-      <time datetime="2015-10-09T16:00:00.000Z" itemprop="datePublished">2015-10-10</time>
+    <a href="/build-multi-language-framework-by-drpc.html">
+      <time datetime="2016-03-25T16:00:00.000Z" itemprop="datePublished">2016-03-26</time>
     </a>
   </div>
 
 
-      <a data-url="http://www.tnidea.com/monitor-system-by-icinga2.html" data-id="cij8lxqz80023o8s3lvo2xwtr" class="article-share-link">分享到</a>
+      <a data-url="http://www.tnidea.com/build-multi-language-framework-by-drpc.html" data-id="cima65ejw0000b3s3o7kns6vl" class="article-share-link">分享到</a>
       
-        <a href="http://www.tnidea.com/monitor-system-by-icinga2.html#disqus_thread" class="article-comment-link">评论</a>
+        <a href="http://www.tnidea.com/build-multi-language-framework-by-drpc.html#disqus_thread" class="article-comment-link">评论</a>
       
       
   <div class="article-tag">
     <i class="fa fa-tags"></i>&nbsp;&nbsp;
   </div>
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CentOS/">CentOS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Icinga-Web2/">Icinga Web2</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Icinga2/">Icinga2</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/服务器监控/">服务器监控</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NET/">.NET</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/">C#</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/DRPC/">DRPC</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Topology/">Topology</a></li></ul>
 
     </footer>
   </div>
@@ -305,19 +199,10 @@
     
 <nav id="article-nav">
   
-    <a href="/prepare-for-setting-up-icinga-web2.html" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">上一篇</strong>
-      <div class="article-nav-title">
-        
-          安装Icinga Web2所需服务
-        
-      </div>
-    </a>
   
-  
-    <a href="/call-dot-net-drpc-program.html" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/recog-http-charset-by-dot-net.html" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">下一篇</strong>
-      <div class="article-nav-title">使用DRPC调用.NET开发的Storm拓扑</div>
+      <div class="article-nav-title">使用C#自动识别网页编码</div>
     </a>
   
 </nav>
