@@ -5,17 +5,17 @@
   
   <title>使用DRPC构建分布式多语言编程架构 | 地平线</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Distributed RPC（DRPC）作为Storm基于Thrift协议的RPC实现，已在之前的文章中被多次提及；在一个多开发语言的环境中，RPC是必不可少的一环，常见的RPC实现方式除了thrift外也还有很多，甚至基于Http协议的RESTful API也可以算作是其中的一员。本文将为您解读：为什么在这么多的RPC方式中选择使用DRPC来构建多语言编程架构，而不是使用其基于的thrift或">
+  <meta name="description" content="Distributed RPC（DRPC）作为Storm基于Thrift协议的RPC实现，已在之前的文章中被多次提及；在一个多开发语言的环境中，RPC是必不可少的一环，常见的RPC实现方式除了thrift外也还有很多，甚至基于Http协议的RESTful API也可以算作是其中的一员。本文将为您解读：为什么在这么多的RPC方式中选择使用DRPC来构建多语言编程架构，而不是使用Thrift或者其它方">
 <meta property="og:type" content="article">
 <meta property="og:title" content="使用DRPC构建分布式多语言编程架构">
 <meta property="og:url" content="http://www.tnidea.com/build-multi-language-framework-by-drpc.html">
 <meta property="og:site_name" content="地平线">
-<meta property="og:description" content="Distributed RPC（DRPC）作为Storm基于Thrift协议的RPC实现，已在之前的文章中被多次提及；在一个多开发语言的环境中，RPC是必不可少的一环，常见的RPC实现方式除了thrift外也还有很多，甚至基于Http协议的RESTful API也可以算作是其中的一员。本文将为您解读：为什么在这么多的RPC方式中选择使用DRPC来构建多语言编程架构，而不是使用其基于的thrift或">
+<meta property="og:description" content="Distributed RPC（DRPC）作为Storm基于Thrift协议的RPC实现，已在之前的文章中被多次提及；在一个多开发语言的环境中，RPC是必不可少的一环，常见的RPC实现方式除了thrift外也还有很多，甚至基于Http协议的RESTful API也可以算作是其中的一员。本文将为您解读：为什么在这么多的RPC方式中选择使用DRPC来构建多语言编程架构，而不是使用Thrift或者其它方">
 <meta property="og:image" content="http://www.tnidea.com/media/image/drpc-flow.jpg">
-<meta property="og:updated_time" content="2016-03-27T06:10:30.000Z">
+<meta property="og:updated_time" content="2016-03-27T06:26:38.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="使用DRPC构建分布式多语言编程架构">
-<meta name="twitter:description" content="Distributed RPC（DRPC）作为Storm基于Thrift协议的RPC实现，已在之前的文章中被多次提及；在一个多开发语言的环境中，RPC是必不可少的一环，常见的RPC实现方式除了thrift外也还有很多，甚至基于Http协议的RESTful API也可以算作是其中的一员。本文将为您解读：为什么在这么多的RPC方式中选择使用DRPC来构建多语言编程架构，而不是使用其基于的thrift或">
+<meta name="twitter:description" content="Distributed RPC（DRPC）作为Storm基于Thrift协议的RPC实现，已在之前的文章中被多次提及；在一个多开发语言的环境中，RPC是必不可少的一环，常见的RPC实现方式除了thrift外也还有很多，甚至基于Http协议的RESTful API也可以算作是其中的一员。本文将为您解读：为什么在这么多的RPC方式中选择使用DRPC来构建多语言编程架构，而不是使用Thrift或者其它方">
   
   
   <link rel="stylesheet" href="/css/style.css" type="text/css">
@@ -125,30 +125,31 @@
     (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
 
-    <p>Distributed RPC（DRPC）作为Storm基于Thrift协议的RPC实现，已在之前的文章中被多次提及；在一个多开发语言的环境中，RPC是必不可少的一环，常见的RPC实现方式除了thrift外也还有很多，甚至基于Http协议的RESTful API也可以算作是其中的一员。本文将为您解读：为什么在这么多的RPC方式中选择使用DRPC来构建多语言编程架构，而不是使用其基于的thrift或者其它方式？</p>
+    <p>Distributed RPC（DRPC）作为Storm基于Thrift协议的RPC实现，已在之前的文章中被多次提及；在一个多开发语言的环境中，RPC是必不可少的一环，常见的RPC实现方式除了thrift外也还有很多，甚至基于Http协议的RESTful API也可以算作是其中的一员。本文将为您解读：为什么在这么多的RPC方式中选择使用DRPC来构建多语言编程架构，而不是使用Thrift或者其它方式？</p>
 <a id="more"></a>
 <p>如果你开始阅读这篇文章，我相信你至少同意一家公司出现多种编程语言是一个再正常不过的事情。随着编程语言的发展，大多数语言都会有其最佳使用场景的概念，有些偏向快速开发，有些则更注重效率；不同的部门使用各自熟悉的或合适的语言开发，最终需要协同使用时，有人力的公司可以选择用一种语言重写一遍，那么另一些公司呢？</p>
-<p>一开始，你写这个模块可能只是自己的程序有需要，甚至只是做一个可行性的实验；突然大家发现很好用，你不得不为了方便别人使用进一步封装，优化代码性能，考虑如何部署成服务，怎么实现负载均衡……</p>
-<p>自己创造的代码被广泛使用确实让我信心爆棚，但越来越多的时间花在我原本并不擅长的方向，有人会告诉你这就是成长的过程；其实我只是一个安静的程序员，有没有一种方案让我只需要专心的写代码，多语言调用、部署、负载均衡、分布式什么都我都不需要去管？</p>
+<p>一开始，你写这个模块可能只是满足自己程序的需要，甚至只是做一个可行性的实验；后来大家发现很好用，越来越多的人使用这个模块，你不得不为了方便别人使用进一步封装，优化代码性能，考虑如何部署成服务，怎么实现负载均衡……</p>
+<p>自己创造的代码被广泛使用确实让我信心爆棚，但越来越多的时间花在我原本并不擅长的方向……有没有一种方案让我只需要专心的写代码，多语言调用、部署、负载均衡、分布式什么都我都不需要去管？</p>
 <p>答案当然是肯定的啦，下面我就给大家介绍基于 DRPC 构建的分布式多语言编程模式，个人才疏学浅，如果疏漏，请轻拍！</p>
 <p> <img src="http://www.tnidea.com/media/image/drpc-flow.jpg" alt="DRPC-flow"></p>
-<p>DRPC的整个过程与一般的RPC并没有区别，它的实现也是基于Thrift协议；让它变得与众不同的原因便是让你能方便的使用Storm集群的计算能力，当然这也意味着你的整个计算集群都得基于Storm。如果你对大数据的技术有过了解，即时没有听说过Storm，也一定听说过Hadoop吧，Storm类似于Hadoop中MapReduce，它最大的改变便是将MapReduce中批处理的方式换成了实时的方式，另一个号称实时的框架spark streaming则只是把批处理变得更小更敏捷罢了。更多关于这三者比较的信息可以查看我之前的文章：<a href="http://www.tnidea.com/compare-with-distributed-computation-system.html" title="开源分布式计算系统框架比较">开源分布式计算系统框架比较</a>。</p>
+<p>DRPC的整个过程与一般的RPC并没有区别，它的实现也是基于Thrift协议；让它变得与众不同的原因便是让你能方便的使用Storm集群的计算能力，当然这也意味着你的整个计算集群都得基于Storm。如果你对大数据的技术有过了解，即使没有听说过Storm，也一定听说过Hadoop吧，Storm类似于Hadoop中的MapReduce，它最大的改变便是将MapReduce中批处理的方式换成了实时的方式，另一个号称实时的框架spark streaming则只是把批处理变得更小更敏捷罢了。更多关于这三者比较的信息可以查看我之前的文章：<a href="http://www.tnidea.com/compare-with-distributed-computation-system.html" title="开源分布式计算系统框架比较">开源分布式计算系统框架比较</a>。</p>
 <p>编写运行在Storm框架上的DRPC模块是非常容易的，你只需要将你原来编写的逻辑代码包裹在Storm Bolt的封装代码中即可。当然，也会有一些限制，首先是需要将复杂的逻辑尽量拆解，将一个需要运行很久的代码直接封装可能会导致Bolt运行超时；其次，目前的DRPC版本仅支持一个字符串的输入输出，这也意味着复杂的对象需要额外的序列化与反序列化开销；第三，目前并非所有语言均已支持Storm，幸运的是完成对Storm的支持并不困难，下面给大家列出我整理的一些支持语言的DEMO（需要支持DRPC仅需将输入与输出参数的末尾增加一个ID）。</p>
 <ul>
-<li>[C# Demo] (<a href="https://github.com/ziyunhx/storm-net-adapter/blob/master/samples/StormSample/Counter.cs" target="_blank" rel="external">https://github.com/ziyunhx/storm-net-adapter/blob/master/samples/StormSample/Counter.cs</a>)</li>
-<li>[Java Demo] (<a href="https://github.com/apache/storm/blob/master/examples/storm-starter/src/jvm/storm/starter/bolt/PrinterBolt.java" target="_blank" rel="external">https://github.com/apache/storm/blob/master/examples/storm-starter/src/jvm/storm/starter/bolt/PrinterBolt.java</a>)</li>
-<li>[Python Demo] (<a href="https://github.com/apache/storm/blob/master/examples/storm-starter/multilang/resources/splitsentence.py" target="_blank" rel="external">https://github.com/apache/storm/blob/master/examples/storm-starter/multilang/resources/splitsentence.py</a>)</li>
-<li>[NodeJS Demo] (<a href="https://github.com/apache/storm/blob/master/examples/storm-starter/multilang/resources/splitsentence.js" target="_blank" rel="external">https://github.com/apache/storm/blob/master/examples/storm-starter/multilang/resources/splitsentence.js</a>)</li>
-<li>[Ruby Demo] (<a href="https://github.com/apache/storm/blob/master/examples/storm-starter/multilang/resources/splitsentence.rb" target="_blank" rel="external">https://github.com/apache/storm/blob/master/examples/storm-starter/multilang/resources/splitsentence.rb</a>)</li>
+<li><a href="https://github.com/ziyunhx/storm-net-adapter/blob/master/samples/StormSample/Counter.cs" target="_blank" rel="external">C# Demo</a></li>
+<li><a href="https://github.com/apache/storm/blob/master/examples/storm-starter/src/jvm/storm/starter/bolt/PrinterBolt.java" target="_blank" rel="external">Java Demo</a></li>
+<li><a href="https://github.com/apache/storm/blob/master/examples/storm-starter/multilang/resources/splitsentence.py" target="_blank" rel="external">Python Demo</a></li>
+<li><a href="https://github.com/apache/storm/blob/master/examples/storm-starter/multilang/resources/splitsentence.js" target="_blank" rel="external">NodeJS Demo</a></li>
+<li><a href="https://github.com/apache/storm/blob/master/examples/storm-starter/multilang/resources/splitsentence.rb" target="_blank" rel="external">Ruby Demo</a></li>
 </ul>
+<p>如果你需要完成对一种目前尚不支持的语言的适配，可以查看 <a href="http://storm.apache.org/releases/0.9.6/Multilang-protocol.html" target="_blank" rel="external">Storm Multi-Language Protocol</a>。</p>
 <p>另一个需要关心的便是在其它语言中的调用问题，它的实现相比支持Storm更加简单，毕竟只是对Thrift的进一步封装，同样提供我搜集的开源项目地址：</p>
 <ul>
-<li>C#/.Net    [Storm.Net.Apapter] (<a href="https://github.com/ziyunhx/storm-net-adapter" target="_blank" rel="external">https://github.com/ziyunhx/storm-net-adapter</a>)</li>
-<li>Java    [Storm 官方项目] (<a href="http://storm.apache.org/" target="_blank" rel="external">http://storm.apache.org/</a>)</li>
-<li>Python    [storm-drpc-client] (<a href="https://pypi.python.org/pypi/storm-drpc-client" target="_blank" rel="external">https://pypi.python.org/pypi/storm-drpc-client</a>)</li>
-<li>Php    [php-drpc] (<a href="https://github.com/mithunsatheesh/php-drpc" target="_blank" rel="external">https://github.com/mithunsatheesh/php-drpc</a>)</li>
+<li>C#/.Net    <a href="https://github.com/ziyunhx/storm-net-adapter" target="_blank" rel="external">Storm.Net.Apapter</a></li>
+<li>Java    <a href="http://storm.apache.org/" target="_blank" rel="external">Storm 官方项目</a></li>
+<li>Python    <a href="https://pypi.python.org/pypi/storm-drpc-client" target="_blank" rel="external">storm-drpc-client</a></li>
+<li>Php    <a href="https://github.com/mithunsatheesh/php-drpc" target="_blank" rel="external">php-drpc</a></li>
 </ul>
-<p>如果需要使用到生产环境中，性能和安全性也是需要考虑的问题。使用DRPC会带来一定性能损耗，但是不要担心，不论是官方的测试报告还是我们实际使用的结论都表明这一损耗在分布式集群中是可接受的，对于大部分的用户甚至无法感知；它的负载能力同样不俗，而且DRPC本身也是支持分布式的。DRPC目前并没有做许多额外的安全性的防护，我们目前也是只能通过切换默认端口号，不开放外网访问或者使用IP白名单，程序中验证访问权限的方式来完成。相信在今后这一块也会受到官方的重视。</p>
+<p>如果需要使用到生产环境中，性能和安全性也是需要考虑的问题。使用DRPC会带来一定性能损耗，但是不要担心，不论是官方的测试报告还是我们实际使用的结论都表明这一损耗在分布式集群中是可接受的，对于大部分的用户甚至无法感知；它的负载能力同样不俗，而且DRPC本身也是支持分布式的。DRPC目前并没有做许多额外的安全性的防护，我们目前也是只能通过切换默认端口号，不开放外网访问或者使用IP白名单，程序中验证访问权限的方式来完成。相信在今后这一块也会受到官方的重视，本文的例子还是以0.9.6版本为基础，官方的开发版本已经到了2.0。</p>
 <p>如果你已经下定决心想要尝试下，我已经给你准备了一个Docker快速编排的镜像，你可以查看我之前的文章或者直接依据开源项目的步骤操作，虽然现在在Docker中使用JDK已经违反了协议，还望大家放我一马啊。</p>
 <ul>
 <li><a href="http://www.tnidea.com/deploy-storm-by-docker.html">使用Docker快速部署Storm环境</a></li>
