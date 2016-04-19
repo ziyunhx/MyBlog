@@ -4,7 +4,7 @@
   <subtitle><![CDATA[纯粹的技术导向！]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://www.tnidea.com/"/>
-  <updated>2016-03-27T06:26:38.000Z</updated>
+  <updated>2016-04-19T14:28:20.000Z</updated>
   <id>http://www.tnidea.com/</id>
   
   <author>
@@ -13,6 +13,46 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[再谈网络爬虫中的编码识别问题]]></title>
+    <link href="http://www.tnidea.com/talk-about-http-charset-recog-again.html"/>
+    <id>http://www.tnidea.com/talk-about-http-charset-recog-again.html</id>
+    <published>2016-04-18T16:00:00.000Z</published>
+    <updated>2016-04-19T14:28:20.000Z</updated>
+    <content type="html"><![CDATA[<p>在之前的文章中，我给大家介绍了 Nchardet 结合网页头部声明来识别网页的编码。通过较长时间段生产环境的使用，效果并不是十分理想。首先是 Nchardet 带来了极大的CPU的开销，尤其是对大规模的爬虫集群来说几乎无法接受；其次猜测的准确性距离100%有一段距离，使得感受并不友好。因此，就有了今天的这篇文章。</p>
+<a id="more"></a>
+<p>Nchardet 是通过尝试转换编码比较错误率来实现编码猜测的，由于网页的长度与中文密度的关系，效果并不理想。之前的方法中默认采用了这种方案，导致了较大的CPU资源的开销。</p>
+<p>除了可以通过解析网页头部的编码声明，其实还可以通过解析请求返回的 ContentType 来猜测编码，.Net的网络请求库中的 HttpClient 就是使用了这一方法，实现代码如下：</p>
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">string</span> Hcharset = <span class="string">""</span>;</span><br><span class="line"><span class="keyword">string</span> text = <span class="string">""</span>;</span><br><span class="line"><span class="keyword">if</span> (!<span class="keyword">string</span>.IsNullOrEmpty(text = httpWebResponse.ContentType))</span><br><span class="line">&#123;</span><br><span class="line">    text = text.ToLower(CultureInfo.InvariantCulture);</span><br><span class="line">    <span class="keyword">string</span>[] array = text.Split(<span class="keyword">new</span> <span class="keyword">char</span>[] &#123; <span class="string">';'</span>, <span class="string">'='</span>, <span class="string">' '</span> &#125;);</span><br><span class="line">    <span class="keyword">bool</span> flag = <span class="keyword">false</span>;</span><br><span class="line">    <span class="keyword">string</span>[] array2 = array;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; array2.Length; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">string</span> text2 = array2[i];</span><br><span class="line">        <span class="keyword">if</span> (text2 == <span class="string">"charset"</span>)</span><br><span class="line">            flag = <span class="keyword">true</span>;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span> (flag)</span><br><span class="line">                Hcharset = text2;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>其中 httpWebResponse 为网络请求返回的结果。</p>
+<p>另外我们通过正则来解析用户在网页中声明的编码：</p>
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">string</span> CharsetReg = <span class="string">@"(meta.*?charset=""?(?&lt;Charset&gt;[^\s""'&gt;;]+)""?)|(xml.*?encoding=""?(?&lt;Charset&gt;[^\s""&gt;;]+)""?)"</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">string</span> Rcharset = <span class="string">""</span>;</span><br><span class="line">String cache = <span class="keyword">string</span>.Empty;</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> (<span class="keyword">true</span>)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">var</span> b = ResponseStream.ReadByte();</span><br><span class="line">    <span class="keyword">if</span> (b &lt; <span class="number">0</span>) <span class="comment">//end of stream</span></span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    bytes.Add((<span class="keyword">byte</span>)b);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (!cache.EndsWith(<span class="string">"&lt;/head&gt;"</span>, StringComparison.OrdinalIgnoreCase))</span><br><span class="line">        cache += (<span class="keyword">char</span>)b;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Match match = Regex.Match(cache, CharsetReg, RegexOptions.IgnoreCase | RegexOptions.Multiline);</span><br><span class="line"><span class="keyword">if</span> (match.Success)</span><br><span class="line">    Rcharset = match.Groups[<span class="string">"Charset"</span>].Value;</span><br></pre></td></tr></table></figure>
+<p>由于两种方法取到的结果都有不准确的可能，因此当它们相同时我们就采用该种方式解析网页获得内容，避免使用 Nchardet 带来性能损耗。当两者不同时我们才使用 Nchardet 进行猜测，同样与之前的两种结果比较选择相同的方式解析。</p>
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> (!<span class="keyword">string</span>.IsNullOrEmpty(Rcharset) &amp;&amp; !<span class="keyword">string</span>.IsNullOrEmpty(Hcharset) &amp;&amp; Hcharset.ToUpper() == Rcharset.ToUpper())</span><br><span class="line">    encode = Encoding.GetEncoding(Hcharset);</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">&#123;</span><br><span class="line">    Ncharset = NChardetHelper.RecogCharset(bytes.ToArray(), Thrinax.Data.NChardetLanguage.CHINESE, <span class="number">1024</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (!<span class="keyword">string</span>.IsNullOrEmpty(Ncharset) &amp;&amp; (Ncharset.ToUpper() == Rcharset.ToUpper() || Ncharset.ToUpper() == Hcharset.ToUpper()))</span><br><span class="line">        encode = Encoding.GetEncoding(Ncharset);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>当以上方法还是得不到相同的编码时，我们使用人工标注的编码（如果有的话）。然后我们使用以下顺序来解析网页：<br>人工标注的编码 &gt; 网页自动识别 &gt; 解析ContentType &gt; 解析Html编码声明 。</p>
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="comment">//2，使用人工标注的编码</span></span><br><span class="line"><span class="keyword">if</span> (encode == <span class="keyword">null</span> &amp;&amp; !<span class="keyword">string</span>.IsNullOrEmpty(encoding))</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">try</span></span><br><span class="line">    &#123;</span><br><span class="line">        encode = Encoding.GetEncoding(encoding);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">catch</span> &#123; &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//3，使用单一方式识别出的编码，网页自动识别 &gt; 解析ContentType &gt; 解析Html编码声明</span></span><br><span class="line"><span class="keyword">if</span> (encode == <span class="keyword">null</span> &amp;&amp; !<span class="keyword">string</span>.IsNullOrEmpty(Ncharset))</span><br><span class="line">    encode = Encoding.GetEncoding(Ncharset);</span><br><span class="line"><span class="keyword">if</span>(encode == <span class="keyword">null</span> &amp;&amp; !<span class="keyword">string</span>.IsNullOrEmpty(Hcharset))</span><br><span class="line">    encode = Encoding.GetEncoding(Hcharset);</span><br><span class="line"><span class="keyword">if</span> (encode == <span class="keyword">null</span> &amp;&amp; !<span class="keyword">string</span>.IsNullOrEmpty(Rcharset))</span><br><span class="line">    encode = Encoding.GetEncoding(Rcharset);</span><br></pre></td></tr></table></figure>
+<p>如果都没有的话，听天由命吧，直接使用默认编码解析。下面是该逻辑和取出内容的部分：</p>
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="comment">//4，使用默认编码，听天由命吧</span></span><br><span class="line"><span class="keyword">if</span> (encode == <span class="keyword">null</span>)</span><br><span class="line">    encode = Encoding.Default;</span><br><span class="line"></span><br><span class="line">Content = encode.GetString(bytes.ToArray());</span><br><span class="line">ResponseStream.Close();</span><br></pre></td></tr></table></figure>
+<p>ok，大功告成！所有代码以及里面的一些依赖都已经在 <a href="https://github.com/ziyunhx/thrinax" target="_blank" rel="external">thrinax</a> 库中了，编码识别模块通过长时间生产环境爬虫使用，统计结果显示识别准确率大于 99.99%。相比之前方式的性能提高数倍。<a href="https://github.com/ziyunhx/thrinax" target="_blank" rel="external">thrinax</a> 的定位是一个使用 .Net 提供网络抓取，信息抽取，自然语言处理的库，其中的大部分代码都会来源于社区或其它开源算法或者论文，该库只是筛选统一方便调用。如果大家有这三方面的好的推荐，可以通过 Issue 或者博客评论发给我！</p>
+<p>本文涉及 <a href="https://github.com/ziyunhx/thrinax/blob/master/Helper/HttpHelper.cs" target="_blank" rel="external">HttpHelper</a> 与 <a href="https://github.com/ziyunhx/thrinax/blob/master/Helper/NChardetHelper.cs" target="_blank" rel="external">NChardetHelper</a>，欢迎大家 Star 与 Fork <a href="https://github.com/ziyunhx/thrinax" target="_blank" rel="external">thrinax</a> 库。</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>在之前的文章中，我给大家介绍了 Nchardet 结合网页头部声明来识别网页的编码。通过较长时间段生产环境的使用，效果并不是十分理想。首先是 Nchardet 带来了极大的CPU的开销，尤其是对大规模的爬虫集群来说几乎无法接受；其次猜测的准确性距离100%有一段距离，使得感受并不友好。因此，就有了今天的这篇文章。</p>]]>
+    
+    </summary>
+    
+      <category term=".NET" scheme="http://www.tnidea.com/tags/NET/"/>
+    
+      <category term="C#" scheme="http://www.tnidea.com/tags/C/"/>
+    
+      <category term="charset" scheme="http://www.tnidea.com/tags/charset/"/>
+    
+      <category term="csharp" scheme="http://www.tnidea.com/tags/csharp/"/>
+    
+      <category term="爬虫" scheme="http://www.tnidea.com/categories/%E7%88%AC%E8%99%AB/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[使用DRPC构建分布式多语言编程架构]]></title>
@@ -1575,146 +1615,6 @@ nimbus<span class="class">.thrift</span><span class="class">.port</span>: <span 
       <category term="流式框架" scheme="http://www.tnidea.com/tags/%E6%B5%81%E5%BC%8F%E6%A1%86%E6%9E%B6/"/>
     
       <category term="部署" scheme="http://www.tnidea.com/tags/%E9%83%A8%E7%BD%B2/"/>
-    
-      <category term="Storm" scheme="http://www.tnidea.com/categories/Storm/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[开源分布式计算系统框架比较]]></title>
-    <link href="http://www.tnidea.com/compare-with-distributed-computation-system.html"/>
-    <id>http://www.tnidea.com/compare-with-distributed-computation-system.html</id>
-    <published>2015-05-02T16:00:00.000Z</published>
-    <updated>2015-10-07T08:08:33.000Z</updated>
-    <content type="html"><![CDATA[<p> 分布式计算在许多领域都有广泛需求，目前流行的分布式计算框架主要有 Hadoop MapReduce, Spark Streaming, Storm； 这三个框架各有优势，现在都属于 Apache 基金会下的顶级项目，下文将对三个框架的特点与适用场景进行分析，以便开发者能快速选择适合自己的框架进行开发。</p>
-<a id="more"></a>
-<p> Hadoop MapReduce 是三者中出现最早，知名度最大的分布式计算框架，最早由 Google Lab 开发，使用者遍布全球（<a href="http://wiki.apache.org/hadoop/PoweredBy" title="Hadoop PoweredBy" target="_blank" rel="external">Hadoop PoweredBy</a>）；主要适用于大批量的集群任务，由于是批量执行，故时效性偏低，原生支持 Java 语言开发 MapReduce ，其它语言需要使用到 Hadoop Streaming 来开发。Spark Streaming 保留了 Hadoop MapReduce 的优点，而且在时效性上有了很大提高，中间结果可以保存在内存中，从而对需要迭代计算和有较高时效性要求的系统提供了很好的支持，多用于能容忍小延时的推荐与计算系统。Storm 一开始就是为实时处理设计，因此在实时分析/性能监测等需要高时效性的领域广泛采用，而且它理论上支持所有语言，只需要少量代码即可完成适配器。</p>
-<p> 下面的表格是对三者部分特性的比较，描述时间为 2015-5-3，三个项目均处于快速迭代中，文中描述特性会随时产生变化，如果与官方文档产生出入以官方文档为准。</p>
-<table>
-<thead>
-<tr>
-<th>比较项</th>
-<th>Storm</th>
-<th>Spark Streaming</th>
-<th>Hadoop MapReduce</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>血统</td>
-<td>Twitter</td>
-<td>UC Berkeley AMP lab</td>
-<td>Google Lab</td>
-</tr>
-<tr>
-<td>开源时间</td>
-<td>2011.9.16</td>
-<td>2011.5.24</td>
-<td>2007.9.4</td>
-</tr>
-<tr>
-<td>当前版本</td>
-<td>0.9.4</td>
-<td>1.3.1</td>
-<td>2.7.0</td>
-</tr>
-<tr>
-<td>相关资料</td>
-<td>多</td>
-<td>多</td>
-<td>极多</td>
-</tr>
-<tr>
-<td>依赖环境</td>
-<td>Zookeeper、Java、Python</td>
-<td>hadoop client、Scala</td>
-<td>Java、ssh</td>
-</tr>
-<tr>
-<td>技术语言</td>
-<td>Java、Clojure</td>
-<td>Scala</td>
-<td>Java</td>
-</tr>
-<tr>
-<td>支持语言</td>
-<td>Any</td>
-<td>Scala、Java、Python</td>
-<td>Java &amp; Others</td>
-</tr>
-<tr>
-<td>延时</td>
-<td>实时</td>
-<td>秒级</td>
-<td>较高</td>
-</tr>
-<tr>
-<td>网络带宽</td>
-<td>一般</td>
-<td>一般</td>
-<td>一般</td>
-</tr>
-<tr>
-<td>硬盘IO</td>
-<td>一般</td>
-<td>少</td>
-<td>较少</td>
-</tr>
-<tr>
-<td>集群支持</td>
-<td>好</td>
-<td>超过1000节点</td>
-<td>数千个节点</td>
-</tr>
-<tr>
-<td>吞吐量</td>
-<td>较好</td>
-<td>好</td>
-<td>好</td>
-</tr>
-<tr>
-<td>使用公司</td>
-<td>淘宝、百度、Twitte、Groupon、雅虎</td>
-<td>Intel、腾讯、淘宝、中移动、Google</td>
-<td>EBay、Facebook、Google、IBM</td>
-</tr>
-<tr>
-<td>适用场景</td>
-<td>实时的小数据块的分析计算</td>
-<td>较大数据块又需要高时效性的小批量计算</td>
-<td>低时效性的大批量计算</td>
-</tr>
-</tbody>
-</table>
-<p>表格说明：</p>
-<ul>
-<li>开源时间以 github 上最早的 commit 或者官网上最早发布版本的时间为准。</li>
-<li>当前版本与特性描述截止 2015-5-3。</li>
-<li>相关资料量通过比较官方文档、搜索引擎、论坛等途径得出。</li>
-<li>部分比较数据来源于实践或相关文章（未找到出处）。</li>
-</ul>
-<p>本文会保持更新，如果数据发现有出入，欢迎指正。</p>
-<p>参考资料：</p>
-<ul>
-<li><a href="http://hadoop.apache.org/index.html" title="hadoop" target="_blank" rel="external">Hadoop 官网</a></li>
-<li><a href="http://spark.apache.org/streaming/" title="Spark Streaming" target="_blank" rel="external">Spark Streaming</a></li>
-<li><a href="http://storm.apache.org/" title="storm" target="_blank" rel="external">Storm 官网</a></li>
-</ul>
-]]></content>
-    <summary type="html">
-    <![CDATA[<p> 分布式计算在许多领域都有广泛需求，目前流行的分布式计算框架主要有 Hadoop MapReduce, Spark Streaming, Storm； 这三个框架各有优势，现在都属于 Apache 基金会下的顶级项目，下文将对三个框架的特点与适用场景进行分析，以便开发者能快速选择适合自己的框架进行开发。</p>]]>
-    
-    </summary>
-    
-      <category term="Hadoop MapReduce" scheme="http://www.tnidea.com/tags/Hadoop-MapReduce/"/>
-    
-      <category term="Spark Streaming" scheme="http://www.tnidea.com/tags/Spark-Streaming/"/>
-    
-      <category term="Storm" scheme="http://www.tnidea.com/tags/Storm/"/>
-    
-      <category term="分布式" scheme="http://www.tnidea.com/tags/%E5%88%86%E5%B8%83%E5%BC%8F/"/>
-    
-      <category term="流式框架" scheme="http://www.tnidea.com/tags/%E6%B5%81%E5%BC%8F%E6%A1%86%E6%9E%B6/"/>
     
       <category term="Storm" scheme="http://www.tnidea.com/categories/Storm/"/>
     
