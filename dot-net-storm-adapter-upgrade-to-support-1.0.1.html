@@ -5,17 +5,17 @@
   
   <title>Storm 1.0.1发布，.NET 适配也已到来 | 地平线</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Apache Storm 1.0.0发不不久，1.0.1版本也在几天前到来；该版本主要是完成一些BUG修复和小的改进，通过一段时间新版本的使用，特将个人感受和一些遇到的问题归纳如下，另外 .NET版本的适配器也已经发布，源码在 storm-net-adapter，如果你希望快捷体验Storm 1.0.1，可以通过Docker 来部署，地址在：storm-mono-docker，该镜像已经集成了Mo">
+  <meta name="description" content="Apache Storm 1.0.0刚发布不久，1.0.1版本也在几天前到来；该版本主要是完成一些BUG修复和小的改进，通过一段时间新版本的使用，特将个人感受和一些遇到的问题归纳如下；另外 .NET 版本的 Storm 适配器也已经发布，源码在 storm-net-adapter，如果你希望便捷的体验Storm 1.0.1，可以通过 Docker 来部署，地址在：storm-mono-docker">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Storm 1.0.1发布，.NET 适配也已到来">
 <meta property="og:url" content="http://www.tnidea.com/dot-net-storm-adapter-upgrade-to-support-1.0.1.html">
 <meta property="og:site_name" content="地平线">
-<meta property="og:description" content="Apache Storm 1.0.0发不不久，1.0.1版本也在几天前到来；该版本主要是完成一些BUG修复和小的改进，通过一段时间新版本的使用，特将个人感受和一些遇到的问题归纳如下，另外 .NET版本的适配器也已经发布，源码在 storm-net-adapter，如果你希望快捷体验Storm 1.0.1，可以通过Docker 来部署，地址在：storm-mono-docker，该镜像已经集成了Mo">
+<meta property="og:description" content="Apache Storm 1.0.0刚发布不久，1.0.1版本也在几天前到来；该版本主要是完成一些BUG修复和小的改进，通过一段时间新版本的使用，特将个人感受和一些遇到的问题归纳如下；另外 .NET 版本的 Storm 适配器也已经发布，源码在 storm-net-adapter，如果你希望便捷的体验Storm 1.0.1，可以通过 Docker 来部署，地址在：storm-mono-docker">
 <meta property="og:image" content="http://www.tnidea.com/media/image/storm-ui-docker-101.png">
-<meta property="og:updated_time" content="2016-05-12T15:27:54.000Z">
+<meta property="og:updated_time" content="2016-05-12T15:39:07.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Storm 1.0.1发布，.NET 适配也已到来">
-<meta name="twitter:description" content="Apache Storm 1.0.0发不不久，1.0.1版本也在几天前到来；该版本主要是完成一些BUG修复和小的改进，通过一段时间新版本的使用，特将个人感受和一些遇到的问题归纳如下，另外 .NET版本的适配器也已经发布，源码在 storm-net-adapter，如果你希望快捷体验Storm 1.0.1，可以通过Docker 来部署，地址在：storm-mono-docker，该镜像已经集成了Mo">
+<meta name="twitter:description" content="Apache Storm 1.0.0刚发布不久，1.0.1版本也在几天前到来；该版本主要是完成一些BUG修复和小的改进，通过一段时间新版本的使用，特将个人感受和一些遇到的问题归纳如下；另外 .NET 版本的 Storm 适配器也已经发布，源码在 storm-net-adapter，如果你希望便捷的体验Storm 1.0.1，可以通过 Docker 来部署，地址在：storm-mono-docker">
   
   
   <link rel="stylesheet" href="/css/style.css" type="text/css">
@@ -125,15 +125,16 @@
     (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
 
-    <p> Apache Storm 1.0.0发不不久，1.0.1版本也在几天前到来；该版本主要是完成一些BUG修复和小的改进，通过一段时间新版本的使用，特将个人感受和一些遇到的问题归纳如下，另外 .NET版本的适配器也已经发布，源码在 <a href="https://github.com/ziyunhx/storm-net-adapter" title="storm-net-adapter" target="_blank" rel="external">storm-net-adapter</a>，如果你希望快捷体验Storm 1.0.1，可以通过Docker 来部署，地址在：<a href="https://github.com/ziyunhx/storm-mono-docker" target="_blank" rel="external">storm-mono-docker</a>，该镜像已经集成了Mono。你也可以查看我之前的文章来详细了解。</p>
+    <p> Apache Storm 1.0.0刚发布不久，1.0.1版本也在几天前到来；该版本主要是完成一些BUG修复和小的改进，通过一段时间新版本的使用，特将个人感受和一些遇到的问题归纳如下；另外 .NET 版本的 Storm 适配器也已经发布，源码在 <a href="https://github.com/ziyunhx/storm-net-adapter" title="storm-net-adapter" target="_blank" rel="external">storm-net-adapter</a>，如果你希望便捷的体验Storm 1.0.1，可以通过 Docker 来部署，地址在：<a href="https://github.com/ziyunhx/storm-mono-docker" target="_blank" rel="external">storm-mono-docker</a>，该镜像已经集成了Mono，你也可以查看我之前的文章来详细了解。</p>
 <a id="more"></a>
 <p> 下图是使用 Docker 部署的 .NET 版的 Wordcount 的 Storm UI：</p>
 <p> <img src="http://www.tnidea.com/media/image/storm-ui-docker-101.png" alt="Storm UI"></p>
-<p> 通过图片我们可以看到，Topology 和 Supervisor 都增加了内存的占用字段，Nimbus 也支持多主机配置了，诟病多年的单Nimbus造成的稳定性隐患也终于得到解决。原有的配置项从 <code>nimbus.host</code> 换成了 <code>nimbus.seeds</code>，但实际测试如果你没有修改过来的话也只会出现警告，并不会崩溃。</p>
+<p> 通过图片我们可以看到，Topology 和 Supervisor 都增加了内存的占用字段，Nimbus 也支持多主机配置了，诟病多年的单 Nimbus 造成的稳定性隐患也终于得到解决。原有的配置项从 <code>nimbus.host</code> 换成了 <code>nimbus.seeds</code>，但实际测试如果你没有修改过来的话也只会出现警告，并不会崩溃。</p>
 <p> 但是 Windows 版本的安装就会有些状况了，首先是 log4g2 的配置问题，原本逻辑的将 %STORM_HOME% 拼接在前面的逻辑并没有生效，你需要在 conf/storm.yaml 中配置日志配置文件的路径，类似：</p>
 <pre><code>storm<span class="class">.log4j2</span><span class="class">.conf</span><span class="class">.dir</span>: <span class="string">"X:/Storm/apache-storm-last/log4j2"</span>
 </code></pre><p> 然后你需要使用管理员权限运行命令，相关的资料你可以查看 <a href="https://github.com/apache/storm/blob/master/docs/windows-users-guide.md" title="windows-users-guide" target="_blank" rel="external">windows-users-guide</a>。</p>
 <p> 另外 Storm 的安全机制也有了很大的提升，详细信息我会在后续专门翻译介绍，你也可以查看 <a href="http://storm.apache.org/releases/1.0.1/SECURITY.html" title="SECURITY" target="_blank" rel="external">SECURITY</a> 了解。storm jar 的远程提交在上面提供的 Docker 镜像中暂时还无法使用，可能和安全机制的提交也有关系。</p>
+<p> 总体来说，Storm 的发展速度和方向都是符合我的个人预期的，新版本的文档目前还不够完善，建议大家先折腾一段时间踩踩坑再上生产环境。学习的话就直接从 1.0 版本开始吧。</p>
 <p> 好了，本文就先介绍到这里。欢迎大家关注我的公众号，现在开始接受外部投稿，如果你有 STORM SPARK 等流式框架或者 Tensflow 等机器学习框架以及 NLP 自然语言处理相关的文章愿意在本公众号发布，欢迎在公众号和我留言！</p>
 
     <p>本文来自 <a href="http://www.tnidea.com/" title="The NewIdea" target="_blank" rel="external">The NewIdea</a>，作者 Carey Tzou 。<br>永久地址：<a href="http://www.tnidea.com/dot-net-storm-adapter-upgrade-to-support-1.0.1.html" title="Storm 1.0.1发布，.NET 适配也已到来" target="_blank" rel="external">http://www.tnidea.com/dot-net-storm-adapter-upgrade-to-support-1.0.1.html</a><br>未经授权，拒绝任何全文及摘要转载！<br>
