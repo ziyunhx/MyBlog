@@ -4,7 +4,7 @@
   <subtitle><![CDATA[纯粹的技术导向！]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://www.tnidea.com/"/>
-  <updated>2016-04-19T14:58:37.000Z</updated>
+  <updated>2016-05-12T15:27:54.000Z</updated>
   <id>http://www.tnidea.com/</id>
   
   <author>
@@ -13,6 +13,42 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[Storm 1.0.1发布，.NET 适配也已到来]]></title>
+    <link href="http://www.tnidea.com/dot-net-storm-adapter-upgrade-to-support-1.0.1.html"/>
+    <id>http://www.tnidea.com/dot-net-storm-adapter-upgrade-to-support-1.0.1.html</id>
+    <published>2016-05-11T16:00:00.000Z</published>
+    <updated>2016-05-12T15:27:54.000Z</updated>
+    <content type="html"><![CDATA[<p> Apache Storm 1.0.0发不不久，1.0.1版本也在几天前到来；该版本主要是完成一些BUG修复和小的改进，通过一段时间新版本的使用，特将个人感受和一些遇到的问题归纳如下，另外 .NET版本的适配器也已经发布，源码在 <a href="https://github.com/ziyunhx/storm-net-adapter" title="storm-net-adapter" target="_blank" rel="external">storm-net-adapter</a>，如果你希望快捷体验Storm 1.0.1，可以通过Docker 来部署，地址在：<a href="https://github.com/ziyunhx/storm-mono-docker" target="_blank" rel="external">storm-mono-docker</a>，该镜像已经集成了Mono。你也可以查看我之前的文章来详细了解。</p>
+<a id="more"></a>
+<p> 下图是使用 Docker 部署的 .NET 版的 Wordcount 的 Storm UI：</p>
+<p> <img src="http://www.tnidea.com/media/image/storm-ui-docker-101.png" alt="Storm UI"></p>
+<p> 通过图片我们可以看到，Topology 和 Supervisor 都增加了内存的占用字段，Nimbus 也支持多主机配置了，诟病多年的单Nimbus造成的稳定性隐患也终于得到解决。原有的配置项从 <code>nimbus.host</code> 换成了 <code>nimbus.seeds</code>，但实际测试如果你没有修改过来的话也只会出现警告，并不会崩溃。</p>
+<p> 但是 Windows 版本的安装就会有些状况了，首先是 log4g2 的配置问题，原本逻辑的将 %STORM_HOME% 拼接在前面的逻辑并没有生效，你需要在 conf/storm.yaml 中配置日志配置文件的路径，类似：</p>
+<pre><code>storm<span class="class">.log4j2</span><span class="class">.conf</span><span class="class">.dir</span>: <span class="string">"X:/Storm/apache-storm-last/log4j2"</span>
+</code></pre><p> 然后你需要使用管理员权限运行命令，相关的资料你可以查看 <a href="https://github.com/apache/storm/blob/master/docs/windows-users-guide.md" title="windows-users-guide" target="_blank" rel="external">windows-users-guide</a>。</p>
+<p> 另外 Storm 的安全机制也有了很大的提升，详细信息我会在后续专门翻译介绍，你也可以查看 <a href="http://storm.apache.org/releases/1.0.1/SECURITY.html" title="SECURITY" target="_blank" rel="external">SECURITY</a> 了解。storm jar 的远程提交在上面提供的 Docker 镜像中暂时还无法使用，可能和安全机制的提交也有关系。</p>
+<p> 好了，本文就先介绍到这里。欢迎大家关注我的公众号，现在开始接受外部投稿，如果你有 STORM SPARK 等流式框架或者 Tensflow 等机器学习框架以及 NLP 自然语言处理相关的文章愿意在本公众号发布，欢迎在公众号和我留言！</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p> Apache Storm 1.0.0发不不久，1.0.1版本也在几天前到来；该版本主要是完成一些BUG修复和小的改进，通过一段时间新版本的使用，特将个人感受和一些遇到的问题归纳如下，另外 .NET版本的适配器也已经发布，源码在 <a href="https://github.com/ziyunhx/storm-net-adapter" title="storm-net-adapter">storm-net-adapter</a>，如果你希望快捷体验Storm 1.0.1，可以通过Docker 来部署，地址在：<a href="https://github.com/ziyunhx/storm-mono-docker">storm-mono-docker</a>，该镜像已经集成了Mono。你也可以查看我之前的文章来详细了解。</p>]]>
+    
+    </summary>
+    
+      <category term=".NET" scheme="http://www.tnidea.com/tags/NET/"/>
+    
+      <category term="C#" scheme="http://www.tnidea.com/tags/C/"/>
+    
+      <category term="Topology" scheme="http://www.tnidea.com/tags/Topology/"/>
+    
+      <category term="csharp" scheme="http://www.tnidea.com/tags/csharp/"/>
+    
+      <category term="storm" scheme="http://www.tnidea.com/tags/storm/"/>
+    
+      <category term="Storm" scheme="http://www.tnidea.com/categories/Storm/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[再谈网络爬虫中的编码识别问题]]></title>
@@ -1536,85 +1572,6 @@ nimbus<span class="class">.thrift</span><span class="class">.port</span>: <span 
       <category term="csharp" scheme="http://www.tnidea.com/tags/csharp/"/>
     
       <category term="wordcount" scheme="http://www.tnidea.com/tags/wordcount/"/>
-    
-      <category term="Storm" scheme="http://www.tnidea.com/categories/Storm/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[搭建.Net开发Storm拓扑的环境]]></title>
-    <link href="http://www.tnidea.com/deploy-storm-environment.html"/>
-    <id>http://www.tnidea.com/deploy-storm-environment.html</id>
-    <published>2015-05-19T16:00:00.000Z</published>
-    <updated>2015-10-07T08:13:28.000Z</updated>
-    <content type="html"><![CDATA[<p> 上篇博客比较了目前流行的计算框架特性，如果你是 Java 开发者，那么根据业务场景选择即可；但是如果你是 .Net 开发者，那么三者都不能拿来即用，至少在这篇文章出现之前是如此。基于上篇文章的比较发现，Storm 应该是对多语言支持比较好的框架了，但即便如此，官方也没有提供 .Net 的适配器，网上也找不到第三方的开源库。So，<a href="https://github.com/ziyunhx/storm-net-adapter" title="Storm.Net.Adapter" target="_blank" rel="external">Storm.Net.Adapter</a> 出现了，一个使用 Csharp 开发的 针对 Apache Storm 的适配器！</p>
-<a id="more"></a>
-<p> 本文是“Storm系列”的第一篇，后期会根据时间情况继续更新，欢迎大家关注文章末尾处的微信公众号：dotNet大数据，如果你愿意提供素材或建议，欢迎通过 About 中的邮箱与我联系。</p>
-<h2 id="安装Storm与依赖环境">安装Storm与依赖环境</h2><h3 id="安装Zookeeper">安装Zookeeper</h3><ul>
-<li>获取最新 Zookeeper 程序包：<a href="http://zookeeper.apache.org/" title="zookeeper" target="_blank" rel="external">官网</a></li>
-<li>解压程序包，拷贝 conf 下 zoo_sample.cfg 为 zoo.cfg，修改相关配置</li>
-<li>Windows 环境下直接执行 bin\zkServer.cmd；Linux 下执行 <code>bin/zkServer.sh start</code></li>
-</ul>
-<h3 id="安装Python,_Java与Maven">安装Python, Java与Maven</h3><ul>
-<li>下载 Python 2.x 安装</li>
-<li>下载 JAVA 6+ 安装，必须安装 JDK 版，否则使用 Maven 时会出错</li>
-<li>下载 Maven 并安装</li>
-</ul>
-<h3 id="下载Storm">下载Storm</h3><ul>
-<li>获取最新 Storm 程序包：<a href="http://storm.apache.org/downloads.html" title="Storm" target="_blank" rel="external">官网</a></li>
-<li>解压后修改 conf 下的 storm.yaml 里的相关配置</li>
-</ul>
-<h3 id="配置环境变量">配置环境变量</h3><ul>
-<li>配置 Storm_Home 与 Java_Home; 目录最好不要有空格</li>
-<li>classPath 里增加 <code>.;%JAVA_HOME%\lib\dt.jar;%JAVA_HOME%\lib\toos.jar;</code></li>
-<li>path 里增加 <code>%STORM_HOME%\bin;%JAVA_HOME%\bin;</code></li>
-<li>将 Maven 的目录也加到 path 方便使用</li>
-</ul>
-<h3 id="Storm启动">Storm启动</h3><ul>
-<li>启动 Zookeeper</li>
-<li>运行 <code>storm nimbus</code> （如果未将 Storm 加到 path，需要先切换到 Storm 的 bin 目录，下同）</li>
-<li>运行 <code>storm supervisor</code> （集群环境下，非主可以仅执行该句）</li>
-<li>运行 <code>storm ui</code>，通过 <a href="http://localhost:8080/" target="_blank" rel="external">http://localhost:8080/</a> 监控 Storm 运行状况</li>
-</ul>
-<h2 id="使用_Storm-Net-Adapter">使用 Storm.Net.Adapter</h2><h3 id="获取_Storm-Net-Adapter">获取 Storm.Net.Adapter</h3><p> 目前有以下几种方式获取最新的 Storm.Net.Adapter 库</p>
-<ul>
-<li>通过源代码编译自己的版本： <a href="https://github.com/ziyunhx/storm-net-adapter" title="Storm.Net.Adapter" target="_blank" rel="external">GitHub</a></li>
-<li>下载编译好的版本加入引用： <a href="https://github.com/ziyunhx/storm-net-adapter/releases" title="Storm.Net.Adapter Release" target="_blank" rel="external">Release</a></li>
-<li>使用 NuGet 获取最新版本（推荐）：<code>PM&gt; Install-Package Storm.Net.Adapter</code></li>
-</ul>
-<h3 id="创建示例项目">创建示例项目</h3><ul>
-<li>在项目中引用 Storm.Net.Adapter，创建 Spout （基于ISpout）和 Bolt （基于IBolt或IBasicBolt），都需要 <code>using Storm;</code></li>
-<li>创建一个使用 Maven 管理的 Java 项目，增加 dotNet 程序对应的 Topology</li>
-<li><p>Windows（.Net Framework）平台下，你可以通过下面的方式来调用你的 Spout 或 Bolt：</p>
-<pre><code><span class="keyword">super</span>(<span class="string">"cmd"</span>, <span class="string">"/k"</span>, <span class="string">"CALL"</span>, <span class="string">"StormSimple.exe"</span>, <span class="string">"generator"</span>);
-</code></pre></li>
-<li><p>Linux, Mac OSX, Windows（mono）平台下，你可以通过下面的方式来调用你的 Spout 或 Bolt：</p>
-<pre><code><span class="keyword">super</span>(<span class="string">"mono"</span>, <span class="string">"StormSimple.exe"</span>, <span class="string">"generator"</span>);
-</code></pre></li>
-</ul>
-<h3 id="打包与发布">打包与发布</h3><ul>
-<li><p>拷贝编译好的 dotNet 程序到 resources 目录下，使用下面的 Maven 命令打包你的 Topology：</p>
-<pre><code>$ mvn <span class="package"><span class="keyword">package</span></span>
-</code></pre></li>
-<li><p>通过 Storm 命令行工具提交你创建好的 Topology：</p>
-<pre><code>$ storm jar storm-starter-*-jar-with-dependencies<span class="class">.jar</span> storm<span class="class">.starter</span><span class="class">.WordCountTopologyCsharp</span> wordcount
-</code></pre></li>
-</ul>
-]]></content>
-    <summary type="html">
-    <![CDATA[<p> 上篇博客比较了目前流行的计算框架特性，如果你是 Java 开发者，那么根据业务场景选择即可；但是如果你是 .Net 开发者，那么三者都不能拿来即用，至少在这篇文章出现之前是如此。基于上篇文章的比较发现，Storm 应该是对多语言支持比较好的框架了，但即便如此，官方也没有提供 .Net 的适配器，网上也找不到第三方的开源库。So，<a href="https://github.com/ziyunhx/storm-net-adapter" title="Storm.Net.Adapter">Storm.Net.Adapter</a> 出现了，一个使用 Csharp 开发的 针对 Apache Storm 的适配器！</p>]]>
-    
-    </summary>
-    
-      <category term="Storm" scheme="http://www.tnidea.com/tags/Storm/"/>
-    
-      <category term="zookeeper" scheme="http://www.tnidea.com/tags/zookeeper/"/>
-    
-      <category term="分布式" scheme="http://www.tnidea.com/tags/%E5%88%86%E5%B8%83%E5%BC%8F/"/>
-    
-      <category term="流式框架" scheme="http://www.tnidea.com/tags/%E6%B5%81%E5%BC%8F%E6%A1%86%E6%9E%B6/"/>
-    
-      <category term="部署" scheme="http://www.tnidea.com/tags/%E9%83%A8%E7%BD%B2/"/>
     
       <category term="Storm" scheme="http://www.tnidea.com/categories/Storm/"/>
     

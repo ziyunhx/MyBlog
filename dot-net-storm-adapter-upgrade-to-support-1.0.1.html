@@ -3,18 +3,19 @@
 <head>
   <meta charset="utf-8">
   
-  <title>安装Icinga Web2所需服务 | 地平线</title>
+  <title>Storm 1.0.1发布，.NET 适配也已到来 | 地平线</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Icinga Web2是Icinga2的Web前端展示界面之一，它也是支持Icinga2的Web界面中我个人最喜欢的。通过Icinga Web2，你可以方便的展示与管理你的监控，也可以自定义一些显示模块。本文将介绍Icinga Web2的安装与配置，其中部分经验可能在Icinga2的其它Web界面也适用。">
+  <meta name="description" content="Apache Storm 1.0.0发不不久，1.0.1版本也在几天前到来；该版本主要是完成一些BUG修复和小的改进，通过一段时间新版本的使用，特将个人感受和一些遇到的问题归纳如下，另外 .NET版本的适配器也已经发布，源码在 storm-net-adapter，如果你希望快捷体验Storm 1.0.1，可以通过Docker 来部署，地址在：storm-mono-docker，该镜像已经集成了Mo">
 <meta property="og:type" content="article">
-<meta property="og:title" content="安装Icinga Web2所需服务">
-<meta property="og:url" content="http://www.tnidea.com/prepare-for-setting-up-icinga-web2.html">
+<meta property="og:title" content="Storm 1.0.1发布，.NET 适配也已到来">
+<meta property="og:url" content="http://www.tnidea.com/dot-net-storm-adapter-upgrade-to-support-1.0.1.html">
 <meta property="og:site_name" content="地平线">
-<meta property="og:description" content="Icinga Web2是Icinga2的Web前端展示界面之一，它也是支持Icinga2的Web界面中我个人最喜欢的。通过Icinga Web2，你可以方便的展示与管理你的监控，也可以自定义一些显示模块。本文将介绍Icinga Web2的安装与配置，其中部分经验可能在Icinga2的其它Web界面也适用。">
-<meta property="og:updated_time" content="2015-10-29T13:01:55.000Z">
+<meta property="og:description" content="Apache Storm 1.0.0发不不久，1.0.1版本也在几天前到来；该版本主要是完成一些BUG修复和小的改进，通过一段时间新版本的使用，特将个人感受和一些遇到的问题归纳如下，另外 .NET版本的适配器也已经发布，源码在 storm-net-adapter，如果你希望快捷体验Storm 1.0.1，可以通过Docker 来部署，地址在：storm-mono-docker，该镜像已经集成了Mo">
+<meta property="og:image" content="http://www.tnidea.com/media/image/storm-ui-docker-101.png">
+<meta property="og:updated_time" content="2016-05-12T15:27:54.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="安装Icinga Web2所需服务">
-<meta name="twitter:description" content="Icinga Web2是Icinga2的Web前端展示界面之一，它也是支持Icinga2的Web界面中我个人最喜欢的。通过Icinga Web2，你可以方便的展示与管理你的监控，也可以自定义一些显示模块。本文将介绍Icinga Web2的安装与配置，其中部分经验可能在Icinga2的其它Web界面也适用。">
+<meta name="twitter:title" content="Storm 1.0.1发布，.NET 适配也已到来">
+<meta name="twitter:description" content="Apache Storm 1.0.0发不不久，1.0.1版本也在几天前到来；该版本主要是完成一些BUG修复和小的改进，通过一段时间新版本的使用，特将个人感受和一些遇到的问题归纳如下，另外 .NET版本的适配器也已经发布，源码在 storm-net-adapter，如果你希望快捷体验Storm 1.0.1，可以通过Docker 来部署，地址在：storm-mono-docker，该镜像已经集成了Mo">
   
   
   <link rel="stylesheet" href="/css/style.css" type="text/css">
@@ -92,7 +93,7 @@
 
     <div class="outer">
       
-      <section id="main"><article id="post-prepare-for-setting-up-icinga-web2" class="article article-type-post" itemscope itemprop="blogPost">
+      <section id="main"><article id="post-dot-net-storm-adapter-upgrade-to-support-1.0.1" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
     
     
@@ -101,7 +102,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      安装Icinga Web2所需服务
+      Storm 1.0.1发布，.NET 适配也已到来
     </h1>
   
 
@@ -124,71 +125,18 @@
     (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
 
-    <p>Icinga Web2是Icinga2的Web前端展示界面之一，它也是支持Icinga2的Web界面中我个人最喜欢的。通过Icinga Web2，你可以方便的展示与管理你的监控，也可以自定义一些显示模块。本文将介绍Icinga Web2的安装与配置，其中部分经验可能在Icinga2的其它Web界面也适用。</p>
+    <p> Apache Storm 1.0.0发不不久，1.0.1版本也在几天前到来；该版本主要是完成一些BUG修复和小的改进，通过一段时间新版本的使用，特将个人感受和一些遇到的问题归纳如下，另外 .NET版本的适配器也已经发布，源码在 <a href="https://github.com/ziyunhx/storm-net-adapter" title="storm-net-adapter" target="_blank" rel="external">storm-net-adapter</a>，如果你希望快捷体验Storm 1.0.1，可以通过Docker 来部署，地址在：<a href="https://github.com/ziyunhx/storm-mono-docker" target="_blank" rel="external">storm-mono-docker</a>，该镜像已经集成了Mono。你也可以查看我之前的文章来详细了解。</p>
 <a id="more"></a>
-<p>Icinga2通过DB IDO模块将所有配置与状态信息都保存在一个数据库中，这些数据会被Icinga Web2，Icinga Reporting或Icinga Web 1.x使用。</p>
-<p>目前Icinga2支持使用MySQL和PostgreSQL作为后端数据库，本文仅介绍MySQL作为后端数据库的情况，如果你使用PostgreSQL，请依据官方文档配置好PostgreSQL。</p>
-<h3 id="安装MySQL数据库服务">安装MySQL数据库服务</h3><p>Debian/Ubuntu:</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ apt-get install mysql-server mysql-client</span><br></pre></td></tr></table></figure>
-<p>RHEL/CentOS 5/6:</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ yum install mysql-server mysql&#10;$ chkconfig mysqld on&#10;$ service mysqld start&#10;$ mysql_secure_installation</span><br></pre></td></tr></table></figure>
-<p>RHEL/CentOS 7 和 Fedora:</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ yum install mariadb-server mariadb&#10;$ systemctl enable mariadb&#10;$ systemctl start mariadb&#10;$ mysql_secure_installation</span><br></pre></td></tr></table></figure>
-<p>SUSE:</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ zypper install mysql mysql-client&#10;$ chkconfig mysqld on&#10;$ service mysqld start</span><br></pre></td></tr></table></figure>
-<p>FreeBSD:</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ pkg install mysql56-server&#10;$ sysrc mysql_enable=yes&#10;$ service mysql-server restart&#10;$ mysql_secure_installation</span><br></pre></td></tr></table></figure>
-<h3 id="安装MySQL的IDO模块">安装MySQL的IDO模块</h3><p>通过默认的包管理器安装icinga2-ido-mysql包：</p>
-<p>Debian/Ubuntu:</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ apt-get install icinga2-ido-mysql</span><br></pre></td></tr></table></figure>
-<p>RHEL/CentOS:</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ yum install icinga2-ido-mysql</span><br></pre></td></tr></table></figure>
-<p>SUSE:</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ zypper install icinga2-ido-mysql</span><br></pre></td></tr></table></figure>
-<p>FreeBSD:</p>
-<p>FreeBSD的MySQL IDO模块已经包含在icinga2包中，位于 /usr/local/share/icinga2-ido-mysql/schema/mysql.sql。</p>
-<p>注意：Debian/Ubuntu的包中提供了一个数据库配置向导，你可以根据个人喜好来选择是否使用它。</p>
-<h3 id="设置MySQL数据库">设置MySQL数据库</h3><p>为Icinga 2设置一个MySQL数据库:</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ mysql -u root -p&#10;&#10;mysql&#62;  CREATE DATABASE icinga;&#10;        GRANT SELECT, INSERT, UPDATE, DELETE, DROP, CREATE VIEW, INDEX, EXECUTE ON icinga.* TO &#39;icinga&#39;@&#39;localhost&#39; IDENTIFIED BY &#39;icinga&#39;;</span><br></pre></td></tr></table></figure>
-<p>在创建数据库完成后，使用以下命令导入Icinga2 IDO数据库结构：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ mysql -u root -p icinga &#60; /usr/share/icinga2-ido-mysql/schema/mysql.sql</span><br></pre></td></tr></table></figure>
-<p>为了使用Icinga Web2，我们为Icinga Web2也创建一个空的数据库：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ mysql -u root -p&#10;&#10;mysql&#62;  CREATE DATABASE icingaweb2;&#10;        GRANT SELECT, INSERT, UPDATE, DELETE, DROP, CREATE VIEW, INDEX, EXECUTE ON icingaweb2.* TO &#39;icingaweb2&#39;@&#39;localhost&#39; IDENTIFIED BY &#39;icingaweb2&#39;;&#10;        quit</span><br></pre></td></tr></table></figure>
-<p>启用MySQL IDO模块</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ icinga2 feature enable ido-mysql</span><br></pre></td></tr></table></figure>
-<p>启用后别忘了重启Icinga2服务：</p>
-<p>Debian/Ubuntu, RHEL/CentOS 6 和 SUSE:</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ service icinga2 restart</span><br></pre></td></tr></table></figure>
-<p>RHEL/CentOS 7 和 Fedora:</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ systemctl restart icinga2</span><br></pre></td></tr></table></figure>
-<p>FreeBSD:</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ service icinga2 restart</span><br></pre></td></tr></table></figure>
-<h3 id="安装Web服务">安装Web服务</h3><p>Debian/Ubuntu:</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ apt-get install apache2</span><br></pre></td></tr></table></figure>
-<p>RHEL/CentOS 6:</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ yum install httpd&#10;$ chkconfig httpd on&#10;$ service httpd start</span><br></pre></td></tr></table></figure>
-<p>RHEL/CentOS 7/Fedora:</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ yum install httpd&#10;$ systemctl enable httpd&#10;$ systemctl start httpd</span><br></pre></td></tr></table></figure>
-<p>SUSE:</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ zypper install apache2&#10;$ chkconfig on&#10;$ service apache2 start</span><br></pre></td></tr></table></figure>
-<p>FreeBSD (nginx，你也可以使用 apache24 来作为Web服务)：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ pkg install nginx php56-gettext php56-ldap php56-openssl php56-mysql php56-pdo_mysql php56-pgsql php56-pdo_pgsql php56-sockets php56-gd pecl-imagick pecl-intl&#10;$ sysrc php_fpm_enable=yes&#10;$ sysrc nginx_enable=yes&#10;$ sed -i &#39;&#39; &#34;s/listen\ =\ 127.0.0.1:9000/listen\ =\ \/var\/run\/php5-fpm.sock/&#34; /usr/local/etc/php-fpm.conf&#10;$ sed -i &#39;&#39; &#34;s/;listen.owner/listen.owner/&#34; /usr/local/etc/php-fpm.conf&#10;$ sed -i &#39;&#39; &#34;s/;listen.group/listen.group/&#34; /usr/local/etc/php-fpm.conf&#10;$ sed -i &#39;&#39; &#34;s/;listen.mode/listen.mode/&#34; /usr/local/etc/php-fpm.conf&#10;$ service php-fpm start&#10;$ service nginx start</span><br></pre></td></tr></table></figure>
-<h3 id="配置防火墙规则">配置防火墙规则</h3><p>例如：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ iptables -A INPUT -p tcp -m tcp --dport 80 -j ACCEPT&#10;$ service iptables save</span><br></pre></td></tr></table></figure>
-<p>RHEL/CentOS 7 使用下面命令：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ firewall-cmd --add-service=http&#10;$ firewall-cmd --permanent --add-service=http</span><br></pre></td></tr></table></figure>
-<h3 id="配置额外的命令通道">配置额外的命令通道</h3><p>Web接口和一些其它模块通过额外的命令通道来向Icinga2发送命令，你可以使用下面的命令启用它： </p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ icinga2 feature enable command</span><br></pre></td></tr></table></figure>
-<p>同样，你需要重启Icinga2服务来使它生效。</p>
-<p>默认情况下，icingacmd用户组拥有读写命令通道文件的权限，因此你需要使用下面的命令将Web服务的用户加入到该组：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ usermod -a -G icingacmd www-data</span><br></pre></td></tr></table></figure>
-<p>FreeBSD: www用户组拥有文件的读写权限，你不需要额外操作什么。</p>
-<p>Debian包使用nagios作为默认用户名和用户组，因此你需要将上述命令中的icingacmd修改为nagios。</p>
-<p>Web服务的用户名在不同的环境下是不同的，因此你可以尝试修改www-data为wwwrun、www、或者 apache。</p>
-<p>你可以使用以下命令来检测是否成功将用户加入到icingacmd用户组：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ id &#60;your-webserver-user&#62;</span><br></pre></td></tr></table></figure>
+<p> 下图是使用 Docker 部署的 .NET 版的 Wordcount 的 Storm UI：</p>
+<p> <img src="http://www.tnidea.com/media/image/storm-ui-docker-101.png" alt="Storm UI"></p>
+<p> 通过图片我们可以看到，Topology 和 Supervisor 都增加了内存的占用字段，Nimbus 也支持多主机配置了，诟病多年的单Nimbus造成的稳定性隐患也终于得到解决。原有的配置项从 <code>nimbus.host</code> 换成了 <code>nimbus.seeds</code>，但实际测试如果你没有修改过来的话也只会出现警告，并不会崩溃。</p>
+<p> 但是 Windows 版本的安装就会有些状况了，首先是 log4g2 的配置问题，原本逻辑的将 %STORM_HOME% 拼接在前面的逻辑并没有生效，你需要在 conf/storm.yaml 中配置日志配置文件的路径，类似：</p>
+<pre><code>storm<span class="class">.log4j2</span><span class="class">.conf</span><span class="class">.dir</span>: <span class="string">"X:/Storm/apache-storm-last/log4j2"</span>
+</code></pre><p> 然后你需要使用管理员权限运行命令，相关的资料你可以查看 <a href="https://github.com/apache/storm/blob/master/docs/windows-users-guide.md" title="windows-users-guide" target="_blank" rel="external">windows-users-guide</a>。</p>
+<p> 另外 Storm 的安全机制也有了很大的提升，详细信息我会在后续专门翻译介绍，你也可以查看 <a href="http://storm.apache.org/releases/1.0.1/SECURITY.html" title="SECURITY" target="_blank" rel="external">SECURITY</a> 了解。storm jar 的远程提交在上面提供的 Docker 镜像中暂时还无法使用，可能和安全机制的提交也有关系。</p>
+<p> 好了，本文就先介绍到这里。欢迎大家关注我的公众号，现在开始接受外部投稿，如果你有 STORM SPARK 等流式框架或者 Tensflow 等机器学习框架以及 NLP 自然语言处理相关的文章愿意在本公众号发布，欢迎在公众号和我留言！</p>
 
-    <p>本文来自 <a href="http://www.tnidea.com/" title="The NewIdea" target="_blank" rel="external">The NewIdea</a>，作者 Carey Tzou 。<br>永久地址：<a href="http://www.tnidea.com/prepare-for-setting-up-icinga-web2.html" title="安装Icinga Web2所需服务" target="_blank" rel="external">http://www.tnidea.com/prepare-for-setting-up-icinga-web2.html</a><br>未经授权，拒绝任何全文及摘要转载！<br>
+    <p>本文来自 <a href="http://www.tnidea.com/" title="The NewIdea" target="_blank" rel="external">The NewIdea</a>，作者 Carey Tzou 。<br>永久地址：<a href="http://www.tnidea.com/dot-net-storm-adapter-upgrade-to-support-1.0.1.html" title="Storm 1.0.1发布，.NET 适配也已到来" target="_blank" rel="external">http://www.tnidea.com/dot-net-storm-adapter-upgrade-to-support-1.0.1.html</a><br>未经授权，拒绝任何全文及摘要转载！<br>
     <br>
     <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
     <!-- 博客正文广告 -->
@@ -209,21 +157,21 @@
     <footer class="article-footer">
     
   <div class="article-date">
-    <a href="/prepare-for-setting-up-icinga-web2.html">
-      <time datetime="2015-10-24T16:00:00.000Z" itemprop="datePublished">2015-10-25</time>
+    <a href="/dot-net-storm-adapter-upgrade-to-support-1.0.1.html">
+      <time datetime="2016-05-11T16:00:00.000Z" itemprop="datePublished">2016-05-12</time>
     </a>
   </div>
 
 
-      <a data-url="http://www.tnidea.com/prepare-for-setting-up-icinga-web2.html" data-id="cin87m6uc001zdvs3m27n5tcg" class="article-share-link">Bagikan</a>
+      <a data-url="http://www.tnidea.com/dot-net-storm-adapter-upgrade-to-support-1.0.1.html" data-id="cio4g9cc40000sms3kjo29gid" class="article-share-link">Bagikan</a>
       
-        <a href="http://www.tnidea.com/prepare-for-setting-up-icinga-web2.html#disqus_thread" class="article-comment-link">Komentar</a>
+        <a href="http://www.tnidea.com/dot-net-storm-adapter-upgrade-to-support-1.0.1.html#disqus_thread" class="article-comment-link">Komentar</a>
       
       
   <div class="article-tag">
     <i class="fa fa-tags"></i>&nbsp;&nbsp;
   </div>
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CentOS/">CentOS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Icinga-Web2/">Icinga Web2</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Icinga2/">Icinga2</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/服务器监控/">服务器监控</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NET/">.NET</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/">C#</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Topology/">Topology</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/csharp/">csharp</a></li></ul>
 
     </footer>
   </div>
@@ -231,19 +179,10 @@
     
 <nav id="article-nav">
   
-    <a href="/setting-up-icinga-web2.html" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Lebih baru</strong>
-      <div class="article-nav-title">
-        
-          安装与配置Icinga Web2
-        
-      </div>
-    </a>
   
-  
-    <a href="/monitor-system-by-icinga2.html" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/talk-about-http-charset-recog-again.html" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Lebih Tua</strong>
-      <div class="article-nav-title">使用Icinga2和Icinga Web2搭建监控服务</div>
+      <div class="article-nav-title">再谈网络爬虫中的编码识别问题</div>
     </a>
   
 </nav>
