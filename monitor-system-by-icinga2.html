@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>使用Icinga2和Icinga Web2搭建监控服务 | 地平线</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="监控是系统运维的基础，Icinga是一个开源的监控系统框架，通过其广泛的插件支持，你可以监控几乎任何你能想到的网络资源；也可以在超过临界值时给予通知，根据监控数据生产报表。本文主要介绍其搭建过程，大部分内容翻译自官方文档。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用Icinga2和Icinga Web2搭建监控服务">
+<meta property="og:url" content="http://www.tnidea.com/monitor-system-by-icinga2.html">
+<meta property="og:site_name" content="地平线">
+<meta property="og:description" content="监控是系统运维的基础，Icinga是一个开源的监控系统框架，通过其广泛的插件支持，你可以监控几乎任何你能想到的网络资源；也可以在超过临界值时给予通知，根据监控数据生产报表。本文主要介绍其搭建过程，大部分内容翻译自官方文档。">
+<meta property="og:updated_time" content="2015-10-11T16:00:41.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="使用Icinga2和Icinga Web2搭建监控服务">
+<meta name="twitter:description" content="监控是系统运维的基础，Icinga是一个开源的监控系统框架，通过其广泛的插件支持，你可以监控几乎任何你能想到的网络资源；也可以在超过临界值时给予通知，根据监控数据生产报表。本文主要介绍其搭建过程，大部分内容翻译自官方文档。">
+  
+  
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" type="text/css">
+  
+
+  
+
+  
+  <script src="/js/classie.js" type="text/javascript"></script>
+  <script src="/js/modernizr.custom.js" type="text/javascript"></script>
+</head>
+<body>
+  <div id="container" class="cbp-spmenu-push">
+    <header id="header">
+  <div id="header-main" class="header-inner">
+    <div class="outer">
+      <span id="mobile-logo" class="navigation-menu-button" id="js-mobile-menu"><i class="fa fa-bars mobile-menu-img">&nbsp;</i><span class="site-title">地平线</span></span>
+      <a href="/" id="logo"><i class="logo" style="background-image: url(/css/images/logo.png)"></i></a>
+      <!-- Nav -->
+      <nav id="main-nav">
+        <ul>
+          
+            
+          
+            
+                <li class="main-nav-link">
+                <a href="/archives">时间线
+                    
+                </a>
+                
+                </li>
+            
+          
+            
+                <li class="main-nav-link">
+                <a href="javascript:void(0)">技术
+                    
+                        <i class="fa fa-angle-down" style="font-weight:600;color:#b6c1c9;"></i>
+                    
+                </a>
+                
+                    <ul class="menu-category-list"><li class="menu-category-list-item"><a class="menu-category-list-link" href="/categories/Storm/">Storm</a></li><li class="menu-category-list-item"><a class="menu-category-list-link" href="/categories/爬虫/">爬虫</a></li><li class="menu-category-list-item"><a class="menu-category-list-link" href="/categories/运维/">运维</a></li><li class="menu-category-list-item"><a class="menu-category-list-link" href="/categories/项目管理/">项目管理</a></li></ul>
+                
+                </li>
+            
+          
+            
+                <li class="main-nav-link">
+                <a href="https://github.com/ziyunhx/">GitHub
+                    
+                </a>
+                
+                </li>
+            
+          
+            
+                <li class="main-nav-link">
+                <a href="/about.html">关于我
+                    
+                </a>
+                
+                </li>
+            
+          
+        </ul>
+      </nav>
+      
+      <div id="search-form-wrap">
+        <form class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="搜索"><button type="submit" class="search-form-submit"> </button></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+    <div class="outer">
+      
+      <section id="main"><article id="post-monitor-system-by-icinga2" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      使用Icinga2和Icinga Web2搭建监控服务
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+                
+<br>
+    <p style="border-top:1px solid #eceff2;margin:0 20px;"></p>
+    <br>
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <!-- 博客正文广告 -->
+    <ins class="adsbygoogle"
+        style="display:block"
+        data-ad-client="ca-pub-6541442242935379"
+        data-ad-slot="9453052931"
+        data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+
+    <p>监控是系统运维的基础，Icinga是一个开源的监控系统框架，通过其广泛的插件支持，你可以监控几乎任何你能想到的网络资源；也可以在超过临界值时给予通知，根据监控数据生产报表。本文主要介绍其搭建过程，大部分内容翻译自官方文档。</p>
+<a id="more"></a>
+<p>在使用Icinga2前，我们曾经自己编写过监控框架，也用过其它的类似监控系统和在线服务。功能都大同小异，现在之所以选择Icinga2 + Icinga Web2来构建整个系统的监控平台主要是由于其高度可自定义性以及广泛的插件。但是由于该版本发布时间比较短，国内少有将最新版本用于生产环境，导致文档较少，很多问题需要自行摸索。写这个系列文章也是想将自己遇到的坑列出来让其它人少走弯路。</p>
+<p>下面将介绍Icinga2与Icinga Web2的安装，所有的操作步骤均仅在CentOS 7上验证（特殊说明的除外），不保证其它系统下的完备性。</p>
+<h2 id="安装Icinga2">安装Icinga2</h2><h3 id="设置Icinga2安装源">设置Icinga2安装源</h3><p>首先你要根据你的系统选择执行下面的命令将Icinga2的项目库地址加入到包管理中。</p>
+<p>Debian (debmon):</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ wget -O - http://debmon.org/debmon/repo.key 2&#62;/dev/null | apt-key add -&#10;$ echo &#39;deb http://debmon.org/debmon debmon-jessie main&#39; &#62;/etc/apt/sources.list.d/debmon.list&#10;$ apt-get update</span><br></pre></td></tr></table></figure>
+<p>Ubuntu (PPA):</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ add-apt-repository ppa:formorer/icinga&#10;$ apt-get update</span><br></pre></td></tr></table></figure>
+<p>RHEL/CentOS:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ rpm --import http://packages.icinga.org/icinga.key&#10;$ curl -o /etc/yum.repos.d/ICINGA-release.repo http://packages.icinga.org/epel/ICINGA-release.repo&#10;$ yum makecache</span><br></pre></td></tr></table></figure>
+<ul>
+<li>这个软件包依赖于<a href="http://fedoraproject.org/wiki/EPEL" title="EPEL" target="_blank" rel="external">EPEL库</a>中的其它软件包，请确保以及允许了<a href="http://fedoraproject.org/wiki/EPEL" title="EPEL" target="_blank" rel="external">EPEL库</a>。CentOS 7可以直接通过以下命令来安装：$ yum install epel-release</li>
+</ul>
+<p>Fedora:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ rpm --import http://packages.icinga.org/icinga.key&#10;$ curl -o /etc/yum.repos.d/ICINGA-release.repo http://packages.icinga.org/fedora/ICINGA-release.repo&#10;$ yum makecache</span><br></pre></td></tr></table></figure>
+<p>SLES 11:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ zypper ar http://packages.icinga.org/SUSE/ICINGA-release-11.repo&#10;$ zypper ref</span><br></pre></td></tr></table></figure>
+<ul>
+<li>这个软件包依赖于openssl1，它是SLES 11安全模块的一部分。</li>
+</ul>
+<p>SLES 12:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ zypper ar http://packages.icinga.org/SUSE/ICINGA-release.repo&#10;$ zypper ref</span><br></pre></td></tr></table></figure>
+<p>openSUSE:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ zypper ar http://packages.icinga.org/openSUSE/ICINGA-release.repo&#10;$ zypper ref</span><br></pre></td></tr></table></figure>
+<h3 id="安装Icinga2-1">安装Icinga2</h3><p>Debian/Ubuntu:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ apt-get install icinga2</span><br></pre></td></tr></table></figure>
+<p>RHEL/CentOS 5/6:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ yum install icinga2&#10;$ chkconfig icinga2 on&#10;$ service icinga2 start</span><br></pre></td></tr></table></figure>
+<p>RHEL/CentOS 7 和 Fedora:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ yum install icinga2&#10;$ systemctl enable icinga2&#10;$ systemctl start icinga2</span><br></pre></td></tr></table></figure>
+<p>SLES/openSUSE:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ zypper install icinga2</span><br></pre></td></tr></table></figure>
+<h3 id="在安装过程中启用功能">在安装过程中启用功能</h3><p>在默认安装中，启用了checker mainlog notification这三个功能，你可以通过执行以下命令来获取当前开启和关闭的所有功能：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ icinga2 feature list</span><br></pre></td></tr></table></figure>
+<p>如果你希望开启或关闭某个功能，可以enable/disable命令，例如我们现在开启command功能：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ icinga2 feature enable command</span><br></pre></td></tr></table></figure>
+<ul>
+<li>如果你启用了某个功能导致在接下来的启动过程中出现错误，记得回来关闭掉！</li>
+</ul>
+<h3 id="文件默认位置">文件默认位置</h3><table>
+<thead>
+<tr>
+<th>路径</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>/etc/icinga2</td>
+<td>包含Icinga2所有的配置文件</td>
+</tr>
+<tr>
+<td>/etc/init.d/icinga2</td>
+<td>Icinga2的启动脚本</td>
+</tr>
+<tr>
+<td>/usr/sbin/icinga2</td>
+<td>Icinga2程序目录</td>
+</tr>
+<tr>
+<td>/usr/share/doc/icinga2</td>
+<td>Icinga2的文档目录</td>
+</tr>
+<tr>
+<td>/usr/share/icinga2/include</td>
+<td>模板库和插件命令配置</td>
+</tr>
+<tr>
+<td>/var/run/icinga2</td>
+<td>程序运行PID文件</td>
+</tr>
+<tr>
+<td>/var/run/icinga2/cmd</td>
+<td>命令通道和状态套接字</td>
+</tr>
+<tr>
+<td>/var/cache/icinga2</td>
+<td>缓存、调试、状态文件</td>
+</tr>
+<tr>
+<td>/var/spool/icinga2</td>
+<td>用于性能数据脱机文件</td>
+</tr>
+<tr>
+<td>/var/lib/icinga2</td>
+<td>状态文件，集群日志，本地证书和配置文件</td>
+</tr>
+<tr>
+<td>/var/log/icinga2</td>
+<td>CompatLogger功能产生的日志文件以及相关工具目录</td>
+</tr>
+</tbody>
+</table>
+<h2 id="安装Check插件">安装Check插件</h2><p>Icinga2只是一个监控框架，如果没有插件，它将不知道如何检查外部服务。Icinga2是从nagios发展而来，因此它兼容nagios的插件。你可以直接使用包管理工具来安装插件包，下表将列出插件包得名称和默认安装路径。</p>
+<table>
+<thead>
+<tr>
+<th>操作系统</th>
+<th>包名称</th>
+<th>安装路径</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>RHEL/CentOS (EPEL)</td>
+<td>nagios-plugins-all</td>
+<td>/usr/lib/nagios/plugins 或 /usr/lib64/nagios/plugins</td>
+</tr>
+<tr>
+<td>Debian</td>
+<td>nagios-plugins</td>
+<td>/usr/lib/nagios/plugins</td>
+</tr>
+<tr>
+<td>FreeBSD</td>
+<td>nagios-plugins</td>
+<td>/usr/local/libexec/nagios</td>
+</tr>
+<tr>
+<td>OS X (MacPorts)</td>
+<td>nagios-plugins</td>
+<td>/opt/local/libexec</td>
+</tr>
+</tbody>
+</table>
+<p>根据安装目录的差异，你可能需要修改Icinga2的配置来指定插件包得安装位置。配置文件为 /etc/icinga2/constants.conf，修改PluginDir的值为插件目录即可。</p>
+<h2 id="运行Icinga2">运行Icinga2</h2><h3 id="启动脚本">启动脚本</h3><p>根据上面的文件位置表格，我们知道Icinga2的默认启动脚本位于： /etc/init.d/icinga2。</p>
+<p>具体命令使用格式为 /etc/init.d/icinga2 {start|stop|restart|reload|checkconfig|status} ；命令具体含义与一般服务相同。</p>
+<p>对于部分操作系统，例如：Fedora，openSUSE 和 RHEL/CentOS 7 可以使用服务来操作，Icinga2在安装时已经安装了必要的服务。</p>
+<p>例如你可以使用以下命令来检查Icinga2的运行状态：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ systemctl status icinga2</span><br></pre></td></tr></table></figure>
+<p>将Icinga2设置为自启动：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ systemctl enable icinga2</span><br></pre></td></tr></table></figure>
+<p>以及重启Icinga2:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ systemctl restart icinga2</span><br></pre></td></tr></table></figure>
+<p>如果启动出错，别忘了检查插件以及配置文件，你也可以使用 journalctl -xn 来查看错误信息。由于篇幅过长，Icinga Web2的安装与配置将放到下篇博客中！</p>
+
+    <p>本文来自 <a href="http://www.tnidea.com/" title="The NewIdea" target="_blank" rel="external">The NewIdea</a>，作者 Carey Tzou 。<br>永久地址：<a href="http://www.tnidea.com/monitor-system-by-icinga2.html" title="使用Icinga2和Icinga Web2搭建监控服务" target="_blank" rel="external">http://www.tnidea.com/monitor-system-by-icinga2.html</a><br>未经授权，拒绝任何全文及摘要转载！<br>
+    <br>
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <!-- 博客正文广告 -->
+    <ins class="adsbygoogle"
+        style="display:block"
+        data-ad-client="ca-pub-6541442242935379"
+        data-ad-slot="9453052931"
+        data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+
+    <p>欢迎关注微信公众号：CareyTzou（dotNet大数据）</p>
+    <a href="http://www.tnidea.com/media/image/wechat.jpg" title="Wechat:CareyTzou" class="fancybox" rel="article0"><img style="width:160px;display:inline;" src="http://www.tnidea.com/media/image/wechat.jpg" alt="Wechat:CareyTzou"></a>
+    
+    </div>
+    
+    <footer class="article-footer">
+    
+  <div class="article-date">
+    <a href="/monitor-system-by-icinga2.html">
+      <time datetime="2015-10-09T16:00:00.000Z" itemprop="datePublished">2015-10-10</time>
+    </a>
+  </div>
+
+
+      <a data-url="http://www.tnidea.com/monitor-system-by-icinga2.html" data-id="cio5x5pem002g6zs30nwnlui2" class="article-share-link">分享到</a>
+      
+        <a href="http://www.tnidea.com/monitor-system-by-icinga2.html#disqus_thread" class="article-comment-link">评论</a>
+      
+      
+  <div class="article-tag">
+    <i class="fa fa-tags"></i>&nbsp;&nbsp;
+  </div>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CentOS/">CentOS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Icinga-Web2/">Icinga Web2</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Icinga2/">Icinga2</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/服务器监控/">服务器监控</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/prepare-for-setting-up-icinga-web2.html" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">上一篇</strong>
+      <div class="article-nav-title">
+        
+          安装Icinga Web2所需服务
+        
+      </div>
+    </a>
+  
+  
+    <a href="/call-dot-net-drpc-program.html" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">下一篇</strong>
+      <div class="article-nav-title">使用DRPC调用.NET开发的Storm拓扑</div>
+    </a>
+  
+</nav>
+
+
+  
+</article>
+
+
+<section id="comments">
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
+
+</section>
+      
+        <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/NET/" style="font-size: 20px;">.NET</a> <a href="/tags/Baidu/" style="font-size: 10px;">Baidu</a> <a href="/tags/C/" style="font-size: 20px;">C#</a> <a href="/tags/CentOS/" style="font-size: 15.71px;">CentOS</a> <a href="/tags/DRPC/" style="font-size: 14.29px;">DRPC</a> <a href="/tags/Docker/" style="font-size: 10px;">Docker</a> <a href="/tags/Hadoop-MapReduce/" style="font-size: 10px;">Hadoop MapReduce</a> <a href="/tags/HttpHelper/" style="font-size: 10px;">HttpHelper</a> <a href="/tags/HttpWebRequest/" style="font-size: 10px;">HttpWebRequest</a> <a href="/tags/Icinga-Web2/" style="font-size: 15.71px;">Icinga Web2</a> <a href="/tags/Icinga2/" style="font-size: 15.71px;">Icinga2</a> <a href="/tags/ImitateLogin/" style="font-size: 10px;">ImitateLogin</a> <a href="/tags/Memory/" style="font-size: 10px;">Memory</a> <a href="/tags/Network/" style="font-size: 10px;">Network</a> <a href="/tags/OpenAuth/" style="font-size: 10px;">OpenAuth</a> <a href="/tags/SVN/" style="font-size: 10px;">SVN</a> <a href="/tags/Spark-Streaming/" style="font-size: 10px;">Spark Streaming</a> <a href="/tags/Storm/" style="font-size: 14.29px;">Storm</a> <a href="/tags/Topology/" style="font-size: 15.71px;">Topology</a> <a href="/tags/VS/" style="font-size: 11.43px;">VS</a> <a href="/tags/charset/" style="font-size: 11.43px;">charset</a> <a href="/tags/csharp/" style="font-size: 18.57px;">csharp</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/mono/" style="font-size: 10px;">mono</a> <a href="/tags/open-auth-assist/" style="font-size: 10px;">open-auth-assist</a> <a href="/tags/social-network/" style="font-size: 12.86px;">social network</a> <a href="/tags/storm/" style="font-size: 17.14px;">storm</a> <a href="/tags/thrift/" style="font-size: 12.86px;">thrift</a> <a href="/tags/wechat/" style="font-size: 10px;">wechat</a> <a href="/tags/wordcount/" style="font-size: 11.43px;">wordcount</a> <a href="/tags/zookeeper/" style="font-size: 10px;">zookeeper</a> <a href="/tags/分布式/" style="font-size: 11.43px;">分布式</a> <a href="/tags/多语言/" style="font-size: 10px;">多语言</a> <a href="/tags/微信/" style="font-size: 10px;">微信</a> <a href="/tags/批处理/" style="font-size: 11.43px;">批处理</a> <a href="/tags/插件机制/" style="font-size: 10px;">插件机制</a> <a href="/tags/文件版本号/" style="font-size: 11.43px;">文件版本号</a> <a href="/tags/服务器监控/" style="font-size: 15.71px;">服务器监控</a> <a href="/tags/流式框架/" style="font-size: 11.43px;">流式框架</a> <a href="/tags/部署/" style="font-size: 10px;">部署</a> <a href="/tags/项目管理/" style="font-size: 10px;">项目管理</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Storm/">Storm</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/爬虫/">爬虫</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/运维/">运维</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/项目管理/">项目管理</a><span class="category-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">时间线</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">五月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">三月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">一月 2016</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">十二月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">十一月 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">十月 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">九月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">八月 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/07/">七月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/06/">六月 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/05/">五月 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/11/">十一月 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/10/">十月 2013</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+</aside>
+      
+    </div>
+    <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2013-2016 The NewIdea Inc.  <span id="footer-info-extend">鄂ICP备15011767号-1</span>
+    </div>
+  </div>
+</footer>
+    
+
+<script>
+  var disqus_shortname = 'tnidea';
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+
+
+ <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+
+
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+  <script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+
+
+<script src="/js/script.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install','e2e3X_cz-QvzonvQg7eP','2.0.0');
+</script>
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?855c1789992bb648e4734a1e1045c672";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+  </div>
+    <div id="mobile-nav">
+    <nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left" id="cbp-spmenu-s1">
+      
+        <a href="/.">首页</a>
+        
+      
+        <a href="/archives">时间线</a>
+        
+      
+        <a href="javascript:void(0)">技术</a>
+        
+          <ul class="main-nav-category-list"><li class="main-nav-category-list-item"><a class="main-nav-category-list-link" href="/categories/Storm/">Storm</a></li><li class="main-nav-category-list-item"><a class="main-nav-category-list-link" href="/categories/爬虫/">爬虫</a></li><li class="main-nav-category-list-item"><a class="main-nav-category-list-link" href="/categories/运维/">运维</a></li><li class="main-nav-category-list-item"><a class="main-nav-category-list-link" href="/categories/项目管理/">项目管理</a></li></ul>
+        
+      
+        <a href="https://github.com/ziyunhx/">GitHub</a>
+        
+      
+        <a href="/about.html">关于我</a>
+        
+      
+      <div id="nav-search-form">
+        <form class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="搜索"><button type="submit" class="search-form-submit"> </button></form>
+      </div>
+    </nav>
+  </div>
+  <script>
+    var menuLeft = document.getElementById( 'cbp-spmenu-s1' ),
+        showMobileNav = document.getElementById( 'mobile-logo' ),
+        container = document.getElementById( 'container' );
+  
+    showMobileNav.onclick = function() {
+      classie.toggle( this, 'active' );
+      classie.toggle( container, 'cbp-spmenu-push-toright' );
+      classie.toggle( menuLeft, 'cbp-spmenu-open' );
+    };
+  </script>
+</body>
+</html>

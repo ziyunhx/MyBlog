@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>再谈网络爬虫中的编码识别问题 | 地平线</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="在之前的文章中，我给大家介绍了 Nchardet 结合网页头部声明来识别网页的编码。通过较长时间段生产环境的使用，效果并不是十分理想。首先是 Nchardet 带来了极大的CPU的开销，尤其是对大规模的爬虫集群来说几乎无法接受；其次猜测的准确性距离100%还有一段距离。因此，就有了今天的这篇文章。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="再谈网络爬虫中的编码识别问题">
+<meta property="og:url" content="http://www.tnidea.com/talk-about-http-charset-recog-again.html">
+<meta property="og:site_name" content="地平线">
+<meta property="og:description" content="在之前的文章中，我给大家介绍了 Nchardet 结合网页头部声明来识别网页的编码。通过较长时间段生产环境的使用，效果并不是十分理想。首先是 Nchardet 带来了极大的CPU的开销，尤其是对大规模的爬虫集群来说几乎无法接受；其次猜测的准确性距离100%还有一段距离。因此，就有了今天的这篇文章。">
+<meta property="og:updated_time" content="2016-04-19T14:58:37.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="再谈网络爬虫中的编码识别问题">
+<meta name="twitter:description" content="在之前的文章中，我给大家介绍了 Nchardet 结合网页头部声明来识别网页的编码。通过较长时间段生产环境的使用，效果并不是十分理想。首先是 Nchardet 带来了极大的CPU的开销，尤其是对大规模的爬虫集群来说几乎无法接受；其次猜测的准确性距离100%还有一段距离。因此，就有了今天的这篇文章。">
+  
+  
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" type="text/css">
+  
+
+  
+
+  
+  <script src="/js/classie.js" type="text/javascript"></script>
+  <script src="/js/modernizr.custom.js" type="text/javascript"></script>
+</head>
+<body>
+  <div id="container" class="cbp-spmenu-push">
+    <header id="header">
+  <div id="header-main" class="header-inner">
+    <div class="outer">
+      <span id="mobile-logo" class="navigation-menu-button" id="js-mobile-menu"><i class="fa fa-bars mobile-menu-img">&nbsp;</i><span class="site-title">地平线</span></span>
+      <a href="/" id="logo"><i class="logo" style="background-image: url(/css/images/logo.png)"></i></a>
+      <!-- Nav -->
+      <nav id="main-nav">
+        <ul>
+          
+            
+          
+            
+                <li class="main-nav-link">
+                <a href="/archives">时间线
+                    
+                </a>
+                
+                </li>
+            
+          
+            
+                <li class="main-nav-link">
+                <a href="javascript:void(0)">技术
+                    
+                        <i class="fa fa-angle-down" style="font-weight:600;color:#b6c1c9;"></i>
+                    
+                </a>
+                
+                    <ul class="menu-category-list"><li class="menu-category-list-item"><a class="menu-category-list-link" href="/categories/Storm/">Storm</a></li><li class="menu-category-list-item"><a class="menu-category-list-link" href="/categories/爬虫/">爬虫</a></li><li class="menu-category-list-item"><a class="menu-category-list-link" href="/categories/运维/">运维</a></li><li class="menu-category-list-item"><a class="menu-category-list-link" href="/categories/项目管理/">项目管理</a></li></ul>
+                
+                </li>
+            
+          
+            
+                <li class="main-nav-link">
+                <a href="https://github.com/ziyunhx/">GitHub
+                    
+                </a>
+                
+                </li>
+            
+          
+            
+                <li class="main-nav-link">
+                <a href="/about.html">关于我
+                    
+                </a>
+                
+                </li>
+            
+          
+        </ul>
+      </nav>
+      
+      <div id="search-form-wrap">
+        <form class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="搜索"><button type="submit" class="search-form-submit"> </button></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+    <div class="outer">
+      
+      <section id="main"><article id="post-talk-about-http-charset-recog-again" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      再谈网络爬虫中的编码识别问题
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+                
+<br>
+    <p style="border-top:1px solid #eceff2;margin:0 20px;"></p>
+    <br>
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <!-- 博客正文广告 -->
+    <ins class="adsbygoogle"
+        style="display:block"
+        data-ad-client="ca-pub-6541442242935379"
+        data-ad-slot="9453052931"
+        data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+
+    <p>在之前的文章中，我给大家介绍了 Nchardet 结合网页头部声明来识别网页的编码。通过较长时间段生产环境的使用，效果并不是十分理想。首先是 Nchardet 带来了极大的CPU的开销，尤其是对大规模的爬虫集群来说几乎无法接受；其次猜测的准确性距离100%还有一段距离。因此，就有了今天的这篇文章。</p>
+<a id="more"></a>
+<p>Nchardet 是通过尝试转换编码比较错误率来实现编码猜测的，由于网页的长度与中文密度的关系，效果并不理想。之前的方法中默认采用了这种方案，导致了较大的CPU资源的开销。下面将介绍新的解析思路：</p>
+<p>首先我们通过解析 HTTP 请求返回的 ContentType 来猜测编码，.Net的网络请求库中的 HttpClient 就是使用了这一方法，实现代码如下：</p>
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">string</span> Hcharset = <span class="string">""</span>;</span><br><span class="line"><span class="keyword">string</span> text = <span class="string">""</span>;</span><br><span class="line"><span class="keyword">if</span> (!<span class="keyword">string</span>.IsNullOrEmpty(text = httpWebResponse.ContentType))</span><br><span class="line">&#123;</span><br><span class="line">    text = text.ToLower(CultureInfo.InvariantCulture);</span><br><span class="line">    <span class="keyword">string</span>[] array = text.Split(<span class="keyword">new</span> <span class="keyword">char</span>[] &#123; <span class="string">';'</span>, <span class="string">'='</span>, <span class="string">' '</span> &#125;);</span><br><span class="line">    <span class="keyword">bool</span> flag = <span class="keyword">false</span>;</span><br><span class="line">    <span class="keyword">string</span>[] array2 = array;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; array2.Length; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">string</span> text2 = array2[i];</span><br><span class="line">        <span class="keyword">if</span> (text2 == <span class="string">"charset"</span>)</span><br><span class="line">            flag = <span class="keyword">true</span>;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span> (flag)</span><br><span class="line">                Hcharset = text2;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>其中 httpWebResponse 为网络请求返回的结果。</p>
+<p>然后我们使用正则来解析用户在网页中声明的编码：</p>
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">string</span> CharsetReg = <span class="string">@"(meta.*?charset=""?(?&lt;Charset&gt;[^\s""'&gt;;]+)""?)|(xml.*?encoding=""?(?&lt;Charset&gt;[^\s""&gt;;]+)""?)"</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">string</span> Rcharset = <span class="string">""</span>;</span><br><span class="line">String cache = <span class="keyword">string</span>.Empty;</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> (<span class="keyword">true</span>)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">var</span> b = ResponseStream.ReadByte();</span><br><span class="line">    <span class="keyword">if</span> (b &lt; <span class="number">0</span>) <span class="comment">//end of stream</span></span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    bytes.Add((<span class="keyword">byte</span>)b);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (!cache.EndsWith(<span class="string">"&lt;/head&gt;"</span>, StringComparison.OrdinalIgnoreCase))</span><br><span class="line">        cache += (<span class="keyword">char</span>)b;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Match match = Regex.Match(cache, CharsetReg, RegexOptions.IgnoreCase | RegexOptions.Multiline);</span><br><span class="line"><span class="keyword">if</span> (match.Success)</span><br><span class="line">    Rcharset = match.Groups[<span class="string">"Charset"</span>].Value;</span><br></pre></td></tr></table></figure>
+<p>由于两种方法取到的结果都有不准确的可能，因此当它们相同时我们就采用该种方式解析网页获得内容，避免使用 Nchardet 带来性能损耗。当两者不同时我们才使用 Nchardet 进行猜测，同样与之前的两种结果比较选择相同的方式解析。</p>
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> (!<span class="keyword">string</span>.IsNullOrEmpty(Rcharset) &amp;&amp; !<span class="keyword">string</span>.IsNullOrEmpty(Hcharset) &amp;&amp; Hcharset.ToUpper() == Rcharset.ToUpper())</span><br><span class="line">    encode = Encoding.GetEncoding(Hcharset);</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">&#123;</span><br><span class="line">    Ncharset = NChardetHelper.RecogCharset(bytes.ToArray(), Thrinax.Data.NChardetLanguage.CHINESE, <span class="number">1024</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (!<span class="keyword">string</span>.IsNullOrEmpty(Ncharset) &amp;&amp; (Ncharset.ToUpper() == Rcharset.ToUpper() || Ncharset.ToUpper() == Hcharset.ToUpper()))</span><br><span class="line">        encode = Encoding.GetEncoding(Ncharset);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果以上方法还是得不到相同的编码时，我们使用人工标注的编码（如果有的话）。接下来我们使用以下顺序来解析网页，直到获取到使用的编码：<br>人工标注的编码 &gt; 网页自动识别 &gt; 解析ContentType &gt; 解析Html编码声明 。</p>
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="comment">//2，使用人工标注的编码</span></span><br><span class="line"><span class="keyword">if</span> (encode == <span class="keyword">null</span> &amp;&amp; !<span class="keyword">string</span>.IsNullOrEmpty(encoding))</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">try</span></span><br><span class="line">    &#123;</span><br><span class="line">        encode = Encoding.GetEncoding(encoding);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">catch</span> &#123; &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//3，使用单一方式识别出的编码，网页自动识别 &gt; 解析ContentType &gt; 解析Html编码声明</span></span><br><span class="line"><span class="keyword">if</span> (encode == <span class="keyword">null</span> &amp;&amp; !<span class="keyword">string</span>.IsNullOrEmpty(Ncharset))</span><br><span class="line">    encode = Encoding.GetEncoding(Ncharset);</span><br><span class="line"><span class="keyword">if</span>(encode == <span class="keyword">null</span> &amp;&amp; !<span class="keyword">string</span>.IsNullOrEmpty(Hcharset))</span><br><span class="line">    encode = Encoding.GetEncoding(Hcharset);</span><br><span class="line"><span class="keyword">if</span> (encode == <span class="keyword">null</span> &amp;&amp; !<span class="keyword">string</span>.IsNullOrEmpty(Rcharset))</span><br><span class="line">    encode = Encoding.GetEncoding(Rcharset);</span><br></pre></td></tr></table></figure>
+<p>如果都没有的话，听天由命吧，直接使用默认编码解析。下面是该逻辑和取出内容的部分：</p>
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="comment">//4，使用默认编码，听天由命吧</span></span><br><span class="line"><span class="keyword">if</span> (encode == <span class="keyword">null</span>)</span><br><span class="line">    encode = Encoding.Default;</span><br><span class="line"></span><br><span class="line">Content = encode.GetString(bytes.ToArray());</span><br><span class="line">ResponseStream.Close();</span><br></pre></td></tr></table></figure>
+<p>ok，大功告成！所有代码以及里面的一些依赖都已经在 <a href="https://github.com/ziyunhx/thrinax" target="_blank" rel="external">thrinax</a> 库中了，编码识别模块通过长时间生产环境爬虫使用，统计结果显示识别准确率大于 99.99%。相比之前方式的性能提高数倍。<a href="https://github.com/ziyunhx/thrinax" target="_blank" rel="external">thrinax</a> 的定位是一个使用 .Net 提供网络抓取，信息抽取，自然语言处理的库，其中的大部分代码都会来源于社区或其它开源算法或者论文，该库只是筛选统一方便调用。如果大家有这三方面的好的推荐，可以通过 Issue 或者博客评论发给我！</p>
+<p>本文涉及 <a href="https://github.com/ziyunhx/thrinax/blob/master/Helper/HttpHelper.cs" target="_blank" rel="external">HttpHelper</a> 与 <a href="https://github.com/ziyunhx/thrinax/blob/master/Helper/NChardetHelper.cs" target="_blank" rel="external">NChardetHelper</a>，欢迎大家 Star 与 Fork <a href="https://github.com/ziyunhx/thrinax" target="_blank" rel="external">thrinax</a> 库。</p>
+
+    <p>本文来自 <a href="http://www.tnidea.com/" title="The NewIdea" target="_blank" rel="external">The NewIdea</a>，作者 Carey Tzou 。<br>永久地址：<a href="http://www.tnidea.com/talk-about-http-charset-recog-again.html" title="再谈网络爬虫中的编码识别问题" target="_blank" rel="external">http://www.tnidea.com/talk-about-http-charset-recog-again.html</a><br>未经授权，拒绝任何全文及摘要转载！<br>
+    <br>
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <!-- 博客正文广告 -->
+    <ins class="adsbygoogle"
+        style="display:block"
+        data-ad-client="ca-pub-6541442242935379"
+        data-ad-slot="9453052931"
+        data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+
+    <p>欢迎关注微信公众号：CareyTzou（dotNet大数据）</p>
+    <a href="http://www.tnidea.com/media/image/wechat.jpg" title="Wechat:CareyTzou" class="fancybox" rel="article0"><img style="width:160px;display:inline;" src="http://www.tnidea.com/media/image/wechat.jpg" alt="Wechat:CareyTzou"></a>
+    
+    </div>
+    
+    <footer class="article-footer">
+    
+  <div class="article-date">
+    <a href="/talk-about-http-charset-recog-again.html">
+      <time datetime="2016-04-18T16:00:00.000Z" itemprop="datePublished">2016-04-19</time>
+    </a>
+  </div>
+
+
+      <a data-url="http://www.tnidea.com/talk-about-http-charset-recog-again.html" data-id="cio5x5pdv000t6zs3glpzl4ap" class="article-share-link">分享到</a>
+      
+        <a href="http://www.tnidea.com/talk-about-http-charset-recog-again.html#disqus_thread" class="article-comment-link">评论</a>
+      
+      
+  <div class="article-tag">
+    <i class="fa fa-tags"></i>&nbsp;&nbsp;
+  </div>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NET/">.NET</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/">C#</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/charset/">charset</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/csharp/">csharp</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/dot-net-storm-adapter-upgrade-to-support-1.0.1.html" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">上一篇</strong>
+      <div class="article-nav-title">
+        
+          Storm 1.0.1发布，.NET 适配也已到来
+        
+      </div>
+    </a>
+  
+  
+    <a href="/build-multi-language-framework-by-drpc.html" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">下一篇</strong>
+      <div class="article-nav-title">使用DRPC构建分布式多语言编程架构</div>
+    </a>
+  
+</nav>
+
+
+  
+</article>
+
+
+<section id="comments">
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
+
+</section>
+      
+        <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/NET/" style="font-size: 20px;">.NET</a> <a href="/tags/Baidu/" style="font-size: 10px;">Baidu</a> <a href="/tags/C/" style="font-size: 20px;">C#</a> <a href="/tags/CentOS/" style="font-size: 15.71px;">CentOS</a> <a href="/tags/DRPC/" style="font-size: 14.29px;">DRPC</a> <a href="/tags/Docker/" style="font-size: 10px;">Docker</a> <a href="/tags/Hadoop-MapReduce/" style="font-size: 10px;">Hadoop MapReduce</a> <a href="/tags/HttpHelper/" style="font-size: 10px;">HttpHelper</a> <a href="/tags/HttpWebRequest/" style="font-size: 10px;">HttpWebRequest</a> <a href="/tags/Icinga-Web2/" style="font-size: 15.71px;">Icinga Web2</a> <a href="/tags/Icinga2/" style="font-size: 15.71px;">Icinga2</a> <a href="/tags/ImitateLogin/" style="font-size: 10px;">ImitateLogin</a> <a href="/tags/Memory/" style="font-size: 10px;">Memory</a> <a href="/tags/Network/" style="font-size: 10px;">Network</a> <a href="/tags/OpenAuth/" style="font-size: 10px;">OpenAuth</a> <a href="/tags/SVN/" style="font-size: 10px;">SVN</a> <a href="/tags/Spark-Streaming/" style="font-size: 10px;">Spark Streaming</a> <a href="/tags/Storm/" style="font-size: 14.29px;">Storm</a> <a href="/tags/Topology/" style="font-size: 15.71px;">Topology</a> <a href="/tags/VS/" style="font-size: 11.43px;">VS</a> <a href="/tags/charset/" style="font-size: 11.43px;">charset</a> <a href="/tags/csharp/" style="font-size: 18.57px;">csharp</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/mono/" style="font-size: 10px;">mono</a> <a href="/tags/open-auth-assist/" style="font-size: 10px;">open-auth-assist</a> <a href="/tags/social-network/" style="font-size: 12.86px;">social network</a> <a href="/tags/storm/" style="font-size: 17.14px;">storm</a> <a href="/tags/thrift/" style="font-size: 12.86px;">thrift</a> <a href="/tags/wechat/" style="font-size: 10px;">wechat</a> <a href="/tags/wordcount/" style="font-size: 11.43px;">wordcount</a> <a href="/tags/zookeeper/" style="font-size: 10px;">zookeeper</a> <a href="/tags/分布式/" style="font-size: 11.43px;">分布式</a> <a href="/tags/多语言/" style="font-size: 10px;">多语言</a> <a href="/tags/微信/" style="font-size: 10px;">微信</a> <a href="/tags/批处理/" style="font-size: 11.43px;">批处理</a> <a href="/tags/插件机制/" style="font-size: 10px;">插件机制</a> <a href="/tags/文件版本号/" style="font-size: 11.43px;">文件版本号</a> <a href="/tags/服务器监控/" style="font-size: 15.71px;">服务器监控</a> <a href="/tags/流式框架/" style="font-size: 11.43px;">流式框架</a> <a href="/tags/部署/" style="font-size: 10px;">部署</a> <a href="/tags/项目管理/" style="font-size: 10px;">项目管理</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Storm/">Storm</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/爬虫/">爬虫</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/运维/">运维</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/项目管理/">项目管理</a><span class="category-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">时间线</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">五月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">三月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">一月 2016</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">十二月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">十一月 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">十月 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">九月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">八月 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/07/">七月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/06/">六月 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/05/">五月 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/11/">十一月 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/10/">十月 2013</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+</aside>
+      
+    </div>
+    <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2013-2016 The NewIdea Inc.  <span id="footer-info-extend">鄂ICP备15011767号-1</span>
+    </div>
+  </div>
+</footer>
+    
+
+<script>
+  var disqus_shortname = 'tnidea';
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+
+
+ <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+
+
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+  <script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+
+
+<script src="/js/script.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install','e2e3X_cz-QvzonvQg7eP','2.0.0');
+</script>
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?855c1789992bb648e4734a1e1045c672";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+  </div>
+    <div id="mobile-nav">
+    <nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left" id="cbp-spmenu-s1">
+      
+        <a href="/.">首页</a>
+        
+      
+        <a href="/archives">时间线</a>
+        
+      
+        <a href="javascript:void(0)">技术</a>
+        
+          <ul class="main-nav-category-list"><li class="main-nav-category-list-item"><a class="main-nav-category-list-link" href="/categories/Storm/">Storm</a></li><li class="main-nav-category-list-item"><a class="main-nav-category-list-link" href="/categories/爬虫/">爬虫</a></li><li class="main-nav-category-list-item"><a class="main-nav-category-list-link" href="/categories/运维/">运维</a></li><li class="main-nav-category-list-item"><a class="main-nav-category-list-link" href="/categories/项目管理/">项目管理</a></li></ul>
+        
+      
+        <a href="https://github.com/ziyunhx/">GitHub</a>
+        
+      
+        <a href="/about.html">关于我</a>
+        
+      
+      <div id="nav-search-form">
+        <form class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="搜索"><button type="submit" class="search-form-submit"> </button></form>
+      </div>
+    </nav>
+  </div>
+  <script>
+    var menuLeft = document.getElementById( 'cbp-spmenu-s1' ),
+        showMobileNav = document.getElementById( 'mobile-logo' ),
+        container = document.getElementById( 'container' );
+  
+    showMobileNav.onclick = function() {
+      classie.toggle( this, 'active' );
+      classie.toggle( container, 'cbp-spmenu-push-toright' );
+      classie.toggle( menuLeft, 'cbp-spmenu-open' );
+    };
+  </script>
+</body>
+</html>
