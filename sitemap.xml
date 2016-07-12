@@ -2,6 +2,11 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://www.tnidea.com/using-storm-at-dotnet-core.html</loc>
+    <lastmod>2016-07-12T14:50:41.000Z</lastmod>
+  </url>
+  
+  <url>
     <loc>http://www.tnidea.com/dot-net-storm-adapter-upgrade-to-support-1.0.1.html</loc>
     <lastmod>2016-05-12T15:39:07.000Z</lastmod>
   </url>

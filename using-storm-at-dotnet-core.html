@@ -3,17 +3,19 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Tag: 服务器监控 | 地平线</title>
+  <title>.NET Core 也能玩转 Storm | 地平线</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="介绍个人的开源项目以及技术细节，分享构建在微软dotNet平台上的大数据技术、开源项目，分析大数据发展趋势与运用场景，分享实施案例。">
-<meta property="og:type" content="website">
-<meta property="og:title" content="地平线">
-<meta property="og:url" content="http://www.tnidea.com/tags/服务器监控/index.html">
+  <meta name="description" content=".Net Core 自发布以来广受关注，基于其开源与跨平台的特性，可以预见其在 web 开发领域越来越受青睐。现在，Apache Storm 的 .Net Core 版本的适配器正式发布，你现在也可以使用 .Net Core 开发 Topology，实现分布式跨平台使用。">
+<meta property="og:type" content="article">
+<meta property="og:title" content=".NET Core 也能玩转 Storm">
+<meta property="og:url" content="http://www.tnidea.com/using-storm-at-dotnet-core.html">
 <meta property="og:site_name" content="地平线">
-<meta property="og:description" content="介绍个人的开源项目以及技术细节，分享构建在微软dotNet平台上的大数据技术、开源项目，分析大数据发展趋势与运用场景，分享实施案例。">
+<meta property="og:description" content=".Net Core 自发布以来广受关注，基于其开源与跨平台的特性，可以预见其在 web 开发领域越来越受青睐。现在，Apache Storm 的 .Net Core 版本的适配器正式发布，你现在也可以使用 .Net Core 开发 Topology，实现分布式跨平台使用。">
+<meta property="og:image" content="http://www.tnidea.com/media/image/storm-ui-docker-101.png">
+<meta property="og:updated_time" content="2016-07-12T14:50:41.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="地平线">
-<meta name="twitter:description" content="介绍个人的开源项目以及技术细节，分享构建在微软dotNet平台上的大数据技术、开源项目，分析大数据发展趋势与运用场景，分享实施案例。">
+<meta name="twitter:title" content=".NET Core 也能玩转 Storm">
+<meta name="twitter:description" content=".Net Core 自发布以来广受关注，基于其开源与跨平台的特性，可以预见其在 web 开发领域越来越受青睐。现在，Apache Storm 的 .Net Core 版本的适配器正式发布，你现在也可以使用 .Net Core 开发 Topology，实现分布式跨平台使用。">
   
   
   <link rel="stylesheet" href="/css/style.css" type="text/css">
@@ -91,206 +93,127 @@
 
     <div class="outer">
       
-      <section id="main">
-    <section class="archives-wrap">
-    <div class="archive-tag-wrap">
-      <span class="archive-tag">#服务器监控</span>
-    </div>
-    <div class="archives">
+      <section id="main"><article id="post-using-storm-at-dotnet-core" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-      <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
     
-    <div class="archive-article-thumbnail">
-      <a href="/add-network-memory-for-icinga2-monitor.html" class="thumbnail">
+    
+      <header class="article-header">
+        
   
-    <span class="thumbnail-image thumbnail-none"></span>
-  
-</a>
-    </div>
-    
-    <header class="archive-article-header">
-      
-  
-    
-      <span class="article-tag-bg">
-        <a class="none-link" href="/categories/运维/">运维</a>
-      </span>
-    
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/add-network-memory-for-icinga2-monitor.html">使用Icinga2监控服务器带宽以及内存占用</a>
+    <h1 class="article-title" itemprop="name">
+      .NET Core 也能玩转 Storm
     </h1>
   
 
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
       
-        
-  <div class="archive-article-date">
-    <a href="/add-network-memory-for-icinga2-monitor.html">
-      <time datetime="2016-01-10T16:00:00.000Z" itemprop="datePublished">2016-01-11</time>
+                
+<br>
+    <p style="border-top:1px solid #eceff2;margin:0 20px;"></p>
+    <br>
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <!-- 博客正文广告 -->
+    <ins class="adsbygoogle"
+        style="display:block"
+        data-ad-client="ca-pub-6541442242935379"
+        data-ad-slot="9453052931"
+        data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+
+    <p> .Net Core 自发布以来广受关注，基于其开源与跨平台的特性，可以预见其在 web 开发领域越来越受青睐。现在，Apache Storm 的 .Net Core 版本的适配器正式发布，你现在也可以使用 .Net Core 开发 Topology，实现分布式跨平台使用。</p>
+<a id="more"></a>
+<p> <a href="https://github.com/ziyunhx/storm-net-adapter" target="_blank" rel="external">storm-net-adapter</a> 现在已经更新到 2.0.4，增加了对 .Net Core 的支持，由于目前 Thrift 的适配暂时还未完成，因此还无法使用 DRPC 的特性；同时对之前输出复杂日志存在的 BUG 进行了修复。同时，Docker 的镜像编排也已经将 .Net Core 集成，你可以通过 <a href="https://github.com/ziyunhx/storm-mono-docker" target="_blank" rel="external">storm-mono-docker</a> 获取到它。</p>
+<p> 首先，你需要安装 .Net Core 的开发环境，你可以通过以下地址查看如何安装：<a href="https://www.microsoft.com/net/core" target="_blank" rel="external">.Net Core</a> 。</p>
+<p> 使用命令创建新的 .Net Core 项目：</p>
+<pre><code><span class="built_in">mkdir</span> StormSample
+<span class="keyword">cd</span> StormSample
+dotnet <span class="keyword">new</span>
+</code></pre><p> 引用中添加 Storm.Net.Adapter：</p>
+<pre><code><span class="string">"dependencies"</span>: {
+    <span class="string">"Storm.Net.Adapter"</span>: <span class="string">"2.0.1"</span>
+}
+</code></pre><p> 增加业务代码继承 ISpout 和 IBolt，实现接口方法，在 Main 方法里实现调用方法，具体代码可以参照 <a href="https://github.com/ziyunhx/storm-net-adapter/tree/master/src/Samples/StormSample" target="_blank" rel="external">StormSample</a> 。</p>
+<p> 在 Java 端增加调用 .Net 代码的 Topology：</p>
+<p> 在 Windows(.Net Framework) 平台下通过如下代码调用：</p>
+<pre><code><span class="keyword">super</span>(<span class="string">"cmd"</span>, <span class="string">"/k"</span>, <span class="string">"CALL"</span>, <span class="string">"StormSimple.exe"</span>, <span class="string">"generator"</span>);
+</code></pre><p> 在 Linux, Mac OSX, Windows(mono) 下通过如下代码调用：</p>
+<pre><code><span class="keyword">super</span>(<span class="string">"mono"</span>, <span class="string">"StormSimple.exe"</span>, <span class="string">"generator"</span>);
+</code></pre><p> 在 Linux, Mac OSX, Windows(.net core) 下通过如下代码调用：</p>
+<pre><code><span class="keyword">super</span>(<span class="string">"dotnet"</span>, <span class="string">"StormSimple.dll"</span>, <span class="string">"generator"</span>);
+</code></pre><p> 打包 Java 项目，通过 storm jar 命令提交：</p>
+<pre><code>$ storm jar storm-starter-*<span class="class">.jar</span> org<span class="class">.apache</span><span class="class">.storm</span><span class="class">.starter</span><span class="class">.WordCountTopologyCsharp</span> wordcount
+</code></pre><p> 你就可以看到如下熟悉的界面咯：</p>
+<p> <img src="http://www.tnidea.com/media/image/storm-ui-docker-101.png" alt="Storm UI"></p>
+<p> 接下来需要完善与实现的任务还很多，项目的发展需要得到广泛的关注与支持；如果你觉得这个项目对您有帮助，欢迎在 GitHub 给出 Star ，项目地址：<a href="https://github.com/ziyunhx/storm-net-adapter" target="_blank" rel="external">storm-net-adapter</a> ，或者转发文章支持一下！</p>
+
+    <p>本文来自 <a href="http://www.tnidea.com/" title="The NewIdea" target="_blank" rel="external">The NewIdea</a>，作者 Carey Tzou 。<br>永久地址：<a href="http://www.tnidea.com/using-storm-at-dotnet-core.html" title=".NET Core 也能玩转 Storm" target="_blank" rel="external">http://www.tnidea.com/using-storm-at-dotnet-core.html</a><br>未经授权，拒绝任何全文及摘要转载！<br>
+    <br>
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <!-- 博客正文广告 -->
+    <ins class="adsbygoogle"
+        style="display:block"
+        data-ad-client="ca-pub-6541442242935379"
+        data-ad-slot="9453052931"
+        data-ad-format="auto"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+
+    <p>欢迎关注微信公众号：CareyTzou（dotNet大数据）</p>
+    <a href="http://www.tnidea.com/media/image/wechat.jpg" title="Wechat:CareyTzou" class="fancybox" rel="article0"><img style="width:160px;display:inline;" src="http://www.tnidea.com/media/image/wechat.jpg" alt="Wechat:CareyTzou"></a>
+    
+    </div>
+    
+    <footer class="article-footer">
+    
+  <div class="article-date">
+    <a href="/using-storm-at-dotnet-core.html">
+      <time datetime="2016-07-10T16:00:00.000Z" itemprop="datePublished">2016-07-11</time>
     </a>
   </div>
 
 
+      <a data-url="http://www.tnidea.com/using-storm-at-dotnet-core.html" data-id="ciqjktsj4000tuvs311kzwkhh" class="article-share-link">分享到</a>
       
-    </header>
+        <a href="http://www.tnidea.com/using-storm-at-dotnet-core.html#disqus_thread" class="article-comment-link">评论</a>
+      
+      
+  <div class="article-tag">
+    <i class="fa fa-tags"></i>&nbsp;&nbsp;
   </div>
-</article>
-    
-      <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    
-    <div class="archive-article-thumbnail">
-      <a href="/icinga2-monitor-other-machine.html" class="thumbnail">
-  
-    <span class="thumbnail-image thumbnail-none"></span>
-  
-</a>
-    </div>
-    
-    <header class="archive-article-header">
-      
-  
-    
-      <span class="article-tag-bg">
-        <a class="none-link" href="/categories/运维/">运维</a>
-      </span>
-    
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/icinga2-monitor-other-machine.html">使用Icinga2监控Linux和Windows服务器</a>
-    </h1>
-  
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NET-Core/">.NET Core</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/csharp/">csharp</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/dotnet/">dotnet</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/storm/">storm</a></li></ul>
 
-      
-        
-  <div class="archive-article-date">
-    <a href="/icinga2-monitor-other-machine.html">
-      <time datetime="2016-01-05T16:00:00.000Z" itemprop="datePublished">2016-01-06</time>
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/dot-net-storm-adapter-upgrade-to-support-1.0.1.html" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">下一篇</strong>
+      <div class="article-nav-title">Storm 1.0.1发布，.NET 适配也已到来</div>
     </a>
-  </div>
+  
+</nav>
 
 
-      
-    </header>
-  </div>
+  
 </article>
-    
-      <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    
-    <div class="archive-article-thumbnail">
-      <a href="/setting-up-icinga-web2.html" class="thumbnail">
-  
-    <span style="background-image:url(http://www.tnidea.com/media/image/icinga-websetup-1.png
-)" alt="安装与配置Icinga Web2" class="thumbnail-image"></span>
-  
-</a>
-    </div>
-    
-    <header class="archive-article-header">
-      
-  
-    
-      <span class="article-tag-bg">
-        <a class="none-link" href="/categories/运维/">运维</a>
-      </span>
-    
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/setting-up-icinga-web2.html">安装与配置Icinga Web2</a>
-    </h1>
-  
 
-      
-        
-  <div class="archive-article-date">
-    <a href="/setting-up-icinga-web2.html">
-      <time datetime="2015-10-29T16:00:00.000Z" itemprop="datePublished">2015-10-30</time>
-    </a>
+
+<section id="comments">
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
   </div>
+</section>
 
-
-      
-    </header>
-  </div>
-</article>
-    
-      <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    
-    <div class="archive-article-thumbnail">
-      <a href="/prepare-for-setting-up-icinga-web2.html" class="thumbnail">
-  
-    <span class="thumbnail-image thumbnail-none"></span>
-  
-</a>
-    </div>
-    
-    <header class="archive-article-header">
-      
-  
-    
-      <span class="article-tag-bg">
-        <a class="none-link" href="/categories/运维/">运维</a>
-      </span>
-    
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/prepare-for-setting-up-icinga-web2.html">安装Icinga Web2所需服务</a>
-    </h1>
-  
-
-      
-        
-  <div class="archive-article-date">
-    <a href="/prepare-for-setting-up-icinga-web2.html">
-      <time datetime="2015-10-24T16:00:00.000Z" itemprop="datePublished">2015-10-25</time>
-    </a>
-  </div>
-
-
-      
-    </header>
-  </div>
-</article>
-    
-      <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    
-    <div class="archive-article-thumbnail">
-      <a href="/monitor-system-by-icinga2.html" class="thumbnail">
-  
-    <span class="thumbnail-image thumbnail-none"></span>
-  
-</a>
-    </div>
-    
-    <header class="archive-article-header">
-      
-  
-    
-      <span class="article-tag-bg">
-        <a class="none-link" href="/categories/运维/">运维</a>
-      </span>
-    
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/monitor-system-by-icinga2.html">使用Icinga2和Icinga Web2搭建监控服务</a>
-    </h1>
-  
-
-      
-        
-  <div class="archive-article-date">
-    <a href="/monitor-system-by-icinga2.html">
-      <time datetime="2015-10-09T16:00:00.000Z" itemprop="datePublished">2015-10-10</time>
-    </a>
-  </div>
-
-
-      
-    </header>
-  </div>
-</article>
-    
-    </div></section>
-    </section>
+</section>
       
         <aside id="sidebar">
   
@@ -340,7 +263,7 @@
     var dsq = document.createElement('script');
     dsq.type = 'text/javascript';
     dsq.async = true;
-    dsq.src = '//' + disqus_shortname + '.disqus.com/count.js';
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
     (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
   })();
 </script>
