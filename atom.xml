@@ -4,7 +4,7 @@
   <subtitle><![CDATA[纯粹的技术导向！]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://www.tnidea.com/"/>
-  <updated>2016-07-12T14:50:41.000Z</updated>
+  <updated>2016-07-12T15:01:11.000Z</updated>
   <id>http://www.tnidea.com/</id>
   
   <author>
@@ -19,35 +19,35 @@
     <link href="http://www.tnidea.com/using-storm-at-dotnet-core.html"/>
     <id>http://www.tnidea.com/using-storm-at-dotnet-core.html</id>
     <published>2016-07-10T16:00:00.000Z</published>
-    <updated>2016-07-12T14:50:41.000Z</updated>
-    <content type="html"><![CDATA[<p> .Net Core 自发布以来广受关注，基于其开源与跨平台的特性，可以预见其在 web 开发领域越来越受青睐。现在，Apache Storm 的 .Net Core 版本的适配器正式发布，你现在也可以使用 .Net Core 开发 Topology，实现分布式跨平台使用。</p>
+    <updated>2016-07-12T15:01:11.000Z</updated>
+    <content type="html"><![CDATA[<p> .Net Core 自发布以来广受关注，基于其开源与跨平台的特性，可以预见其在 web 开发领域越来越受青睐。现在，Apache Storm 的 .Net Core 版本的适配器正式发布，你现在也可以使用 .Net Core 开发 Topology，实现分布式跨平台的实时计算。</p>
 <a id="more"></a>
-<p> <a href="https://github.com/ziyunhx/storm-net-adapter" target="_blank" rel="external">storm-net-adapter</a> 现在已经更新到 2.0.4，增加了对 .Net Core 的支持，由于目前 Thrift 的适配暂时还未完成，因此还无法使用 DRPC 的特性；同时对之前输出复杂日志存在的 BUG 进行了修复。同时，Docker 的镜像编排也已经将 .Net Core 集成，你可以通过 <a href="https://github.com/ziyunhx/storm-mono-docker" target="_blank" rel="external">storm-mono-docker</a> 获取到它。</p>
-<p> 首先，你需要安装 .Net Core 的开发环境，你可以通过以下地址查看如何安装：<a href="https://www.microsoft.com/net/core" target="_blank" rel="external">.Net Core</a> 。</p>
-<p> 使用命令创建新的 .Net Core 项目：</p>
+<p> <a href="https://github.com/ziyunhx/storm-net-adapter" target="_blank" rel="external">storm-net-adapter</a> 现在已经更新到 2.0.4，增加了对 .Net Core 的支持，并对之前存在的例如输出复杂日志时的 BUG 进行了修复；由于目前 Thrift 的适配暂时还未完成，因此还无法使用 DRPC 的特性。同时，Storm 集群的 Docker 的镜像编排也已经集成了 .Net Core ，你可以通过 <a href="https://github.com/ziyunhx/storm-mono-docker" target="_blank" rel="external">storm-mono-docker</a> 获取到它。</p>
+<p> .Net Core 玩转 Storm 的首要条件当然是安装 .Net Core 的开发环境啦，你可以通过以下地址查看如何安装：<a href="https://www.microsoft.com/net/core" target="_blank" rel="external">.Net Core</a> 。</p>
+<p> 然后使用命令创建新的 .Net Core 项目：</p>
 <pre><code><span class="built_in">mkdir</span> StormSample
 <span class="keyword">cd</span> StormSample
 dotnet <span class="keyword">new</span>
-</code></pre><p> 引用中添加 Storm.Net.Adapter：</p>
+</code></pre><p> 在项目中添加 Storm.Net.Adapter 引用：</p>
 <pre><code><span class="string">"dependencies"</span>: {
     <span class="string">"Storm.Net.Adapter"</span>: <span class="string">"2.0.1"</span>
 }
-</code></pre><p> 增加业务代码继承 ISpout 和 IBolt，实现接口方法，在 Main 方法里实现调用方法，具体代码可以参照 <a href="https://github.com/ziyunhx/storm-net-adapter/tree/master/src/Samples/StormSample" target="_blank" rel="external">StormSample</a> 。</p>
-<p> 在 Java 端增加调用 .Net 代码的 Topology：</p>
-<p> 在 Windows(.Net Framework) 平台下通过如下代码调用：</p>
+</code></pre><p> 接下来增加业务代码，继承 ISpout 和 IBolt，实现接口方法，在 Main 方法里实现调用方法，具体代码可以参照 <a href="https://github.com/ziyunhx/storm-net-adapter/tree/master/src/Samples/StormSample" target="_blank" rel="external">StormSample</a> 。</p>
+<p> 在 Java 端增加调用 .Net 代码的 Topology；</p>
+<p> 如果需要运行在 Windows(.Net Framework) 平台下通过如下代码调用：</p>
 <pre><code><span class="keyword">super</span>(<span class="string">"cmd"</span>, <span class="string">"/k"</span>, <span class="string">"CALL"</span>, <span class="string">"StormSimple.exe"</span>, <span class="string">"generator"</span>);
 </code></pre><p> 在 Linux, Mac OSX, Windows(mono) 下通过如下代码调用：</p>
 <pre><code><span class="keyword">super</span>(<span class="string">"mono"</span>, <span class="string">"StormSimple.exe"</span>, <span class="string">"generator"</span>);
 </code></pre><p> 在 Linux, Mac OSX, Windows(.net core) 下通过如下代码调用：</p>
 <pre><code><span class="keyword">super</span>(<span class="string">"dotnet"</span>, <span class="string">"StormSimple.dll"</span>, <span class="string">"generator"</span>);
-</code></pre><p> 打包 Java 项目，通过 storm jar 命令提交：</p>
+</code></pre><p> 使用 Maven 打包 Java 项目，通过 storm jar 命令提交：</p>
 <pre><code>$ storm jar storm-starter-*<span class="class">.jar</span> org<span class="class">.apache</span><span class="class">.storm</span><span class="class">.starter</span><span class="class">.WordCountTopologyCsharp</span> wordcount
 </code></pre><p> 你就可以看到如下熟悉的界面咯：</p>
 <p> <img src="http://www.tnidea.com/media/image/storm-ui-docker-101.png" alt="Storm UI"></p>
 <p> 接下来需要完善与实现的任务还很多，项目的发展需要得到广泛的关注与支持；如果你觉得这个项目对您有帮助，欢迎在 GitHub 给出 Star ，项目地址：<a href="https://github.com/ziyunhx/storm-net-adapter" target="_blank" rel="external">storm-net-adapter</a> ，或者转发文章支持一下！</p>
 ]]></content>
     <summary type="html">
-    <![CDATA[<p> .Net Core 自发布以来广受关注，基于其开源与跨平台的特性，可以预见其在 web 开发领域越来越受青睐。现在，Apache Storm 的 .Net Core 版本的适配器正式发布，你现在也可以使用 .Net Core 开发 Topology，实现分布式跨平台使用。</p>]]>
+    <![CDATA[<p> .Net Core 自发布以来广受关注，基于其开源与跨平台的特性，可以预见其在 web 开发领域越来越受青睐。现在，Apache Storm 的 .Net Core 版本的适配器正式发布，你现在也可以使用 .Net Core 开发 Topology，实现分布式跨平台的实时计算。</p>]]>
     
     </summary>
     
