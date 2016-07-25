@@ -2,6 +2,11 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://www.tnidea.com/dotnet-core-support-drpc-now.html</loc>
+    <lastmod>2016-07-25T14:28:00.000Z</lastmod>
+  </url>
+  
+  <url>
     <loc>http://www.tnidea.com/using-storm-at-dotnet-core.html</loc>
     <lastmod>2016-07-12T15:01:11.000Z</lastmod>
   </url>
