@@ -10,7 +10,7 @@ tags:
 
 ---
 
- 上篇文章为大家带来了新版本的 Storm 适配器，今天来弥补一下上次匆忙发布带来的遗憾。是的，DRPC for .net Core 来了，当然，为了实现这个功能，一个精简版本的 Apache Thrift for .net core 也产生了；这个类库根据 [Poadmap for adding new language bindings](https://thrift.apache.org/docs/HowToNewLanguage) 完成，为了不带来误解，该项目暂时不开源，仅在 Nugut 中供 [storm-net-adapter](https://github.com/ziyunhx/storm-net-adapter) 使用，如果你也暂时需要它，可以通过 Nuget 搜索 Tnidea.Thrift 获得。
+ 上篇文章为大家带来了新版本的 Storm 适配器，今天来弥补一下上次匆忙发布带来的遗憾。是的，DRPC for .net Core 来了，当然，为了实现这个功能，一个精简版本的 Apache Thrift for .net core 也产生了；这个类库根据 [Roadmap for adding new language bindings](https://thrift.apache.org/docs/HowToNewLanguage) 完成，为了不带来误解，该项目暂时不开源，仅在 Nugut 中供 [storm-net-adapter](https://github.com/ziyunhx/storm-net-adapter) 使用，如果你也暂时需要它，可以通过 Nuget 搜索 Tnidea.Thrift 获得。
 
 <!--more-->
  
