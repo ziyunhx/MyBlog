@@ -4,7 +4,7 @@
   <subtitle><![CDATA[纯粹的技术导向！]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://www.tnidea.com/"/>
-  <updated>2016-07-27T15:41:03.000Z</updated>
+  <updated>2016-07-27T16:36:14.000Z</updated>
   <id>http://www.tnidea.com/</id>
   
   <author>
@@ -19,7 +19,7 @@
     <link href="http://www.tnidea.com/protect-your-elasticsearch.html"/>
     <id>http://www.tnidea.com/protect-your-elasticsearch.html</id>
     <published>2016-07-26T16:00:00.000Z</published>
-    <updated>2016-07-27T15:41:03.000Z</updated>
+    <updated>2016-07-27T16:36:14.000Z</updated>
     <content type="html"><![CDATA[<p> Elasticsearch是一款基于Lucence的全文检索数据库，在文本分析、搜索等领域被广泛使用，但是默认的配置通过限制仅允许局域网访问来保证数据的安全性，如果你需要对公网提供服务，便需要额外安装插件来实现访问控制了。裸奔不仅可能带来被脱库，甚至数据会被删除而且不可恢复。本文将介绍如何选择和配置插件来保障Elasticsearch的安全。</p>
 <a id="more"></a>
 <p> 本文介绍的环境均在 Centos 7 下，其它系统同理，只需要修改部分命令。</p>
@@ -84,7 +84,7 @@ cp kirk-keystore.jks <span class="regexp">/usr/</span>share<span class="regexp">
 # -<span class="keyword">cn</span> 后为集群名称（默认为elasticsearch），如果你修改过 cluster.name，则将它替换成你修改的名称
 </code></pre></li>
 <li><p>再次连接 Elasticsearch 服务，输入你设置的密码即可正常访问。</p>
-<h2 id="4-_给你的_Elasticsearch_服务创建快照备份">4. 给你的 Elasticsearch 服务创建快照备份</h2><p>Elasticsearch 的数据安全不仅来自外部，内部成员的误操作同样可能带来不可挽回的损失；尽量将账户设置为最小所需权限是一个好方法，但是仍然不可避免存在超级用户，加上 head 插件缺失的确认机制，一不小心就回到解放前了！因此定时备份数据十分重要。</p>
+<h2 id="5-_给你的_Elasticsearch_服务创建快照备份">5. 给你的 Elasticsearch 服务创建快照备份</h2><p>Elasticsearch 的数据安全不仅来自外部，内部成员的误操作同样可能带来不可挽回的损失；尽量将账户设置为最小所需权限是一个好方法，但是仍然不可避免存在超级用户，加上 head 插件缺失的确认机制，一不小心就回到解放前了！因此定时备份数据十分重要。</p>
 </li>
 <li><p>设置共享目录，并挂载到集群上的所有机器，并赋予 Elasticsearch 用户写权限；</p>
 </li>
