@@ -4,7 +4,7 @@
   <subtitle><![CDATA[纯粹的技术导向！]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://www.tnidea.com/"/>
-  <updated>2016-07-25T14:36:16.000Z</updated>
+  <updated>2016-07-27T15:41:03.000Z</updated>
   <id>http://www.tnidea.com/</id>
   
   <author>
@@ -15,12 +15,126 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title><![CDATA[保护好你的Elasticsearch全文检索库]]></title>
+    <link href="http://www.tnidea.com/protect-your-elasticsearch.html"/>
+    <id>http://www.tnidea.com/protect-your-elasticsearch.html</id>
+    <published>2016-07-26T16:00:00.000Z</published>
+    <updated>2016-07-27T15:41:03.000Z</updated>
+    <content type="html"><![CDATA[<p> Elasticsearch是一款基于Lucence的全文检索数据库，在文本分析、搜索等领域被广泛使用，但是默认的配置通过限制仅允许局域网访问来保证数据的安全性，如果你需要对公网提供服务，便需要额外安装插件来实现访问控制了。裸奔不仅可能带来被脱库，甚至数据会被删除而且不可恢复。本文将介绍如何选择和配置插件来保障Elasticsearch的安全。</p>
+<a id="more"></a>
+<p> 本文介绍的环境均在 Centos 7 下，其它系统同理，只需要修改部分命令。</p>
+<h2 id="1-_安装_Elasticsearch，开启外网访问权限">1. 安装 Elasticsearch，开启外网访问权限</h2><ul>
+<li><p>安装JDK 7+，并配置 JAVA_HOME <a href="http://docs.oracle.com/javase/8/docs/technotes/guides/install/install_overview.html" target="_blank" rel="external">Oracle 官网</a>;</p>
+</li>
+<li><p>根据官网提供的方法安装 Elasticsearch：<a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/setup-repositories.html" target="_blank" rel="external">使用yum安装</a>;</p>
+</li>
+<li><p>配置 /etc/elasticsearch/elasticsearch.yml 文件，此处修改 network.host 来允许外网访问：</p>
+<pre><code>network.host:<span class="number">0.0</span><span class="number">.0</span><span class="number">.0</span>
+</code></pre></li>
+<li><p>为了防止他人的端口扫描，修改掉默认端口吧，例如设置成：</p>
+<pre><code><span class="title">http</span>.<span class="foreign"><span class="keyword">port</span>: 9999</span>
+</code></pre></li>
+<li><p>安装管理插件，例如 head ，重启 Elasticsearch。</p>
+<h2 id="2-_安装与配置_SearchGuard_2">2. 安装与配置 SearchGuard 2</h2></li>
+<li><p>安装 Elasticsearch 对应版本的 search-guard-ssl 和 search-guard-2 插件：</p>
+<pre><code>cd /usr/share/elasticsearch
+sudo bin/plugin <span class="operator"><span class="keyword">install</span> -b com.floragunn/<span class="keyword">search</span>-<span class="keyword">guard</span>-ssl/<span class="number">2.3</span><span class="number">.4</span><span class="number">.14</span>
+sudo <span class="keyword">bin</span>/<span class="keyword">plugin</span> <span class="keyword">install</span> -b com.floragunn/<span class="keyword">search</span>-<span class="keyword">guard</span>-<span class="number">2</span>/<span class="number">2.3</span><span class="number">.4</span><span class="number">.3</span></span>
+</code></pre></li>
+<li><p>配置 search-guard-ssl，生成证书：</p>
+<pre><code><span class="keyword">cd</span> ~
+yum install wget unzip
+wget http<span class="variable">s:</span>//github.<span class="keyword">com</span>/floragunncom/<span class="built_in">search</span>-guard-ssl/archive/<span class="number">2.3</span>.<span class="number">4</span>.zip
+unzip <span class="number">2.3</span>.<span class="number">4</span>.zip
+<span class="keyword">cd</span> <span class="built_in">search</span>-guard-ssl-<span class="number">2.3</span>.<span class="number">4</span>/example-pki-scripts/
+./example.<span class="keyword">sh</span>
+</code></pre></li>
+<li><p>复制相应证书到配置文件目录，在集群中时修改 node-0-keystore.jks 中的数字保证与配置文件中相同：</p>
+<pre><code>cp node-<span class="number">0</span>-keystore<span class="class">.jks</span> /etc/elasticsearch/
+cp truststore<span class="class">.jks</span> /etc/elasticsearch/
+</code></pre></li>
+<li><p>将目录中的 elasticsearch.yml.example 的内容复制到 /etc/elasticsearch/elasticsearch.yml</p>
+</li>
+<li><p>在 /etc/elasticsearch/elasticsearch.yml 中增加以下内容：</p>
+<pre><code>searchguard<span class="class">.ssl</span><span class="class">.transport</span><span class="class">.keystore_filepath</span>: node-<span class="number">0</span>-keystore<span class="class">.jks</span>
+#注意 node-<span class="number">0</span>-keystore<span class="class">.jks</span> 与拷入目录的证书名称相同
+searchguard<span class="class">.ssl</span><span class="class">.transport</span><span class="class">.keystore_password</span>: changeit
+searchguard<span class="class">.ssl</span><span class="class">.transport</span><span class="class">.truststore_filepath</span>: truststore<span class="class">.jks</span>
+searchguard<span class="class">.ssl</span><span class="class">.transport</span><span class="class">.truststore_password</span>: changeit
+searchguard<span class="class">.ssl</span><span class="class">.transport</span><span class="class">.enforce_hostname_verification</span>: false
+</code></pre><h2 id="3-_修改账户密码以及角色权限">3. 修改账户密码以及角色权限</h2></li>
+<li><p>使用自带的 hash 脚本生成密码（mycleartextpassword 替换为你需要设置的密码）：</p>
+<pre><code>sh /usr/share/elasticsearch/plugins/search-guard-<span class="number">2</span>/tools/hash<span class="class">.sh</span> -<span class="tag">p</span> mycleartextpassword
+</code></pre></li>
+<li><p>将生成的密码复制到 /usr/share/elasticsearch/plugins/search-guard-2/sgconfig/sg_internal_users.yml 中你需要的用户名的 password 后，并注释其它用户；</p>
+</li>
+<li><p>在相同目录的 sg_roles.yml 中自定义你的用户角色权限；</p>
+</li>
+<li><p>在 sg_roles_mapping.yml 中指定用户与角色间的对应关系。</p>
+<h2 id="4-_更新应用配置_SearchGuard_2_文件">4. 更新应用配置 SearchGuard 2 文件</h2></li>
+<li><p>拷贝证书到 SearchGuard 2 插件的配置文件目录：</p>
+<pre><code>cd <span class="regexp">~/search-guard-ssl-2.3.4/</span>example-pki-scripts/
+cp truststore.jks <span class="regexp">/usr/</span>share<span class="regexp">/elasticsearch/</span>plugins<span class="regexp">/search-guard-2/</span>sgconfig/
+cp kirk-keystore.jks <span class="regexp">/usr/</span>share<span class="regexp">/elasticsearch/</span>plugins<span class="regexp">/search-guard-2/</span>sgconfig/
+</code></pre></li>
+<li><p>重启 Elasticsearch 服务</p>
+</li>
+<li><p>使用命令应用配置（即时不修改配置文件也需要执行）：</p>
+<pre><code><span class="keyword">sh</span> plugins/<span class="built_in">search</span>-guard-<span class="number">2</span>/tools/sgadmin.<span class="keyword">sh</span> -<span class="keyword">cd</span> plugins/<span class="built_in">search</span>-guard-<span class="number">2</span>/sgconfig/ -ks plugins/<span class="built_in">search</span>-guard-<span class="number">2</span>/sgconfig/kirk-keystore.jks -<span class="keyword">ts</span> plugins/<span class="built_in">search</span>-guard-<span class="number">2</span>/sgconfig/truststore.jks -nhnv -<span class="keyword">cn</span> elasticsearch 
+# -<span class="keyword">cn</span> 后为集群名称（默认为elasticsearch），如果你修改过 cluster.name，则将它替换成你修改的名称
+</code></pre></li>
+<li><p>再次连接 Elasticsearch 服务，输入你设置的密码即可正常访问。</p>
+<h2 id="4-_给你的_Elasticsearch_服务创建快照备份">4. 给你的 Elasticsearch 服务创建快照备份</h2><p>Elasticsearch 的数据安全不仅来自外部，内部成员的误操作同样可能带来不可挽回的损失；尽量将账户设置为最小所需权限是一个好方法，但是仍然不可避免存在超级用户，加上 head 插件缺失的确认机制，一不小心就回到解放前了！因此定时备份数据十分重要。</p>
+</li>
+<li><p>设置共享目录，并挂载到集群上的所有机器，并赋予 Elasticsearch 用户写权限；</p>
+</li>
+<li><p>在 elasticsearch.yml 中增加共享目录的配置，并重启 ES 服务：</p>
+<pre><code>path<span class="class">.repo</span>: [<span class="string">"/mount/backups"</span>]
+</code></pre></li>
+<li><p>使用 curl 创建备份仓库：</p>
+<pre><code>$ curl -XPUT <span class="string">'http</span>:<span class="comment">//localhost:9200/_snapshot/my_backup' -d '{</span>
+    <span class="string">"type"</span>: <span class="string">"fs"</span>,
+    <span class="string">"settings"</span>: {
+        <span class="string">"location"</span>: <span class="string">"my_backup"</span>,
+        <span class="string">"compress"</span>: <span class="keyword">true</span>
+    }
+}'
+</code></pre></li>
+<li><p>对指定的 index 创建快照备份（注意索引间不要有空格）：</p>
+<pre><code>$ curl -XPUT <span class="string">'http</span>:<span class="comment">//localhost:9200/_snapshot/my_backup/snapshot_1' -d '{</span>
+    <span class="string">"indices"</span>: <span class="string">"index_1,index_2"</span>
+}'
+</code></pre></li>
+<li><p>查询备份状态</p>
+<pre><code>GET <span class="string">http:</span><span class="comment">//localhost:9200/_snapshot/my_backup/snapshot_1/_status</span>
+</code></pre></li>
+<li><p>把最后两部设置成定时任务吧，这样你就可以定期备份了；而且由于快照机制是增量备份，所以也不用担心空间了！</p>
+<p>好了，有关 Elasticsearch 的设置就到这里了。安全无小事，本文也仅是简单介绍了下方法和思路，许多细节都需要自己慢慢琢磨哦！</p>
+</li>
+</ul>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p> Elasticsearch是一款基于Lucence的全文检索数据库，在文本分析、搜索等领域被广泛使用，但是默认的配置通过限制仅允许局域网访问来保证数据的安全性，如果你需要对公网提供服务，便需要额外安装插件来实现访问控制了。裸奔不仅可能带来被脱库，甚至数据会被删除而且不可恢复。本文将介绍如何选择和配置插件来保障Elasticsearch的安全。</p>]]>
+    
+    </summary>
+    
+      <category term="Elasticsearch" scheme="http://www.tnidea.com/tags/Elasticsearch/"/>
+    
+      <category term="SearchGuard" scheme="http://www.tnidea.com/tags/SearchGuard/"/>
+    
+      <category term="Snapshot" scheme="http://www.tnidea.com/tags/Snapshot/"/>
+    
+      <category term="运维" scheme="http://www.tnidea.com/categories/%E8%BF%90%E7%BB%B4/"/>
+    
+  </entry>
+  
+  <entry>
     <title><![CDATA[.NET Core 现已支持DRPC，同时带来Apache Thrift]]></title>
     <link href="http://www.tnidea.com/dotnet-core-support-drpc-now.html"/>
     <id>http://www.tnidea.com/dotnet-core-support-drpc-now.html</id>
     <published>2016-07-24T16:00:00.000Z</published>
-    <updated>2016-07-25T14:36:16.000Z</updated>
-    <content type="html"><![CDATA[<p> 上篇文章为大家带来了新版本的 Storm 适配器，今天来弥补一下上次匆忙发布带来的遗憾。是的，DRPC for .net Core 来了，当然，为了实现这个功能，一个精简版本的 Apache Thrift for .net core 也产生了；这个类库根据 <a href="https://thrift.apache.org/docs/HowToNewLanguage" target="_blank" rel="external">Poadmap for adding new language bindings</a> 完成，为了不带来误解，该项目暂时不开源，仅在 Nugut 中供 <a href="https://github.com/ziyunhx/storm-net-adapter" target="_blank" rel="external">storm-net-adapter</a> 使用，如果你也暂时需要它，可以通过 Nuget 搜索 Tnidea.Thrift 获得。</p>
+    <updated>2016-07-27T15:41:50.000Z</updated>
+    <content type="html"><![CDATA[<p> 上篇文章为大家带来了新版本的 Storm 适配器，今天来弥补一下上次匆忙发布带来的遗憾。是的，DRPC for .net Core 来了，当然，为了实现这个功能，一个精简版本的 Apache Thrift for .net core 也产生了；这个类库根据 <a href="https://thrift.apache.org/docs/HowToNewLanguage" target="_blank" rel="external">Roadmap for adding new language bindings</a> 完成，为了不带来误解，该项目暂时不开源，仅在 Nugut 中供 <a href="https://github.com/ziyunhx/storm-net-adapter" target="_blank" rel="external">storm-net-adapter</a> 使用，如果你也暂时需要它，可以通过 Nuget 搜索 Tnidea.Thrift 获得。</p>
 <a id="more"></a>
 <p> <a href="https://github.com/ziyunhx/storm-net-adapter" target="_blank" rel="external">storm-net-adapter</a> 最新版本为 2.0.5，现在支持 .Net4.0+, .Net Core。下面给大家介绍如何快速开始创建一个 DRPC Topology：</p>
 <h2 id="1-_创建-Net_DRPC_Topology项目">1. 创建.Net DRPC Topology项目</h2><ul>
@@ -51,7 +165,7 @@
 <p> 至此就全部结束了！所有的代码都在 <a href="https://github.com/ziyunhx/storm-net-adapter" target="_blank" rel="external">storm-net-adapter</a> 可以找到，你可以通过 Star 与 Fork 该项目来支持我！</p>
 ]]></content>
     <summary type="html">
-    <![CDATA[<p> 上篇文章为大家带来了新版本的 Storm 适配器，今天来弥补一下上次匆忙发布带来的遗憾。是的，DRPC for .net Core 来了，当然，为了实现这个功能，一个精简版本的 Apache Thrift for .net core 也产生了；这个类库根据 <a href="https://thrift.apache.org/docs/HowToNewLanguage">Poadmap for adding new language bindings</a> 完成，为了不带来误解，该项目暂时不开源，仅在 Nugut 中供 <a href="https://github.com/ziyunhx/storm-net-adapter">storm-net-adapter</a> 使用，如果你也暂时需要它，可以通过 Nuget 搜索 Tnidea.Thrift 获得。</p>]]>
+    <![CDATA[<p> 上篇文章为大家带来了新版本的 Storm 适配器，今天来弥补一下上次匆忙发布带来的遗憾。是的，DRPC for .net Core 来了，当然，为了实现这个功能，一个精简版本的 Apache Thrift for .net core 也产生了；这个类库根据 <a href="https://thrift.apache.org/docs/HowToNewLanguage">Roadmap for adding new language bindings</a> 完成，为了不带来误解，该项目暂时不开源，仅在 Nugut 中供 <a href="https://github.com/ziyunhx/storm-net-adapter">storm-net-adapter</a> 使用，如果你也暂时需要它，可以通过 Nuget 搜索 Tnidea.Thrift 获得。</p>]]>
     
     </summary>
     
@@ -1490,81 +1604,6 @@ nimbus<span class="class">.thrift</span><span class="class">.port</span>: <span 
       <category term="HttpWebRequest" scheme="http://www.tnidea.com/tags/HttpWebRequest/"/>
     
       <category term="csharp" scheme="http://www.tnidea.com/tags/csharp/"/>
-    
-      <category term="爬虫" scheme="http://www.tnidea.com/categories/%E7%88%AC%E8%99%AB/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[开源一个社交网站模拟登录的库]]></title>
-    <link href="http://www.tnidea.com/social-network-imitate-login.html"/>
-    <id>http://www.tnidea.com/social-network-imitate-login.html</id>
-    <published>2015-06-26T16:00:00.000Z</published>
-    <updated>2015-10-07T08:17:21.000Z</updated>
-    <content type="html"><![CDATA[<p> 网站的登录是抓取某些网站的必须步骤，大多数情况我们都是使用一个真实的浏览器去提交我们的登录信息，但是在代码中嵌套浏览器不仅会带来性能损耗，还会带来崩溃的风险。因此就有了这个使用httpRequest来模拟登录的库 <strong><a href="https://github.com/ziyunhx/imitate-login" target="_blank" rel="external">imitate-login</a></strong> ，目前仅有微博网页版和微博Wap版的实现，其它计划实现会根据项目关注度来决定（<strong>Star &amp; fork</strong>）是否更新以及更新时间。</p>
- <a id="more"></a>
-<p> <strong>如果这个项目侵犯了您的权益，请及时与我联系（可通过留言或邮件）！我会在收到的一周内协商处理。</strong></p>
-<p> 这个类库仅对外提供一个方法： </p>
-<p> <code>LoginResult Login(1: string userName, 2: string password, 3: LoginSite loginSite);</code> </p>
-<p> 这个方法位于ImitateLogin的LoginHelper类中，使用之前需要先对其进行实例化。通过传入 用户名、密码以及登录的网站，返回一个包含登录结果状态、描述信息以及Cookies字典的类。</p>
-<p> 这个类库并没有提供对验证码的支持，微博可以通过设置登录保护来避免验证码的出现：</p>
-<p> 位于 设置-&gt;账号安全-&gt;登录保护</p>
-<p> <img src="http://www.tnidea.com/media/image/imitate-login-weibo-setting.png" alt="image"></p>
-<p> 这个项目支持使用 Apache Thrift 来实现多语言环境下的RPC调用，首先安装Thrift，然后使用以下命令创建目标语言下的接口：</p>
-<p> <code>thrift --gen &lt;language&gt; ImitateLogin.thrift</code></p>
-<p>将上面命令中的<code>&lt;language&gt;</code>替换为你所使用的语言。Thrift 目前支持以下参数所代表的语言：</p>
-<ul>
-<li>as3</li>
-<li>c_glib</li>
-<li>cpp</li>
-<li>csharp</li>
-<li>delphi</li>
-<li>erl</li>
-<li>go</li>
-<li>hs</li>
-<li>java</li>
-<li>js</li>
-<li>ocaml</li>
-<li>perl</li>
-<li>php</li>
-<li>py</li>
-<li>rb</li>
-</ul>
-<p>然后在csharp端添加服务端得代码：</p>
-<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Start</span>(<span class="params"></span>) </span><br><span class="line"></span>&#123; </span><br><span class="line">	TServerSocket serverTransport = <span class="keyword">new</span> TServerSocket(<span class="number">7901</span>, <span class="number">0</span>, <span class="keyword">false</span>); </span><br><span class="line">	Login.Processor processor = <span class="keyword">new</span> Login.Processor(<span class="keyword">new</span> LoginHelper()); </span><br><span class="line">	TServer server = <span class="keyword">new</span> TSimpleServer(processor, serverTransport); </span><br><span class="line">	Console.WriteLine(<span class="string">"Starting server on port 7901 ..."</span>); </span><br><span class="line">	server.Serve(); </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p> 然后在其它语言（例如JAVA）中实现客户端的方法：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">TTransport transport = <span class="keyword">new</span> TSocket(<span class="string">"localhost"</span>, <span class="number">7901</span>);</span><br><span class="line">transport.open();</span><br><span class="line">TProtocol protocol = <span class="keyword">new</span> TBinaryProtocol(transport);</span><br><span class="line">Login.Client client = <span class="keyword">new</span> Login.Client(protocol);</span><br><span class="line">client.Login(<span class="string">"username"</span>, <span class="string">"password"</span>, LoginSite.Weibo);</span><br></pre></td></tr></table></figure>
-<p>将上述语句中的 username 和 password 替换为真实用于登录的微博账户。</p>
-<p>你可以在包含Mono或.Net Framework的环境下运行 <strong><a href="https://github.com/ziyunhx/imitate-login" target="_blank" rel="external">imitate-login</a></strong> 类库。该类库里包含一个使用Gtk+创建的测试窗体程序，如果你希望使用它，需要额外安装 Gtk+ for Mono.</p>
-<p>该类库已经完成的社交网站支持：</p>
-<ul>
-<li>Weibo</li>
-<li>WeiboWap</li>
-</ul>
-<p>计划完成的支持：</p>
-<ul>
-<li>Taobao</li>
-<li>QQ</li>
-<li>Facebook</li>
-<li>Twitter</li>
-<li>Google</li>
-</ul>
-<p>计划支持部分会根据项目关注度来决定（<strong>Star &amp; fork</strong>）是否更新以及更新时间。</p>
-]]></content>
-    <summary type="html">
-    <![CDATA[<p> 网站的登录是抓取某些网站的必须步骤，大多数情况我们都是使用一个真实的浏览器去提交我们的登录信息，但是在代码中嵌套浏览器不仅会带来性能损耗，还会带来崩溃的风险。因此就有了这个使用httpRequest来模拟登录的库 <strong><a href="https://github.com/ziyunhx/imitate-login">imitate-login</a></strong> ，目前仅有微博网页版和微博Wap版的实现，其它计划实现会根据项目关注度来决定（<strong>Star &amp; fork</strong>）是否更新以及更新时间。</p>]]>
-    
-    </summary>
-    
-      <category term=".NET" scheme="http://www.tnidea.com/tags/NET/"/>
-    
-      <category term="C#" scheme="http://www.tnidea.com/tags/C/"/>
-    
-      <category term="csharp" scheme="http://www.tnidea.com/tags/csharp/"/>
-    
-      <category term="social network" scheme="http://www.tnidea.com/tags/social-network/"/>
-    
-      <category term="thrift" scheme="http://www.tnidea.com/tags/thrift/"/>
     
       <category term="爬虫" scheme="http://www.tnidea.com/categories/%E7%88%AC%E8%99%AB/"/>
     
