@@ -186,7 +186,7 @@ cp kirk-keystore.jks <span class="regexp">/usr/</span>share<span class="regexp">
     <link href="http://www.tnidea.com/using-storm-at-dotnet-core.html"/>
     <id>http://www.tnidea.com/using-storm-at-dotnet-core.html</id>
     <published>2016-07-10T16:00:00.000Z</published>
-    <updated>2016-07-12T15:01:11.000Z</updated>
+    <updated>2016-07-25T14:31:39.000Z</updated>
     <content type="html"><![CDATA[<p> .Net Core 自发布以来广受关注，基于其开源与跨平台的特性，可以预见其在 web 开发领域越来越受青睐。现在，Apache Storm 的 .Net Core 版本的适配器正式发布，你现在也可以使用 .Net Core 开发 Topology，实现分布式跨平台的实时计算。</p>
 <a id="more"></a>
 <p> <a href="https://github.com/ziyunhx/storm-net-adapter" target="_blank" rel="external">storm-net-adapter</a> 现在已经更新到 2.0.4，增加了对 .Net Core 的支持，并对之前存在的例如输出复杂日志时的 BUG 进行了修复；由于目前 Thrift 的适配暂时还未完成，因此还无法使用 DRPC 的特性。同时，Storm 集群的 Docker 的镜像编排也已经集成了 .Net Core ，你可以通过 <a href="https://github.com/ziyunhx/storm-mono-docker" target="_blank" rel="external">storm-mono-docker</a> 获取到它。</p>
