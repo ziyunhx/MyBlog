@@ -28,20 +28,19 @@ widgets:
 #- recent_posts
 - category
 - archive
+#- links
 #- tag
 
 thumbnail: true
 
 # Contacts
 contacts:
-  github: http://github.com/ziyunhx
+  github: https://github.com/ziyunhx
   twitter: 'https://twitter.com/ziyunhx'
-  facebook: 'http://www.facebook.com/ziyunhx'
+  facebook: 'https://www.facebook.com/ziyunhx'
   rss: atom.xml
 
 # Links
-links:
-#  Hexo: http://hexo.io
 
 # CDN
 cdn: baidu #If your site loads slowly change it to "google" , because "useso" is slow out of China

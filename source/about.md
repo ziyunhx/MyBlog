@@ -8,9 +8,9 @@ Carey Tzou，男，与80后一起长大的90后，非典型处女座，间歇性
 
 C#, Java, Python, JS, Html
 
-<a href="http://www.tnidea.com/media/image/mvp-logo.png" title="MVP(2015 .Net)" class="fancybox" rel="article0"><img style="display:inline;width:200px;" src="http://www.tnidea.com/media/image/mvp-logo.png" alt="MVP(2015 .Net)"></a>
+<a href="https://www.tnidea.com/media/image/mvp-logo.png" title="MVP(2015 .Net)" class="fancybox" rel="article0"><img style="display:inline;width:200px;" src="https://www.tnidea.com/media/image/mvp-logo.png" alt="MVP(2015 .Net)"></a>
 
-MVP(2015 .Net)
+MVP(2015-2016 .Net)
 
 #### 工作
 
@@ -28,5 +28,9 @@ MVP(2015 .Net)
  - [Email](mailto:carey@tnidea.com "Personal Email")
  - [Twitter](https://twitter.com/ziyunhx "Twitter-ziyunhx")
 
+<br/>
+<div class="bd-reward-stl"><button id="bdRewardBtn"><span></span></button></div>
+<br/>
+
 欢迎关注微信公众号：CareyTzou（dotNet大数据）
-<a href="http://www.tnidea.com/media/image/wechat.jpg" title="Wechat:CareyTzou" class="fancybox" rel="article0"><img style="width:160px;display:inline;" src="http://www.tnidea.com/media/image/wechat.jpg" alt="Wechat:CareyTzou"></a>
+<a href="https://www.tnidea.com/media/image/wechat.jpg" title="Wechat:CareyTzou" class="fancybox" rel="article0"><img style="width:160px;display:inline;" src="https://www.tnidea.com/media/image/wechat.jpg" alt="Wechat:CareyTzou"></a>

@@ -11,7 +11,7 @@ author_title: 'Programmer & Architect'
 avatar: css/images/avatar.png
 location: 'Shanghai, China'
 follow: https://github.com/ziyunhx/
-language: zh_CN
+language: zh-CN
 timezone: Asia/Shanghai
 since: 2013 # The start year showing in your copyright section.
 
@@ -70,10 +70,10 @@ pagination_dir: page
 theme: icarus
 
 # Disqus
-disqus_shortname: tnidea
+#disqus_shortname: tnidea
 
 # DuoShuo
-#duoshuo_shortname: tnidea
+duoshuo_shortname: tnidea
 
 # Deployment
 ## Docs: http://hexo.io/docs/deployment.html
