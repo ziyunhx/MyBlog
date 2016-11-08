@@ -9,7 +9,7 @@
   <meta name="description" content="监控是系统运维的基础，Icinga是一个开源的监控系统框架，通过其广泛的插件支持，你可以监控几乎任何你能想到的网络资源；也可以在超过临界值时给予通知，根据监控数据生产报表。本文将介绍如何通过SNMP协议来监控服务器的带宽以及内存占用。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="使用Icinga2监控服务器带宽以及内存占用">
-<meta property="og:url" content="http://www.tnidea.com/add-network-memory-for-icinga2-monitor.html">
+<meta property="og:url" content="https://www.tnidea.com/add-network-memory-for-icinga2-monitor.html">
 <meta property="og:site_name" content="地平线">
 <meta property="og:description" content="监控是系统运维的基础，Icinga是一个开源的监控系统框架，通过其广泛的插件支持，你可以监控几乎任何你能想到的网络资源；也可以在超过临界值时给予通知，根据监控数据生产报表。本文将介绍如何通过SNMP协议来监控服务器的带宽以及内存占用。">
 <meta property="og:updated_time" content="2016-01-10T14:03:39.000Z">
@@ -503,7 +503,7 @@
 </table>
 <p>下面是一个检查网络的例子，同样放在 services.conf：</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">apply Service &#34;network&#34; &#123;&#10;  import &#34;generic-service&#34;&#10;&#10;  check_command = &#34;snmp-interface&#34;&#10;  vars.snmp_nocrypt = &#34;authNoPriv&#34;&#10;  vars.snmp_v3 = true&#10;  vars.snmp_login = &#34;carey&#34;&#10;  vars.snmp_password = &#34;tnidea@carey&#34;&#10;  vars.snmp_interface = &#34;eth0&#34;&#10;  vars.snmp_authprotocol = &#34;MD5&#34;&#10;  vars.snmp_interface_megabytes = false&#10;  assign where host.name == NodeName&#10;&#125;</span><br></pre></td></tr></table></figure>
-    <p>本文来自 <a href="http://www.tnidea.com/" title="The NewIdea" target="_blank" rel="external">The NewIdea</a>，作者 Carey Tzou 。<br>永久地址：<a href="http://www.tnidea.com/add-network-memory-for-icinga2-monitor.html" title="使用Icinga2监控服务器带宽以及内存占用" target="_blank" rel="external">http://www.tnidea.com/add-network-memory-for-icinga2-monitor.html</a><br>未经授权，拒绝任何全文及摘要转载！<br>
+    <p>本文来自 <a href="http://www.tnidea.com/" title="The NewIdea" target="_blank" rel="external">The NewIdea</a>，作者 Carey Tzou 。<br>永久地址：<a href="https://www.tnidea.com/add-network-memory-for-icinga2-monitor.html" title="使用Icinga2监控服务器带宽以及内存占用" target="_blank" rel="external">https://www.tnidea.com/add-network-memory-for-icinga2-monitor.html</a><br>未经授权，拒绝任何全文及摘要转载！<br>
     <br>
     <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
     <!-- 博客正文广告 -->
@@ -532,9 +532,9 @@
   </div>
 
 
-      <a data-url="http://www.tnidea.com/add-network-memory-for-icinga2-monitor.html" data-id="cisqzdgxa0000mes34gzhhwlj" class="article-share-link">分享到</a>
+      <a data-url="https://www.tnidea.com/add-network-memory-for-icinga2-monitor.html" data-id="cisqzdgxa0000mes34gzhhwlj" class="article-share-link">分享到</a>
       
-        <a href="http://www.tnidea.com/add-network-memory-for-icinga2-monitor.html#disqus_thread" class="article-comment-link">评论</a>
+        <a href="https://www.tnidea.com/add-network-memory-for-icinga2-monitor.html#disqus_thread" class="article-comment-link">评论</a>
       
       
   <div class="article-tag">
@@ -657,7 +657,7 @@
 var _hmt = _hmt || [];
 (function() {
   var hm = document.createElement("script");
-  hm.src = "//hm.baidu.com/hm.js?855c1789992bb648e4734a1e1045c672";
+  hm.src = "https://hm.baidu.com/hm.js?855c1789992bb648e4734a1e1045c672";
   var s = document.getElementsByTagName("script")[0]; 
   s.parentNode.insertBefore(hm, s);
 })();

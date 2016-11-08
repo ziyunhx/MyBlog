@@ -9,7 +9,7 @@
   <meta name="description" content="上篇文章为大家带来了新版本的 Storm 适配器，今天来弥补一下上次匆忙发布带来的遗憾。是的，DRPC for .net Core 来了，当然，为了实现这个功能，一个精简版本的 Apache Thrift for .net core 也产生了；这个类库根据 Roadmap for adding new language bindings 完成，为了不带来误解，该项目暂时不开源，仅在 Nugut 中">
 <meta property="og:type" content="article">
 <meta property="og:title" content=".NET Core 现已支持DRPC，同时带来Apache Thrift">
-<meta property="og:url" content="http://www.tnidea.com/dotnet-core-support-drpc-now.html">
+<meta property="og:url" content="https://www.tnidea.com/dotnet-core-support-drpc-now.html">
 <meta property="og:site_name" content="地平线">
 <meta property="og:description" content="上篇文章为大家带来了新版本的 Storm 适配器，今天来弥补一下上次匆忙发布带来的遗憾。是的，DRPC for .net Core 来了，当然，为了实现这个功能，一个精简版本的 Apache Thrift for .net core 也产生了；这个类库根据 Roadmap for adding new language bindings 完成，为了不带来误解，该项目暂时不开源，仅在 Nugut 中">
 <meta property="og:updated_time" content="2016-07-27T15:41:50.000Z">
@@ -155,7 +155,7 @@
 <h2 id="3-_使用C#调用刚刚提交的DRPC_Topology">3. 使用C#调用刚刚提交的DRPC Topology</h2><figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">using</span> System;</span><br><span class="line"><span class="keyword">using</span> System.Collections.Generic;</span><br><span class="line"><span class="keyword">using</span> System.Linq;</span><br><span class="line"><span class="keyword">using</span> System.Threading.Tasks;</span><br><span class="line"><span class="keyword">using</span> Storm;</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">Storm.DRPC.Demo</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Program</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>(<span class="params"><span class="keyword">string</span>[] args</span>)</span><br><span class="line">        </span>&#123;</span><br><span class="line">            DRPCClient client = <span class="keyword">new</span> DRPCClient(<span class="string">"host"</span>, <span class="number">3772</span>);</span><br><span class="line">            <span class="keyword">string</span> result = client.execute(<span class="string">"simpledrpc"</span>, <span class="string">"hello word"</span>);</span><br><span class="line">            Console.WriteLine(result);</span><br><span class="line">            Console.WriteLine(<span class="string">"Please input a word and press enter, if you want quit it, press enter only!"</span>);</span><br><span class="line">            <span class="keyword">do</span></span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">string</span> input = Console.ReadLine();</span><br><span class="line">                <span class="keyword">if</span> (<span class="keyword">string</span>.IsNullOrEmpty(input))</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line">                Console.WriteLine(client.execute(<span class="string">"simpledrpc"</span>, input));</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">while</span> (<span class="keyword">true</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p> 至此就全部结束了！所有的代码都在 <a href="https://github.com/ziyunhx/storm-net-adapter" target="_blank" rel="external">storm-net-adapter</a> 可以找到，你可以通过 Star 与 Fork 该项目来支持我！</p>
 
-    <p>本文来自 <a href="http://www.tnidea.com/" title="The NewIdea" target="_blank" rel="external">The NewIdea</a>，作者 Carey Tzou 。<br>永久地址：<a href="http://www.tnidea.com/dotnet-core-support-drpc-now.html" title=".NET Core 现已支持DRPC，同时带来Apache Thrift" target="_blank" rel="external">http://www.tnidea.com/dotnet-core-support-drpc-now.html</a><br>未经授权，拒绝任何全文及摘要转载！<br>
+    <p>本文来自 <a href="http://www.tnidea.com/" title="The NewIdea" target="_blank" rel="external">The NewIdea</a>，作者 Carey Tzou 。<br>永久地址：<a href="https://www.tnidea.com/dotnet-core-support-drpc-now.html" title=".NET Core 现已支持DRPC，同时带来Apache Thrift" target="_blank" rel="external">https://www.tnidea.com/dotnet-core-support-drpc-now.html</a><br>未经授权，拒绝任何全文及摘要转载！<br>
     <br>
     <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
     <!-- 博客正文广告 -->
@@ -184,9 +184,9 @@
   </div>
 
 
-      <a data-url="http://www.tnidea.com/dotnet-core-support-drpc-now.html" data-id="cisqzdgzt004ames3p79u0kre" class="article-share-link">分享到</a>
+      <a data-url="https://www.tnidea.com/dotnet-core-support-drpc-now.html" data-id="cisqzdgzt004ames3p79u0kre" class="article-share-link">分享到</a>
       
-        <a href="http://www.tnidea.com/dotnet-core-support-drpc-now.html#disqus_thread" class="article-comment-link">评论</a>
+        <a href="https://www.tnidea.com/dotnet-core-support-drpc-now.html#disqus_thread" class="article-comment-link">评论</a>
       
       
   <div class="article-tag">
@@ -309,7 +309,7 @@
 var _hmt = _hmt || [];
 (function() {
   var hm = document.createElement("script");
-  hm.src = "//hm.baidu.com/hm.js?855c1789992bb648e4734a1e1045c672";
+  hm.src = "https://hm.baidu.com/hm.js?855c1789992bb648e4734a1e1045c672";
   var s = document.getElementsByTagName("script")[0]; 
   s.parentNode.insertBefore(hm, s);
 })();
