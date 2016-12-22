@@ -12,7 +12,7 @@
 <meta property="og:url" content="http://www.tnidea.com/using-efcore-code-first-for-mysql.html">
 <meta property="og:site_name" content="地平线">
 <meta property="og:description" content="EntityFramework(以下简称EF) 作为 .NET 广受欢迎的数据库操作中间件，支持了几乎所有你用过的关系型数据库，本文将非常基础的介绍其在 Mysql 中的使用。EF 常见的使用模式有三种：CodeFirst, ModelFirst, DBFirst；三种方式各有所特点，一般要根据实际的业务情况做选择。">
-<meta property="og:updated_time" content="2016-12-22T16:31:22.000Z">
+<meta property="og:updated_time" content="2016-12-22T16:35:23.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="使用 EF Core CodeFirst 操作 Mysql 数据库">
 <meta name="twitter:description" content="EntityFramework(以下简称EF) 作为 .NET 广受欢迎的数据库操作中间件，支持了几乎所有你用过的关系型数据库，本文将非常基础的介绍其在 Mysql 中的使用。EF 常见的使用模式有三种：CodeFirst, ModelFirst, DBFirst；三种方式各有所特点，一般要根据实际的业务情况做选择。">
@@ -130,8 +130,7 @@
 <p> 在完全没有历史负担的情况下，选择 CodeFirst 更为普遍，在最新的 EntityFramework Core 中 CodeFirst 几乎是唯一的选择。本文将介绍如何使用 CodeFirst 创建和操作 Mysql 数据库，文中将以微信企业号的用户同步作为案例。IDE 使用 Visual Studio for Mac。</p>
 <p> 首先，使用 Mac 版 Visual Studio 创建一个 Console Application(.NET Core) 项目：EFCoreSample。使用 Nuget 增加 EFCore 以及 Mysql 所需要的包：</p>
 <ul>
-<li><p>Microsoft.EntityFrameworkCore</p>
-</li>
+<li>Microsoft.EntityFrameworkCore</li>
 <li><p>MySql.Data.EntityFrameworkCore</p>
 <p>然后，由于本次例子中会使用到微信企业号的 API，我们直接引用第三方包来实现：</p>
 </li>
@@ -139,19 +138,19 @@
 </li>
 <li><p>Senparc.Weixin.QY</p>
 <p>第三步，在解决方案中新建一个 Models 文件夹，增加部门（Party），用户（User），标签（Tag）类，以及它们之间的相互关系部门标签（PartyTag），用户部门（UserParty），用户标签（UserTag）类，均为多对多关系。类的详细定义代码如下：</p>
-<p>部门（Party）</p>
+<p><strong> 部门（Party） </strong></p>
 </li>
 </ul>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">public class Party&#10;&#123;&#10;    public Party()&#10;    &#123;&#10;        UserPartys = new List&#60;UserParty&#62;();&#10;        PartyTags = new List&#60;PartyTag&#62;();&#10;    &#125;&#10;&#10;    /// &#60;summary&#62;&#10;    /// &#37096;&#38376;Id&#10;    /// &#60;/summary&#62;&#10;    [Key]&#10;    public int PartyId &#123; get; set; &#125;&#10;    /// &#60;summary&#62;&#10;    /// &#37096;&#38376;&#21517;&#31216;&#10;    /// &#60;/summary&#62;&#10;    [Required]&#10;    [StringLength(32)]&#10;    public string Name &#123; get; set; &#125;&#10;    /// &#60;summary&#62;&#10;    /// &#22312;&#29238;&#37096;&#38376;&#20013;&#30340;&#27425;&#24207;&#20540;&#12290;order&#20540;&#23567;&#30340;&#25490;&#24207;&#38752;&#21069;&#12290;&#10;    /// &#60;/summary&#62;&#10;    public int Order &#123; get; set; &#125;&#10;    /// &#60;summary&#62;&#10;    /// &#19978;&#32423;&#37096;&#38376;Id&#10;    /// &#60;/summary&#62;&#10;    public int ParentPartyId &#123; get; set; &#125;&#10;    public List&#60;UserParty&#62; UserPartys &#123; set; get; &#125;&#10;    public List&#60;PartyTag&#62; PartyTags &#123; set; get; &#125;&#10;&#125;</span><br></pre></td></tr></table></figure>
-<p>用户（User）</p>
+<p> <strong> 用户（User） </strong> </p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">public class User&#10;&#123;&#10;    public User()&#10;    &#123;&#10;        UserPartys = new List&#60;UserParty&#62;();&#10;        UserTags = new List&#60;UserTag&#62;();&#10;    &#125;&#10;&#10;    /// &#60;summary&#62;&#10;    /// &#21592;&#24037;UserID&#10;    /// &#60;/summary&#62;&#10;    [Key]&#10;    [StringLength(32)]&#10;    public string UserId &#123; get; set; &#125;&#10;    /// &#60;summary&#62;&#10;    /// &#22836;&#20687;url&#12290;&#27880;&#65306;&#23567;&#22270;&#23558;url&#26368;&#21518;&#30340;&#34;/0&#34;&#25913;&#25104;&#34;/64&#34;&#10;    /// &#60;/summary&#62;&#10;    [StringLength(256)]&#10;    public string Avatar &#123; get; set; &#125;&#10;    /// &#60;summary&#62;&#10;    /// &#37038;&#31665;&#10;    /// &#60;/summary&#62;&#10;    [StringLength(256)]&#10;    public string Email &#123; get; set; &#125;&#10;    /// &#60;summary&#62;&#10;    /// &#24615;&#21035;&#12290;gender=0&#34920;&#31034;&#30007;&#65292;=1&#34920;&#31034;&#22899;&#10;    /// &#60;/summary&#62;&#10;    public int Gender &#123; get; set; &#125;&#10;    /// &#60;summary&#62;&#10;    /// &#25163;&#26426;&#21495;&#30721;&#10;    /// &#60;/summary&#62;&#10;    [StringLength(32)]&#10;    public string Mobile &#123; get; set; &#125;&#10;    /// &#60;summary&#62;&#10;    /// &#25104;&#21592;&#21517;&#31216;&#10;    /// &#60;/summary&#62;&#10;    [StringLength(128)]&#10;    public string Name &#123; get; set; &#125;&#10;    /// &#60;summary&#62;&#10;    /// &#32844;&#20301;&#20449;&#24687;&#10;    /// &#60;/summary&#62;&#10;    [StringLength(64)]&#10;    public string Position &#123; get; set; &#125;&#10;    /// &#60;summary&#62;&#10;    /// &#20851;&#27880;&#29366;&#24577;: 1=&#24050;&#20851;&#27880;&#65292;2=&#24050;&#20923;&#32467;&#65292;4=&#26410;&#20851;&#27880;&#10;    /// &#60;/summary&#62;&#10;    public int Status &#123; get; set; &#125;&#10;    /// &#60;summary&#62;&#10;    /// &#24494;&#20449;&#21495;&#10;    /// &#60;/summary&#62;&#10;    [StringLength(64)]&#10;    public string Weixinid &#123; get; set; &#125;&#10;    /// &#60;summary&#62;&#10;    /// &#25104;&#21592;&#25152;&#23646;&#37096;&#38376;&#21015;&#34920;&#10;    /// &#60;/summary&#62;&#10;    public List&#60;UserParty&#62; UserPartys &#123; get; set; &#125;&#10;    public List&#60;UserTag&#62; UserTags &#123; set; get; &#125;&#10;&#125;</span><br></pre></td></tr></table></figure>
-<p>标签（Tag）</p>
+<p> <strong> 标签（Tag） </strong> </p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">public class Tag&#10;&#123;&#10;    public Tag()&#10;    &#123;&#10;        PartyTags = new List&#60;PartyTag&#62;();&#10;        UserTags = new List&#60;UserTag&#62;();&#10;    &#125;&#10;&#10;    [Key]&#10;    public int TagId &#123; set; get; &#125;&#10;    [Required]&#10;    [StringLength(64)]&#10;    public string TagName &#123; set; get; &#125;&#10;    public List&#60;PartyTag&#62; PartyTags &#123; get; set; &#125;&#10;    public List&#60;UserTag&#62; UserTags &#123; get; set; &#125;&#10;&#125;</span><br></pre></td></tr></table></figure>
-<p>部门标签（PartyTag）</p>
+<p> <strong> 部门标签（PartyTag） </strong> </p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">public class PartyTag&#10;&#123;&#10;    public int PartyId &#123; set; get; &#125;&#10;    public Party Party &#123; set; get; &#125;&#10;&#10;    public int TagId &#123; set; get; &#125;&#10;    public Tag Tag &#123; set; get; &#125;&#10;&#125;</span><br></pre></td></tr></table></figure>
-<p>用户部门（UserParty）</p>
+<p> <strong> 用户部门（UserParty） </strong> </p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">public class UserParty&#10;&#123;&#10;    [StringLength(32)]&#10;    public string UserId &#123; set; get; &#125;&#10;    public User User &#123; set; get; &#125;&#10;&#10;    public int PartyId &#123; set; get; &#125;&#10;    public Party Party &#123; set; get; &#125;&#10;&#125;</span><br></pre></td></tr></table></figure>
-<p>用户标签（UserTag）</p>
+<p> <strong> 用户标签（UserTag） </strong> </p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">public class UserTag&#10;&#123;&#10;    [StringLength(32)]&#10;    public string UserId &#123; set; get; &#125;&#10;    public User User &#123; set; get; &#125;&#10;&#10;    public int TagId &#123; set; get; &#125;&#10;    public Tag Tag &#123; set; get; &#125;&#10;&#125;</span><br></pre></td></tr></table></figure>
 <p> 第四步，增加 WechatContext 类来操作数据库：</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">public class WechatContext : DbContext&#10;&#123;&#10;    public DbSet&#60;User&#62; Users &#123; set; get; &#125;&#10;    public DbSet&#60;Party&#62; Partys &#123; set; get; &#125;&#10;    public DbSet&#60;Tag&#62; Tags &#123; set; get; &#125;&#10;    public DbSet&#60;PartyTag&#62; PartyTags &#123; set; get; &#125;&#10;    public DbSet&#60;UserParty&#62; UserPartys &#123; set; get; &#125;&#10;    public DbSet&#60;UserTag&#62; UserTags &#123; set; get; &#125;&#10;&#10;    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)&#10;        =&#62; optionsBuilder.UseMySQL(@&#34;server=127.0.0.1;user id=root;password=root;persistsecurityinfo=True;database=wechatdb;Character Set=utf8&#34;);&#10;&#10;    protected override void OnModelCreating(ModelBuilder modelBuilder)&#10;    &#123;&#10;        modelBuilder.Entity&#60;PartyTag&#62;()&#10;                    .HasKey(c =&#62; new &#123; c.PartyId, c.TagId &#125;);&#10;        modelBuilder.Entity&#60;UserParty&#62;()&#10;                    .HasKey(c =&#62; new &#123; c.PartyId, c.UserId &#125;);&#10;        modelBuilder.Entity&#60;UserTag&#62;()&#10;                    .HasKey(c =&#62; new &#123; c.UserId, c.TagId &#125;);&#10;&#10;    &#125;&#10;&#125;</span><br></pre></td></tr></table></figure>
