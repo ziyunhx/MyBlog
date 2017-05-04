@@ -2,6 +2,16 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://www.tnidea.com/call-dot-net-drpc-program.html</loc>
+    <lastmod>2017-05-04T06:19:11.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://www.tnidea.com/deploy-wordcount-topology.html</loc>
+    <lastmod>2017-05-04T06:19:11.000Z</lastmod>
+  </url>
+  
+  <url>
     <loc>http://www.tnidea.com/using-efcore-code-first-for-mysql.html</loc>
     <lastmod>2016-12-22T16:37:35.000Z</lastmod>
   </url>
@@ -87,11 +97,6 @@
   </url>
   
   <url>
-    <loc>http://www.tnidea.com/call-dot-net-drpc-program.html</loc>
-    <lastmod>2015-10-29T13:01:55.000Z</lastmod>
-  </url>
-  
-  <url>
     <loc>http://www.tnidea.com/monitor-system-by-icinga2.html</loc>
     <lastmod>2015-10-11T16:00:41.000Z</lastmod>
   </url>
@@ -114,11 +119,6 @@
   <url>
     <loc>http://www.tnidea.com/git-project-version.html</loc>
     <lastmod>2015-10-07T08:15:59.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://www.tnidea.com/deploy-wordcount-topology.html</loc>
-    <lastmod>2015-10-07T08:15:09.000Z</lastmod>
   </url>
   
   <url>
