@@ -9,12 +9,12 @@
   <meta name="description" content="WordCount在大数据领域就像学习一门语言时的hello world，得益于Storm的开源以及Storm.Net.Adapter，现在我们也可以像Java或Python一样，使用Csharp创建原生支持的Storm Topologies。下面我将通过介绍wordcount来展示如何使用Csharp开发Storm拓扑。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="使用Csharp创建你的第一个Storm拓扑（wordcount）">
-<meta property="og:url" content="http://www.tnidea.com/you-first-csharp-storm-topology.html">
+<meta property="og:url" content="https://www.tnidea.com/you-first-csharp-storm-topology.html">
 <meta property="og:site_name" content="地平线">
 <meta property="og:description" content="WordCount在大数据领域就像学习一门语言时的hello world，得益于Storm的开源以及Storm.Net.Adapter，现在我们也可以像Java或Python一样，使用Csharp创建原生支持的Storm Topologies。下面我将通过介绍wordcount来展示如何使用Csharp开发Storm拓扑。">
-<meta property="og:image" content="http://www.tnidea.com/media/image/wordcount-project.png">
-<meta property="og:image" content="http://www.tnidea.com/media/image/wordcount-topology.png">
-<meta property="og:updated_time" content="2015-10-07T08:18:04.000Z">
+<meta property="og:image" content="https://www.tnidea.com/media/image/wordcount-project.png">
+<meta property="og:image" content="https://www.tnidea.com/media/image/wordcount-topology.png">
+<meta property="og:updated_time" content="2017-05-04T06:22:15.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="使用Csharp创建你的第一个Storm拓扑（wordcount）">
 <meta name="twitter:description" content="WordCount在大数据领域就像学习一门语言时的hello world，得益于Storm的开源以及Storm.Net.Adapter，现在我们也可以像Java或Python一样，使用Csharp创建原生支持的Storm Topologies。下面我将通过介绍wordcount来展示如何使用Csharp开发Storm拓扑。">
@@ -128,7 +128,7 @@
 <a id="more"></a>
 <p> 上篇博客已经介绍了如何部署Storm开发环境，本文所讲述demo已包含在<a href="https://github.com/ziyunhx/storm-net-adapter" title="Storm.Net.Adapter" target="_blank" rel="external">Storm.Net.Adapter</a>中，如果你觉得对你有帮助，欢迎Star和Fork，让更多人看到来帮助完善这个项目。</p>
 <p> 首先，我们创建一个控制台应用程序（使用控制台是方便调用） StormSimple；使用Nuget添加添加Storm.Net.Adapter（该类库的namespace为Storm）。</p>
-<p><img src="http://www.tnidea.com/media/image/wordcount-project.png" alt="wordcount project"></p>
+<p><img src="https://www.tnidea.com/media/image/wordcount-project.png" alt="wordcount project"></p>
 <p> <strong>STEP1</strong>：通过继承ISpout创建一个Spout：Generator，实现ISpout的四个方法：</p>
 <figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Open</span>(<span class="params">Config stormConf, TopologyContext context</span>)</span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">NextTuple</span>(<span class="params"></span>)</span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Ack</span>(<span class="params"><span class="keyword">long</span> seqId</span>)</span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Fail</span>(<span class="params"><span class="keyword">long</span> seqId</span>)</span>;</span><br></pre></td></tr></table></figure>
 <p> 在实现这4个方法之前，我们还需要创建一些变量和方法来初始化这个类：</p>
@@ -156,9 +156,9 @@
 <p> <strong>STEP3</strong>：修改Program.cs来方便使用Java调用。</p>
 <figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">using</span> Storm;</span><br><span class="line"><span class="keyword">using</span> System;</span><br><span class="line"><span class="keyword">using</span> System.Linq;</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">StormSample</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">class</span> <span class="title">Program</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>(<span class="params"><span class="keyword">string</span>[] args</span>)</span><br><span class="line">        </span>&#123;</span><br><span class="line">            <span class="keyword">if</span> (args.Count() &gt; <span class="number">0</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">string</span> compName = args[<span class="number">0</span>];</span><br><span class="line"></span><br><span class="line">                <span class="keyword">try</span></span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="keyword">if</span> (<span class="string">"generator"</span>.Equals(compName))</span><br><span class="line">                    &#123;</span><br><span class="line">                        ApacheStorm.LaunchPlugin(<span class="keyword">new</span> newPlugin(Generator.Get));</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="function"><span class="keyword">else</span> <span class="title">if</span> (<span class="params"><span class="string">"splitter"</span>.Equals(compName</span>))</span><br><span class="line">                    </span>&#123;</span><br><span class="line">                        ApacheStorm.LaunchPlugin(<span class="keyword">new</span> newPlugin(Splitter.Get));</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="function"><span class="keyword">else</span> <span class="title">if</span> (<span class="params"><span class="string">"counter"</span>.Equals(compName</span>))</span><br><span class="line">                    </span>&#123;</span><br><span class="line">                        ApacheStorm.LaunchPlugin(<span class="keyword">new</span> newPlugin(Counter.Get));</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">else</span></span><br><span class="line">                    &#123;</span><br><span class="line">                        <span class="keyword">throw</span> <span class="keyword">new</span> Exception(<span class="keyword">string</span>.Format(<span class="string">"unexpected compName: &#123;0&#125;"</span>, compName));</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">catch</span> (Exception ex)</span><br><span class="line">                &#123;</span><br><span class="line">                    Context.Logger.Error(ex.ToString());</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">            &#123;</span><br><span class="line">                Context.Logger.Error(<span class="string">"Not support local model."</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p> 我们在Main方法里使用参数来确定具体调用的是哪个Spout/Bolt，ApacheStorm是一个包含主要方法的类，之所以不使用Storm只是因为命名空间占用了它。Csharp端的代码到此就全部结束了，Java端的代码与部署发布将在下一篇详细介绍，敬请期待！下面让我们来看一看整个Topology的流程吧！</p>
-<p> <img src="http://www.tnidea.com/media/image/wordcount-topology.png" alt="WordCount Topology"></p>
+<p> <img src="https://www.tnidea.com/media/image/wordcount-topology.png" alt="WordCount Topology"></p>
 
-    <p>本文来自 <a href="https://www.tnidea.com/" title="The NewIdea" target="_blank" rel="external">The NewIdea</a>，作者 Carey Tzou 。<br>永久地址：<a href="http://www.tnidea.com/you-first-csharp-storm-topology.html" title="使用Csharp创建你的第一个Storm拓扑（wordcount）" target="_blank" rel="external">http://www.tnidea.com/you-first-csharp-storm-topology.html</a><br>未经授权，拒绝任何全文及摘要转载！<br>
+    <p>本文来自 <a href="https://www.tnidea.com/" title="The NewIdea" target="_blank" rel="external">The NewIdea</a>，作者 Carey Tzou 。<br>永久地址：<a href="https://www.tnidea.com/you-first-csharp-storm-topology.html" title="使用Csharp创建你的第一个Storm拓扑（wordcount）" target="_blank" rel="external">https://www.tnidea.com/you-first-csharp-storm-topology.html</a><br>未经授权，拒绝任何全文及摘要转载！<br>
     <br>
     <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
     <!-- 博客正文广告 -->
@@ -185,9 +185,9 @@
   </div>
 
 
-      <a data-url="http://www.tnidea.com/you-first-csharp-storm-topology.html" data-id="cisqzdgxs000gmes3fdvlmphu" class="article-share-link">分享到</a>
+      <a data-url="https://www.tnidea.com/you-first-csharp-storm-topology.html" data-id="cisqzdgxs000gmes3fdvlmphu" class="article-share-link">分享到</a>
       
-        <a href="http://www.tnidea.com/you-first-csharp-storm-topology.html#disqus_thread" class="article-comment-link">评论</a>
+        <a href="https://www.tnidea.com/you-first-csharp-storm-topology.html#disqus_thread" class="article-comment-link">评论</a>
       
       
   <div class="article-tag">

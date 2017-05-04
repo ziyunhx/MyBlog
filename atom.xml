@@ -3,9 +3,9 @@
   <title><![CDATA[地平线]]></title>
   <subtitle><![CDATA[纯粹的技术导向！]]></subtitle>
   <link href="/atom.xml" rel="self"/>
-  <link href="http://www.tnidea.com/"/>
+  <link href="https://www.tnidea.com/"/>
   <updated>2016-12-22T16:37:35.000Z</updated>
-  <id>http://www.tnidea.com/</id>
+  <id>https://www.tnidea.com/</id>
   
   <author>
     <name><![CDATA[Carey Tzou]]></name>
@@ -16,8 +16,8 @@
   
   <entry>
     <title><![CDATA[使用 EF Core CodeFirst 操作 Mysql 数据库]]></title>
-    <link href="http://www.tnidea.com/using-efcore-code-first-for-mysql.html"/>
-    <id>http://www.tnidea.com/using-efcore-code-first-for-mysql.html</id>
+    <link href="https://www.tnidea.com/using-efcore-code-first-for-mysql.html"/>
+    <id>https://www.tnidea.com/using-efcore-code-first-for-mysql.html</id>
     <published>2016-12-22T16:00:00.000Z</published>
     <updated>2016-12-22T16:37:35.000Z</updated>
     <content type="html"><![CDATA[<p> EntityFramework(以下简称EF) 作为 .NET 广受欢迎的数据库操作中间件，支持了几乎所有你用过的关系型数据库，本文将非常基础的介绍其在 Mysql 中的使用。EF 常见的使用模式有三种：CodeFirst, ModelFirst, DBFirst；三种方式各有所特点，一般要根据实际的业务情况做选择。</p>
@@ -61,20 +61,20 @@
     
     </summary>
     
-      <category term=".NET" scheme="http://www.tnidea.com/tags/NET/"/>
+      <category term=".NET" scheme="https://www.tnidea.com/tags/NET/"/>
     
-      <category term="EFCore" scheme="http://www.tnidea.com/tags/EFCore/"/>
+      <category term="EFCore" scheme="https://www.tnidea.com/tags/EFCore/"/>
     
-      <category term="mysql" scheme="http://www.tnidea.com/tags/mysql/"/>
+      <category term="mysql" scheme="https://www.tnidea.com/tags/mysql/"/>
     
-      <category term="技术" scheme="http://www.tnidea.com/categories/%E6%8A%80%E6%9C%AF/"/>
+      <category term="技术" scheme="https://www.tnidea.com/categories/%E6%8A%80%E6%9C%AF/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[保护好你的Elasticsearch全文检索库]]></title>
-    <link href="http://www.tnidea.com/protect-your-elasticsearch.html"/>
-    <id>http://www.tnidea.com/protect-your-elasticsearch.html</id>
+    <link href="https://www.tnidea.com/protect-your-elasticsearch.html"/>
+    <id>https://www.tnidea.com/protect-your-elasticsearch.html</id>
     <published>2016-07-26T16:00:00.000Z</published>
     <updated>2016-07-27T16:36:14.000Z</updated>
     <content type="html"><![CDATA[<p> Elasticsearch是一款基于Lucence的全文检索数据库，在文本分析、搜索等领域被广泛使用，但是默认的配置通过限制仅允许局域网访问来保证数据的安全性，如果你需要对公网提供服务，便需要额外安装插件来实现访问控制了。裸奔不仅可能带来被脱库，甚至数据会被删除而且不可恢复。本文将介绍如何选择和配置插件来保障Elasticsearch的安全。</p>
@@ -175,20 +175,20 @@ cp kirk-keystore.jks <span class="regexp">/usr/</span>share<span class="regexp">
     
     </summary>
     
-      <category term="Elasticsearch" scheme="http://www.tnidea.com/tags/Elasticsearch/"/>
+      <category term="Elasticsearch" scheme="https://www.tnidea.com/tags/Elasticsearch/"/>
     
-      <category term="SearchGuard" scheme="http://www.tnidea.com/tags/SearchGuard/"/>
+      <category term="SearchGuard" scheme="https://www.tnidea.com/tags/SearchGuard/"/>
     
-      <category term="Snapshot" scheme="http://www.tnidea.com/tags/Snapshot/"/>
+      <category term="Snapshot" scheme="https://www.tnidea.com/tags/Snapshot/"/>
     
-      <category term="运维" scheme="http://www.tnidea.com/categories/%E8%BF%90%E7%BB%B4/"/>
+      <category term="运维" scheme="https://www.tnidea.com/categories/%E8%BF%90%E7%BB%B4/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[.NET Core 现已支持DRPC，同时带来Apache Thrift]]></title>
-    <link href="http://www.tnidea.com/dotnet-core-support-drpc-now.html"/>
-    <id>http://www.tnidea.com/dotnet-core-support-drpc-now.html</id>
+    <link href="https://www.tnidea.com/dotnet-core-support-drpc-now.html"/>
+    <id>https://www.tnidea.com/dotnet-core-support-drpc-now.html</id>
     <published>2016-07-24T16:00:00.000Z</published>
     <updated>2016-07-27T15:41:50.000Z</updated>
     <content type="html"><![CDATA[<p> 上篇文章为大家带来了新版本的 Storm 适配器，今天来弥补一下上次匆忙发布带来的遗憾。是的，DRPC for .net Core 来了，当然，为了实现这个功能，一个精简版本的 Apache Thrift for .net core 也产生了；这个类库根据 <a href="https://thrift.apache.org/docs/HowToNewLanguage" target="_blank" rel="external">Roadmap for adding new language bindings</a> 完成，为了不带来误解，该项目暂时不开源，仅在 Nugut 中供 <a href="https://github.com/ziyunhx/storm-net-adapter" target="_blank" rel="external">storm-net-adapter</a> 使用，如果你也暂时需要它，可以通过 Nuget 搜索 Tnidea.Thrift 获得。</p>
@@ -226,24 +226,24 @@ cp kirk-keystore.jks <span class="regexp">/usr/</span>share<span class="regexp">
     
     </summary>
     
-      <category term=".NET Core" scheme="http://www.tnidea.com/tags/NET-Core/"/>
+      <category term=".NET Core" scheme="https://www.tnidea.com/tags/NET-Core/"/>
     
-      <category term="csharp" scheme="http://www.tnidea.com/tags/csharp/"/>
+      <category term="csharp" scheme="https://www.tnidea.com/tags/csharp/"/>
     
-      <category term="dotnet" scheme="http://www.tnidea.com/tags/dotnet/"/>
+      <category term="dotnet" scheme="https://www.tnidea.com/tags/dotnet/"/>
     
-      <category term="storm" scheme="http://www.tnidea.com/tags/storm/"/>
+      <category term="storm" scheme="https://www.tnidea.com/tags/storm/"/>
     
-      <category term="Storm" scheme="http://www.tnidea.com/categories/Storm/"/>
+      <category term="Storm" scheme="https://www.tnidea.com/categories/Storm/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[.NET Core 也能玩转 Storm]]></title>
-    <link href="http://www.tnidea.com/using-storm-at-dotnet-core.html"/>
-    <id>http://www.tnidea.com/using-storm-at-dotnet-core.html</id>
+    <link href="https://www.tnidea.com/using-storm-at-dotnet-core.html"/>
+    <id>https://www.tnidea.com/using-storm-at-dotnet-core.html</id>
     <published>2016-07-10T16:00:00.000Z</published>
-    <updated>2016-07-25T14:31:39.000Z</updated>
+    <updated>2017-05-04T06:22:15.000Z</updated>
     <content type="html"><![CDATA[<p> .Net Core 自发布以来广受关注，基于其开源与跨平台的特性，可以预见其在 web 开发领域越来越受青睐。现在，Apache Storm 的 .Net Core 版本的适配器正式发布，你现在也可以使用 .Net Core 开发 Topology，实现分布式跨平台的实时计算。</p>
 <a id="more"></a>
 <p> <a href="https://github.com/ziyunhx/storm-net-adapter" target="_blank" rel="external">storm-net-adapter</a> 现在已经更新到 2.0.4，增加了对 .Net Core 的支持，并对之前存在的例如输出复杂日志时的 BUG 进行了修复；由于目前 Thrift 的适配暂时还未完成，因此还无法使用 DRPC 的特性。同时，Storm 集群的 Docker 的镜像编排也已经集成了 .Net Core ，你可以通过 <a href="https://github.com/ziyunhx/storm-mono-docker" target="_blank" rel="external">storm-mono-docker</a> 获取到它。</p>
@@ -267,7 +267,7 @@ dotnet <span class="keyword">new</span>
 </code></pre><p> 使用 Maven 打包 Java 项目，通过 storm jar 命令提交：</p>
 <pre><code>$ storm jar storm-starter-*<span class="class">.jar</span> org<span class="class">.apache</span><span class="class">.storm</span><span class="class">.starter</span><span class="class">.WordCountTopologyCsharp</span> wordcount
 </code></pre><p> 你就可以看到如下熟悉的界面咯：</p>
-<p> <img src="http://www.tnidea.com/media/image/storm-ui-docker-101.png" alt="Storm UI"></p>
+<p> <img src="https://www.tnidea.com/media/image/storm-ui-docker-101.png" alt="Storm UI"></p>
 <p> 接下来需要完善与实现的任务还很多，项目的发展需要得到广泛的关注与支持；如果你觉得这个项目对您有帮助，欢迎在 GitHub 给出 Star ，项目地址：<a href="https://github.com/ziyunhx/storm-net-adapter" target="_blank" rel="external">storm-net-adapter</a> ，或者转发文章支持一下！</p>
 ]]></content>
     <summary type="html">
@@ -275,28 +275,28 @@ dotnet <span class="keyword">new</span>
     
     </summary>
     
-      <category term=".NET Core" scheme="http://www.tnidea.com/tags/NET-Core/"/>
+      <category term=".NET Core" scheme="https://www.tnidea.com/tags/NET-Core/"/>
     
-      <category term="csharp" scheme="http://www.tnidea.com/tags/csharp/"/>
+      <category term="csharp" scheme="https://www.tnidea.com/tags/csharp/"/>
     
-      <category term="dotnet" scheme="http://www.tnidea.com/tags/dotnet/"/>
+      <category term="dotnet" scheme="https://www.tnidea.com/tags/dotnet/"/>
     
-      <category term="storm" scheme="http://www.tnidea.com/tags/storm/"/>
+      <category term="storm" scheme="https://www.tnidea.com/tags/storm/"/>
     
-      <category term="Storm" scheme="http://www.tnidea.com/categories/Storm/"/>
+      <category term="Storm" scheme="https://www.tnidea.com/categories/Storm/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[Storm 1.0.1发布，.NET 适配也已到来]]></title>
-    <link href="http://www.tnidea.com/dot-net-storm-adapter-upgrade-to-support-1.0.1.html"/>
-    <id>http://www.tnidea.com/dot-net-storm-adapter-upgrade-to-support-1.0.1.html</id>
+    <link href="https://www.tnidea.com/dot-net-storm-adapter-upgrade-to-support-1.0.1.html"/>
+    <id>https://www.tnidea.com/dot-net-storm-adapter-upgrade-to-support-1.0.1.html</id>
     <published>2016-05-11T16:00:00.000Z</published>
-    <updated>2016-05-12T15:39:07.000Z</updated>
+    <updated>2017-05-04T06:22:15.000Z</updated>
     <content type="html"><![CDATA[<p> Apache Storm 1.0.0刚发布不久，1.0.1版本也在几天前到来；该版本主要是完成一些BUG修复和小的改进，通过一段时间新版本的使用，特将个人感受和一些遇到的问题归纳如下；另外 .NET 版本的 Storm 适配器也已经发布，源码在 <a href="https://github.com/ziyunhx/storm-net-adapter" title="storm-net-adapter" target="_blank" rel="external">storm-net-adapter</a>，如果你希望便捷的体验Storm 1.0.1，可以通过 Docker 来部署，地址在：<a href="https://github.com/ziyunhx/storm-mono-docker" target="_blank" rel="external">storm-mono-docker</a>，该镜像已经集成了Mono，你也可以查看我之前的文章来详细了解。</p>
 <a id="more"></a>
 <p> 下图是使用 Docker 部署的 .NET 版的 Wordcount 的 Storm UI：</p>
-<p> <img src="http://www.tnidea.com/media/image/storm-ui-docker-101.png" alt="Storm UI"></p>
+<p> <img src="https://www.tnidea.com/media/image/storm-ui-docker-101.png" alt="Storm UI"></p>
 <p> 通过图片我们可以看到，Topology 和 Supervisor 都增加了内存的占用字段，Nimbus 也支持多主机配置了，诟病多年的单 Nimbus 造成的稳定性隐患也终于得到解决。原有的配置项从 <code>nimbus.host</code> 换成了 <code>nimbus.seeds</code>，但实际测试如果你没有修改过来的话也只会出现警告，并不会崩溃。</p>
 <p> 但是 Windows 版本的安装就会有些状况了，首先是 log4g2 的配置问题，原本逻辑的将 %STORM_HOME% 拼接在前面的逻辑并没有生效，你需要在 conf/storm.yaml 中配置日志配置文件的路径，类似：</p>
 <pre><code>storm<span class="class">.log4j2</span><span class="class">.conf</span><span class="class">.dir</span>: <span class="string">"X:/Storm/apache-storm-last/log4j2"</span>
@@ -310,24 +310,24 @@ dotnet <span class="keyword">new</span>
     
     </summary>
     
-      <category term=".NET" scheme="http://www.tnidea.com/tags/NET/"/>
+      <category term=".NET" scheme="https://www.tnidea.com/tags/NET/"/>
     
-      <category term="C#" scheme="http://www.tnidea.com/tags/C/"/>
+      <category term="C#" scheme="https://www.tnidea.com/tags/C/"/>
     
-      <category term="Topology" scheme="http://www.tnidea.com/tags/Topology/"/>
+      <category term="Topology" scheme="https://www.tnidea.com/tags/Topology/"/>
     
-      <category term="csharp" scheme="http://www.tnidea.com/tags/csharp/"/>
+      <category term="csharp" scheme="https://www.tnidea.com/tags/csharp/"/>
     
-      <category term="storm" scheme="http://www.tnidea.com/tags/storm/"/>
+      <category term="storm" scheme="https://www.tnidea.com/tags/storm/"/>
     
-      <category term="Storm" scheme="http://www.tnidea.com/categories/Storm/"/>
+      <category term="Storm" scheme="https://www.tnidea.com/categories/Storm/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[再谈网络爬虫中的编码识别问题]]></title>
-    <link href="http://www.tnidea.com/talk-about-http-charset-recog-again.html"/>
-    <id>http://www.tnidea.com/talk-about-http-charset-recog-again.html</id>
+    <link href="https://www.tnidea.com/talk-about-http-charset-recog-again.html"/>
+    <id>https://www.tnidea.com/talk-about-http-charset-recog-again.html</id>
     <published>2016-04-18T16:00:00.000Z</published>
     <updated>2016-04-19T14:58:37.000Z</updated>
     <content type="html"><![CDATA[<p>在之前的文章中，我给大家介绍了 Nchardet 结合网页头部声明来识别网页的编码。通过较长时间段生产环境的使用，效果并不是十分理想。首先是 Nchardet 带来了极大的CPU的开销，尤其是对大规模的爬虫集群来说几乎无法接受；其次猜测的准确性距离100%还有一段距离。因此，就有了今天的这篇文章。</p>
@@ -352,32 +352,32 @@ dotnet <span class="keyword">new</span>
     
     </summary>
     
-      <category term=".NET" scheme="http://www.tnidea.com/tags/NET/"/>
+      <category term=".NET" scheme="https://www.tnidea.com/tags/NET/"/>
     
-      <category term="C#" scheme="http://www.tnidea.com/tags/C/"/>
+      <category term="C#" scheme="https://www.tnidea.com/tags/C/"/>
     
-      <category term="charset" scheme="http://www.tnidea.com/tags/charset/"/>
+      <category term="charset" scheme="https://www.tnidea.com/tags/charset/"/>
     
-      <category term="csharp" scheme="http://www.tnidea.com/tags/csharp/"/>
+      <category term="csharp" scheme="https://www.tnidea.com/tags/csharp/"/>
     
-      <category term="爬虫" scheme="http://www.tnidea.com/categories/%E7%88%AC%E8%99%AB/"/>
+      <category term="爬虫" scheme="https://www.tnidea.com/categories/%E7%88%AC%E8%99%AB/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[使用DRPC构建分布式多语言编程架构]]></title>
-    <link href="http://www.tnidea.com/build-multi-language-framework-by-drpc.html"/>
-    <id>http://www.tnidea.com/build-multi-language-framework-by-drpc.html</id>
+    <link href="https://www.tnidea.com/build-multi-language-framework-by-drpc.html"/>
+    <id>https://www.tnidea.com/build-multi-language-framework-by-drpc.html</id>
     <published>2016-03-25T16:00:00.000Z</published>
-    <updated>2016-03-27T06:26:38.000Z</updated>
+    <updated>2017-05-04T06:22:15.000Z</updated>
     <content type="html"><![CDATA[<p>Distributed RPC（DRPC）作为Storm基于Thrift协议的RPC实现，已在之前的文章中被多次提及；在一个多开发语言的环境中，RPC是必不可少的一环，常见的RPC实现方式除了thrift外也还有很多，甚至基于Http协议的RESTful API也可以算作是其中的一员。本文将为您解读：为什么在这么多的RPC方式中选择使用DRPC来构建多语言编程架构，而不是使用Thrift或者其它方式？</p>
 <a id="more"></a>
 <p>如果你开始阅读这篇文章，我相信你至少同意一家公司出现多种编程语言是一个再正常不过的事情。随着编程语言的发展，大多数语言都会有其最佳使用场景的概念，有些偏向快速开发，有些则更注重效率；不同的部门使用各自熟悉的或合适的语言开发，最终需要协同使用时，有人力的公司可以选择用一种语言重写一遍，那么另一些公司呢？</p>
 <p>一开始，你写这个模块可能只是满足自己程序的需要，甚至只是做一个可行性的实验；后来大家发现很好用，越来越多的人使用这个模块，你不得不为了方便别人使用进一步封装，优化代码性能，考虑如何部署成服务，怎么实现负载均衡……</p>
 <p>自己创造的代码被广泛使用确实让我信心爆棚，但越来越多的时间花在我原本并不擅长的方向……有没有一种方案让我只需要专心的写代码，多语言调用、部署、负载均衡、分布式什么都我都不需要去管？</p>
 <p>答案当然是肯定的啦，下面我就给大家介绍基于 DRPC 构建的分布式多语言编程模式，个人才疏学浅，如果疏漏，请轻拍！</p>
-<p> <img src="http://www.tnidea.com/media/image/drpc-flow.jpg" alt="DRPC-flow"></p>
-<p>DRPC的整个过程与一般的RPC并没有区别，它的实现也是基于Thrift协议；让它变得与众不同的原因便是让你能方便的使用Storm集群的计算能力，当然这也意味着你的整个计算集群都得基于Storm。如果你对大数据的技术有过了解，即使没有听说过Storm，也一定听说过Hadoop吧，Storm类似于Hadoop中的MapReduce，它最大的改变便是将MapReduce中批处理的方式换成了实时的方式，另一个号称实时的框架spark streaming则只是把批处理变得更小更敏捷罢了。更多关于这三者比较的信息可以查看我之前的文章：<a href="http://www.tnidea.com/compare-with-distributed-computation-system.html" title="开源分布式计算系统框架比较">开源分布式计算系统框架比较</a>。</p>
+<p> <img src="https://www.tnidea.com/media/image/drpc-flow.jpg" alt="DRPC-flow"></p>
+<p>DRPC的整个过程与一般的RPC并没有区别，它的实现也是基于Thrift协议；让它变得与众不同的原因便是让你能方便的使用Storm集群的计算能力，当然这也意味着你的整个计算集群都得基于Storm。如果你对大数据的技术有过了解，即使没有听说过Storm，也一定听说过Hadoop吧，Storm类似于Hadoop中的MapReduce，它最大的改变便是将MapReduce中批处理的方式换成了实时的方式，另一个号称实时的框架spark streaming则只是把批处理变得更小更敏捷罢了。更多关于这三者比较的信息可以查看我之前的文章：<a href="https://www.tnidea.com/compare-with-distributed-computation-system.html" title="开源分布式计算系统框架比较">开源分布式计算系统框架比较</a>。</p>
 <p>编写运行在Storm框架上的DRPC模块是非常容易的，你只需要将你原来编写的逻辑代码包裹在Storm Bolt的封装代码中即可。当然，也会有一些限制，首先是需要将复杂的逻辑尽量拆解，将一个需要运行很久的代码直接封装可能会导致Bolt运行超时；其次，目前的DRPC版本仅支持一个字符串的输入输出，这也意味着复杂的对象需要额外的序列化与反序列化开销；第三，目前并非所有语言均已支持Storm，幸运的是完成对Storm的支持并不困难，下面给大家列出我整理的一些支持语言的DEMO（需要支持DRPC仅需将输入与输出参数的末尾增加一个ID）。</p>
 <ul>
 <li><a href="https://github.com/ziyunhx/storm-net-adapter/blob/master/samples/StormSample/Counter.cs" target="_blank" rel="external">C# Demo</a></li>
@@ -397,7 +397,7 @@ dotnet <span class="keyword">new</span>
 <p>如果需要使用到生产环境中，性能和安全性也是需要考虑的问题。使用DRPC会带来一定性能损耗，但是不要担心，不论是官方的测试报告还是我们实际使用的结论都表明这一损耗在分布式集群中是可接受的，对于大部分的用户甚至无法感知；它的负载能力同样不俗，而且DRPC本身也是支持分布式的。DRPC目前并没有做许多额外的安全性的防护，我们目前也是只能通过切换默认端口号，不开放外网访问或者使用IP白名单，程序中验证访问权限的方式来完成。相信在今后这一块也会受到官方的重视，本文的例子还是以0.9.6版本为基础，官方的开发版本已经到了2.0。</p>
 <p>如果你已经下定决心想要尝试下，我已经给你准备了一个Docker快速编排的镜像，你可以查看我之前的文章或者直接依据开源项目的步骤操作，虽然现在在Docker中使用JDK已经违反了协议，还望大家放我一马啊。</p>
 <ul>
-<li><a href="http://www.tnidea.com/deploy-storm-by-docker.html">使用Docker快速部署Storm环境</a></li>
+<li><a href="https://www.tnidea.com/deploy-storm-by-docker.html">使用Docker快速部署Storm环境</a></li>
 <li><a href="https://github.com/ziyunhx/storm-mono-docker" target="_blank" rel="external">storm-mono-docker</a></li>
 </ul>
 <p>另外，现在微信公众号已开通评论和打赏功能，有什么建议或者觉得文章对您有帮助，请移步公众号支持一下哦！</p>
@@ -407,26 +407,26 @@ dotnet <span class="keyword">new</span>
     
     </summary>
     
-      <category term=".NET" scheme="http://www.tnidea.com/tags/NET/"/>
+      <category term=".NET" scheme="https://www.tnidea.com/tags/NET/"/>
     
-      <category term="C#" scheme="http://www.tnidea.com/tags/C/"/>
+      <category term="C#" scheme="https://www.tnidea.com/tags/C/"/>
     
-      <category term="DRPC" scheme="http://www.tnidea.com/tags/DRPC/"/>
+      <category term="DRPC" scheme="https://www.tnidea.com/tags/DRPC/"/>
     
-      <category term="Topology" scheme="http://www.tnidea.com/tags/Topology/"/>
+      <category term="Topology" scheme="https://www.tnidea.com/tags/Topology/"/>
     
-      <category term="storm" scheme="http://www.tnidea.com/tags/storm/"/>
+      <category term="storm" scheme="https://www.tnidea.com/tags/storm/"/>
     
-      <category term="多语言" scheme="http://www.tnidea.com/tags/%E5%A4%9A%E8%AF%AD%E8%A8%80/"/>
+      <category term="多语言" scheme="https://www.tnidea.com/tags/%E5%A4%9A%E8%AF%AD%E8%A8%80/"/>
     
-      <category term="Storm" scheme="http://www.tnidea.com/categories/Storm/"/>
+      <category term="Storm" scheme="https://www.tnidea.com/categories/Storm/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[使用C#自动识别网页编码]]></title>
-    <link href="http://www.tnidea.com/recog-http-charset-by-dot-net.html"/>
-    <id>http://www.tnidea.com/recog-http-charset-by-dot-net.html</id>
+    <link href="https://www.tnidea.com/recog-http-charset-by-dot-net.html"/>
+    <id>https://www.tnidea.com/recog-http-charset-by-dot-net.html</id>
     <published>2016-01-26T16:00:00.000Z</published>
     <updated>2016-01-29T16:34:13.000Z</updated>
     <content type="html"><![CDATA[<p>在大规模的网络爬虫编程中，网页编码识别是必不可少的，本文将介绍如何通过C#来自动识别网页的编码。文中会分析几种可行的方法并提供源码，部分源码来源于开源代码改写而来。</p>
@@ -454,22 +454,22 @@ dotnet <span class="keyword">new</span>
     
     </summary>
     
-      <category term=".NET" scheme="http://www.tnidea.com/tags/NET/"/>
+      <category term=".NET" scheme="https://www.tnidea.com/tags/NET/"/>
     
-      <category term="C#" scheme="http://www.tnidea.com/tags/C/"/>
+      <category term="C#" scheme="https://www.tnidea.com/tags/C/"/>
     
-      <category term="charset" scheme="http://www.tnidea.com/tags/charset/"/>
+      <category term="charset" scheme="https://www.tnidea.com/tags/charset/"/>
     
-      <category term="csharp" scheme="http://www.tnidea.com/tags/csharp/"/>
+      <category term="csharp" scheme="https://www.tnidea.com/tags/csharp/"/>
     
-      <category term="爬虫" scheme="http://www.tnidea.com/categories/%E7%88%AC%E8%99%AB/"/>
+      <category term="爬虫" scheme="https://www.tnidea.com/categories/%E7%88%AC%E8%99%AB/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[使用Icinga2监控服务器带宽以及内存占用]]></title>
-    <link href="http://www.tnidea.com/add-network-memory-for-icinga2-monitor.html"/>
-    <id>http://www.tnidea.com/add-network-memory-for-icinga2-monitor.html</id>
+    <link href="https://www.tnidea.com/add-network-memory-for-icinga2-monitor.html"/>
+    <id>https://www.tnidea.com/add-network-memory-for-icinga2-monitor.html</id>
     <published>2016-01-10T16:00:00.000Z</published>
     <updated>2016-01-10T14:03:39.000Z</updated>
     <content type="html"><![CDATA[<p>监控是系统运维的基础，Icinga是一个开源的监控系统框架，通过其广泛的插件支持，你可以监控几乎任何你能想到的网络资源；也可以在超过临界值时给予通知，根据监控数据生产报表。本文将介绍如何通过SNMP协议来监控服务器的带宽以及内存占用。</p>
@@ -855,26 +855,26 @@ dotnet <span class="keyword">new</span>
     
     </summary>
     
-      <category term="CentOS" scheme="http://www.tnidea.com/tags/CentOS/"/>
+      <category term="CentOS" scheme="https://www.tnidea.com/tags/CentOS/"/>
     
-      <category term="Icinga Web2" scheme="http://www.tnidea.com/tags/Icinga-Web2/"/>
+      <category term="Icinga Web2" scheme="https://www.tnidea.com/tags/Icinga-Web2/"/>
     
-      <category term="Icinga2" scheme="http://www.tnidea.com/tags/Icinga2/"/>
+      <category term="Icinga2" scheme="https://www.tnidea.com/tags/Icinga2/"/>
     
-      <category term="Memory" scheme="http://www.tnidea.com/tags/Memory/"/>
+      <category term="Memory" scheme="https://www.tnidea.com/tags/Memory/"/>
     
-      <category term="Network" scheme="http://www.tnidea.com/tags/Network/"/>
+      <category term="Network" scheme="https://www.tnidea.com/tags/Network/"/>
     
-      <category term="服务器监控" scheme="http://www.tnidea.com/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9B%91%E6%8E%A7/"/>
+      <category term="服务器监控" scheme="https://www.tnidea.com/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9B%91%E6%8E%A7/"/>
     
-      <category term="运维" scheme="http://www.tnidea.com/categories/%E8%BF%90%E7%BB%B4/"/>
+      <category term="运维" scheme="https://www.tnidea.com/categories/%E8%BF%90%E7%BB%B4/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[ImitateLogin新增插件机制以及又一个社交网站的支持]]></title>
-    <link href="http://www.tnidea.com/imitate-login-support-plugin-now.html"/>
-    <id>http://www.tnidea.com/imitate-login-support-plugin-now.html</id>
+    <link href="https://www.tnidea.com/imitate-login-support-plugin-now.html"/>
+    <id>https://www.tnidea.com/imitate-login-support-plugin-now.html</id>
     <published>2016-01-08T16:00:00.000Z</published>
     <updated>2016-01-08T16:25:39.000Z</updated>
     <content type="html"><![CDATA[<p>我的文章里已经多次介绍 <a href="https://github.com/ziyunhx/imitate-login" target="_blank" rel="external">imitate-login</a> ，这是我最近一直在维护的一个使用c#模拟社交网站登录的开源项目，现在新增了对插件的支持以及一个新的网站（由于某种原因，会在文章结束部分介绍；而且仅会出现在博客中）。希望喜欢的读者可以通过 <strong>Star &amp; fork</strong> 来支持我，我也会据此来决定时间的分配。</p>
@@ -915,28 +915,28 @@ dotnet <span class="keyword">new</span>
     
     </summary>
     
-      <category term=".NET" scheme="http://www.tnidea.com/tags/NET/"/>
+      <category term=".NET" scheme="https://www.tnidea.com/tags/NET/"/>
     
-      <category term="C#" scheme="http://www.tnidea.com/tags/C/"/>
+      <category term="C#" scheme="https://www.tnidea.com/tags/C/"/>
     
-      <category term="social network" scheme="http://www.tnidea.com/tags/social-network/"/>
+      <category term="social network" scheme="https://www.tnidea.com/tags/social-network/"/>
     
-      <category term="thrift" scheme="http://www.tnidea.com/tags/thrift/"/>
+      <category term="thrift" scheme="https://www.tnidea.com/tags/thrift/"/>
     
-      <category term="wechat" scheme="http://www.tnidea.com/tags/wechat/"/>
+      <category term="wechat" scheme="https://www.tnidea.com/tags/wechat/"/>
     
-      <category term="微信" scheme="http://www.tnidea.com/tags/%E5%BE%AE%E4%BF%A1/"/>
+      <category term="微信" scheme="https://www.tnidea.com/tags/%E5%BE%AE%E4%BF%A1/"/>
     
-      <category term="插件机制" scheme="http://www.tnidea.com/tags/%E6%8F%92%E4%BB%B6%E6%9C%BA%E5%88%B6/"/>
+      <category term="插件机制" scheme="https://www.tnidea.com/tags/%E6%8F%92%E4%BB%B6%E6%9C%BA%E5%88%B6/"/>
     
-      <category term="爬虫" scheme="http://www.tnidea.com/categories/%E7%88%AC%E8%99%AB/"/>
+      <category term="爬虫" scheme="https://www.tnidea.com/categories/%E7%88%AC%E8%99%AB/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[使用Icinga2监控Linux和Windows服务器]]></title>
-    <link href="http://www.tnidea.com/icinga2-monitor-other-machine.html"/>
-    <id>http://www.tnidea.com/icinga2-monitor-other-machine.html</id>
+    <link href="https://www.tnidea.com/icinga2-monitor-other-machine.html"/>
+    <id>https://www.tnidea.com/icinga2-monitor-other-machine.html</id>
     <published>2016-01-05T16:00:00.000Z</published>
     <updated>2016-01-06T16:02:29.000Z</updated>
     <content type="html"><![CDATA[<p>Icinga2可以通过Agent来监控其它设备，这些设备包含各种操作系统的服务器以及网络设备。一些简单的网络指标监控是不需要创建Agent的，例如ping和ssh；但是某些无法通过网络获取的指标则需要在被监测服务器创建一个监控代理来将指标返回给监控服务器。本文将介绍如何在Linux和Windows服务器上安装和配置Agent来实现多机器的监控。</p>
@@ -981,29 +981,29 @@ dotnet <span class="keyword">new</span>
     
     </summary>
     
-      <category term="CentOS" scheme="http://www.tnidea.com/tags/CentOS/"/>
+      <category term="CentOS" scheme="https://www.tnidea.com/tags/CentOS/"/>
     
-      <category term="Icinga Web2" scheme="http://www.tnidea.com/tags/Icinga-Web2/"/>
+      <category term="Icinga Web2" scheme="https://www.tnidea.com/tags/Icinga-Web2/"/>
     
-      <category term="Icinga2" scheme="http://www.tnidea.com/tags/Icinga2/"/>
+      <category term="Icinga2" scheme="https://www.tnidea.com/tags/Icinga2/"/>
     
-      <category term="服务器监控" scheme="http://www.tnidea.com/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9B%91%E6%8E%A7/"/>
+      <category term="服务器监控" scheme="https://www.tnidea.com/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9B%91%E6%8E%A7/"/>
     
-      <category term="运维" scheme="http://www.tnidea.com/categories/%E8%BF%90%E7%BB%B4/"/>
+      <category term="运维" scheme="https://www.tnidea.com/categories/%E8%BF%90%E7%BB%B4/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[Storm适配器(.Net)升级说明以及一些性能数据]]></title>
-    <link href="http://www.tnidea.com/dot-net-storm-adapter-upgrade.html"/>
-    <id>http://www.tnidea.com/dot-net-storm-adapter-upgrade.html</id>
+    <link href="https://www.tnidea.com/dot-net-storm-adapter-upgrade.html"/>
+    <id>https://www.tnidea.com/dot-net-storm-adapter-upgrade.html</id>
     <published>2015-12-04T16:00:00.000Z</published>
-    <updated>2015-12-05T12:52:05.000Z</updated>
+    <updated>2017-05-04T06:22:15.000Z</updated>
     <content type="html"><![CDATA[<p> <a href="https://github.com/ziyunhx/storm-net-adapter" title="storm-net-adapter" target="_blank" rel="external">storm-net-adapter</a> 是一个使用C#编写的 Apache Storm 适配器；用于在 .Net 环境下开发 Storm 原生支持的拓扑，以及通过DRPC来远程跨语言使用集群计算资源。距离首次介绍已经更新了3个版本，带来了数项功能与性能的改进！下面将对改进部分进行说明。</p>
 <a id="more"></a>
-<p> 首先，在V1.2版本加入了对DRPC的支持；通过使用DRPC，你可以方便调用任何使用Storm支持语言编写的Topology，你仅需将它们部署到集群。详细介绍可以通过 <a href="http://www.tnidea.com/dot-net-drpc-storm.html">.NET使用DRPC远程调用运行在Storm上的拓扑</a> 和 <a href="http://www.tnidea.com/call-dot-net-drpc-program.html">使用DRPC调用.NET开发的Storm拓扑</a> 来了解。<br> 在刚刚发布的V1.4版本中，对DRPC的支持进一步增强，默认使用线程池来管理连接。在之前的版本中，单机单进程环境下，如果所有并发使用各自连接，并发100的环境下长时间运行会出现连接数过大导致失败；如果使用单连接加锁模式，在并发30的情况下延时以及在5000ms以上。通过使用线程池来控制（默认配置），在生产环境下，峰值200并发的条件下，使用外网访问DRPC的延时保持在200ms内；每日调用量保持在2500万次，单个小时调用量峰值在300万次。Storm集群使用Docker部署在单台服务器上，部署方式可以查看 <a href="http://www.tnidea.com/deploy-storm-by-docker.html">使用Docker快速部署Storm环境</a>。下面是连续10天Storm运行的截图：</p>
-<p> <img src="http://www.tnidea.com/media/image/storm-run-status-1.png" alt="Storm UI"></p>
-<p> <img src="http://www.tnidea.com/media/image/storm-run-status-2.png" alt="Storm Topology"></p>
+<p> 首先，在V1.2版本加入了对DRPC的支持；通过使用DRPC，你可以方便调用任何使用Storm支持语言编写的Topology，你仅需将它们部署到集群。详细介绍可以通过 <a href="https://www.tnidea.com/dot-net-drpc-storm.html">.NET使用DRPC远程调用运行在Storm上的拓扑</a> 和 <a href="https://www.tnidea.com/call-dot-net-drpc-program.html">使用DRPC调用.NET开发的Storm拓扑</a> 来了解。<br> 在刚刚发布的V1.4版本中，对DRPC的支持进一步增强，默认使用线程池来管理连接。在之前的版本中，单机单进程环境下，如果所有并发使用各自连接，并发100的环境下长时间运行会出现连接数过大导致失败；如果使用单连接加锁模式，在并发30的情况下延时以及在5000ms以上。通过使用线程池来控制（默认配置），在生产环境下，峰值200并发的条件下，使用外网访问DRPC的延时保持在200ms内；每日调用量保持在2500万次，单个小时调用量峰值在300万次。Storm集群使用Docker部署在单台服务器上，部署方式可以查看 <a href="https://www.tnidea.com/deploy-storm-by-docker.html">使用Docker快速部署Storm环境</a>。下面是连续10天Storm运行的截图：</p>
+<p> <img src="https://www.tnidea.com/media/image/storm-run-status-1.png" alt="Storm UI"></p>
+<p> <img src="https://www.tnidea.com/media/image/storm-run-status-2.png" alt="Storm Topology"></p>
 <p> 当然，你也可以通过设置 reconnect 和 maxIdle 参数来决定是否使用线程池特性以及最大线程数。</p>
 <p> 在V1.3版本，解决了一些在linux环境下运行的Bug，默认demo使用mono来驱动，并将Storm版本选用了0.9.6版本。</p>
 <p> 在V1.4版本中，移除了项目对于Json.Net的依赖，采用SimpleJson作为替代；现在，再也不用慢慢等待Nuget的龟速了。另外，该类库支持.Net 3.5及以上；这是由于最新的Thrift并不支持.Net 3.5以下的版本，如果你需要使用更低版本的.Net，你可以从Apache Thrift官方网站下载源码修改后自行编译。</p>
@@ -1014,26 +1014,26 @@ dotnet <span class="keyword">new</span>
     
     </summary>
     
-      <category term=".NET" scheme="http://www.tnidea.com/tags/NET/"/>
+      <category term=".NET" scheme="https://www.tnidea.com/tags/NET/"/>
     
-      <category term="C#" scheme="http://www.tnidea.com/tags/C/"/>
+      <category term="C#" scheme="https://www.tnidea.com/tags/C/"/>
     
-      <category term="DRPC" scheme="http://www.tnidea.com/tags/DRPC/"/>
+      <category term="DRPC" scheme="https://www.tnidea.com/tags/DRPC/"/>
     
-      <category term="Topology" scheme="http://www.tnidea.com/tags/Topology/"/>
+      <category term="Topology" scheme="https://www.tnidea.com/tags/Topology/"/>
     
-      <category term="csharp" scheme="http://www.tnidea.com/tags/csharp/"/>
+      <category term="csharp" scheme="https://www.tnidea.com/tags/csharp/"/>
     
-      <category term="storm" scheme="http://www.tnidea.com/tags/storm/"/>
+      <category term="storm" scheme="https://www.tnidea.com/tags/storm/"/>
     
-      <category term="Storm" scheme="http://www.tnidea.com/categories/Storm/"/>
+      <category term="Storm" scheme="https://www.tnidea.com/categories/Storm/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[使用ImitateLogin模拟登录百度]]></title>
-    <link href="http://www.tnidea.com/login-baidu-throught-imitate-login.html"/>
-    <id>http://www.tnidea.com/login-baidu-throught-imitate-login.html</id>
+    <link href="https://www.tnidea.com/login-baidu-throught-imitate-login.html"/>
+    <id>https://www.tnidea.com/login-baidu-throught-imitate-login.html</id>
     <published>2015-11-29T16:00:00.000Z</published>
     <updated>2015-11-30T16:23:54.000Z</updated>
     <content type="html"><![CDATA[<p>在之前的文章中，我已经介绍过一个社交网站模拟登录的类库：<a href="https://github.com/ziyunhx/imitate-login" target="_blank" rel="external">imitate-login</a> ，这是一个通过c#的HttpWebRequest来模拟网站登录的库，之前实现了微博网页版和微博Wap版；现在，模拟百度登录的部分也已经完成。由于个人时间的限制，加上目前有多个项目在同时进行，因此更新频率会根据项目关注度来决定（<strong>Star &amp; fork</strong>）。</p>
@@ -1069,26 +1069,26 @@ dotnet <span class="keyword">new</span>
     
     </summary>
     
-      <category term=".NET" scheme="http://www.tnidea.com/tags/NET/"/>
+      <category term=".NET" scheme="https://www.tnidea.com/tags/NET/"/>
     
-      <category term="Baidu" scheme="http://www.tnidea.com/tags/Baidu/"/>
+      <category term="Baidu" scheme="https://www.tnidea.com/tags/Baidu/"/>
     
-      <category term="C#" scheme="http://www.tnidea.com/tags/C/"/>
+      <category term="C#" scheme="https://www.tnidea.com/tags/C/"/>
     
-      <category term="csharp" scheme="http://www.tnidea.com/tags/csharp/"/>
+      <category term="csharp" scheme="https://www.tnidea.com/tags/csharp/"/>
     
-      <category term="social network" scheme="http://www.tnidea.com/tags/social-network/"/>
+      <category term="social network" scheme="https://www.tnidea.com/tags/social-network/"/>
     
-      <category term="thrift" scheme="http://www.tnidea.com/tags/thrift/"/>
+      <category term="thrift" scheme="https://www.tnidea.com/tags/thrift/"/>
     
-      <category term="爬虫" scheme="http://www.tnidea.com/categories/%E7%88%AC%E8%99%AB/"/>
+      <category term="爬虫" scheme="https://www.tnidea.com/categories/%E7%88%AC%E8%99%AB/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[使用Docker快速部署Storm环境]]></title>
-    <link href="http://www.tnidea.com/deploy-storm-by-docker.html"/>
-    <id>http://www.tnidea.com/deploy-storm-by-docker.html</id>
+    <link href="https://www.tnidea.com/deploy-storm-by-docker.html"/>
+    <id>https://www.tnidea.com/deploy-storm-by-docker.html</id>
     <published>2015-11-17T16:00:00.000Z</published>
     <updated>2015-11-18T13:34:33.000Z</updated>
     <content type="html"><![CDATA[<p>Storm的部署虽然不是特别麻烦，但是在生产环境中，为了提高部署效率，方便管理维护，使用Docker来统一管理部署是一个不错的选择。下面是我开源的一个新的项目，一个配置好了storm与mono环境的Docker镜像编排：<a href="https://github.com/ziyunhx/storm-mono-docker" target="_blank" rel="external">storm-mono-docker</a>。</p>
@@ -1144,28 +1144,28 @@ nimbus<span class="class">.thrift</span><span class="class">.port</span>: <span 
     
     </summary>
     
-      <category term=".NET" scheme="http://www.tnidea.com/tags/NET/"/>
+      <category term=".NET" scheme="https://www.tnidea.com/tags/NET/"/>
     
-      <category term="C#" scheme="http://www.tnidea.com/tags/C/"/>
+      <category term="C#" scheme="https://www.tnidea.com/tags/C/"/>
     
-      <category term="Docker" scheme="http://www.tnidea.com/tags/Docker/"/>
+      <category term="Docker" scheme="https://www.tnidea.com/tags/Docker/"/>
     
-      <category term="csharp" scheme="http://www.tnidea.com/tags/csharp/"/>
+      <category term="csharp" scheme="https://www.tnidea.com/tags/csharp/"/>
     
-      <category term="mono" scheme="http://www.tnidea.com/tags/mono/"/>
+      <category term="mono" scheme="https://www.tnidea.com/tags/mono/"/>
     
-      <category term="storm" scheme="http://www.tnidea.com/tags/storm/"/>
+      <category term="storm" scheme="https://www.tnidea.com/tags/storm/"/>
     
-      <category term="Storm" scheme="http://www.tnidea.com/categories/Storm/"/>
+      <category term="Storm" scheme="https://www.tnidea.com/categories/Storm/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[安装与配置Icinga Web2]]></title>
-    <link href="http://www.tnidea.com/setting-up-icinga-web2.html"/>
-    <id>http://www.tnidea.com/setting-up-icinga-web2.html</id>
+    <link href="https://www.tnidea.com/setting-up-icinga-web2.html"/>
+    <id>https://www.tnidea.com/setting-up-icinga-web2.html</id>
     <published>2015-10-29T16:00:00.000Z</published>
-    <updated>2015-10-29T15:03:56.000Z</updated>
+    <updated>2017-05-04T06:22:15.000Z</updated>
     <content type="html"><![CDATA[<p>Icinga Web2是Icinga2的Web前端展示界面之一，它也是支持Icinga2的Web界面中我个人最喜欢的。通过Icinga Web2，你可以方便的展示与管理你的监控，也可以自定义一些显示模块。本文将介绍Icinga Web2的安装与配置，其中部分经验可能在Icinga2的其它Web界面也适用。</p>
 <a id="more"></a>
 <h3 id="设置包管理库">设置包管理库</h3><p>你需要使用以下命令将Icinga2的所在的包管理库加入到你的系统中，如果你按照我之前的文章操作的话，其实这步已经做过了。</p>
@@ -1197,48 +1197,48 @@ nimbus<span class="class">.thrift</span><span class="class">.port</span>: <span 
 <p>STEP 1: 通过icingacli创建一个token，用来安装Icinga Web2：</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">icingacli setup token create&#10;icingacli setup token show</span><br></pre></td></tr></table></figure>
 <p>STEP 2: 使用浏览器访问 <a href="http://127.0.0.1/icingaweb2/setup" target="_blank" rel="external">http://127.0.0.1/icingaweb2/setup</a> （将IP替换为实际IP或域名），将上一步命令行得到的token输入到Steup Token的输入框中，继续下一步。</p>
-<p> <img src="http://www.tnidea.com/media/image/icinga-websetup-1.png" alt="Image"></p>
+<p> <img src="https://www.tnidea.com/media/image/icinga-websetup-1.png" alt="Image"></p>
 <p>STEP 3: 根据需要选择需要安装的模块，我这边选择了除翻译外的所有模块。</p>
-<p> <img src="http://www.tnidea.com/media/image/icinga-websetup-2.png" alt="Image"></p>
+<p> <img src="https://www.tnidea.com/media/image/icinga-websetup-2.png" alt="Image"></p>
 <p>STEP 4: 根据系统检查结果，解决需要修改的项，全部完成后刷新确认。</p>
-<p> <img src="http://www.tnidea.com/media/image/icinga-websetup-3.png" alt="Image"></p>
+<p> <img src="https://www.tnidea.com/media/image/icinga-websetup-3.png" alt="Image"></p>
 <p>本例中，需要解决的有PHP时区，LDAP，PDO-MySQL，PDO-PostgreSQL问题。PDO-MySQL，PDO-PostgreSQL只需要重启Web服务器即可解决。</p>
 <p>修改PHP时区：<br><code>使用 vi 打开 /etc/php.ini；查找 date.timezone，删除最前面的分号，在结尾增加时区标签，这里使用： Asia/Shanghai 。</code></p>
 <p>启用LDAP：<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">yum install php-ldap</span><br></pre></td></tr></table></figure></p>
 <p>重启Web服务器，CentOS 7直接使用 systemctl restart httpd 重启。<br>现在界面上所有的状态应该都已经变成了绿色，继续下一步吧，后面没有特别讲到的步骤都是直接点击下一步的！</p>
 <p>STEP 5: 配置Icinga Web2数据库</p>
-<p> <img src="http://www.tnidea.com/media/image/icinga-websetup-4.png" alt="Image"></p>
+<p> <img src="https://www.tnidea.com/media/image/icinga-websetup-4.png" alt="Image"></p>
 <p>此处直接填写我们创建的icingaweb2数据库的信息，默认情况下用户名和密码都是icingaweb2。由于我们并没有给予icingaweb2用户创建表的权限，因此你还需要给一个有创建数据库和表权限的用户。</p>
-<p><img src="http://www.tnidea.com/media/image/icinga-websetup-5.png" alt="Image"></p>
+<p><img src="https://www.tnidea.com/media/image/icinga-websetup-5.png" alt="Image"></p>
 <p>STEP 6: 创建一个Icinga Web2的管理员账号</p>
-<p><img src="http://www.tnidea.com/media/image/icinga-websetup-6.png" alt="Image"></p>
+<p><img src="https://www.tnidea.com/media/image/icinga-websetup-6.png" alt="Image"></p>
 <p>STEP 7: 配置Icinga IDO数据库信息</p>
-<p><img src="http://www.tnidea.com/media/image/icinga-websetup-7.png" alt="Image"></p>
+<p><img src="https://www.tnidea.com/media/image/icinga-websetup-7.png" alt="Image"></p>
 <p>此处直接填写我们创建的icinga数据库的信息，默认情况下用户名和密码都是icinga。</p>
 <p>ok! 一切就绪，登陆进去瞅瞅吧！</p>
-<p><img src="http://www.tnidea.com/media/image/icinga-websetup-8.png" alt="Image"></p>
+<p><img src="https://www.tnidea.com/media/image/icinga-websetup-8.png" alt="Image"></p>
 ]]></content>
     <summary type="html">
     <![CDATA[<p>Icinga Web2是Icinga2的Web前端展示界面之一，它也是支持Icinga2的Web界面中我个人最喜欢的。通过Icinga Web2，你可以方便的展示与管理你的监控，也可以自定义一些显示模块。本文将介绍Icinga Web2的安装与配置，其中部分经验可能在Icinga2的其它Web界面也适用。</p>]]>
     
     </summary>
     
-      <category term="CentOS" scheme="http://www.tnidea.com/tags/CentOS/"/>
+      <category term="CentOS" scheme="https://www.tnidea.com/tags/CentOS/"/>
     
-      <category term="Icinga Web2" scheme="http://www.tnidea.com/tags/Icinga-Web2/"/>
+      <category term="Icinga Web2" scheme="https://www.tnidea.com/tags/Icinga-Web2/"/>
     
-      <category term="Icinga2" scheme="http://www.tnidea.com/tags/Icinga2/"/>
+      <category term="Icinga2" scheme="https://www.tnidea.com/tags/Icinga2/"/>
     
-      <category term="服务器监控" scheme="http://www.tnidea.com/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9B%91%E6%8E%A7/"/>
+      <category term="服务器监控" scheme="https://www.tnidea.com/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9B%91%E6%8E%A7/"/>
     
-      <category term="运维" scheme="http://www.tnidea.com/categories/%E8%BF%90%E7%BB%B4/"/>
+      <category term="运维" scheme="https://www.tnidea.com/categories/%E8%BF%90%E7%BB%B4/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[安装Icinga Web2所需服务]]></title>
-    <link href="http://www.tnidea.com/prepare-for-setting-up-icinga-web2.html"/>
-    <id>http://www.tnidea.com/prepare-for-setting-up-icinga-web2.html</id>
+    <link href="https://www.tnidea.com/prepare-for-setting-up-icinga-web2.html"/>
+    <id>https://www.tnidea.com/prepare-for-setting-up-icinga-web2.html</id>
     <published>2015-10-24T16:00:00.000Z</published>
     <updated>2015-10-29T13:01:55.000Z</updated>
     <content type="html"><![CDATA[<p>Icinga Web2是Icinga2的Web前端展示界面之一，它也是支持Icinga2的Web界面中我个人最喜欢的。通过Icinga Web2，你可以方便的展示与管理你的监控，也可以自定义一些显示模块。本文将介绍Icinga Web2的安装与配置，其中部分经验可能在Icinga2的其它Web界面也适用。</p>
@@ -1310,22 +1310,22 @@ nimbus<span class="class">.thrift</span><span class="class">.port</span>: <span 
     
     </summary>
     
-      <category term="CentOS" scheme="http://www.tnidea.com/tags/CentOS/"/>
+      <category term="CentOS" scheme="https://www.tnidea.com/tags/CentOS/"/>
     
-      <category term="Icinga Web2" scheme="http://www.tnidea.com/tags/Icinga-Web2/"/>
+      <category term="Icinga Web2" scheme="https://www.tnidea.com/tags/Icinga-Web2/"/>
     
-      <category term="Icinga2" scheme="http://www.tnidea.com/tags/Icinga2/"/>
+      <category term="Icinga2" scheme="https://www.tnidea.com/tags/Icinga2/"/>
     
-      <category term="服务器监控" scheme="http://www.tnidea.com/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9B%91%E6%8E%A7/"/>
+      <category term="服务器监控" scheme="https://www.tnidea.com/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9B%91%E6%8E%A7/"/>
     
-      <category term="运维" scheme="http://www.tnidea.com/categories/%E8%BF%90%E7%BB%B4/"/>
+      <category term="运维" scheme="https://www.tnidea.com/categories/%E8%BF%90%E7%BB%B4/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[使用Icinga2和Icinga Web2搭建监控服务]]></title>
-    <link href="http://www.tnidea.com/monitor-system-by-icinga2.html"/>
-    <id>http://www.tnidea.com/monitor-system-by-icinga2.html</id>
+    <link href="https://www.tnidea.com/monitor-system-by-icinga2.html"/>
+    <id>https://www.tnidea.com/monitor-system-by-icinga2.html</id>
     <published>2015-10-09T16:00:00.000Z</published>
     <updated>2015-10-11T16:00:41.000Z</updated>
     <content type="html"><![CDATA[<p>监控是系统运维的基础，Icinga是一个开源的监控系统框架，通过其广泛的插件支持，你可以监控几乎任何你能想到的网络资源；也可以在超过临界值时给予通知，根据监控数据生产报表。本文主要介绍其搭建过程，大部分内容翻译自官方文档。</p>
@@ -1471,22 +1471,22 @@ nimbus<span class="class">.thrift</span><span class="class">.port</span>: <span 
     
     </summary>
     
-      <category term="CentOS" scheme="http://www.tnidea.com/tags/CentOS/"/>
+      <category term="CentOS" scheme="https://www.tnidea.com/tags/CentOS/"/>
     
-      <category term="Icinga Web2" scheme="http://www.tnidea.com/tags/Icinga-Web2/"/>
+      <category term="Icinga Web2" scheme="https://www.tnidea.com/tags/Icinga-Web2/"/>
     
-      <category term="Icinga2" scheme="http://www.tnidea.com/tags/Icinga2/"/>
+      <category term="Icinga2" scheme="https://www.tnidea.com/tags/Icinga2/"/>
     
-      <category term="服务器监控" scheme="http://www.tnidea.com/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9B%91%E6%8E%A7/"/>
+      <category term="服务器监控" scheme="https://www.tnidea.com/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9B%91%E6%8E%A7/"/>
     
-      <category term="运维" scheme="http://www.tnidea.com/categories/%E8%BF%90%E7%BB%B4/"/>
+      <category term="运维" scheme="https://www.tnidea.com/categories/%E8%BF%90%E7%BB%B4/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[使用DRPC调用.NET开发的Storm拓扑]]></title>
-    <link href="http://www.tnidea.com/call-dot-net-drpc-program.html"/>
-    <id>http://www.tnidea.com/call-dot-net-drpc-program.html</id>
+    <link href="https://www.tnidea.com/call-dot-net-drpc-program.html"/>
+    <id>https://www.tnidea.com/call-dot-net-drpc-program.html</id>
     <published>2015-09-11T16:00:00.000Z</published>
     <updated>2017-05-04T06:19:11.000Z</updated>
     <content type="html"><![CDATA[<p> 在上一篇文章里介绍了.Net版本的DRPC的类库，结尾处的例子使用了Java版 BasicDRPCTopology ，本文我将介绍如何使用C#来开发 Storm Topology 并供远程DRPC调用，这篇文章将作为.Net Storm系列文章的一个暂时的结束，新的文章将随着 <a href="https://github.com/ziyunhx/storm-net-adapter" title="storm-net-adapter" target="_blank" rel="external">storm-net-adapter</a> 新特性来更新!</p>
@@ -1512,28 +1512,28 @@ nimbus<span class="class">.thrift</span><span class="class">.port</span>: <span 
     
     </summary>
     
-      <category term=".NET" scheme="http://www.tnidea.com/tags/NET/"/>
+      <category term=".NET" scheme="https://www.tnidea.com/tags/NET/"/>
     
-      <category term="C#" scheme="http://www.tnidea.com/tags/C/"/>
+      <category term="C#" scheme="https://www.tnidea.com/tags/C/"/>
     
-      <category term="DRPC" scheme="http://www.tnidea.com/tags/DRPC/"/>
+      <category term="DRPC" scheme="https://www.tnidea.com/tags/DRPC/"/>
     
-      <category term="Topology" scheme="http://www.tnidea.com/tags/Topology/"/>
+      <category term="Topology" scheme="https://www.tnidea.com/tags/Topology/"/>
     
-      <category term="csharp" scheme="http://www.tnidea.com/tags/csharp/"/>
+      <category term="csharp" scheme="https://www.tnidea.com/tags/csharp/"/>
     
-      <category term="storm" scheme="http://www.tnidea.com/tags/storm/"/>
+      <category term="storm" scheme="https://www.tnidea.com/tags/storm/"/>
     
-      <category term="Storm" scheme="http://www.tnidea.com/categories/Storm/"/>
+      <category term="Storm" scheme="https://www.tnidea.com/categories/Storm/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[.NET使用DRPC远程调用运行在Storm上的拓扑]]></title>
-    <link href="http://www.tnidea.com/dot-net-drpc-storm.html"/>
-    <id>http://www.tnidea.com/dot-net-drpc-storm.html</id>
+    <link href="https://www.tnidea.com/dot-net-drpc-storm.html"/>
+    <id>https://www.tnidea.com/dot-net-drpc-storm.html</id>
     <published>2015-08-11T16:00:00.000Z</published>
-    <updated>2015-09-28T12:13:59.000Z</updated>
+    <updated>2017-05-04T06:22:15.000Z</updated>
     <content type="html"><![CDATA[<p> Distributed RPC（DRPC）是Storm构建在Thrift协议上的RPC的实现，DRPC使得你可以通过多种语言远程的使用Storm集群的计算能力。DRPC并非Storm的基础特性，但它确实非常有用。DRPC的整个过程与一般的RPC没有区别，客户端只需要调用一个远程的方法并等待返回结果。主要工作已经被DRPC Server封装，服务端在这个过程中完成了以下步骤：</p>
 <a id="more"></a>
 <ul>
@@ -1541,7 +1541,7 @@ nimbus<span class="class">.thrift</span><span class="class">.port</span>: <span 
 <li>将请求发送到storm topology；</li>
 <li>从storm topology接收结果；</li>
 <li><p>将结果发回给等待的客户端。</p>
-<p><img src="http://www.tnidea.com/media/image/drpc-workflow.png" alt="image"></p>
+<p><img src="https://www.tnidea.com/media/image/drpc-workflow.png" alt="image"></p>
 <p><a href="https://github.com/ziyunhx/storm-net-adapter" title="storm-net-adapter" target="_blank" rel="external">storm-net-adapter</a>现在已经完成了对DRPC的支持，因此你可以使用dotNet编写代码远程调用任何支持语言编写的支持DRPC的Topology，当然你也可以使用dotNet编写Topology供其它语言通过DRPC调用。</p>
 <p>DRPC是<a href="https://github.com/ziyunhx/storm-net-adapter" title="storm-net-adapter" target="_blank" rel="external">storm-net-adapter</a>新增加的特性，因此需要使用最新的类库，你可以使用源代码自行编译，或者下载最新的<a href="https://github.com/ziyunhx/storm-net-adapter/releases" title="Release" target="_blank" rel="external">Release</a>，还可以使用Nuget获取最新版本。</p>
 <p> PM&gt; Install-Package Storm.Net.Adapter</p>
@@ -1567,26 +1567,26 @@ nimbus<span class="class">.thrift</span><span class="class">.port</span>: <span 
     
     </summary>
     
-      <category term=".NET" scheme="http://www.tnidea.com/tags/NET/"/>
+      <category term=".NET" scheme="https://www.tnidea.com/tags/NET/"/>
     
-      <category term="C#" scheme="http://www.tnidea.com/tags/C/"/>
+      <category term="C#" scheme="https://www.tnidea.com/tags/C/"/>
     
-      <category term="DRPC" scheme="http://www.tnidea.com/tags/DRPC/"/>
+      <category term="DRPC" scheme="https://www.tnidea.com/tags/DRPC/"/>
     
-      <category term="Topology" scheme="http://www.tnidea.com/tags/Topology/"/>
+      <category term="Topology" scheme="https://www.tnidea.com/tags/Topology/"/>
     
-      <category term="csharp" scheme="http://www.tnidea.com/tags/csharp/"/>
+      <category term="csharp" scheme="https://www.tnidea.com/tags/csharp/"/>
     
-      <category term="storm" scheme="http://www.tnidea.com/tags/storm/"/>
+      <category term="storm" scheme="https://www.tnidea.com/tags/storm/"/>
     
-      <category term="Storm" scheme="http://www.tnidea.com/categories/Storm/"/>
+      <category term="Storm" scheme="https://www.tnidea.com/categories/Storm/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[Open Auth辅助库（使用ImitateLogin实现登录）]]></title>
-    <link href="http://www.tnidea.com/open-auth-assist-project.html"/>
-    <id>http://www.tnidea.com/open-auth-assist-project.html</id>
+    <link href="https://www.tnidea.com/open-auth-assist-project.html"/>
+    <id>https://www.tnidea.com/open-auth-assist-project.html</id>
     <published>2015-08-09T16:00:00.000Z</published>
     <updated>2015-09-23T15:26:42.000Z</updated>
     <content type="html"><![CDATA[<p> 网络上越来越多的公司进行着自己的平台化策略，其中绝大多数都已Web API的方式对外提供服务，为了方便的使用这些服务，你不得不引用许多相关的类库，但是API的本质其实仅仅是一些约定的网络请求，我们大多数情况仅仅使用API提供的少数几个功能，因此，我稍微修改了下微博的c#的类库，加入了<a href="https://github.com/ziyunhx/imitate-login" title="ImitateLogin" target="_blank" rel="external">ImitateLogin</a>库来模拟登录，形成了<a href="https://github.com/ziyunhx/open-auth-assist" title="open-auth-assist" target="_blank" rel="external">open-auth-assist</a>库。</p>
@@ -1610,19 +1610,19 @@ nimbus<span class="class">.thrift</span><span class="class">.port</span>: <span 
     
     </summary>
     
-      <category term=".NET" scheme="http://www.tnidea.com/tags/NET/"/>
+      <category term=".NET" scheme="https://www.tnidea.com/tags/NET/"/>
     
-      <category term="C#" scheme="http://www.tnidea.com/tags/C/"/>
+      <category term="C#" scheme="https://www.tnidea.com/tags/C/"/>
     
-      <category term="ImitateLogin" scheme="http://www.tnidea.com/tags/ImitateLogin/"/>
+      <category term="ImitateLogin" scheme="https://www.tnidea.com/tags/ImitateLogin/"/>
     
-      <category term="OpenAuth" scheme="http://www.tnidea.com/tags/OpenAuth/"/>
+      <category term="OpenAuth" scheme="https://www.tnidea.com/tags/OpenAuth/"/>
     
-      <category term="csharp" scheme="http://www.tnidea.com/tags/csharp/"/>
+      <category term="csharp" scheme="https://www.tnidea.com/tags/csharp/"/>
     
-      <category term="open-auth-assist" scheme="http://www.tnidea.com/tags/open-auth-assist/"/>
+      <category term="open-auth-assist" scheme="https://www.tnidea.com/tags/open-auth-assist/"/>
     
-      <category term="爬虫" scheme="http://www.tnidea.com/categories/%E7%88%AC%E8%99%AB/"/>
+      <category term="爬虫" scheme="https://www.tnidea.com/categories/%E7%88%AC%E8%99%AB/"/>
     
   </entry>
   

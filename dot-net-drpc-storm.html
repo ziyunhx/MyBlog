@@ -9,11 +9,11 @@
   <meta name="description" content="Distributed RPC（DRPC）是Storm构建在Thrift协议上的RPC的实现，DRPC使得你可以通过多种语言远程的使用Storm集群的计算能力。DRPC并非Storm的基础特性，但它确实非常有用。DRPC的整个过程与一般的RPC没有区别，客户端只需要调用一个远程的方法并等待返回结果。主要工作已经被DRPC Server封装，服务端在这个过程中完成了以下步骤：">
 <meta property="og:type" content="article">
 <meta property="og:title" content=".NET使用DRPC远程调用运行在Storm上的拓扑">
-<meta property="og:url" content="http://www.tnidea.com/dot-net-drpc-storm.html">
+<meta property="og:url" content="https://www.tnidea.com/dot-net-drpc-storm.html">
 <meta property="og:site_name" content="地平线">
 <meta property="og:description" content="Distributed RPC（DRPC）是Storm构建在Thrift协议上的RPC的实现，DRPC使得你可以通过多种语言远程的使用Storm集群的计算能力。DRPC并非Storm的基础特性，但它确实非常有用。DRPC的整个过程与一般的RPC没有区别，客户端只需要调用一个远程的方法并等待返回结果。主要工作已经被DRPC Server封装，服务端在这个过程中完成了以下步骤：">
-<meta property="og:image" content="http://www.tnidea.com/media/image/drpc-workflow.png">
-<meta property="og:updated_time" content="2015-09-28T12:13:59.000Z">
+<meta property="og:image" content="https://www.tnidea.com/media/image/drpc-workflow.png">
+<meta property="og:updated_time" content="2017-05-04T06:22:15.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content=".NET使用DRPC远程调用运行在Storm上的拓扑">
 <meta name="twitter:description" content="Distributed RPC（DRPC）是Storm构建在Thrift协议上的RPC的实现，DRPC使得你可以通过多种语言远程的使用Storm集群的计算能力。DRPC并非Storm的基础特性，但它确实非常有用。DRPC的整个过程与一般的RPC没有区别，客户端只需要调用一个远程的方法并等待返回结果。主要工作已经被DRPC Server封装，服务端在这个过程中完成了以下步骤：">
@@ -130,7 +130,7 @@
 <li>将请求发送到storm topology；</li>
 <li>从storm topology接收结果；</li>
 <li><p>将结果发回给等待的客户端。</p>
-<p><img src="http://www.tnidea.com/media/image/drpc-workflow.png" alt="image"></p>
+<p><img src="https://www.tnidea.com/media/image/drpc-workflow.png" alt="image"></p>
 <p><a href="https://github.com/ziyunhx/storm-net-adapter" title="storm-net-adapter" target="_blank" rel="external">storm-net-adapter</a>现在已经完成了对DRPC的支持，因此你可以使用dotNet编写代码远程调用任何支持语言编写的支持DRPC的Topology，当然你也可以使用dotNet编写Topology供其它语言通过DRPC调用。</p>
 <p>DRPC是<a href="https://github.com/ziyunhx/storm-net-adapter" title="storm-net-adapter" target="_blank" rel="external">storm-net-adapter</a>新增加的特性，因此需要使用最新的类库，你可以使用源代码自行编译，或者下载最新的<a href="https://github.com/ziyunhx/storm-net-adapter/releases" title="Release" target="_blank" rel="external">Release</a>，还可以使用Nuget获取最新版本。</p>
 <p> PM&gt; Install-Package Storm.Net.Adapter</p>
@@ -151,7 +151,7 @@
 <figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line">DRPCClient client = <span class="keyword">new</span> DRPCClient(<span class="string">"localhost"</span>, <span class="number">3772</span>);</span><br><span class="line"><span class="keyword">string</span> result = client.execute(<span class="string">"exclamation"</span>, <span class="string">"hello word"</span>);</span><br></pre></td></tr></table></figure>
 <p> 替换 localhost 为你的drpc服务器的地址，exclamation为你在java中设置的LinearDRPCTopologyBuilder的名称；我也在项目中新增了一个控制台程序<a href="https://github.com/ziyunhx/storm-net-adapter/tree/master/samples/Storm.DRPC.Demo" target="_blank" rel="external">Storm.DRPC.Demo</a>以便大家用于测试！</p>
 
-    <p>本文来自 <a href="https://www.tnidea.com/" title="The NewIdea" target="_blank" rel="external">The NewIdea</a>，作者 Carey Tzou 。<br>永久地址：<a href="http://www.tnidea.com/dot-net-drpc-storm.html" title=".NET使用DRPC远程调用运行在Storm上的拓扑" target="_blank" rel="external">http://www.tnidea.com/dot-net-drpc-storm.html</a><br>未经授权，拒绝任何全文及摘要转载！<br>
+    <p>本文来自 <a href="https://www.tnidea.com/" title="The NewIdea" target="_blank" rel="external">The NewIdea</a>，作者 Carey Tzou 。<br>永久地址：<a href="https://www.tnidea.com/dot-net-drpc-storm.html" title=".NET使用DRPC远程调用运行在Storm上的拓扑" target="_blank" rel="external">https://www.tnidea.com/dot-net-drpc-storm.html</a><br>未经授权，拒绝任何全文及摘要转载！<br>
     <br>
     <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
     <!-- 博客正文广告 -->
@@ -178,9 +178,9 @@
   </div>
 
 
-      <a data-url="http://www.tnidea.com/dot-net-drpc-storm.html" data-id="cisqzdh02004xmes32ggtqtoa" class="article-share-link">分享到</a>
+      <a data-url="https://www.tnidea.com/dot-net-drpc-storm.html" data-id="cisqzdh02004xmes32ggtqtoa" class="article-share-link">分享到</a>
       
-        <a href="http://www.tnidea.com/dot-net-drpc-storm.html#disqus_thread" class="article-comment-link">评论</a>
+        <a href="https://www.tnidea.com/dot-net-drpc-storm.html#disqus_thread" class="article-comment-link">评论</a>
       
       
   <div class="article-tag">

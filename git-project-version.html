@@ -9,11 +9,11 @@
   <meta name="description" content="上一篇博客写了如何在 .Net 项目使用 SVN 作为版本控制工具时生成与代码对应的组件版本号。虽然在公司一直使用 SVN ，但我却对 GIT 情有独钟，但少有文章提及如何具体在 Windows 平台来获得版本号。这让我有了迫切得到方法的希望。下面会具体实现如何在VS中使用Git版本号作为编译产生的文件版本号。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="在VS项目中通过GIT生成版本号作为编译版本号">
-<meta property="og:url" content="http://www.tnidea.com/git-project-version.html">
+<meta property="og:url" content="https://www.tnidea.com/git-project-version.html">
 <meta property="og:site_name" content="地平线">
 <meta property="og:description" content="上一篇博客写了如何在 .Net 项目使用 SVN 作为版本控制工具时生成与代码对应的组件版本号。虽然在公司一直使用 SVN ，但我却对 GIT 情有独钟，但少有文章提及如何具体在 Windows 平台来获得版本号。这让我有了迫切得到方法的希望。下面会具体实现如何在VS中使用Git版本号作为编译产生的文件版本号。">
-<meta property="og:image" content="http://www.tnidea.com/media/image/git-setup.png">
-<meta property="og:updated_time" content="2015-10-07T08:15:59.000Z">
+<meta property="og:image" content="https://www.tnidea.com/media/image/git-setup.png">
+<meta property="og:updated_time" content="2017-05-04T06:22:15.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="在VS项目中通过GIT生成版本号作为编译版本号">
 <meta name="twitter:description" content="上一篇博客写了如何在 .Net 项目使用 SVN 作为版本控制工具时生成与代码对应的组件版本号。虽然在公司一直使用 SVN ，但我却对 GIT 情有独钟，但少有文章提及如何具体在 Windows 平台来获得版本号。这让我有了迫切得到方法的希望。下面会具体实现如何在VS中使用Git版本号作为编译产生的文件版本号。">
@@ -125,7 +125,7 @@
 
     <p> 上一篇博客写了如何在 .Net 项目使用 SVN 作为版本控制工具时生成与代码对应的组件版本号。虽然在公司一直使用 SVN ，但我却对 GIT 情有独钟，但少有文章提及如何具体在 Windows 平台来获得版本号。这让我有了迫切得到方法的希望。下面会具体实现如何在VS中使用Git版本号作为编译产生的文件版本号。</p>
 <a id="more"></a>
-<p> 上篇博客 <a href="http://www.tnidea.com/svn-project-version.html" title="在VS项目中使用SVN版本号作为编译版本号">《在VS项目中使用SVN版本号作为编译版本号》</a></p>
+<p> 上篇博客 <a href="https://www.tnidea.com/svn-project-version.html" title="在VS项目中使用SVN版本号作为编译版本号">《在VS项目中使用SVN版本号作为编译版本号》</a></p>
 <p> 将 GIT 的 commit 作为 .Net 项目编译后生成dll的文件版本号主要有以下几个困难。</p>
 <ul>
 <li>GIT 没有一个数字的序号，而是一个SHA散列码；</li>
@@ -134,7 +134,7 @@
 <p>好了，首先我们依旧得找到 msysgit 的安装目录，一查之下头就大了，各个地方的路径都感觉不靠谱，最后还是选用了<br><code>HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Git_is1</code> 的 <code>InstallLocation</code> ，当然也可以通过 temp 环境变量来获取路径，安装时选择第二或第三项：</p>
 </li>
 </ul>
-<p><img src="http://www.tnidea.com/media/image/git-setup.png" alt="git-setup"></p>
+<p><img src="https://www.tnidea.com/media/image/git-setup.png" alt="git-setup"></p>
 <p> 然后参照 Git Bash 的快捷方式拼接了下 call 的语句。写了一个 sh 文件来获得版本号，并保存到文件：</p>
 <pre><code><span class="comment"># file name: git_ver.sh</span>
 <span class="shebang">#!/bin/bash </span>
@@ -145,7 +145,7 @@ VER=<span class="string">"<span class="variable">$VER</span> <span class="variab
 GIT_VERSION=<span class="variable">$VER</span>
 <span class="built_in">echo</span> <span class="variable">$GIT_VERSION</span>&gt;<span class="variable">$VER_FILE</span>
 </code></pre><p> 在批处理里取出刚保存文件的值，接下来的工作就和使用 SVN 里的差不多了，唯一的区别是我们要自己实现关键字的替换。</p>
-<p> 上篇博客 <a href="http://www.tnidea.com/svn-project-version.html" title="在VS项目中使用SVN版本号作为编译版本号">《在VS项目中使用SVN版本号作为编译版本号》</a></p>
+<p> 上篇博客 <a href="https://www.tnidea.com/svn-project-version.html" title="在VS项目中使用SVN版本号作为编译版本号">《在VS项目中使用SVN版本号作为编译版本号》</a></p>
 <p> 建立以一个 AssemblyInfo.tpl 作为替换使用的模板，由于 AssemblyInfo.cs 中除了固定的值外还有类似 GUID 变化的值，所以我们不能全部替换，因此仅将需要修改的部分放在 tpl 中，内容如下：</p>
 <pre><code>[assembly: <span class="function"><span class="title">AssemblyVersion</span><span class="params">(<span class="string">"1.0.0.0"</span>)</span></span>]
 [assembly: <span class="function"><span class="title">AssemblyFileVersion</span><span class="params">(<span class="string">"1.0.0.GITVERSION"</span>)</span></span>]
@@ -250,7 +250,7 @@ GIT_VERSION=<span class="variable">$VER</span>
 ::=================================================
 </code></pre><p> 惯例附上所有代码：<a href="http://pan.baidu.com/s/1osg9C" title="GIT生成版本号.rar" target="_blank" rel="external">点击下载</a></p>
 
-    <p>本文来自 <a href="https://www.tnidea.com/" title="The NewIdea" target="_blank" rel="external">The NewIdea</a>，作者 Carey Tzou 。<br>永久地址：<a href="http://www.tnidea.com/git-project-version.html" title="在VS项目中通过GIT生成版本号作为编译版本号" target="_blank" rel="external">http://www.tnidea.com/git-project-version.html</a><br>未经授权，拒绝任何全文及摘要转载！<br>
+    <p>本文来自 <a href="https://www.tnidea.com/" title="The NewIdea" target="_blank" rel="external">The NewIdea</a>，作者 Carey Tzou 。<br>永久地址：<a href="https://www.tnidea.com/git-project-version.html" title="在VS项目中通过GIT生成版本号作为编译版本号" target="_blank" rel="external">https://www.tnidea.com/git-project-version.html</a><br>未经授权，拒绝任何全文及摘要转载！<br>
     <br>
     <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
     <!-- 博客正文广告 -->
@@ -277,9 +277,9 @@ GIT_VERSION=<span class="variable">$VER</span>
   </div>
 
 
-      <a data-url="http://www.tnidea.com/git-project-version.html" data-id="cisqzdgzq0043mes34sm9ffte" class="article-share-link">分享到</a>
+      <a data-url="https://www.tnidea.com/git-project-version.html" data-id="cisqzdgzq0043mes34sm9ffte" class="article-share-link">分享到</a>
       
-        <a href="http://www.tnidea.com/git-project-version.html#disqus_thread" class="article-comment-link">评论</a>
+        <a href="https://www.tnidea.com/git-project-version.html#disqus_thread" class="article-comment-link">评论</a>
       
       
   <div class="article-tag">

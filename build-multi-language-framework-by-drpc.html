@@ -9,11 +9,11 @@
   <meta name="description" content="Distributed RPC（DRPC）作为Storm基于Thrift协议的RPC实现，已在之前的文章中被多次提及；在一个多开发语言的环境中，RPC是必不可少的一环，常见的RPC实现方式除了thrift外也还有很多，甚至基于Http协议的RESTful API也可以算作是其中的一员。本文将为您解读：为什么在这么多的RPC方式中选择使用DRPC来构建多语言编程架构，而不是使用Thrift或者其它方">
 <meta property="og:type" content="article">
 <meta property="og:title" content="使用DRPC构建分布式多语言编程架构">
-<meta property="og:url" content="http://www.tnidea.com/build-multi-language-framework-by-drpc.html">
+<meta property="og:url" content="https://www.tnidea.com/build-multi-language-framework-by-drpc.html">
 <meta property="og:site_name" content="地平线">
 <meta property="og:description" content="Distributed RPC（DRPC）作为Storm基于Thrift协议的RPC实现，已在之前的文章中被多次提及；在一个多开发语言的环境中，RPC是必不可少的一环，常见的RPC实现方式除了thrift外也还有很多，甚至基于Http协议的RESTful API也可以算作是其中的一员。本文将为您解读：为什么在这么多的RPC方式中选择使用DRPC来构建多语言编程架构，而不是使用Thrift或者其它方">
-<meta property="og:image" content="http://www.tnidea.com/media/image/drpc-flow.jpg">
-<meta property="og:updated_time" content="2016-03-27T06:26:38.000Z">
+<meta property="og:image" content="https://www.tnidea.com/media/image/drpc-flow.jpg">
+<meta property="og:updated_time" content="2017-05-04T06:22:15.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="使用DRPC构建分布式多语言编程架构">
 <meta name="twitter:description" content="Distributed RPC（DRPC）作为Storm基于Thrift协议的RPC实现，已在之前的文章中被多次提及；在一个多开发语言的环境中，RPC是必不可少的一环，常见的RPC实现方式除了thrift外也还有很多，甚至基于Http协议的RESTful API也可以算作是其中的一员。本文将为您解读：为什么在这么多的RPC方式中选择使用DRPC来构建多语言编程架构，而不是使用Thrift或者其它方">
@@ -129,8 +129,8 @@
 <p>一开始，你写这个模块可能只是满足自己程序的需要，甚至只是做一个可行性的实验；后来大家发现很好用，越来越多的人使用这个模块，你不得不为了方便别人使用进一步封装，优化代码性能，考虑如何部署成服务，怎么实现负载均衡……</p>
 <p>自己创造的代码被广泛使用确实让我信心爆棚，但越来越多的时间花在我原本并不擅长的方向……有没有一种方案让我只需要专心的写代码，多语言调用、部署、负载均衡、分布式什么都我都不需要去管？</p>
 <p>答案当然是肯定的啦，下面我就给大家介绍基于 DRPC 构建的分布式多语言编程模式，个人才疏学浅，如果疏漏，请轻拍！</p>
-<p> <img src="http://www.tnidea.com/media/image/drpc-flow.jpg" alt="DRPC-flow"></p>
-<p>DRPC的整个过程与一般的RPC并没有区别，它的实现也是基于Thrift协议；让它变得与众不同的原因便是让你能方便的使用Storm集群的计算能力，当然这也意味着你的整个计算集群都得基于Storm。如果你对大数据的技术有过了解，即使没有听说过Storm，也一定听说过Hadoop吧，Storm类似于Hadoop中的MapReduce，它最大的改变便是将MapReduce中批处理的方式换成了实时的方式，另一个号称实时的框架spark streaming则只是把批处理变得更小更敏捷罢了。更多关于这三者比较的信息可以查看我之前的文章：<a href="http://www.tnidea.com/compare-with-distributed-computation-system.html" title="开源分布式计算系统框架比较">开源分布式计算系统框架比较</a>。</p>
+<p> <img src="https://www.tnidea.com/media/image/drpc-flow.jpg" alt="DRPC-flow"></p>
+<p>DRPC的整个过程与一般的RPC并没有区别，它的实现也是基于Thrift协议；让它变得与众不同的原因便是让你能方便的使用Storm集群的计算能力，当然这也意味着你的整个计算集群都得基于Storm。如果你对大数据的技术有过了解，即使没有听说过Storm，也一定听说过Hadoop吧，Storm类似于Hadoop中的MapReduce，它最大的改变便是将MapReduce中批处理的方式换成了实时的方式，另一个号称实时的框架spark streaming则只是把批处理变得更小更敏捷罢了。更多关于这三者比较的信息可以查看我之前的文章：<a href="https://www.tnidea.com/compare-with-distributed-computation-system.html" title="开源分布式计算系统框架比较">开源分布式计算系统框架比较</a>。</p>
 <p>编写运行在Storm框架上的DRPC模块是非常容易的，你只需要将你原来编写的逻辑代码包裹在Storm Bolt的封装代码中即可。当然，也会有一些限制，首先是需要将复杂的逻辑尽量拆解，将一个需要运行很久的代码直接封装可能会导致Bolt运行超时；其次，目前的DRPC版本仅支持一个字符串的输入输出，这也意味着复杂的对象需要额外的序列化与反序列化开销；第三，目前并非所有语言均已支持Storm，幸运的是完成对Storm的支持并不困难，下面给大家列出我整理的一些支持语言的DEMO（需要支持DRPC仅需将输入与输出参数的末尾增加一个ID）。</p>
 <ul>
 <li><a href="https://github.com/ziyunhx/storm-net-adapter/blob/master/samples/StormSample/Counter.cs" target="_blank" rel="external">C# Demo</a></li>
@@ -150,12 +150,12 @@
 <p>如果需要使用到生产环境中，性能和安全性也是需要考虑的问题。使用DRPC会带来一定性能损耗，但是不要担心，不论是官方的测试报告还是我们实际使用的结论都表明这一损耗在分布式集群中是可接受的，对于大部分的用户甚至无法感知；它的负载能力同样不俗，而且DRPC本身也是支持分布式的。DRPC目前并没有做许多额外的安全性的防护，我们目前也是只能通过切换默认端口号，不开放外网访问或者使用IP白名单，程序中验证访问权限的方式来完成。相信在今后这一块也会受到官方的重视，本文的例子还是以0.9.6版本为基础，官方的开发版本已经到了2.0。</p>
 <p>如果你已经下定决心想要尝试下，我已经给你准备了一个Docker快速编排的镜像，你可以查看我之前的文章或者直接依据开源项目的步骤操作，虽然现在在Docker中使用JDK已经违反了协议，还望大家放我一马啊。</p>
 <ul>
-<li><a href="http://www.tnidea.com/deploy-storm-by-docker.html">使用Docker快速部署Storm环境</a></li>
+<li><a href="https://www.tnidea.com/deploy-storm-by-docker.html">使用Docker快速部署Storm环境</a></li>
 <li><a href="https://github.com/ziyunhx/storm-mono-docker" target="_blank" rel="external">storm-mono-docker</a></li>
 </ul>
 <p>另外，现在微信公众号已开通评论和打赏功能，有什么建议或者觉得文章对您有帮助，请移步公众号支持一下哦！</p>
 
-    <p>本文来自 <a href="https://www.tnidea.com/" title="The NewIdea" target="_blank" rel="external">The NewIdea</a>，作者 Carey Tzou 。<br>永久地址：<a href="http://www.tnidea.com/build-multi-language-framework-by-drpc.html" title="使用DRPC构建分布式多语言编程架构" target="_blank" rel="external">http://www.tnidea.com/build-multi-language-framework-by-drpc.html</a><br>未经授权，拒绝任何全文及摘要转载！<br>
+    <p>本文来自 <a href="https://www.tnidea.com/" title="The NewIdea" target="_blank" rel="external">The NewIdea</a>，作者 Carey Tzou 。<br>永久地址：<a href="https://www.tnidea.com/build-multi-language-framework-by-drpc.html" title="使用DRPC构建分布式多语言编程架构" target="_blank" rel="external">https://www.tnidea.com/build-multi-language-framework-by-drpc.html</a><br>未经授权，拒绝任何全文及摘要转载！<br>
     <br>
     <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
     <!-- 博客正文广告 -->
@@ -182,9 +182,9 @@
   </div>
 
 
-      <a data-url="http://www.tnidea.com/build-multi-language-framework-by-drpc.html" data-id="cisqzdh0j006emes3u5xbf0l9" class="article-share-link">分享到</a>
+      <a data-url="https://www.tnidea.com/build-multi-language-framework-by-drpc.html" data-id="cisqzdh0j006emes3u5xbf0l9" class="article-share-link">分享到</a>
       
-        <a href="http://www.tnidea.com/build-multi-language-framework-by-drpc.html#disqus_thread" class="article-comment-link">评论</a>
+        <a href="https://www.tnidea.com/build-multi-language-framework-by-drpc.html#disqus_thread" class="article-comment-link">评论</a>
       
       
   <div class="article-tag">

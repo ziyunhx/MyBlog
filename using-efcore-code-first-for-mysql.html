@@ -9,7 +9,7 @@
   <meta name="description" content="EntityFramework(以下简称EF) 作为 .NET 广受欢迎的数据库操作中间件，支持了几乎所有你用过的关系型数据库，本文将非常基础的介绍其在 Mysql 中的使用。EF 常见的使用模式有三种：CodeFirst, ModelFirst, DBFirst；三种方式各有所特点，一般要根据实际的业务情况做选择。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="使用 EF Core CodeFirst 操作 Mysql 数据库">
-<meta property="og:url" content="http://www.tnidea.com/using-efcore-code-first-for-mysql.html">
+<meta property="og:url" content="https://www.tnidea.com/using-efcore-code-first-for-mysql.html">
 <meta property="og:site_name" content="地平线">
 <meta property="og:description" content="EntityFramework(以下简称EF) 作为 .NET 广受欢迎的数据库操作中间件，支持了几乎所有你用过的关系型数据库，本文将非常基础的介绍其在 Mysql 中的使用。EF 常见的使用模式有三种：CodeFirst, ModelFirst, DBFirst；三种方式各有所特点，一般要根据实际的业务情况做选择。">
 <meta property="og:updated_time" content="2016-12-22T16:37:35.000Z">
@@ -158,7 +158,7 @@
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">class Program&#10;&#123;&#10;    static void Main(string[] args)&#10;    &#123;&#10;        //&#21028;&#26029;&#25968;&#25454;&#24211;&#26159;&#21542;&#23384;&#22312;,&#22914;&#26524;&#19981;&#23384;&#22312;&#21017;&#21019;&#24314;&#34920;&#10;        WechatContext context = new WechatContext();&#10;&#10;        if (!context.Database.EnsureCreated())&#10;        &#123;&#10;            Console.WriteLine(&#34;Error: Unable to create the mysql database&#65281;&#34;);&#10;        &#125;&#10;        else&#10;        &#123;&#10;            Console.WriteLine(&#34;Create and Connect to MySQL success&#65281;&#34;);&#10;&#10;            //&#21021;&#22987;&#21270;&#24494;&#20449;&#29992;&#25143;&#20851;&#31995;&#25968;&#25454;&#10;            if (UserHelper.GetWechatUserToDB())&#10;            &#123;&#10;                Console.WriteLine(&#34;Init wechat users to MySQL db success&#65281;&#34;);&#10;            &#125;&#10;            else&#10;            &#123;&#10;                Console.WriteLine(&#34;Error: Unable to Init wechat users to MySQL db&#65281;&#34;);&#10;            &#125;&#10;        &#125;&#10;    &#125;&#10;&#125;</span><br></pre></td></tr></table></figure>
 <p>至此，一个简单的 Demo 就完成了，由于篇幅有限，许多地方都还有需要优化的地方，此处就不一一介绍了，完整代码可以在 <a href="https://github.com/ziyunhx/Samples/tree/master/EFCoreSample" target="_blank" rel="external">EFCoreSample</a> 查看。执行后你就可以在数据库看到结果了！</p>
 
-    <p>本文来自 <a href="https://www.tnidea.com/" title="The NewIdea" target="_blank" rel="external">The NewIdea</a>，作者 Carey Tzou 。<br>永久地址：<a href="http://www.tnidea.com/using-efcore-code-first-for-mysql.html" title="使用 EF Core CodeFirst 操作 Mysql 数据库" target="_blank" rel="external">http://www.tnidea.com/using-efcore-code-first-for-mysql.html</a><br>未经授权，拒绝任何全文及摘要转载！<br>
+    <p>本文来自 <a href="https://www.tnidea.com/" title="The NewIdea" target="_blank" rel="external">The NewIdea</a>，作者 Carey Tzou 。<br>永久地址：<a href="https://www.tnidea.com/using-efcore-code-first-for-mysql.html" title="使用 EF Core CodeFirst 操作 Mysql 数据库" target="_blank" rel="external">https://www.tnidea.com/using-efcore-code-first-for-mysql.html</a><br>未经授权，拒绝任何全文及摘要转载！<br>
     <br>
     <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
     <!-- 博客正文广告 -->
@@ -185,9 +185,9 @@
   </div>
 
 
-      <a data-url="http://www.tnidea.com/using-efcore-code-first-for-mysql.html" data-id="cix0l5qjf0000d7s36ufzqg9o" class="article-share-link">分享到</a>
+      <a data-url="https://www.tnidea.com/using-efcore-code-first-for-mysql.html" data-id="cix0l5qjf0000d7s36ufzqg9o" class="article-share-link">分享到</a>
       
-        <a href="http://www.tnidea.com/using-efcore-code-first-for-mysql.html#disqus_thread" class="article-comment-link">评论</a>
+        <a href="https://www.tnidea.com/using-efcore-code-first-for-mysql.html#disqus_thread" class="article-comment-link">评论</a>
       
       
   <div class="article-tag">
