@@ -14,7 +14,7 @@ tags:
 
 <!--more-->
 
- 上篇博客 [《在VS项目中使用SVN版本号作为编译版本号》](http://www.tnidea.com/svn-project-version.html "在VS项目中使用SVN版本号作为编译版本号")
+ 上篇博客 [《在VS项目中使用SVN版本号作为编译版本号》](https://www.tnidea.com/svn-project-version.html "在VS项目中使用SVN版本号作为编译版本号")
 
  将 GIT 的 commit 作为 .Net 项目编译后生成dll的文件版本号主要有以下几个困难。
 
@@ -26,7 +26,7 @@ tags:
  好了，首先我们依旧得找到 msysgit 的安装目录，一查之下头就大了，各个地方的路径都感觉不靠谱，最后还是选用了
  `HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Git_is1` 的 `InstallLocation` ，当然也可以通过 temp 环境变量来获取路径，安装时选择第二或第三项：
 
-![git-setup](http://www.tnidea.com/media/image/git-setup.png)
+![git-setup](https://www.tnidea.com/media/image/git-setup.png)
 
  然后参照 Git Bash 的快捷方式拼接了下 call 的语句。写了一个 sh 文件来获得版本号，并保存到文件：
 
@@ -41,7 +41,7 @@ tags:
 
  在批处理里取出刚保存文件的值，接下来的工作就和使用 SVN 里的差不多了，唯一的区别是我们要自己实现关键字的替换。
 
- 上篇博客 [《在VS项目中使用SVN版本号作为编译版本号》](http://www.tnidea.com/svn-project-version.html "在VS项目中使用SVN版本号作为编译版本号")
+ 上篇博客 [《在VS项目中使用SVN版本号作为编译版本号》](https://www.tnidea.com/svn-project-version.html "在VS项目中使用SVN版本号作为编译版本号")
 
  建立以一个 AssemblyInfo.tpl 作为替换使用的模板，由于 AssemblyInfo.cs 中除了固定的值外还有类似 GUID 变化的值，所以我们不能全部替换，因此仅将需要修改的部分放在 tpl 中，内容如下：
 

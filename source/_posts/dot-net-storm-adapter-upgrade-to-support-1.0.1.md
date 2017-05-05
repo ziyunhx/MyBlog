@@ -17,7 +17,7 @@ tags:
  
  下图是使用 Docker 部署的 .NET 版的 Wordcount 的 Storm UI：
  
- ![Storm UI](http://www.tnidea.com/media/image/storm-ui-docker-101.png)
+ ![Storm UI](https://www.tnidea.com/media/image/storm-ui-docker-101.png)
  
  通过图片我们可以看到，Topology 和 Supervisor 都增加了内存的占用字段，Nimbus 也支持多主机配置了，诟病多年的单 Nimbus 造成的稳定性隐患也终于得到解决。原有的配置项从 `nimbus.host` 换成了 `nimbus.seeds`，但实际测试如果你没有修改过来的话也只会出现警告，并不会崩溃。
  

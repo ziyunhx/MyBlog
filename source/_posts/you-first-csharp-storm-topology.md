@@ -18,7 +18,7 @@ tags:
 
  首先，我们创建一个控制台应用程序（使用控制台是方便调用） StormSimple；使用Nuget添加添加Storm.Net.Adapter（该类库的namespace为Storm）。
 
-![wordcount project](http://www.tnidea.com/media/image/wordcount-project.png)
+![wordcount project](https://www.tnidea.com/media/image/wordcount-project.png)
 
  **STEP1**：通过继承ISpout创建一个Spout：Generator，实现ISpout的四个方法：
 
@@ -348,5 +348,5 @@ namespace StormSample
 
  我们在Main方法里使用参数来确定具体调用的是哪个Spout/Bolt，ApacheStorm是一个包含主要方法的类，之所以不使用Storm只是因为命名空间占用了它。Csharp端的代码到此就全部结束了，Java端的代码与部署发布将在下一篇详细介绍，敬请期待！下面让我们来看一看整个Topology的流程吧！
 
- ![WordCount Topology](http://www.tnidea.com/media/image/wordcount-topology.png)
+ ![WordCount Topology](https://www.tnidea.com/media/image/wordcount-topology.png)
 

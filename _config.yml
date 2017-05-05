@@ -17,7 +17,7 @@ since: 2013 # The start year showing in your copyright section.
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: http://www.tnidea.com/
+url: https://www.tnidea.com/
 root: /
 permalink: :title.html
 permalink_defaults:
@@ -70,10 +70,10 @@ pagination_dir: page
 theme: icarus
 
 # Disqus
-#disqus_shortname: tnidea
+disqus_shortname: tnidea
 
 # DuoShuo
-duoshuo_shortname: tnidea
+#duoshuo_shortname: tnidea
 
 # Deployment
 ## Docs: http://hexo.io/docs/deployment.html

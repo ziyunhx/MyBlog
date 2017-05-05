@@ -52,8 +52,6 @@
     (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
     <br/>
-    <div class="bd-reward-stl"><button id="bdRewardBtn"><span></span></button></div>
-    <br/>
     <p>欢迎关注微信公众号：CareyTzou（dotNet大数据）</p>
     <a href="https://www.tnidea.com/media/image/wechat.jpg" title="Wechat:CareyTzou" class="fancybox" rel="article0"><img style="width:160px;display:inline;" src="https://www.tnidea.com/media/image/wechat.jpg" alt="Wechat:CareyTzou"></a>
     <% } %>
@@ -62,12 +60,7 @@
     <footer class="article-footer">
     <%- partial('post/date', {class_name: 'article-date', date_format: null}) %>
       <a data-url="<%- post.permalink %>" data-id="<%= post._id %>" class="article-share-link"><%= __('article.share') %></a>
-      <% if (post.comments && config.disqus_shortname){ %>
-        <a href="<%- post.permalink %>#disqus_thread" class="article-comment-link"><%= __('article.comments') %></a>
-      <% } else if (post.comments && config.duoshuo_shortname){ %>
-        <a href="<%- post.permalink %>#ds-thread" class="article-comment-link"><%= __('article.comments') %></a>
-      <% } %>
-      <%- partial('post/tag') %>
+    <%- partial('post/tag') %>
     </footer>
   </div>
   <% if (!index){ %>

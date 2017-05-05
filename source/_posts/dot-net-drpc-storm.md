@@ -20,7 +20,7 @@ tags:
  - 从storm topology接收结果；
  - 将结果发回给等待的客户端。
 
- ![image](http://www.tnidea.com/media/image/drpc-workflow.png)
+ ![image](https://www.tnidea.com/media/image/drpc-workflow.png)
 
  [storm-net-adapter](https://github.com/ziyunhx/storm-net-adapter "storm-net-adapter")现在已经完成了对DRPC的支持，因此你可以使用dotNet编写代码远程调用任何支持语言编写的支持DRPC的Topology，当然你也可以使用dotNet编写Topology供其它语言通过DRPC调用。
 

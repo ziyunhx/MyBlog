@@ -26,7 +26,7 @@ tags:
  
  位于 设置->账号安全->登录保护
  
- ![image](http://www.tnidea.com/media/image/imitate-login-weibo-setting.png)
+ ![image](https://www.tnidea.com/media/image/imitate-login-weibo-setting.png)
  
  这个项目支持使用 Apache Thrift 来实现多语言环境下的RPC调用，首先安装Thrift，然后使用以下命令创建目标语言下的接口：
  

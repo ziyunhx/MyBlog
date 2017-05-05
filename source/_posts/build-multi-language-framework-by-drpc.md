@@ -24,9 +24,9 @@ Distributed RPC（DRPC）作为Storm基于Thrift协议的RPC实现，已在之�
 
 答案当然是肯定的啦，下面我就给大家介绍基于 DRPC 构建的分布式多语言编程模式，个人才疏学浅，如果疏漏，请轻拍！
 
- ![DRPC-flow](http://www.tnidea.com/media/image/drpc-flow.jpg)
+ ![DRPC-flow](https://www.tnidea.com/media/image/drpc-flow.jpg)
 
-DRPC的整个过程与一般的RPC并没有区别，它的实现也是基于Thrift协议；让它变得与众不同的原因便是让你能方便的使用Storm集群的计算能力，当然这也意味着你的整个计算集群都得基于Storm。如果你对大数据的技术有过了解，即使没有听说过Storm，也一定听说过Hadoop吧，Storm类似于Hadoop中的MapReduce，它最大的改变便是将MapReduce中批处理的方式换成了实时的方式，另一个号称实时的框架spark streaming则只是把批处理变得更小更敏捷罢了。更多关于这三者比较的信息可以查看我之前的文章：[开源分布式计算系统框架比较](http://www.tnidea.com/compare-with-distributed-computation-system.html "开源分布式计算系统框架比较")。
+DRPC的整个过程与一般的RPC并没有区别，它的实现也是基于Thrift协议；让它变得与众不同的原因便是让你能方便的使用Storm集群的计算能力，当然这也意味着你的整个计算集群都得基于Storm。如果你对大数据的技术有过了解，即使没有听说过Storm，也一定听说过Hadoop吧，Storm类似于Hadoop中的MapReduce，它最大的改变便是将MapReduce中批处理的方式换成了实时的方式，另一个号称实时的框架spark streaming则只是把批处理变得更小更敏捷罢了。更多关于这三者比较的信息可以查看我之前的文章：[开源分布式计算系统框架比较](https://www.tnidea.com/compare-with-distributed-computation-system.html "开源分布式计算系统框架比较")。
 
 编写运行在Storm框架上的DRPC模块是非常容易的，你只需要将你原来编写的逻辑代码包裹在Storm Bolt的封装代码中即可。当然，也会有一些限制，首先是需要将复杂的逻辑尽量拆解，将一个需要运行很久的代码直接封装可能会导致Bolt运行超时；其次，目前的DRPC版本仅支持一个字符串的输入输出，这也意味着复杂的对象需要额外的序列化与反序列化开销；第三，目前并非所有语言均已支持Storm，幸运的是完成对Storm的支持并不困难，下面给大家列出我整理的一些支持语言的DEMO（需要支持DRPC仅需将输入与输出参数的末尾增加一个ID）。
 
@@ -49,7 +49,7 @@ DRPC的整个过程与一般的RPC并没有区别，它的实现也是基于Thri
 
 如果你已经下定决心想要尝试下，我已经给你准备了一个Docker快速编排的镜像，你可以查看我之前的文章或者直接依据开源项目的步骤操作，虽然现在在Docker中使用JDK已经违反了协议，还望大家放我一马啊。
 
-- [使用Docker快速部署Storm环境](http://www.tnidea.com/deploy-storm-by-docker.html)
+- [使用Docker快速部署Storm环境](https://www.tnidea.com/deploy-storm-by-docker.html)
 - [storm-mono-docker](https://github.com/ziyunhx/storm-mono-docker)
 
 另外，现在微信公众号已开通评论和打赏功能，有什么建议或者觉得文章对您有帮助，请移步公众号支持一下哦！

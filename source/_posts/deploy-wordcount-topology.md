@@ -24,7 +24,7 @@ tags:
  
  **STEP2**: 增加csharp的多语言支持：
  
- 将上一篇博客 [使用Csharp创建你的第一个Storm拓扑](http://www.tnidea.com/you-first-csharp-storm-topology.html "使用Csharp创建你的第一个Storm拓扑") 中完成的项目编译，把生产的组件拷贝到 `/multilang/resources/` 文件夹中。
+ 将上一篇博客 [使用Csharp创建你的第一个Storm拓扑](https://www.tnidea.com/you-first-csharp-storm-topology.html "使用Csharp创建你的第一个Storm拓扑") 中完成的项目编译，把生产的组件拷贝到 `/multilang/resources/` 文件夹中。
  
  **STEP3**：使用JAVA创建Topology：
 
@@ -171,9 +171,9 @@ public class WordCountTopologyCsharp {
 
  `$ storm jar storm-starter-*-jar-with-dependencies.jar storm.starter.WordCountTopologyCsharp wordcount`
 
- storm集群的搭建请参考系列文章第一篇 [搭建dotNet开发Storm拓扑的环境](http://www.tnidea.com/deploy-storm-environment.html "搭建dotNet开发Storm拓扑的环境")
+ storm集群的搭建请参考系列文章第一篇 [搭建dotNet开发Storm拓扑的环境](https://www.tnidea.com/deploy-storm-environment.html "搭建dotNet开发Storm拓扑的环境")
  
- ![image](http://www.tnidea.com/media/image/storm-3-01.png)
+ ![image](https://www.tnidea.com/media/image/storm-3-01.png)
  
- ![image](http://www.tnidea.com/media/image/storm-3-02.png)
+ ![image](https://www.tnidea.com/media/image/storm-3-02.png)
 

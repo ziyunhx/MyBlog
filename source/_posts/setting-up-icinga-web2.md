@@ -113,15 +113,15 @@ icingacli setup token show
 
 STEP 2: 使用浏览器访问 http://127.0.0.1/icingaweb2/setup （将IP替换为实际IP或域名），将上一步命令行得到的token输入到Steup Token的输入框中，继续下一步。
 
- ![Image](http://www.tnidea.com/media/image/icinga-websetup-1.png)
+ ![Image](https://www.tnidea.com/media/image/icinga-websetup-1.png)
 
 STEP 3: 根据需要选择需要安装的模块，我这边选择了除翻译外的所有模块。
 
- ![Image](http://www.tnidea.com/media/image/icinga-websetup-2.png)
+ ![Image](https://www.tnidea.com/media/image/icinga-websetup-2.png)
 
 STEP 4: 根据系统检查结果，解决需要修改的项，全部完成后刷新确认。
 
- ![Image](http://www.tnidea.com/media/image/icinga-websetup-3.png)
+ ![Image](https://www.tnidea.com/media/image/icinga-websetup-3.png)
 
 本例中，需要解决的有PHP时区，LDAP，PDO-MySQL，PDO-PostgreSQL问题。PDO-MySQL，PDO-PostgreSQL只需要重启Web服务器即可解决。
 
@@ -138,22 +138,22 @@ yum install php-ldap
 
 STEP 5: 配置Icinga Web2数据库
 
- ![Image](http://www.tnidea.com/media/image/icinga-websetup-4.png)
+ ![Image](https://www.tnidea.com/media/image/icinga-websetup-4.png)
 
 此处直接填写我们创建的icingaweb2数据库的信息，默认情况下用户名和密码都是icingaweb2。由于我们并没有给予icingaweb2用户创建表的权限，因此你还需要给一个有创建数据库和表权限的用户。
 
-![Image](http://www.tnidea.com/media/image/icinga-websetup-5.png)
+![Image](https://www.tnidea.com/media/image/icinga-websetup-5.png)
 
 STEP 6: 创建一个Icinga Web2的管理员账号
 
-![Image](http://www.tnidea.com/media/image/icinga-websetup-6.png)
+![Image](https://www.tnidea.com/media/image/icinga-websetup-6.png)
 
 STEP 7: 配置Icinga IDO数据库信息
 
-![Image](http://www.tnidea.com/media/image/icinga-websetup-7.png)
+![Image](https://www.tnidea.com/media/image/icinga-websetup-7.png)
 
 此处直接填写我们创建的icinga数据库的信息，默认情况下用户名和密码都是icinga。
 
 ok! 一切就绪，登陆进去瞅瞅吧！
 
-![Image](http://www.tnidea.com/media/image/icinga-websetup-8.png)
+![Image](https://www.tnidea.com/media/image/icinga-websetup-8.png)

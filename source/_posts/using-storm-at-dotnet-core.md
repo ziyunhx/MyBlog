@@ -52,6 +52,6 @@ tags:
 
  你就可以看到如下熟悉的界面咯：
 
- ![Storm UI](http://www.tnidea.com/media/image/storm-ui-docker-101.png)
+ ![Storm UI](https://www.tnidea.com/media/image/storm-ui-docker-101.png)
 
  接下来需要完善与实现的任务还很多，项目的发展需要得到广泛的关注与支持；如果你觉得这个项目对您有帮助，欢迎在 GitHub 给出 Star ，项目地址：[storm-net-adapter](https://github.com/ziyunhx/storm-net-adapter) ，或者转发文章支持一下！
