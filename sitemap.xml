@@ -2,8 +2,8 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://www.tnidea.com/you-first-csharp-storm-topology.html</loc>
-    <lastmod>2017-05-04T06:22:15.000Z</lastmod>
+    <loc>https://www.tnidea.com/new-netcore-unstructured-text-capture-lib-thrinax.html</loc>
+    <lastmod>2018-01-25T16:36:23.000Z</lastmod>
   </url>
   
   <url>
@@ -12,7 +12,12 @@
   </url>
   
   <url>
-    <loc>https://www.tnidea.com/dot-net-drpc-storm.html</loc>
+    <loc>https://www.tnidea.com/git-project-version.html</loc>
+    <lastmod>2017-05-04T06:22:15.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.tnidea.com/dot-net-storm-adapter-upgrade.html</loc>
     <lastmod>2017-05-04T06:22:15.000Z</lastmod>
   </url>
   
@@ -27,12 +32,17 @@
   </url>
   
   <url>
-    <loc>https://www.tnidea.com/dot-net-storm-adapter-upgrade.html</loc>
+    <loc>https://www.tnidea.com/you-first-csharp-storm-topology.html</loc>
     <lastmod>2017-05-04T06:22:15.000Z</lastmod>
   </url>
   
   <url>
-    <loc>https://www.tnidea.com/git-project-version.html</loc>
+    <loc>https://www.tnidea.com/dot-net-storm-adapter-upgrade-to-support-1.0.1.html</loc>
+    <lastmod>2017-05-04T06:22:15.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.tnidea.com/dot-net-drpc-storm.html</loc>
     <lastmod>2017-05-04T06:22:15.000Z</lastmod>
   </url>
   
@@ -43,11 +53,6 @@
   
   <url>
     <loc>https://www.tnidea.com/deploy-wordcount-topology.html</loc>
-    <lastmod>2017-05-04T06:22:15.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://www.tnidea.com/dot-net-storm-adapter-upgrade-to-support-1.0.1.html</loc>
     <lastmod>2017-05-04T06:22:15.000Z</lastmod>
   </url>
   

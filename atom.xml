@@ -4,7 +4,7 @@
   <subtitle><![CDATA[纯粹的技术导向！]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="https://www.tnidea.com/"/>
-  <updated>2016-12-22T16:37:35.000Z</updated>
+  <updated>2018-01-25T16:36:23.000Z</updated>
   <id>https://www.tnidea.com/</id>
   
   <author>
@@ -13,6 +13,57 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[Thrinax：.Net的文本抽取类库（一）--基于网页区块的详情页抽取]]></title>
+    <link href="https://www.tnidea.com/new-netcore-unstructured-text-capture-lib-thrinax.html"/>
+    <id>https://www.tnidea.com/new-netcore-unstructured-text-capture-lib-thrinax.html</id>
+    <published>2018-01-24T16:00:00.000Z</published>
+    <updated>2018-01-25T16:36:23.000Z</updated>
+    <content type="html"><![CDATA[<p> 好久不见，这次给大家带来一个全新的基于 .Net 的中文网页信息抽取的类库，Thrinax。该库的目标是通过一种简单的，低人工参与的方式来实现稳定的获取网页中的有效信息；这将会是一个系列文章，在书写文章的同时，类库也会不断完善，今天带来第一篇，基于网页区块的详情页信息抽取。</p>
+<a id="more"></a>
+<p> <a href="https://github.com/ziyunhx/thrinax" target="_blank" rel="external">Thrinax</a> 提供 .Net 4.5 以上，.netcore 2.0 以及后续版本的支持；使用较低版本的用户只能自行通过源码编译，或者升级 .Net 的版本。目前在 Nuget 发布的版本属于测试版本，在未经详细测试验证前，请勿用于生产环境，在版本号小于 2.0 之前，不对版本的兼容性做保证。</p>
+<p> 今天要介绍的功能为：文章详情页抽取。该源码基于 <a href="http://www.cnblogs.com/jasondan/p/3497757.html" target="_blank" rel="external">stanzhai</a> 的 <a href="https://github.com/stanzhai/Html2Article" target="_blank" rel="external">Html2Article</a>，原方法使用文章的分行字数作为判断依据，获取字数较为集中的部分作为文章的正文。在 Apache 2.0 协议下开源，在此感谢他的付出。</p>
+<p> <a href="https://github.com/ziyunhx/thrinax" target="_blank" rel="external">Thrinax</a> 中的 Html2Article 位于 Thrinax.Extract 下，使用前先通过：</p>
+<pre><code>PM&gt; <span class="keyword">Install</span>-Package Thrinax
+</code></pre><p> 安装 Thrinax 类库，使用以下方法调用。</p>
+<pre><code>Article article = Html2Article.GetArticle(htmlContent)<span class="comment">;</span>
+</code></pre><p> 需要注意的是该版本与原有的版本字段不再兼容，下面介绍改进的几个方面：</p>
+<ol>
+<li><p>使用div标签替换原有的按换行符的分段方式，并对所有div标签进行打分，规避了之前的遍历深度难以界定的问题，减少了正文出现遗漏或者杂质的概率；</p>
+</li>
+<li><p>为了选出最合适的区块，打分函数考虑了内含标签，字数等各种情况，根据数百个媒体的实际情况对参数进行了优化；</p>
+</li>
+<li><p>针对特殊的容易混淆的区块，还支持排除词的得分衰减，同时考虑了部分网站布局不清晰时使用段内的P标签的内容；</p>
+</li>
+<li><p>重写了时间识别的函数，将识别的准确性大幅提升；</p>
+</li>
+<li><p>标题仍然采用了原有的h1与title获取的方式，修改了一些可能出现的BUG，由于一般列表页已经获取到标题，所以此处不是特别重要；</p>
+</li>
+<li><p>媒体什么的非必要字段暂时未实现。</p>
+</li>
+</ol>
+<p> 下面放几张实际解析的效果图片吧：</p>
+<p> <img src="https://www.tnidea.com/media/image/thrift-1-01.png" alt="Image"><br> <img src="https://www.tnidea.com/media/image/thrift-1-02.png" alt="Image"><br> <img src="https://www.tnidea.com/media/image/thrift-1-03.png" alt="Image"><br> <img src="https://www.tnidea.com/media/image/thrift-1-04.png" alt="Image"></p>
+<p> 这个版本仍然是一个测试版本，下一篇文章会写列表页的解析，列表页相对文章页难度更大，需要配合一定的人工的工作，同时由于一个列表页可以解析出多篇文章的Url，所以相应的会给文章页解析带来新的思路，能大幅减少出现错误的概率。接下来会实现翻页的逻辑，在文章页和列表页都会十分有用，时间待定，期待吧！</p>
+<p> 最后，如果对这个项目感兴趣的话，快到 <a href="https://github.com/ziyunhx/thrinax" target="_blank" rel="external">GitHub</a> 上 Star 和 Fork 吧，也欢迎大家一起来贡献代码；当然，如果你是爬虫工程师或者对爬虫非常感兴趣的话，最好的方式是把简历投递给我，期待能一起共事！</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p> 好久不见，这次给大家带来一个全新的基于 .Net 的中文网页信息抽取的类库，Thrinax。该库的目标是通过一种简单的，低人工参与的方式来实现稳定的获取网页中的有效信息；这将会是一个系列文章，在书写文章的同时，类库也会不断完善，今天带来第一篇，基于网页区块的详情页信息抽取。</p>]]>
+    
+    </summary>
+    
+      <category term=".NET" scheme="https://www.tnidea.com/tags/NET/"/>
+    
+      <category term="Html2Article" scheme="https://www.tnidea.com/tags/Html2Article/"/>
+    
+      <category term="正文识别" scheme="https://www.tnidea.com/tags/%E6%AD%A3%E6%96%87%E8%AF%86%E5%88%AB/"/>
+    
+      <category term="爬虫" scheme="https://www.tnidea.com/tags/%E7%88%AC%E8%99%AB/"/>
+    
+      <category term="Thrinax" scheme="https://www.tnidea.com/categories/Thrinax/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[使用 EF Core CodeFirst 操作 Mysql 数据库]]></title>
@@ -1580,49 +1631,6 @@ nimbus<span class="class">.thrift</span><span class="class">.port</span>: <span 
       <category term="storm" scheme="https://www.tnidea.com/tags/storm/"/>
     
       <category term="Storm" scheme="https://www.tnidea.com/categories/Storm/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[Open Auth辅助库（使用ImitateLogin实现登录）]]></title>
-    <link href="https://www.tnidea.com/open-auth-assist-project.html"/>
-    <id>https://www.tnidea.com/open-auth-assist-project.html</id>
-    <published>2015-08-09T16:00:00.000Z</published>
-    <updated>2015-09-23T15:26:42.000Z</updated>
-    <content type="html"><![CDATA[<p> 网络上越来越多的公司进行着自己的平台化策略，其中绝大多数都已Web API的方式对外提供服务，为了方便的使用这些服务，你不得不引用许多相关的类库，但是API的本质其实仅仅是一些约定的网络请求，我们大多数情况仅仅使用API提供的少数几个功能，因此，我稍微修改了下微博的c#的类库，加入了<a href="https://github.com/ziyunhx/imitate-login" title="ImitateLogin" target="_blank" rel="external">ImitateLogin</a>库来模拟登录，形成了<a href="https://github.com/ziyunhx/open-auth-assist" title="open-auth-assist" target="_blank" rel="external">open-auth-assist</a>库。</p>
-<a id="more"></a>
-<p> <a href="https://github.com/ziyunhx/open-auth-assist" target="_blank" rel="external">open-auth-assist</a>的目的是将现有的API的类库使用一种通用的方式来代替，同时又不增加太多的额外工作。另外这个项目也可以算作我的另一个开源项目<a href="https://github.com/ziyunhx/imitate-login" target="_blank" rel="external">ImitateLogin</a>的一个Demo。</p>
-<p> 这个类库的绝大多数代码都源于 <a href="http://weibosdk.codeplex.com/" title="WeiboSDK" target="_blank" rel="external">weiboSDK</a> 这个项目，由于作者不准备再更新，而且没有继续提供模拟登录的功能，所以我拿过来修改了下开源出来（已获得原作者同意），目前仅完成了微博部分的实现，由于这个项目依赖于<a href="https://github.com/ziyunhx/imitate-login" target="_blank" rel="external">ImitateLogin</a>，因此只有<a href="https://github.com/ziyunhx/imitate-login" target="_blank" rel="external">ImitateLogin</a>完成的网站才会增加支持；<a href="https://github.com/ziyunhx/imitate-login" target="_blank" rel="external">ImitateLogin</a>本身并没有太多的技术难度，仅仅需要熟悉网络请求和一些耐心来解决各种客户端加密，所以如果大家有时间，也希望能一起为这个项目贡献一些代码，谢谢！</p>
-<p> 下面将简单介绍下如何使用<a href="https://github.com/ziyunhx/open-auth-assist" target="_blank" rel="external">open-auth-assist</a>来实现微博API的调用。</p>
-<p> 首先，我们需要实例化一个OpenAuthAssist类：</p>
-<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> openAuth = <span class="keyword">new</span> SinaWeiboClient(<span class="string">"1402038860"</span>, <span class="string">"62e1ddd4f6bc33077c796d5129047ca2"</span>, <span class="string">"http://qcyn.sina.com.cn"</span>);</span><br></pre></td></tr></table></figure>
-<p> 例子中使用的appkey使用了原作者例子中的key。</p>
-<p> 接下来我们登录需要进行操作的用户：</p>
-<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line">openAuth.DoLogin(<span class="string">"username"</span>, <span class="string">"password"</span>);</span><br></pre></td></tr></table></figure>
-<p> 然后我们来使用Weibo提供的获取用户时间轴的API来展示如何使用Get：</p>
-<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> result = openAuth.HttpGet(<span class="string">"statuses/friends_timeline.json"</span>, <span class="keyword">new</span> Dictionary&lt;<span class="keyword">string</span>, <span class="keyword">object</span>&gt;</span><br><span class="line">		&#123;</span><br><span class="line">			&#123;<span class="string">"count"</span>, <span class="number">5</span>&#125;,</span><br><span class="line">			&#123;<span class="string">"page"</span>, <span class="number">1</span>&#125;,</span><br><span class="line">			&#123;<span class="string">"base_app"</span> , <span class="number">0</span>&#125;</span><br><span class="line">		&#125;);</span><br></pre></td></tr></table></figure>
-<p> 我们发送一条微博来展示Post方法的调用：</p>
-<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> result2 = openAuth.HttpPost(<span class="string">"statuses/update.json"</span>, <span class="keyword">new</span> Dictionary&lt;<span class="keyword">string</span>, <span class="keyword">object</span>&gt;</span><br><span class="line">		&#123;</span><br><span class="line">			&#123;<span class="string">"status"</span> , <span class="keyword">string</span>.Format(<span class="string">"post from OpenAuth.Assist! @&#123;0:HH:mm:ss&#125;"</span>, DateTime.Now)&#125;</span><br><span class="line">		&#125;);</span><br></pre></td></tr></table></figure>
-<p> 接下来，好好享受吧！</p>
-]]></content>
-    <summary type="html">
-    <![CDATA[<p> 网络上越来越多的公司进行着自己的平台化策略，其中绝大多数都已Web API的方式对外提供服务，为了方便的使用这些服务，你不得不引用许多相关的类库，但是API的本质其实仅仅是一些约定的网络请求，我们大多数情况仅仅使用API提供的少数几个功能，因此，我稍微修改了下微博的c#的类库，加入了<a href="https://github.com/ziyunhx/imitate-login" title="ImitateLogin">ImitateLogin</a>库来模拟登录，形成了<a href="https://github.com/ziyunhx/open-auth-assist" title="open-auth-assist">open-auth-assist</a>库。</p>]]>
-    
-    </summary>
-    
-      <category term=".NET" scheme="https://www.tnidea.com/tags/NET/"/>
-    
-      <category term="C#" scheme="https://www.tnidea.com/tags/C/"/>
-    
-      <category term="ImitateLogin" scheme="https://www.tnidea.com/tags/ImitateLogin/"/>
-    
-      <category term="OpenAuth" scheme="https://www.tnidea.com/tags/OpenAuth/"/>
-    
-      <category term="csharp" scheme="https://www.tnidea.com/tags/csharp/"/>
-    
-      <category term="open-auth-assist" scheme="https://www.tnidea.com/tags/open-auth-assist/"/>
-    
-      <category term="爬虫" scheme="https://www.tnidea.com/categories/%E7%88%AC%E8%99%AB/"/>
     
   </entry>
   
