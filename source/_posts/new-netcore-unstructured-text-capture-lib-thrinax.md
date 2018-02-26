@@ -1,4 +1,4 @@
-title: Thrinax：.Net的文本抽取类库（一）--基于网页区块的详情页抽取
+title: .Net文本抽取类库 Thrinax（一）基于网页区块的正文抽取
 date: 2018-01-25
 categories: 
 - Thrinax
@@ -10,20 +10,20 @@ tags:
 
 ---
 
- 好久不见，这次给大家带来一个全新的基于 .Net 的中文网页信息抽取的类库，Thrinax。该库的目标是通过一种简单的，低人工参与的方式来实现稳定的获取网页中的有效信息；这将会是一个系列文章，在书写文章的同时，类库也会不断完善，今天带来第一篇，基于网页区块的详情页信息抽取。
+ 好久不见，这次给大家带来一个全新的基于 .Net 的中文网页信息抽取的类库，[Thrinax](https://github.com/ziyunhx/thrinax)。该库的目标是通过一种简单的，低人工参与的方式来实现稳定的获取网页中的有效信息；这将会是一个系列文章，在书写文章的同时，类库也会不断完善，今天带来第一篇，基于网页区块的详情页信息抽取。
 
 <!--more-->
  [Thrinax](https://github.com/ziyunhx/thrinax) 提供 .Net 4.5 以上，.netcore 2.0 以及后续版本的支持；使用较低版本的用户只能自行通过源码编译，或者升级 .Net 的版本。目前在 Nuget 发布的版本属于测试版本，在未经详细测试验证前，请勿用于生产环境，在版本号小于 2.0 之前，不对版本的兼容性做保证。
 
- 今天要介绍的功能为：文章详情页抽取。该源码基于 [stanzhai](http://www.cnblogs.com/jasondan/p/3497757.html) 的 [Html2Article](https://github.com/stanzhai/Html2Article)，原方法使用文章的分行字数作为判断依据，获取字数较为集中的部分作为文章的正文。在 Apache 2.0 协议下开源，在此感谢他的付出。
+ 今天要介绍的功能为：文章详情页抽取。该源码借鉴了 [stanzhai](http://www.cnblogs.com/jasondan/p/3497757.html) 的 [Html2Article](https://github.com/stanzhai/Html2Article)的思想，原方法使用文章的分行字数作为判断依据，获取字数较为集中的部分作为文章的正文。在 Apache 2.0 协议下开源，在此感谢他的付出。
 
- [Thrinax](https://github.com/ziyunhx/thrinax) 中的 Html2Article 位于 Thrinax.Extract 下，使用前先通过：
+ [Thrinax](https://github.com/ziyunhx/thrinax) 中的 HtmlToArticle 位于 Thrinax.Extract 下，使用前先通过：
 
     PM> Install-Package Thrinax
 
  安装 Thrinax 类库，使用以下方法调用。
 
-    Article article = Html2Article.GetArticle(htmlContent);
+    Article article = HtmlToArticle.GetArticle(htmlContent);
 
  需要注意的是该版本与原有的版本字段不再兼容，下面介绍改进的几个方面：
 
@@ -42,10 +42,10 @@ tags:
 
  下面放几张实际解析的效果图片吧：
 
- ![Image](https://www.tnidea.com/media/image/thrift-1-01.png)
- ![Image](https://www.tnidea.com/media/image/thrift-1-02.png)
- ![Image](https://www.tnidea.com/media/image/thrift-1-03.png)
- ![Image](https://www.tnidea.com/media/image/thrift-1-04.png)
+ ![Image](https://www.tnidea.com/media/image/thrinax-1-01.png)
+ ![Image](https://www.tnidea.com/media/image/thrinax-1-02.png)
+ ![Image](https://www.tnidea.com/media/image/thrinax-1-03.png)
+ ![Image](https://www.tnidea.com/media/image/thrinax-1-04.png)
 
  这个版本仍然是一个测试版本，下一篇文章会写列表页的解析，列表页相对文章页难度更大，需要配合一定的人工的工作，同时由于一个列表页可以解析出多篇文章的Url，所以相应的会给文章页解析带来新的思路，能大幅减少出现错误的概率。接下来会实现翻页的逻辑，在文章页和列表页都会十分有用，时间待定，期待吧！
 
