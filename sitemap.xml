@@ -17,6 +17,11 @@
   </url>
   
   <url>
+    <loc>https://www.tnidea.com/using-storm-at-dotnet-core.html</loc>
+    <lastmod>2017-05-04T06:22:15.000Z</lastmod>
+  </url>
+  
+  <url>
     <loc>https://www.tnidea.com/social-network-imitate-login.html</loc>
     <lastmod>2017-05-04T06:22:15.000Z</lastmod>
   </url>
@@ -42,12 +47,7 @@
   </url>
   
   <url>
-    <loc>https://www.tnidea.com/using-storm-at-dotnet-core.html</loc>
-    <lastmod>2017-05-04T06:22:15.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://www.tnidea.com/build-multi-language-framework-by-drpc.html</loc>
+    <loc>https://www.tnidea.com/dot-net-drpc-storm.html</loc>
     <lastmod>2017-05-04T06:22:15.000Z</lastmod>
   </url>
   
@@ -57,7 +57,7 @@
   </url>
   
   <url>
-    <loc>https://www.tnidea.com/dot-net-drpc-storm.html</loc>
+    <loc>https://www.tnidea.com/build-multi-language-framework-by-drpc.html</loc>
     <lastmod>2017-05-04T06:22:15.000Z</lastmod>
   </url>
   
