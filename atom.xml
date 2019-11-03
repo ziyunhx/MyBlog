@@ -4,7 +4,7 @@
   <subtitle><![CDATA[纯粹的技术导向！]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="https://www.tnidea.com/"/>
-  <updated>2018-02-26T16:23:24.000Z</updated>
+  <updated>2019-11-03T14:48:05.967Z</updated>
   <id>https://www.tnidea.com/</id>
   
   <author>
@@ -15,54 +15,50 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title><![CDATA[.Net文本抽取类库 Thrinax（二）网站列表页模式识别]]></title>
-    <link href="https://www.tnidea.com/new-netcore-page-list-extract-lib-thrinax.html"/>
-    <id>https://www.tnidea.com/new-netcore-page-list-extract-lib-thrinax.html</id>
-    <published>2018-02-23T16:00:00.000Z</published>
-    <updated>2018-02-26T16:23:24.000Z</updated>
-    <content type="html"><![CDATA[<p> 上一篇文章给大家介绍了如何使用 <a href="https://github.com/ziyunhx/thrinax" target="_blank" rel="external">Thrinax</a> 抽取网站正文页信息。在实际使用中，新闻类网站基本遵循 “首页&gt;频道&gt;正文” 的页面模式，识别频道页（列表页）成为了获得信息的基础，今天给大家带来该系列的第二篇，基于模式识别的网站列表页信息抽取。</p>
+    <title><![CDATA[Json 解析与筛选查询工具]]></title>
+    <link href="https://www.tnidea.com/json-point-parse-to-table.html"/>
+    <id>https://www.tnidea.com/json-point-parse-to-table.html</id>
+    <published>2019-11-02T16:00:00.000Z</published>
+    <updated>2019-11-03T14:48:05.967Z</updated>
+    <content type="html"><![CDATA[<p>Json 在接口、配置以及日志中被广泛应用，但是 json 格式本身并不方便进行查看，做了一个简单的网页版工具，可以将 json 数组转换为 Table，方便进行检索和查看。</p>
 <a id="more"></a>
-<p> <a href="https://github.com/ziyunhx/thrinax" target="_blank" rel="external">Thrinax</a> 提供 .Net 4.5 以上，.netcore 2.0 以及后续版本的支持；使用较低版本的用户只能自行通过源码编译，或者升级 .Net 的版本。目前在 Nuget 发布的版本属于测试版本，在未经详细测试验证前，请勿用于生产环境，在版本号小于 2.0 之前，不对版本的兼容性做保证。</p>
-<p> 今天要介绍的功能为：网站列表页模式识别。该方法的基本思想为通过获取网站上所有包含 Url 的 a 标签，识别其 Xpath，然后合并相似的同级元素，对每一种 Xpath 归纳出基础 Xpath，然后从它的子节点获取各种字段，枚举组合后给打分函数计算出最可能的几种方案供用户审核。</p>
-<p> 要使用该方法首先需要通过 Nuget 安装 <a href="https://github.com/ziyunhx/thrinax" target="_blank" rel="external">Thrinax</a>：</p>
-<pre><code>PM&gt; <span class="keyword">Install</span>-Package Thrinax
-</code></pre><p> 然后使用以下方法获取列表页的网页内容，为了支持某些后加载的网站，这里也提供了基于 Selenium chrome 的访问模式。</p>
-<pre><code>HttpResult httpResult = <span class="literal">null</span>;
-<span class="keyword">if</span> (UseBrowser)
-    httpResult = SeleniumHelper.HttpRequest(channelUrl);
-<span class="keyword">else</span>
-    httpResult = HttpHelper.HttpRequest(channelUrl);
-</code></pre><p> 需要注意的是使用浏览器版本的必须要在执行的机器上安装有 Chrome 浏览器。</p>
-<p> 然后调用模式识别函数获取可供选择的多个模式（带有得分）：</p>
-<pre><code><span class="variable"><span class="keyword">var</span> listPagePatterns</span> = SmartParser.Extract_Patterns(channelUrl, httpResult.Content, MediaType.WebNews, Enums.Language.CHINESE);
-</code></pre><p> 实际可供大家直接测试效果的 demo 也已上传到 <a href="https://github.com/ziyunhx/thrinax/tree/master/samples/Thrinax.HtmlListParserSample" target="_blank" rel="external">GitHub</a> 中，使用到了 WPF，暂时仅支持在 Windows 环境下运行，下面是运行截图：</p>
-<p> <img src="https://www.tnidea.com/media/image/thrinax-2-01.png" alt="Image"><br> <img src="https://www.tnidea.com/media/image/thrinax-2-02.png" alt="Image"><br> <img src="https://www.tnidea.com/media/image/thrinax-2-03.png" alt="Image"></p>
-<p> 这个版本仍然是一个测试版本，代码会较为频繁更新，如果本文描述与源码表现出现出入，以 GitHub 上的版本为准。接下来的文章将介绍如何通过列表页来实现对信息抽取准确度的提高，以及网站翻页的处理。</p>
-<p> 最后，如果对这个项目感兴趣的话，快到 <a href="https://github.com/ziyunhx/thrinax" target="_blank" rel="external">GitHub</a> 上 Star 和 Fork 吧，也欢迎大家一起来贡献代码；当然，如果你是爬虫工程师或者对爬虫非常感兴趣的话，最好的方式是把简历投递给我，期待能一起共事！</p>
+<p> 该网页版使用纯 html 与 js 实现，无服务端代码；所有操作均在浏览器本地完成，数据不会上传到服务器。代码已经开源到 <a href="https://github.com/ziyunhx/json-point-parser" target="_blank" rel="external">json-point-parser</a> 。你可以自行下载后直接打开或者部署到服务器，也可以访问我部署的在线版本，网址为：<a href="https://point.tnidea.com/。" target="_blank" rel="external">https://point.tnidea.com/。</a></p>
+<p> <img src="https://www.tnidea.com/media/image/point-main.png" alt="Image"></p>
+<p> 网页使用了 dataTables 作为显示控件，因此你可以自定义排序和搜索，也可以设置每页显示的条数。</p>
+<p> <img src="https://www.tnidea.com/media/image/point-table.png" alt="Image"></p>
+<p> 你可以通过自定义 Display Columns 字段来实现仅显示希望展示的列，多个字段使用 ‘,’ 分割，这里仅支持使用完整的列名来表示。当然，你也可以留空或者使用 ‘*’ 来显示所有的列。</p>
+<p> 即使你的数据在数组中的首列并未出现完整的字段，程序也能自动增补后续出现的字段。</p>
+<pre><code>[{"<span class="attribute">col1</span>":<span class="value"><span class="string">"123"</span></span>,"<span class="attribute">col3</span>":<span class="value"><span class="string">"222"</span></span>},{"<span class="attribute">col1</span>":<span class="value"><span class="string">"345"</span></span>,"<span class="attribute">col4</span>":<span class="value"><span class="number">123</span></span>}]
+</code></pre><p>  <img src="https://www.tnidea.com/media/image/point-json-obj.png" alt="Image"></p>
+<p> Filter Rule 字段被用于筛选展示数据，它使用 json 对象表示，例如我需要展示 name 不为空的，且年龄为 18 或 19 的数据，可以使用以下方式表示：</p>
+<pre><code>{ "<span class="attribute">name</span>" : <span class="value"><span class="string">"*"</span> </span>, "<span class="attribute">age</span>" : <span class="value"><span class="string">"18,19"</span> </span>}
+</code></pre><p> 目前仅支持 ‘*’ 用于限制非空，和使用完整的值过滤，多个值使用 ‘,’ 分隔。另外你也可以勾选 Need Remove Duplicate? 选项来过滤重复数据，注意这里仅使用显示的字段判断是否重复数据。</p>
+<p> 最后，你的配置将通过 cookies 保存到本地，下次打开时会加载最后一次成功解析时的数据。无论数据或者配置均不会被上传到服务器上，以保证你的机密数据不会通过该工具被泄露。</p>
+<p> 如果对这个项目感兴趣的话，快到 <a href="https://github.com/ziyunhx/json-point-parser" target="_blank" rel="external">GitHub</a> 上 Star 和 Fork 吧，也欢迎大家一起来贡献代码；当然，如果你在使用的过程中发现了问题或者对该项目有好的建议，请通过 Issues 提交讨论！</p>
 ]]></content>
     <summary type="html">
-    <![CDATA[<p> 上一篇文章给大家介绍了如何使用 <a href="https://github.com/ziyunhx/thrinax">Thrinax</a> 抽取网站正文页信息。在实际使用中，新闻类网站基本遵循 “首页&gt;频道&gt;正文” 的页面模式，识别频道页（列表页）成为了获得信息的基础，今天给大家带来该系列的第二篇，基于模式识别的网站列表页信息抽取。</p>]]>
+    <![CDATA[<p>Json 在接口、配置以及日志中被广泛应用，但是 json 格式本身并不方便进行查看，做了一个简单的网页版工具，可以将 json 数组转换为 Table，方便进行检索和查看。</p>]]>
     
     </summary>
     
-      <category term=".NET" scheme="https://www.tnidea.com/tags/NET/"/>
+      <category term="Json" scheme="https://www.tnidea.com/tags/Json/"/>
     
-      <category term="列表页识别" scheme="https://www.tnidea.com/tags/%E5%88%97%E8%A1%A8%E9%A1%B5%E8%AF%86%E5%88%AB/"/>
+      <category term="筛选" scheme="https://www.tnidea.com/tags/%E7%AD%9B%E9%80%89/"/>
     
-      <category term="模式识别" scheme="https://www.tnidea.com/tags/%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB/"/>
+      <category term="表格" scheme="https://www.tnidea.com/tags/%E8%A1%A8%E6%A0%BC/"/>
     
-      <category term="爬虫" scheme="https://www.tnidea.com/tags/%E7%88%AC%E8%99%AB/"/>
+      <category term="解析" scheme="https://www.tnidea.com/tags/%E8%A7%A3%E6%9E%90/"/>
     
-      <category term="Thrinax" scheme="https://www.tnidea.com/categories/Thrinax/"/>
+      <category term="技术" scheme="https://www.tnidea.com/categories/%E6%8A%80%E6%9C%AF/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[.Net文本抽取类库 Thrinax（二）网站列表页模式识别]]></title>
-    <link href="https://www.tnidea.com/json-point-parse-to-table.html"/>
-    <id>https://www.tnidea.com/json-point-parse-to-table.html</id>
+    <link href="https://www.tnidea.com/new-netcore-page-list-extract-lib-thrinax.html"/>
+    <id>https://www.tnidea.com/new-netcore-page-list-extract-lib-thrinax.html</id>
     <published>2018-02-23T16:00:00.000Z</published>
-    <updated>2019-11-03T09:01:52.640Z</updated>
+    <updated>2018-02-26T16:23:24.000Z</updated>
     <content type="html"><![CDATA[<p> 上一篇文章给大家介绍了如何使用 <a href="https://github.com/ziyunhx/thrinax" target="_blank" rel="external">Thrinax</a> 抽取网站正文页信息。在实际使用中，新闻类网站基本遵循 “首页&gt;频道&gt;正文” 的页面模式，识别频道页（列表页）成为了获得信息的基础，今天给大家带来该系列的第二篇，基于模式识别的网站列表页信息抽取。</p>
 <a id="more"></a>
 <p> <a href="https://github.com/ziyunhx/thrinax" target="_blank" rel="external">Thrinax</a> 提供 .Net 4.5 以上，.netcore 2.0 以及后续版本的支持；使用较低版本的用户只能自行通过源码编译，或者升级 .Net 的版本。目前在 Nuget 发布的版本属于测试版本，在未经详细测试验证前，请勿用于生产环境，在版本号小于 2.0 之前，不对版本的兼容性做保证。</p>
