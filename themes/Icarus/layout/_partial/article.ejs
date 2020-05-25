@@ -27,17 +27,6 @@
 <br>
     <p style="border-top:1px solid #eceff2;margin:0 20px;"></p>
     <br>
-    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-    <!-- 博客正文广告 -->
-    <ins class="adsbygoogle"
-        style="display:block"
-        data-ad-client="ca-pub-6541442242935379"
-        data-ad-slot="9453052931"
-        data-ad-format="auto"></ins>
-    <script>
-    (adsbygoogle = window.adsbygoogle || []).push({});
-    </script>
-
     <%- post.content %>
     <p>本文来自 <a href="https://www.tnidea.com/" title="The NewIdea" target="_blank" rel="external">The NewIdea</a>，作者 Carey Tzou 。<br>永久地址：<a href="<%- url_for(config.url + config.root + post.path) %>" title="<%= post.title %>" target="_blank" rel="external"><%- url_for(config.url + config.root + post.path) %></a><br>未经授权，拒绝任何全文及摘要转载！<br>
     <br>
@@ -51,9 +40,6 @@
     <script>
     (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
-    <br/>
-    <p>欢迎关注微信公众号：CareyTzou（dotNet大数据）</p>
-    <a href="https://www.tnidea.com/media/image/wechat.jpg" title="Wechat:CareyTzou" class="fancybox" rel="article0"><img style="width:160px;display:inline;" src="https://www.tnidea.com/media/image/wechat.jpg" alt="Wechat:CareyTzou"></a>
     <% } %>
     </div>
     
@@ -67,17 +53,3 @@
     <%- partial('post/nav') %>
   <% } %>
 </article>
-
-<% if (!index && post.comments && config.disqus_shortname){ %>
-<section id="comments">
-  <div id="disqus_thread">
-    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-  </div>
-</section>
-<% } else if (!index && post.comments && config.duoshuo_shortname){ %>
-  <section id="comments">
-    <div id="ds-thread" class="ds-thread" data-thread-key="<%- post.permalink %>" data-title="<%- post.title %>" data-url="<%- post.permalink %>">
-      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by DuoShuo.</a></noscript>
-    </div>
-  </section>
-<% } %>

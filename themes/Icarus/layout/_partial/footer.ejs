@@ -3,8 +3,14 @@
     <%- partial('_partial/sidebar') %>
   <% } %>
   <div class="outer">
-    <div id="footer-info" class="inner">
-      &copy; 2013-<%= date(new Date(), 'YYYY') %> The NewIdea Inc.
-    </div>
+    <div style="margin:0 auto; padding:10px 0;">
+      <a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=31011302005972" style="display:inline-block;text-decoration:none;height:15px;line-height:15px;"><img src="
+        media/image/beian.png" style="float:left;width: 15px;"><span style="float:left;height:15px;line-height:15px;margin: 0px 0px 0px 5px; color:#939393;">沪公网安备 31011302005972号</span></a>
+       &nbsp;&nbsp;
+       <a href="http://www.beian.miit.gov.cn" style="display:inline-block;text-decoration:none;height:15px;line-height:15px;" target="_blank"><span style="float:left;height:15px;line-height:15px;margin: 0px 0px 0px 5px; color:#939393;">沪ICP备20007508号</span></a>
+      </div>
+      <div id="footer-info" class="inner">
+        &copy; 2013-<%= date(new Date(), 'YYYY') %> The NewIdea. 
+      </div>
   </div>
 </footer>

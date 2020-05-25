@@ -3,7 +3,7 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: 地平线
+title: 新观点
 subtitle: 纯粹的技术导向！
 description: 介绍个人的开源项目以及技术细节，分享构建在微软dotNet平台上的大数据技术、开源项目，分析大数据发展趋势与运用场景，分享实施案例。
 author: Carey Tzou
@@ -70,7 +70,7 @@ pagination_dir: page
 theme: icarus
 
 # Disqus
-disqus_shortname: tnidea
+#disqus_shortname: tnidea
 
 # DuoShuo
 #duoshuo_shortname: tnidea
